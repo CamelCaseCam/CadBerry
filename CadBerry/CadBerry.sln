@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Berry", "Berry\Berry.vcxproj", "{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry", "CadBerry\CadBerry.vcxproj", "{918CE669-7D59-4175-A672-2F1D929E7603}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GILBuildEngine", "GILBuildEngine\GILBuildEngine.vcxproj", "{A719CF0D-93E7-C213-7C7B-333A68E89E78}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "CadBerry\vendor\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glad", "CadBerry\vendor\Glad\Glad.vcxproj", "{BDD6857C-A90D-870D-52FA-6C103E10030F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "CadBerry\vendor\IMGUI\ImGui.vcxproj", "{C0FF640D-2C14-8DBE-F595-301E616989EF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VSCodeIntegration", "Modules\VSCodeIntegration\VSCodeIntegration.vcxproj", "{6D50644B-D966-62E1-22DE-ED028E333369}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WhereAmI", "CadBerry\vendor\WhereAmI\WhereAmI.vcxproj", "{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Debug|x64.ActiveCfg = Debug|x64
+		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Debug|x64.Build.0 = Debug|x64
+		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Release|x64.ActiveCfg = Release|x64
+		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Release|x64.Build.0 = Release|x64
+		{918CE669-7D59-4175-A672-2F1D929E7603}.Debug|x64.ActiveCfg = Debug|x64
+		{918CE669-7D59-4175-A672-2F1D929E7603}.Debug|x64.Build.0 = Debug|x64
+		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.ActiveCfg = Release|x64
+		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.Build.0 = Release|x64
+		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Debug|x64.ActiveCfg = Debug|x64
+		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Debug|x64.Build.0 = Debug|x64
+		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Release|x64.ActiveCfg = Release|x64
+		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Release|x64.Build.0 = Release|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.ActiveCfg = Debug|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Debug|x64.Build.0 = Debug|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.ActiveCfg = Release|x64
+		{154B857C-0182-860D-AA6E-6C109684020F}.Release|x64.Build.0 = Release|x64
+		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Debug|x64.ActiveCfg = Debug|x64
+		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Debug|x64.Build.0 = Debug|x64
+		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Release|x64.ActiveCfg = Release|x64
+		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Release|x64.Build.0 = Release|x64
+		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Debug|x64.ActiveCfg = Debug|x64
+		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Debug|x64.Build.0 = Debug|x64
+		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Release|x64.ActiveCfg = Release|x64
+		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Release|x64.Build.0 = Release|x64
+		{6D50644B-D966-62E1-22DE-ED028E333369}.Debug|x64.ActiveCfg = Debug|x64
+		{6D50644B-D966-62E1-22DE-ED028E333369}.Debug|x64.Build.0 = Debug|x64
+		{6D50644B-D966-62E1-22DE-ED028E333369}.Release|x64.ActiveCfg = Release|x64
+		{6D50644B-D966-62E1-22DE-ED028E333369}.Release|x64.Build.0 = Release|x64
+		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Debug|x64.ActiveCfg = Debug|x64
+		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Debug|x64.Build.0 = Debug|x64
+		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.ActiveCfg = Release|x64
+		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

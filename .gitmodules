@@ -1,0 +1,27 @@
+[submodule "CadBerry\\CadBerry\\vendor\\spdlog"]
+	path = CadBerry\\CadBerry\\vendor\\spdlog
+	url = https://github.com/gabime/spdlog.git
+[submodule "CadBerry/CadBerry/vendor/IMGUI"]
+	path = CadBerry/CadBerry/vendor/IMGUI
+	url = https://github.com/CamelCaseCam/imgui.git
+[submodule "CadBerry/CadBerry/vendor/GLFW"]
+	path = CadBerry/CadBerry/vendor/GLFW
+	url = https://github.com/CamelCaseCam/glfw
+[submodule "glm"]
+	path = glm
+	url = https://github.com/g-truc/glm.git
+[submodule "CadBerry/vendor/glm"]
+	path = CadBerry/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "CadBerry/CadBerry/vendor/glm"]
+	path = CadBerry/CadBerry/vendor/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "CadBerry/nfd"]
+	path = CadBerry/nfd
+	url = https://github.com/CamelCaseCam/nativefiledialog.git
+[submodule "CadBerry/CadBerry/vendor/nfd"]
+	path = CadBerry/CadBerry/vendor/nfd
+	url = https://github.com/CamelCaseCam/nativefiledialog.git
+[submodule "CadBerry/CadBerry/vendor/WhereAmI"]
+	path = CadBerry/CadBerry/vendor/WhereAmI
+	url = https://github.com/gpakosz/whereami.git

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CadBerry">
+      <UniqueIdentifier>{918CE669-7D59-4175-A672-2F1D929E7603}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\BuildEngine">
+      <UniqueIdentifier>{86C8DAC5-7257-648F-1B76-788A07E47435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Events">
+      <UniqueIdentifier>{554B5028-C1D6-BDEC-CAE7-40E136F219ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\ImGui">
+      <UniqueIdentifier>{7B6A64A4-6738-58AA-50CC-C8D03C39340F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Module">
+      <UniqueIdentifier>{26757A3A-9200-E8FE-9B11-6BF3071C44FF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Platform">
+      <UniqueIdentifier>{057CAE99-7192-AC2F-BA09-3851265F7DB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Platform\Windows">
+      <UniqueIdentifier>{3F5BE67A-AB1D-1A05-F4CD-A89160CFF2E2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Project">
+      <UniqueIdentifier>{D7317878-C32A-97CA-EC5C-7C4FD8B476D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Tests">
+      <UniqueIdentifier>{13D027A5-FF9D-1BAB-E831-8CD1D49EF70F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CadBerry.h" />
+    <ClInclude Include="src\CadBerry\Application.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\BuildEngine\BuildDialog.h">
+      <Filter>CadBerry\BuildEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\BuildEngine\BuildEngine.h">
+      <Filter>CadBerry\BuildEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Core.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Events\ApplicationEvent.h">
+      <Filter>CadBerry\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Events\BuildEvent.h">
+      <Filter>CadBerry\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Events\Event.h">
+      <Filter>CadBerry\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Events\KeyEvent.h">
+      <Filter>CadBerry\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Events\MouseEvent.h">
+      <Filter>CadBerry\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\ImGui\ImGuiLayer.h">
+      <Filter>CadBerry\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Input.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\KeyCode.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Layer.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\LayerStack.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Log.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Math.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Module\Module.h">
+      <Filter>CadBerry\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Module\Viewport.h">
+      <Filter>CadBerry\Module</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\MouseCode.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\Windows\WindowsInput.h">
+      <Filter>CadBerry\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\Windows\WindowsWindow.h">
+      <Filter>CadBerry\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Project\CreateProject.h">
+      <Filter>CadBerry\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Project\Project.h">
+      <Filter>CadBerry\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Tests\SimpleModule.h">
+      <Filter>CadBerry\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h">
+      <Filter>CadBerry\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Window.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cdbpch.h" />
+    <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLContext.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CadBerry\Application.cpp">
+      <Filter>CadBerry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp">
+      <Filter>CadBerry\BuildEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\ImGui\ImGuiBuild.cpp">
+      <Filter>CadBerry\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\ImGui\ImGuiLayer.cpp">
+      <Filter>CadBerry\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Layer.cpp">
+      <Filter>CadBerry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\LayerStack.cpp">
+      <Filter>CadBerry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Log.cpp">
+      <Filter>CadBerry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Module\Viewport.cpp">
+      <Filter>CadBerry\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\Windows\WindowsInput.cpp">
+      <Filter>CadBerry\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\Windows\WindowsWindow.cpp">
+      <Filter>CadBerry\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Project\CreateProject.cpp">
+      <Filter>CadBerry\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Project\Project.cpp">
+      <Filter>CadBerry\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cdbpch.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLContext.cpp" />
+  </ItemGroup>
+</Project>

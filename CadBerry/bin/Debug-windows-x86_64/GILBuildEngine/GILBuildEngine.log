@@ -1,0 +1,7 @@
+﻿cl : command line warning D9025: overriding '/MTd' with '/MDd'
+  GBSequence.cpp
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\GBSequence.cpp(42,75): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\GBSequence.cpp(44,53): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  GILBuildEngine.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Debug-windows-x86_64\GILBuildEngine\GILBuildEngine.dll
+          1 file(s) copied.
+          1 file(s) copied.
