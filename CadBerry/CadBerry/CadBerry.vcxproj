@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{918CE669-7D59-4175-A672-2F1D929E7603}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CadBerry</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\bin\Debug-windows-x86_64\CadBerry\</OutDir>
+    <IntDir>..\bin\Debug-windows-x86_64\CadBerry\</IntDir>
+    <TargetName>CadBerry</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\bin\Release-windows-x86_64\CadBerry\</OutDir>
+    <IntDir>..\bin\Release-windows-x86_64\CadBerry\</IntDir>
+    <TargetName>CadBerry</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\nfd\build\lib\Debug\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\bin\Debug-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.dll ..\bin\Debug-windows-x86_64\Berry
+copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Debug-windows-x86_64\Berry</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\nfd\build\lib\Debug\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.dll ..\bin\Release-windows-x86_64\Berry
+copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-windows-x86_64\Berry</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CadBerry.h" />
+    <ClInclude Include="src\CadBerry\Application.h" />
+    <ClInclude Include="src\CadBerry\BuildEngine\BuildDialog.h" />
+    <ClInclude Include="src\CadBerry\BuildEngine\BuildEngine.h" />
+    <ClInclude Include="src\CadBerry\Core.h" />
+    <ClInclude Include="src\CadBerry\Events\ApplicationEvent.h" />
+    <ClInclude Include="src\CadBerry\Events\BuildEvent.h" />
+    <ClInclude Include="src\CadBerry\Events\Event.h" />
+    <ClInclude Include="src\CadBerry\Events\KeyEvent.h" />
+    <ClInclude Include="src\CadBerry\Events\MouseEvent.h" />
+    <ClInclude Include="src\CadBerry\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\CadBerry\Input.h" />
+    <ClInclude Include="src\CadBerry\KeyCode.h" />
+    <ClInclude Include="src\CadBerry\Layer.h" />
+    <ClInclude Include="src\CadBerry\LayerStack.h" />
+    <ClInclude Include="src\CadBerry\Log.h" />
+    <ClInclude Include="src\CadBerry\Math.h" />
+    <ClInclude Include="src\CadBerry\Module\Module.h" />
+    <ClInclude Include="src\CadBerry\Module\Viewport.h" />
+    <ClInclude Include="src\CadBerry\MouseCode.h" />
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\CadBerry\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\CadBerry\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\CadBerry\Project\CreateProject.h" />
+    <ClInclude Include="src\CadBerry\Project\Project.h" />
+    <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
+    <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
+    <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h" />
+    <ClInclude Include="src\CadBerry\Window.h" />
+    <ClInclude Include="src\cdbpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CadBerry\Application.cpp" />
+    <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp" />
+    <ClCompile Include="src\CadBerry\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\CadBerry\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\CadBerry\Layer.cpp" />
+    <ClCompile Include="src\CadBerry\LayerStack.cpp" />
+    <ClCompile Include="src\CadBerry\Log.cpp" />
+    <ClCompile Include="src\CadBerry\Module\Viewport.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\CadBerry\Project\CreateProject.cpp" />
+    <ClCompile Include="src\CadBerry\Project\Project.cpp" />
+    <ClCompile Include="src\cdbpch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\Glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\IMGUI\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\WhereAmI\WhereAmI.vcxproj">
+      <Project>{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

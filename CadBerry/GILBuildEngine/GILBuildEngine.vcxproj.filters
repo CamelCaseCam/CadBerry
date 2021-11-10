@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GIL">
+      <UniqueIdentifier>{A1EA870B-0DF4-877C-966F-9E7C0278937C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GIL\CGIL">
+      <UniqueIdentifier>{0F2C11AA-FBF8-6BB5-2412-5A5D103EA143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GIL\Compiler">
+      <UniqueIdentifier>{2BAFB0C5-1712-406A-C097-7820ACD90BED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GIL\Lexer">
+      <UniqueIdentifier>{70C9EAEC-DC33-9F63-2572-5009911B7DB8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GIL\Parser">
+      <UniqueIdentifier>{FD274D93-E9DF-8EE0-52E7-673C3EBE29D1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\GIL\CGIL\CGIL_info.h">
+      <Filter>GIL\CGIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Compiler\CodonEncoding.h">
+      <Filter>GIL\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Compiler\Compiler.h">
+      <Filter>GIL\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Compiler\GBSequence.h">
+      <Filter>GIL\Compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Examples.h">
+      <Filter>GIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Lexer\Lexer.h">
+      <Filter>GIL\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Lexer\LexerMacros.h">
+      <Filter>GIL\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Lexer\LexerTokens.h">
+      <Filter>GIL\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Lexer\Token.h">
+      <Filter>GIL\Lexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Parser\Operation.h">
+      <Filter>GIL\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Parser\Parser.h">
+      <Filter>GIL\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Parser\Project.h">
+      <Filter>GIL\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Parser\Region.h">
+      <Filter>GIL\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Parser\Sequence.h">
+      <Filter>GIL\Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\SaveFunctions.h">
+      <Filter>GIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Todos.h" />
+    <ClInclude Include="src\gilpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\API.cpp" />
+    <ClCompile Include="src\GIL\Compiler\CodonEncoding.cpp">
+      <Filter>GIL\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Compiler\Compiler.cpp">
+      <Filter>GIL\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Compiler\GBSequence.cpp">
+      <Filter>GIL\Compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Lexer\Lexer.cpp">
+      <Filter>GIL\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Lexer\LexerMacros.cpp">
+      <Filter>GIL\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Lexer\LexerTokens.cpp">
+      <Filter>GIL\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Lexer\Token.cpp">
+      <Filter>GIL\Lexer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Parser\Operation.cpp">
+      <Filter>GIL\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Parser\Project.cpp">
+      <Filter>GIL\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Parser\Region.cpp">
+      <Filter>GIL\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Parser\Sequence.cpp">
+      <Filter>GIL\Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\SaveFunctions.cpp">
+      <Filter>GIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gilpch.cpp" />
+  </ItemGroup>
+</Project>
