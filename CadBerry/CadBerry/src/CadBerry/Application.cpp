@@ -30,16 +30,16 @@ namespace CDB
 
 		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
 		EditorWindow->m_LayerStack.PushLayer(Viewports);
-		/*glGenVertexArrays(1, &VertexArray);
+		glGenVertexArrays(1, &VertexArray);
 		glBindVertexArray(VertexArray);
 
 		glGenBuffers(1, &VertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
 
 		float vertices[3 * 3] = {
-			-0.5f, 0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f
+			0.0f, 0.5f, 0.0f,
+			-0.5f, -0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f
 		};
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -51,15 +51,45 @@ namespace CDB
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBuffer);
 		
 		unsigned int indices[3] = { 0, 1, 2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		std::string VertSrc = R"(
+			#version 330 core
+
+			layout(location = 0) in vec3 a_Position;
+			out vec3 OutPos;
+
+			void main()
+			{
+				OutPos = a_Position;
+				gl_Position = vec4(a_Position, 1.0);
+			}
+		)";
+
+		std::string FragSrc = R"(
+			#version 330 core
+
+			layout(location = 0) out vec4 colour;
+			in vec3 OutPos;
+			vec3 C1 = vec3(1.0, 0.0, 0.0);
+			vec3 C2 = vec3(0.0, 1.0, 0.0);
+
+			void main()
+			{
+				colour = vec4(C1 * OutPos.x + (1.0 - C2 * OutPos.x), 1.0);
+			}
+		)";
+
+		shader = new Shader(VertSrc, FragSrc);
 
 		running = true;
 
 		EditorWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		while (running)
 		{
-			/*glBindVertexArray(VertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);*/
+			shader->Bind();
+			glBindVertexArray(VertexArray);
+			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
 			EditorWindow->OnUpdate();
 			for (Layer* layer : EditorWindow->m_LayerStack)

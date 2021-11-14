@@ -12,6 +12,8 @@
 
 #include "CadBerry/BuildEngine/BuildEngine.h"
 
+#include "CadBerry/Rendering/Shader.h"
+
 namespace CDB
 {
 	class CDBAPI Application
@@ -65,5 +67,7 @@ namespace CDB
 		Window* EditorWindow;
 
 		unsigned int VertexArray, VertexBuffer, IndexBuffer;
+
+		Shader* shader;
 	};
 }
