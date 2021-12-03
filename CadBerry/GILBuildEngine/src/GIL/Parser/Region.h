@@ -5,7 +5,7 @@ namespace GIL
 {
 	namespace Parser
 	{
-		class Region
+		class Region    //Could have been done with a struct
 		{
 		public:
 			Region() {}

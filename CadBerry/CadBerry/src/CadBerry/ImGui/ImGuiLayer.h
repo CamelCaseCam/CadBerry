@@ -3,6 +3,8 @@
 #include "CadBerry/Layer.h"
 #include "CadBerry/Core.h"
 
+#include "imgui.h"
+
 #include "CadBerry/Events/ApplicationEvent.h"
 #include "CadBerry/Events/KeyEvent.h"
 #include "CadBerry/Events/MouseEvent.h"
@@ -21,6 +23,8 @@ namespace CDB
 
 		void Begin();
 		void End();
+
+		ImGuiContext* Context;
 	private:
 		float m_Time = 0.0f;
 	};

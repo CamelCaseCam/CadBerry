@@ -7,6 +7,7 @@ namespace GIL
 	{
 		std::unordered_map<LexerToken, std::string> LexerToken2Str = std::unordered_map<LexerToken, std::string>({
 			{LexerToken::IMPORT, "import"},
+			{LexerToken::STRING, "string"},
 			{LexerToken::USING, "using"},
 			{LexerToken::IDENT, "ident"},
 			{LexerToken::NEWLINE, "newline"},
@@ -40,7 +41,22 @@ namespace GIL
 			{LexerToken::DEFGENE, "define gene"},
 
 
-			{LexerToken::UNKNOWN, "unknown token"}
+			{LexerToken::UNKNOWN, "unknown token"},
+
+			{LexerToken::NAMESPACE, "namespace"},
+			{LexerToken::CREATENAMESPACE, "create namespace"},
+
+			{LexerToken::IF, "if"},
+			{LexerToken::BOOL, "bool"},
+			{LexerToken::EQUALS, "equals"},
+			{LexerToken::AND, "and"},
+			{LexerToken::OR, "or"},
+			{LexerToken::NOT, "not"},
+			{LexerToken::NAND, "nand"},
+			{LexerToken::NOR, "nor"},
+
+			{LexerToken::LPAREN, "left parentheses"},
+			{LexerToken::RPAREN, "right parentheses"},
 		});
 	}
 }

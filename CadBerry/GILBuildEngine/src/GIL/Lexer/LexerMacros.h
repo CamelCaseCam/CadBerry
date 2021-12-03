@@ -1,5 +1,6 @@
 #pragma once
 #include "LexerTokens.h"
+#include "Token.h"
 #include <gilpch.h>
 
 
@@ -43,16 +44,19 @@ for
 case 'o':\
 case 'i':\
 case 'u':\
-case 'f':
+case 'f':\
+case 'n':\
+case 'b':\
+case 't':
 
 #define IsWhiteSpace(x) x == ' ' || x == '\n' || x == '\r' || x == '\t'
-#define IsNotWhiteSpace(x) x != ' ' && x != '\n' && x != '\r' && x != '\t'
+#define IsNotWhiteSpace(x) x != ' ' && x != '\n' && x != '\r' && x != '\t' && x != ':' && x != ')' && x != '('
 
 namespace GIL
 {
 	namespace Lexer
 	{
-		extern std::unordered_map<std::string, LexerToken> ReservedKeywords;
+		extern std::unordered_map<std::string, Token**> ReservedKeywords;
 
 
 		/*
@@ -68,6 +72,6 @@ namespace GIL
 		*/
 		extern std::unordered_map<std::string, LexerToken> PreprocessorDirectives;
 
-		extern std::unordered_map<std::string, LexerToken> OpRegions;
+		extern std::unordered_map<std::string, Token**> OpRegions;
 	}
 }

@@ -13,9 +13,10 @@ namespace GIL
 
 
 
-	class Sequence
+	class Sequence    //Base sequence class that is inherited by different sequence types
 	{
 	public:
+		virtual ~Sequence() {}
 		virtual std::vector<Parser::Region>* GetRegions(Parser::Project* Proj) = 0;
 		virtual std::string* GetCode(Parser::Project* Proj) = 0;
 
@@ -23,12 +24,12 @@ namespace GIL
 		virtual void Load(std::ifstream& InputFile) = 0;
 	};
 
-	class StaticSequence : public Sequence
+	class StaticSequence : public Sequence    //So far we only have static sequences
 	{
 	public:
 		StaticSequence() {}
 		StaticSequence(std::vector<GIL::Lexer::Token*> tokens) : Tokens(tokens) {}
-		~StaticSequence();
+		~StaticSequence() override;
 		bool IsCompiled = false;
 		std::vector<GIL::Lexer::Token*> Tokens;
 		std::vector<Parser::Region> Regions;

@@ -87,6 +87,41 @@ operation TestOp
 	TTT
 }
 )";
+
+		std::string BoolExample = 
+R"(#Target S.Cerevisiae
+bool b1 = true | false
+bool b2 = b1 | false & b1 | !b1)";
+
+		std::string BoolExample2 = 
+R"(#Target S.Cerevisiae
+bool b1 = true & (false | true))";
+
+		std::string BoolExample3 =
+R"(#Target S.Cerevisiae
+bool b1 => SomePromoter
+bool B = true | b1
+
+sequence s
+{
+	ATTTTTTT
+	@AQX@
+}
+
+operation o
+{
+	if B
+	{
+		s
+		$InnerCode
+	}
+}
+
+.o
+{
+	CCCCC
+}
+)";
 	}
 }
 #endif

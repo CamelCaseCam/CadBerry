@@ -5,13 +5,18 @@ namespace GIL
 {
 	namespace Lexer
 	{
-		std::unordered_map<std::string, LexerToken> ReservedKeywords = std::unordered_map<std::string, LexerToken>({
-			{"sequence", LexerToken::DEFINESEQUENCE},
-			{"operation", LexerToken::DEFOP},
-			{"import", LexerToken::IMPORT},
-			{"using", LexerToken::USING},
-			{"from", LexerToken::FROM},
-			{"for", LexerToken::FOR}
+		std::unordered_map<std::string, Token**> ReservedKeywords = std::unordered_map<std::string, Token**>({
+			{"sequence", &Token::DefineSequence},
+			{"operation", &Token::DefOp},
+			{"import", &Token::Import},
+			{"if", &Token::IF},
+			{"using", &Token::Using},
+			{"from", &Token::From},
+			{"for", &Token::For},
+			{"namespace", &Token::CreateNamespace},
+			{"bool", &Token::Bool},
+			{"true", &Token::True},
+			{"false", &Token::False},
 		});
 
 		std::unordered_map<std::string, LexerToken> PreprocessorDirectives = std::unordered_map<std::string, LexerToken>({
@@ -25,8 +30,8 @@ namespace GIL
 			{"#endRegion", LexerToken::ENDREGION},
 		});
 
-		std::unordered_map<std::string, LexerToken> OpRegions = std::unordered_map<std::string, LexerToken>({    //Stuff like $InnerCode
-			{"$InnerCode", LexerToken::INNERCODE}
+		std::unordered_map<std::string, Token**> OpRegions = std::unordered_map<std::string, Token**>({    //Stuff like $InnerCode
+			{"$InnerCode", &Token::InnerCode}
 		});
 	}
 }

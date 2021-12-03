@@ -19,8 +19,10 @@ namespace GIL
 		Token* GetIfInnerCode(std::string& Text, int& i);
 		Token* GetOp(std::string& Text, int& i);
 
+		void GetMapToken(Token*& t, std::unordered_map<std::string, Token**>& Dict, std::string& TokenName, Token* Default);
 		void GetMapToken(Token* t, std::unordered_map<std::string, LexerToken>& Dict, LexerToken Default);
 		void GetWord(std::string& Text, std::string& Output, int& i);
+		void GetString(std::string& Text, std::string& Output, int& i);
 
 
 
@@ -73,7 +75,63 @@ namespace GIL
 						++i;
 						OutputTokens->push_back(new Token(LexerToken::FORWARD, ""));
 					}
+					else
+					{
+						OutputTokens->push_back(Token::Equals);
+					}
 					break;
+				case '&':
+					OutputTokens->push_back(Token::And);
+					break;
+				case '|':
+					OutputTokens->push_back(Token::Or);
+					break;
+				case '!':
+					if (Text.length() > i + 1)
+					{
+						if (Text[i + 1] == '&')    //!&
+						{
+							OutputTokens->push_back(Token::NAND);
+						}
+						else if (Text[i + 1] == '|')    //!|
+						{
+							OutputTokens->push_back(Token::NOR);
+						}
+						else
+						{
+							OutputTokens->push_back(Token::Not);
+						}
+					}
+					else
+					{
+						OutputTokens->push_back(Token::Not);
+					}
+					break;
+				case '(':
+					OutputTokens->push_back(Token::LParen);
+					break;
+				case ')':
+					OutputTokens->push_back(Token::RParen);
+					break;
+				case '"':
+				{
+					Token* NewToken = new Token();
+					NewToken->TokenType = LexerToken::STRING;
+					++i;
+					GetString(Text, NewToken->Value, i);
+					OutputTokens->push_back(NewToken);
+					break;
+				}
+				case ':':
+				{
+					if (OutputTokens->operator[](OutputTokens->size() - 1)->TokenType != LexerToken::IDENT)
+					{
+						CDB_BuildError("Expected namespace name");
+					}
+					CDB_BuildInfo("Get Namespace");
+					OutputTokens->operator[](OutputTokens->size() - 1)->TokenType = LexerToken::NAMESPACE;
+					break;
+				}
 				default:
 					break;
 				}
@@ -88,11 +146,16 @@ namespace GIL
 			{
 			CouldBeReservedKeyword
 				{
-					Token* T = new Token();
-					GetWord(Text, T->Value, i);
+					Token* T;
+					std::string s;
+					GetWord(Text, s, i);
 
 					//Check if word is reserved token
-					GetMapToken(T, ReservedKeywords, LexerToken::IDENT);
+					GetMapToken(T, ReservedKeywords, s, nullptr);
+					if (T == nullptr)
+					{
+						return new Token(LexerToken::IDENT, s);
+					}
 					return T;
 				}
 			default:
@@ -123,12 +186,14 @@ namespace GIL
 
 		Token* GetIfInnerCode(std::string& Text, int& i)
 		{
-			Token* T = new Token();
-			GetWord(Text, T->Value, i);
-			GetMapToken(T, OpRegions, LexerToken::UNKNOWN);
-			if (T->TokenType == LexerToken::UNKNOWN)
+			Token* T;
+			std::string s;
+			GetWord(Text, s, i);
+
+			GetMapToken(T, OpRegions, s, nullptr);
+			if (T == nullptr)
 			{
-				CDB_BuildError("Error {0}", *T);
+				CDB_BuildError("Error unknown token {0}", s);
 				return T;
 			}
 			return T;
@@ -197,6 +262,15 @@ namespace GIL
 
 
 
+		void GetMapToken(Token*& t, std::unordered_map<std::string, Token**>& Dict, std::string& TokenName, Token* Default)
+		{
+			t = Default;
+			if (Dict.contains(TokenName))
+			{
+				t = *Dict[TokenName];
+			}
+		}
+
 		void GetMapToken(Token* t, std::unordered_map<std::string, LexerToken>& Dict, LexerToken Default)
 		{
 			t->TokenType = Default;
@@ -214,6 +288,19 @@ namespace GIL
 			Output.reserve(WordLen);    //Reserve the length of the ident
 			for (WordStart; WordStart < i; ++WordStart)
 				Output += Text[WordStart];
+			--i;
+		}
+
+		void GetString(std::string& Text, std::string& Output, int& i)
+		{
+			int WordLen = 0;
+			int WordStart = i;
+			for (i; i < Text.length() && Text[i] != '"'; ++i)
+				++WordLen;
+			Output.reserve(WordLen);    //Reserve the length of the string
+			for (WordStart; WordStart < i; ++WordStart)
+				Output += Text[WordStart];
 		}
 	}
 }
+

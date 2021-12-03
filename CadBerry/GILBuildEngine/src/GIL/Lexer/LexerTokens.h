@@ -8,6 +8,7 @@ namespace GIL
 		enum class LexerToken
 		{
 			IMPORT,
+			STRING,
 			USING,
 			IDENT,
 			NEWLINE,
@@ -41,7 +42,26 @@ namespace GIL
 			CALLPROMOTER,
 			DEFGENE,
 
-			UNKNOWN
+			UNKNOWN,
+
+			NAMESPACE,
+			CREATENAMESPACE,
+
+			//Bool stuff
+			IF,
+			BOOL,
+			EQUALS,
+			AND,
+			OR,
+			NOT,
+			NAND,
+			NOR,
+
+			BOOL_TRUE,
+			BOOL_FALSE,
+
+			RPAREN,
+			LPAREN,
 		};
 
 		extern std::unordered_map<LexerToken, std::string> LexerToken2Str;

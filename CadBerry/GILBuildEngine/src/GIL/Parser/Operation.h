@@ -16,6 +16,8 @@ namespace GIL
 	class Operation
 	{
 	public:
+		virtual ~Operation() {}
+
 		virtual std::pair<std::vector<Parser::Region>, std::string> Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj) = 0;
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile) = 0;
@@ -23,6 +25,7 @@ namespace GIL
 
 	class StaticOperation : public Operation
 	{
+		virtual ~StaticOperation() override;
 		std::vector<Parser::Region*> Regions;
 		std::string Code;
 
@@ -34,6 +37,7 @@ namespace GIL
 	class DynamicOperation : public Operation
 	{
 	public:
+		virtual ~DynamicOperation() override;
 		std::vector<Lexer::Token*> tokens;
 		int NumInnerCode;
 

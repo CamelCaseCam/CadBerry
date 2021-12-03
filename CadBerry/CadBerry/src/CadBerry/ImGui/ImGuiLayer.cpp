@@ -25,7 +25,7 @@ namespace CDB
 	{
 		//Set up ImGui
 		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
+		Context = ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 		//Enable keyboard, docking, and viewports
@@ -46,6 +46,11 @@ namespace CDB
 
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 410");
+
+		for (Module* m : app.Modules)
+		{
+			m->InitImGui(Context);
+		}
 	}
 
 	void ImGuiLayer::OnDetach()

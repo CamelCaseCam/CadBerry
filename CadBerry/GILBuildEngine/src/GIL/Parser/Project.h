@@ -3,6 +3,7 @@
 
 #include "Operation.h"
 #include "Sequence.h"
+#include "GIL/Modules/GILModule.h"
 
 #include "GIL/Lexer/Token.h"
 
@@ -10,12 +11,26 @@ namespace GIL
 {
 	namespace Parser
 	{
+		class Project;
 		class Project
 		{
 		public:
+			//The parsing step of compilation
 			static Project* Parse(std::vector<Lexer::Token*>& Tokens);
+			~Project();
+
+
 			void Save(std::string Path);
+			void Save(std::ofstream& OutputFile);    //Overload to save a project within another file
 			static Project* Load(std::string Path);
+			static Project* Load(std::ifstream& InputFile, std::string& DataPath);    //Overload to load a project from within a file
+
+			Sequence* GetSeq(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns sequence based on namespaces
+			Operation* GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns operation based on namespaces
+			
+			//This should probably be private
+			Sequence* GetSeqFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
+			Operation* GetOpFromNamespace(std::string& OpName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
 
 			/*
 			This is another place where C++ GIL is better than the C# GIL. In the C# GIL, I implemented sequence and operation forwards (=>) by
@@ -26,6 +41,11 @@ namespace GIL
 			std::map<std::string, Operation*> Operations;
 			std::map<std::string, Sequence*> Sequences;
 			std::vector<Lexer::Token*> Main;
+
+			//TODO: make GIL be able to be statically or dynamically linked
+			std::vector<std::string> Imports;
+			std::vector<std::string> Usings;
+			std::map<std::string, Project*> Namespaces;
 
 			std::string TargetOrganism;
 		};

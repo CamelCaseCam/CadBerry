@@ -130,7 +130,8 @@ project "Berry"
 	includedirs
 	{
 		"CadBerry/vendor/spdlog/include",
-		"CadBerry/src"
+		"CadBerry/src",
+		"%{IncludeDirs.ImGui}",
 	}
 
 	libdirs
@@ -294,6 +295,137 @@ project "GILBuildEngine"
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/Build"),
 			("{COPYFILE} ../bin/" .. OutputDir .. "/GILBuildEngine/GILBuildEngine.pdb ../bin/" .. OutputDir .. "/Berry/Build")
+		}
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		buildoptions "/MDd"
+		symbols "On"
+		defines
+		{
+			"CDB_ENABLE_ASSERTS"
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		buildoptions "/MD"
+		optimize "On"
+
+-- GIL Modules
+project "utils"
+	location "utils"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	pchheader("utilspch.h")
+	pchsource("utils/src/utilspch.cpp")
+
+	--linkoptions { '/DEFAULTLIB:"LIBCMT',  }
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"GILBuildEngine/src",
+		"utils/src",
+		"%{IncludeDirs.ImGui}",
+	}
+
+	links
+	{
+		"CadBerry",
+		"ImGui",
+		"GILBuildEngine",
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "On"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/GILModules"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/Berry/GILModules")
+		}
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		buildoptions "/MDd"
+		symbols "On"
+		defines
+		{
+			"CDB_ENABLE_ASSERTS"
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		buildoptions "/MD"
+		optimize "On"
+
+project "Core"
+	location "Modules/Core"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	--linkoptions { '/DEFAULTLIB:"LIBCMT',  }
+
+	files
+	{
+		"Modules/%{prj.name}/src/**.h",
+		"Modules/%{prj.name}/src/**.hpp",
+		"Modules/%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"Core/src",
+		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.GLFW}",
+	}
+
+	links
+	{
+		"CadBerry",
+		"ImGui",
+		"GLFW",
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "On"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/Core/Core.pdb ../../bin/" .. OutputDir .. "/Berry/Modules")
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"

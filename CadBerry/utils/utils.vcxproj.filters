@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Operations">
+      <UniqueIdentifier>{A91D7DD3-95D5-BE20-FEDC-977CEAB35911}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Operations\PrintWarning.h">
+      <Filter>Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utilspch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\API.cpp" />
+    <ClCompile Include="src\Operations\PrintWarning.cpp">
+      <Filter>Operations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utilspch.cpp" />
+  </ItemGroup>
+</Project>

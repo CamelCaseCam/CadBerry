@@ -106,18 +106,25 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core.h" />
+    <ClInclude Include="src\GIL.h" />
+    <ClInclude Include="src\GIL\Bools\Bool.h" />
+    <ClInclude Include="src\GIL\Bools\BoolContext.h" />
+    <ClInclude Include="src\GIL\Bools\IfStatement.h" />
+    <ClInclude Include="src\GIL\Bools\Test.h" />
     <ClInclude Include="src\GIL\CGIL\CGIL_info.h" />
     <ClInclude Include="src\GIL\Compiler\CodonEncoding.h" />
     <ClInclude Include="src\GIL\Compiler\Compiler.h" />
+    <ClInclude Include="src\GIL\Compiler\CompilerMacros.h" />
     <ClInclude Include="src\GIL\Compiler\GBSequence.h" />
+    <ClInclude Include="src\GIL\Errors.h" />
     <ClInclude Include="src\GIL\Examples.h" />
     <ClInclude Include="src\GIL\Lexer\Lexer.h" />
     <ClInclude Include="src\GIL\Lexer\LexerMacros.h" />
     <ClInclude Include="src\GIL\Lexer\LexerTokens.h" />
     <ClInclude Include="src\GIL\Lexer\Token.h" />
+    <ClInclude Include="src\GIL\Modules\GILModule.h" />
     <ClInclude Include="src\GIL\OutputTypes.h" />
     <ClInclude Include="src\GIL\Parser\Operation.h" />
-    <ClInclude Include="src\GIL\Parser\Parser.h" />
     <ClInclude Include="src\GIL\Parser\Project.h" />
     <ClInclude Include="src\GIL\Parser\Region.h" />
     <ClInclude Include="src\GIL\Parser\Sequence.h" />
@@ -127,9 +134,12 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
+    <ClCompile Include="src\GIL\Bools\Bool.cpp" />
+    <ClCompile Include="src\GIL\Bools\BoolContext.cpp" />
     <ClCompile Include="src\GIL\Compiler\CodonEncoding.cpp" />
     <ClCompile Include="src\GIL\Compiler\Compiler.cpp" />
     <ClCompile Include="src\GIL\Compiler\GBSequence.cpp" />
+    <ClCompile Include="src\GIL\Errors.cpp" />
     <ClCompile Include="src\GIL\Lexer\Lexer.cpp" />
     <ClCompile Include="src\GIL\Lexer\LexerMacros.cpp" />
     <ClCompile Include="src\GIL\Lexer\LexerTokens.cpp" />

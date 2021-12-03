@@ -6,7 +6,7 @@ namespace GIL
 {
 	std::vector<Parser::Region>* StaticSequence::GetRegions(Parser::Project* Proj)
 	{
-		if (!this->IsCompiled)
+		if (!this->IsCompiled)    //Only compile the sequence once, on subsequent calls used the cached result
 		{
 			IsCompiled = true;
 			auto output = GIL::Compiler::Compile(Proj, &this->Tokens);
@@ -18,7 +18,7 @@ namespace GIL
 
 	std::string* StaticSequence::GetCode(Parser::Project* Proj)
 	{
-		if (!this->IsCompiled)
+		if (!this->IsCompiled)    //Only compile the sequence once, on subsequent calls used the cached result
 		{
 			auto output = GIL::Compiler::Compile(Proj, &this->Tokens);
 			this->Regions = output.first;
@@ -28,7 +28,7 @@ namespace GIL
 		return &this->Code;
 	}
 
-	void StaticSequence::Save(std::ofstream& OutputFile)
+	void StaticSequence::Save(std::ofstream& OutputFile)    //Save the number of tokens and the tokens to the file
 	{
 		int NumTokens = this->Tokens.size();
 		OutputFile.write((char*)&NumTokens, sizeof(int));
@@ -55,7 +55,7 @@ namespace GIL
 	{
 		for (GIL::Lexer::Token* t : this->Tokens)
 		{
-			GIL::Lexer::Token::SafeDelete(t);
+			GIL::Lexer::Token::SafeDelete(t);    //Only deletes unique tokens
 		}
 	}
 }

@@ -29,7 +29,33 @@ namespace GIL
 			static Token* Begin;
 			static Token* End;
 
+			static Token* DefineSequence;
+			static Token* DefOp;
 			static Token* InnerCode;
+
+			static Token* Import;
+			static Token* Using;
+
+			static Token* From;
+			static Token* For;
+
+			static Token* CreateNamespace;
+
+			//Bool stuff
+			static Token* IF;
+			static Token* Bool;
+			static Token* Equals;
+			static Token* And;
+			static Token* Or;
+			static Token* Not;
+			static Token* NAND;
+			static Token* NOR;
+
+			static Token* LParen;
+			static Token* RParen;
+
+			static Token* True;
+			static Token* False;
 
 			//I could add a forward (=>) token, but it'll have to be changed anyways into a forwardop or faorwardseq token so I won't
 

@@ -73,10 +73,11 @@ namespace CDB
 			in vec3 OutPos;
 			vec3 C1 = vec3(1.0, 0.0, 0.0);
 			vec3 C2 = vec3(0.0, 1.0, 0.0);
+			vec3 C3 = vec3(0.0, 0.0, 1.0);
 
 			void main()
 			{
-				colour = vec4(C1 * OutPos.x + (1.0 - C2 * OutPos.x), 1.0);
+				colour = vec4(C1 * OutPos.x + (1.0 - C2 * OutPos.x) + C3 * OutPos.y, 1.0);
 			}
 		)";
 

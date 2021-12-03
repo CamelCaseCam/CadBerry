@@ -10,5 +10,5 @@ namespace GIL
 		FASTA,
 	};
 
-	extern std::unordered_map<std::string, OutputType> String2OutputType;
+	extern std::unordered_map<std::string, OutputType> String2OutputType;    //Dictionary so that we can use this in a switch statement
 }

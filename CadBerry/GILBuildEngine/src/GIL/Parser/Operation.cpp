@@ -10,10 +10,22 @@ namespace GIL
 	using namespace Parser;
 	using namespace Compiler;
 
+	StaticOperation::~StaticOperation()
+	{
+		for (Parser::Region* r : Regions)
+			delete r;
+	}
+
 	std::pair<std::vector<Parser::Region>, std::string> StaticOperation::Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj)
 	{
 		//TODO: Implement static operations
 		return { {}, "" };
+	}
+
+	DynamicOperation::~DynamicOperation()
+	{
+		for (Lexer::Token* t : tokens)
+			t->SafeDelete(t);
 	}
 
 	std::pair<std::vector<Parser::Region>, std::string> DynamicOperation::Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj)

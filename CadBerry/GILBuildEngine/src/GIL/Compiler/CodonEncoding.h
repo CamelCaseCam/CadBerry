@@ -11,7 +11,8 @@ namespace GIL
 			CodonEncoding(std::string Organism);
 			
 			std::string* GetFromLetter(char l, int idx = 0);
-			char CodonToLetter(std::string codon);
+			std::pair<char, int> CodonToLetter(std::string codon);
+			static char CodonToLetterOnly(std::string codon);
 
 			~CodonEncoding();
 

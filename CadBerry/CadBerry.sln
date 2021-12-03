@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Berry", "Berry\Berry.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry", "CadBerry\CadBerry.vcxproj", "{918CE669-7D59-4175-A672-2F1D929E7603}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Modules\Core\Core.vcxproj", "{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GILBuildEngine", "GILBuildEngine\GILBuildEngine.vcxproj", "{A719CF0D-93E7-C213-7C7B-333A68E89E78}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "CadBerry\vendor\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
@@ -16,6 +18,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VSCodeIntegration", "Modules\VSCodeIntegration\VSCodeIntegration.vcxproj", "{6D50644B-D966-62E1-22DE-ED028E333369}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WhereAmI", "CadBerry\vendor\WhereAmI\WhereAmI.vcxproj", "{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{169C8510-82B0-ADC1-4B32-5121B705AAF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +35,10 @@ Global
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Debug|x64.Build.0 = Debug|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.ActiveCfg = Release|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.Build.0 = Release|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.ActiveCfg = Debug|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.Build.0 = Debug|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.ActiveCfg = Release|x64
+		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.Build.0 = Release|x64
 		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Debug|x64.ActiveCfg = Debug|x64
 		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Debug|x64.Build.0 = Debug|x64
 		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Release|x64.ActiveCfg = Release|x64
@@ -55,6 +63,10 @@ Global
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Debug|x64.Build.0 = Debug|x64
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.ActiveCfg = Release|x64
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.Build.0 = Release|x64
+		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Debug|x64.ActiveCfg = Debug|x64
+		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Debug|x64.Build.0 = Debug|x64
+		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.ActiveCfg = Release|x64
+		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

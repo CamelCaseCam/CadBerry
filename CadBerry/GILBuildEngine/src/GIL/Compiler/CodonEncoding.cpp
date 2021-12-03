@@ -118,6 +118,7 @@ namespace GIL
                 }
             }
 
+            Lines.push_back(Line);
             while (std::getline(OrganismFile, Line, '\n'))
                 Lines.push_back(Line);
             OrganismFile.close();
@@ -132,6 +133,10 @@ namespace GIL
                     while (std::getline(ss, Codon, ' '))
                     {
                         std::string* CurrentCodon = new std::string(Codon);
+                        for (int i = 0; i < CurrentCodon->length(); ++i)
+                        {
+                            (*CurrentCodon)[i] = std::tolower((*CurrentCodon)[i]);
+                        }
                         Codons->push_back(CurrentCodon);
                     }
                 }
@@ -148,7 +153,26 @@ namespace GIL
             return Code2Codon[l]->operator[](idx);
         }
 
-        char CodonEncoding::CodonToLetter(std::string codon)
+        std::pair<char, int> CodonEncoding::CodonToLetter(std::string codon)
+        {
+            for (int i = 0; i < codon.length(); ++i)    //Convert codon to lower case
+            {
+                codon[i] = std::tolower(codon[i]);
+            }
+            char c = Codon2Letter[codon];
+            std::vector<std::string*>* Codons = Code2Codon[c];
+            
+            for (int i = 0; i < Codons->size(); ++i)
+            {
+                if (*(*Codons)[i] == codon)
+                {
+                    return { c, i };
+                }
+            }
+            return { c, 0 };
+        }
+
+        char CodonEncoding::CodonToLetterOnly(std::string codon)
         {
             return Codon2Letter[codon];
         }
