@@ -7,16 +7,16 @@ namespace GIL
 
 	void SaveString(std::string& Text, std::ofstream& OutputFile)    //Writes length and chars to file
 	{
-		int Len = Text.length();
-		OutputFile.write((char*)&Len, sizeof(int));
-		OutputFile.write((char*)Text.data(), sizeof(char) * Len);
+		int TLen = Text.length();
+		OutputFile.write((char*)&TLen, sizeof(int));
+		OutputFile.write((char*)Text.data(), sizeof(char) * TLen);
 	}
 
 	void LoadStringFromFile(std::string& Text, std::ifstream& InputFile)    //Reads length chars from file
 	{
-		int Len;
-		InputFile.read((char*)&Len, sizeof(int));
-		Text.resize(Len);
-		InputFile.read(Text.data(), sizeof(char) * Len);
+		int TLen = 0;
+		InputFile.read((char*)&TLen, sizeof(int));
+		Text.resize(TLen);
+		InputFile.read(Text.data(), sizeof(char) * TLen);
 	}
 }

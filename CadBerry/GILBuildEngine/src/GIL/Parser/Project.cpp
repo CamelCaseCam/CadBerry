@@ -652,12 +652,12 @@ namespace GIL
 
 		Project* Project::Load(std::string Path)
 		{
-			std::ifstream InputFile(Path);
+			std::ifstream InputFile(Path, std::ios::binary|std::ios::in);
 			return Project::Load(InputFile, Path);
 		}
 		Project* Project::Load(std::ifstream& InputFile, std::string& Path)
 		{
-			int Version;
+			int Version = -1;
 			InputFile.read((char*)&Version, sizeof(int));
 			
 			switch (Version)
@@ -931,7 +931,7 @@ namespace GIL
 				Proj->Main.push_back(Token::Load(InputFile));
 			}
 
-			Len = 0;
+			Len = -1;
 			InputFile.read((char*)&Len, sizeof(int));    //Load the imports
 			Proj->Imports.reserve(Len);
 			for (int i = 0; i < Len; ++i)

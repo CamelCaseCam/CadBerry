@@ -62,7 +62,8 @@ project "CadBerry"
 	libdirs
 	{
 		"%{prj.name}/vendor/SFML/lib",
-		"CadBerry/vendor/nfd/build/lib/Debug/x64"
+		"CadBerry/vendor/nfd/build/lib/Debug/x64",
+		"CadBerry/vendor/nfd/build/lib/Release/x64"
 	}
 
 	links
@@ -111,6 +112,10 @@ project "CadBerry"
 		links
 		{
 			"nfd"
+		}
+		defines
+		{
+			"FMT_HEADER_ONLY"
 		}
 project "Berry"
 	location "Berry"

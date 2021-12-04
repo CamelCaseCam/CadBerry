@@ -231,6 +231,7 @@ namespace GIL
 			int NumChars = 0;
 			for (i; i < Text.length() && Text[i] != '\n'; ++i)
 				++NumChars;
+			T->TokenType = LexerToken::COMMENT;
 			T->Value.reserve(NumChars);
 			for (CommentStart; CommentStart < i; ++CommentStart)
 				T->Value += Text[CommentStart];
@@ -244,9 +245,8 @@ namespace GIL
 			int NumChars = 0;
 			for (i; i < Text.length() && (Text[i] != '*' || Text[i + 1] != '/'); ++i)
 				++NumChars;
-			T->Value.reserve(NumChars);
-			for (CommentStart; CommentStart < i; ++CommentStart)
-				T->Value += Text[CommentStart];
+			T->TokenType = LexerToken::COMMENT;
+			T->Value = Text.substr(CommentStart, NumChars);
 			return T;
 		}
 

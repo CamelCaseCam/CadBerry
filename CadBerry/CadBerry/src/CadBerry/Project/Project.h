@@ -13,7 +13,7 @@ namespace CDB
 	public:
 		std::string Name;
 		std::string Path;
-		std::string PreBuildDir;
+		std::string PreBuildDir = "\\.GILCache\\";
 
 		Project() {}
 

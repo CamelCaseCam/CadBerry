@@ -35,7 +35,10 @@ namespace GIL
 
 			for (std::string& s : Proj->Imports)
 			{
-				ImportFile(s, Proj);
+				if (!Proj->Namespaces.contains(s))
+				{
+					ImportFile(s, Proj);
+				}
 			}
 
 			for (std::string& s : Proj->Usings)
