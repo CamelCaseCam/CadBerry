@@ -4,6 +4,8 @@
 
 namespace GIL
 {
+	std::vector<Parser::Region> CopiedRegions;
+
 	std::vector<Parser::Region>* StaticSequence::GetRegions(Parser::Project* Proj)
 	{
 		if (!this->IsCompiled)    //Only compile the sequence once, on subsequent calls used the cached result
@@ -13,7 +15,14 @@ namespace GIL
 			this->Regions = output.first;
 			this->Code = output.second;
 		}
-		return &this->Regions;
+		
+		CopiedRegions.clear();
+		CopiedRegions.reserve(this->Regions.size());
+		for (Parser::Region r : this->Regions)
+		{
+			CopiedRegions.push_back(r);
+		}
+		return &CopiedRegions;
 	}
 
 	std::string* StaticSequence::GetCode(Parser::Project* Proj)

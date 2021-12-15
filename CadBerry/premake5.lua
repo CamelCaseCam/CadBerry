@@ -15,6 +15,7 @@ IncludeDirs["ImGui"] = "CadBerry/vendor/IMGUI"
 IncludeDirs["glm"] = "CadBerry/vendor/glm"
 IncludeDirs["nfd"] = "CadBerry/vendor/nfd/src/include"
 IncludeDirs["WhereAmI"] = "CadBerry/vendor/WhereAmI/src"
+IncludeDirs["BlockingCollection"] = "CadBerry/vendor/BlockingCollection"
 
 include "CadBerry/vendor/GLFW"
 include "CadBerry/vendor/Glad"
@@ -57,6 +58,7 @@ project "CadBerry"
 		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.nfd}",
 		"%{IncludeDirs.WhereAmI}",
+		"%{IncludeDirs.BlockingCollection}",
 	}
 
 	libdirs
@@ -137,6 +139,7 @@ project "Berry"
 		"CadBerry/vendor/spdlog/include",
 		"CadBerry/src",
 		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.BlockingCollection}",
 	}
 
 	libdirs
@@ -211,6 +214,7 @@ project "VSCodeIntegration"
 		"CadBerry/src",
 		"VSCodeIntegration/src",
 		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.BlockingCollection}",
 	}
 
 	links
@@ -275,6 +279,7 @@ project "GILBuildEngine"
 		"CadBerry/src",
 		"GILBuildEngine/src",
 		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.BlockingCollection}",
 	}
 
 	links
@@ -342,6 +347,7 @@ project "utils"
 		"GILBuildEngine/src",
 		"utils/src",
 		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.BlockingCollection}",
 	}
 
 	links
@@ -406,6 +412,7 @@ project "Core"
 		"Core/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.GLFW}",
+		"%{IncludeDirs.BlockingCollection}",
 	}
 
 	links

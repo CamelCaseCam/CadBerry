@@ -182,6 +182,7 @@ namespace CDB
 		CDB_EditorAssert(!s_Instance, "Application already exists")
 		s_Instance = this;
 		GuiLayer = new ImGuiLayer();
+		m_ThreadPool = ThreadPool::Get();
 
 		//load modules
 		const std::filesystem::directory_iterator end{};
@@ -267,6 +268,7 @@ namespace CDB
 
 	Application::~Application()
 	{
+		m_ThreadPool->CompleteTasksAndDelete();    //Executes all the tasks submitted to the thread pool and exits
 		//GuiLayer will have already been deleted
 	}
 

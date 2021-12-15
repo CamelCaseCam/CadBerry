@@ -15,9 +15,9 @@ std::string GIL::Compiler::GBSequence::WriteToString(std::pair<std::vector<GIL::
 
     for (auto Region : Output.first)
     {
-        ss << "     CDS             " << Region.Start + 1 << ".." << Region.End + 1 << "\n                     /label=\"" << Region.Name << "\"\n";
+        ss << "     CDS             " << Region.Start << ".." << Region.End << "\n                     /label=\"" << Region.Name << "\"\n";
     }
-    ss << "\nORIGIN\n";
+    ss << "ORIGIN\n";
 
     int CurrentBase = 0;
     while (CurrentBase < Output.second.length())
@@ -47,5 +47,6 @@ std::string GIL::Compiler::GBSequence::WriteToString(std::pair<std::vector<GIL::
         }
         ss << "\n";
     }
+    ss << "//\n";
     return ss.str();
 }

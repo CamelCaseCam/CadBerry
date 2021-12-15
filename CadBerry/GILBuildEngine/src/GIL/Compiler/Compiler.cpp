@@ -49,6 +49,7 @@ namespace GIL
 			Region CurrentRegion;
 			std::string Code;
 			CurrentRegion.Name = "Main";
+			CurrentRegion.Start = 1;
 			for (int i = 0; i < (*Tokens).size(); ++i)
 			{
 				Token* t = (*Tokens)[i];
@@ -64,14 +65,14 @@ namespace GIL
 					++i;
 					if ((*Tokens)[i]->TokenType == LexerToken::IDENT)
 					{
-						if (Code.length() != 0 || CurrentRegion.Name != "Main")
+						if (CurrentRegion.Start != Code.length() || CurrentRegion.Name != "Main")
 						{
 							CurrentRegion.End = Code.length();
 							Output.push_back(CurrentRegion);
 						}
 						CurrentRegion = Region();
 						CurrentRegion.Name = (*Tokens)[i]->Value;
-						CurrentRegion.Add(Code.length());
+						CurrentRegion.Start = Code.length();
 						break;
 					}
 					CDB_BuildError("#BeginRegion not followed by ident");
@@ -81,26 +82,44 @@ namespace GIL
 					Output.push_back(CurrentRegion);
 					CurrentRegion = Region();
 					CurrentRegion.Name = "Main";
+					CurrentRegion.Start = Code.length();
 					break;
 				case LexerToken::IDENT:
 				{
-					CurrentRegion.End = Code.length();
-					Output.push_back(CurrentRegion);
+					//Check if main region has anything in it
+					if ((CurrentRegion.Start != Code.length() && Code.length() != 0) || CurrentRegion.Name != "Main")
+					{
+						CurrentRegion.End = Code.length();
+						Output.push_back(CurrentRegion);
+						CurrentRegion = Region();
+						CurrentRegion.Name = "Main";
+					}
 
 					std::vector<Region>* SeqRegions = Proj->GetSeq(Tokens, i, &Modules)->GetRegions(Proj);
 					int Start = Code.length();
 					Code += *Proj->GetSeq(Tokens, i, &Modules)->GetCode(Proj);
 					for (Region r : *SeqRegions)
 					{
+						if (r.Start == 0)
+						{
+							r.Start = 1;
+						}
 						r.Add(Start);
-						Output.push_back(r);
+						Output.push_back(std::move(r));
 					}
+					CurrentRegion.Start = Code.length();
 					break;
 				}
 				case LexerToken::CALLOP:
 				{
-					CurrentRegion.End = Code.length();
-					Output.push_back(CurrentRegion);
+					//Check if main region has anything in it
+					if ((CurrentRegion.Start != Code.length() && Code.length() != 0) || CurrentRegion.Name != "Main")
+					{
+						CurrentRegion.End = Code.length();
+						Output.push_back(CurrentRegion);
+						CurrentRegion = Region();
+						CurrentRegion.Name = "Main";
+					}
 					int OldIdx = i;
 					++i;
 					std::vector<Token*> InsideTokens = GetInsideTokens(*Tokens, i);
@@ -109,16 +128,21 @@ namespace GIL
 					auto Ptr = Proj->GetOp(Tokens, OldIdx, &Modules);
 					auto output = Ptr->Get(InsideTokens, Proj);
 					int Start = Code.length();
+					if (Start == 0)    //Make sure start isn't 0
+						Start = 1;
 					Code += output.second;
+
+					Output.push_back(Region(t->Value, Start, Code.length()));    //Create a region for the operation
 					for (Region r : output.first)
 					{
-						if (r.Name == "Main")
+						if (r.Name == "Main")    //If it's a main region, we don't want to add it
 						{
-							r.Name = t->Value;
+							continue;
 						}
 						r.Add(Start);
 						Output.push_back(r);
 					}
+					CurrentRegion.Start = Code.length();
 					break;
 				}
 				case LexerToken::FROM:
@@ -163,6 +187,14 @@ namespace GIL
 						AminosIDXToDNA(output.second, Aminos, Idxs, Proj, CurrentEncoding);    //Convert amino acids to DNA optimized for target
 					}
 
+					//Check if main region has anything in it
+					if (CurrentRegion.Start != Code.length() || CurrentRegion.Name != "Main")
+					{
+						CurrentRegion.End = Code.length();
+						Output.push_back(CurrentRegion);
+						CurrentRegion = Region();
+						CurrentRegion.Name = "Main";
+					}
 					//Add the regions to the output
 					Output.reserve(Output.size() + output.first.size() + 1);    //Reserve enough space
 
@@ -177,6 +209,7 @@ namespace GIL
 						Output.push_back(r);
 					}
 					Code += output.second;
+					CurrentRegion.Start = Code.length();
 					break;
 				}
 				default:

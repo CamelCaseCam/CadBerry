@@ -34,6 +34,9 @@
     <Filter Include="CadBerry\Tests">
       <UniqueIdentifier>{13D027A5-FF9D-1BAB-E831-8CD1D49EF70F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\Threading">
+      <UniqueIdentifier>{166CA8E9-0250-693F-6BB0-639257B353C1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CadBerry.h" />
@@ -121,6 +124,9 @@
     <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h">
       <Filter>CadBerry\Tests</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Threading\ThreadPool.h">
+      <Filter>CadBerry\Threading</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Window.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
@@ -168,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp">
       <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp">
+      <Filter>CadBerry\Threading</Filter>
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
   </ItemGroup>

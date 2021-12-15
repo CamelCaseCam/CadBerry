@@ -25,3 +25,6 @@
 [submodule "CadBerry/CadBerry/vendor/WhereAmI"]
 	path = CadBerry/CadBerry/vendor/WhereAmI
 	url = https://github.com/gpakosz/whereami.git
+[submodule "CadBerry/CadBerry/vendor/BlockingCollection"]
+	path = CadBerry/CadBerry/vendor/BlockingCollection
+	url = https://github.com/CodeExMachina/BlockingCollection.git

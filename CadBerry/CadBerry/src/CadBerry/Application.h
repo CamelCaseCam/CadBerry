@@ -6,6 +6,7 @@
 #include "CadBerry/LayerStack.h"
 #include "CadBerry/ImGui/ImGuiLayer.h"
 #include "CadBerry/Project/Project.h"
+#include "CadBerry/Threading/ThreadPool.h"
 
 #include "CadBerry/Module/Viewport.h"
 #include "CadBerry/Module/Module.h"
@@ -61,6 +62,7 @@ namespace CDB
 		bool running;
 		ImGuiLayer* GuiLayer;
 		ViewportLayer* Viewports;
+		ThreadPool* m_ThreadPool;
 
 		static Application* s_Instance;
 

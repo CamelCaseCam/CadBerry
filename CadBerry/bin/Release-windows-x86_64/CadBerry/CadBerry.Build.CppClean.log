@@ -1,8 +1,6 @@
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.lib
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.exp
-d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.pch
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\vc142.pdb
-d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cdbpch.obj
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\shader.obj
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\project.obj
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\createproject.obj
@@ -17,6 +15,9 @@ d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\imguilayer.
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\imguibuild.obj
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\builddialog.obj
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\application.obj
+d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.pch
+d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cdbpch.obj
+d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\threadpool.obj
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.dll
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.pdb
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\cadberry.write.1u.tlog
@@ -24,5 +25,6 @@ d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tl
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\cl.read.1.tlog
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\cl.write.1.tlog
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\link.command.1.tlog
+d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\link.delete.1.tlog
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\link.read.1.tlog
 d:\development\cadberry\cadberry\bin\release-windows-x86_64\cadberry\cadberry.tlog\link.write.1.tlog

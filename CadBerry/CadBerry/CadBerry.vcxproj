@@ -60,7 +60,7 @@
       <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\BlockingCollection;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -85,7 +85,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Debug-window
       <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;CDB_RELEASE;FMT_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\BlockingCollection;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -138,6 +138,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h" />
+    <ClInclude Include="src\CadBerry\Threading\ThreadPool.h" />
     <ClInclude Include="src\CadBerry\Window.h" />
     <ClInclude Include="src\cdbpch.h" />
   </ItemGroup>
@@ -156,6 +157,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Project\CreateProject.cpp" />
     <ClCompile Include="src\CadBerry\Project\Project.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
+    <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp" />
     <ClCompile Include="src\cdbpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

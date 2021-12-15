@@ -1,13 +1,15 @@
 #define FMT_HEADER_ONLY
 #include "CadBerry.h"
 #include "CadBerry/Project/Project.h"
+#include "CadBerry/Threading/ThreadPool.h"
 
 #include <filesystem>
 #include <stdlib.h>
 #include <sys/stat.h>
 
 //Function definitions
-void PrecompileFiles(std::string Subdir = "");
+void PrecompileFiles();
+void PrecompileFiles(std::string Subdir);
 bool IsChanged(std::string RelativePath);
 
 
@@ -16,6 +18,8 @@ bool IsChanged(std::string RelativePath);
 const float PrecompilationInterval = 10.0f;
 std::string FullPrebuildPath;
 CDB::Application* CDBApp;
+
+void (*PC)() = PrecompileFiles;
 
 
 class __declspec(dllexport) VSCodeWindow : public CDB::Viewport
@@ -53,10 +57,15 @@ public:
 		{
 			CurrentTime = 0;
 			CDB_EditorInfo("Precompiling files");
-			PrecompileFiles();
+			CDB::ThreadPool::Get()->AddStandardTask(PC);
 		}
 	}
 };
+
+void PrecompileFiles()
+{
+	PrecompileFiles("");
+}
 
 void PrecompileFiles(std::string Subdir)
 {
