@@ -79,7 +79,6 @@ public:
 		}
 
 		auto Output = GIL::Compiler::Compile(Project);	//Compile code into intermediate output
-		CDB_BuildInfo(Output.second);
 		CheckFatal;
 
 		switch (GIL::String2OutputType[OutputType])

@@ -95,7 +95,15 @@ namespace GIL
 						CurrentRegion.Name = "Main";
 					}
 
-					std::vector<Region>* SeqRegions = Proj->GetSeq(Tokens, i, &Modules)->GetRegions(Proj);
+					GIL::Sequence* Seq = Proj->GetSeq(Tokens, i, &Modules);
+					if (Seq == nullptr)    //Make sure sequence exists
+					{
+						CDB_BuildError("Sequence \"{0}\" does not exist", t->Value);
+						break;
+					}
+
+					//Sequence exists
+					std::vector<Region>* SeqRegions = Seq->GetRegions(Proj);
 					int Start = Code.length();
 					Code += *Proj->GetSeq(Tokens, i, &Modules)->GetCode(Proj);
 					for (Region r : *SeqRegions)
@@ -124,8 +132,14 @@ namespace GIL
 					++i;
 					std::vector<Token*> InsideTokens = GetInsideTokens(*Tokens, i);
 
-					//TODO: Test if this is safe, I think the parser checks if the ops exist, but it might not
 					auto Ptr = Proj->GetOp(Tokens, OldIdx, &Modules);
+					if (Ptr == nullptr)    //Make sure the operation exists
+					{
+						CDB_BuildError("Operation \"{0}\" does not exist", t->Value);
+						break;
+					}
+
+					//Operation exists
 					auto output = Ptr->Get(InsideTokens, Proj);
 					int Start = Code.length();
 					if (Start == 0)    //Make sure start isn't 0
