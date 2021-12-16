@@ -341,7 +341,7 @@ namespace GIL
 				f_GetModule GetModule = (f_GetModule)GetProcAddress(DLLID, "GetModule");
 				if (!GetModule)
 				{
-					CDB_EditorError("Could not locate GetModule function in dll \"{0}\"", Path);
+					CDB_BuildError("Could not locate GetModule function in dll \"{0}\"", Path);
 					FreeLibrary(DLLID);
 					return;
 				}

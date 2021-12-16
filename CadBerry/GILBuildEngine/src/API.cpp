@@ -13,6 +13,7 @@
 #include "GIL/Errors.h"
 
 #include "GIL/Bools/BoolContext.h"
+#include "GIL/Utils/Utils.h"
 
 #include "Core.h"
 #include "spdlog/spdlog.h"

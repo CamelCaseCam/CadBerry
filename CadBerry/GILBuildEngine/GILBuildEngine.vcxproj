@@ -129,6 +129,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Parser\Region.h" />
     <ClInclude Include="src\GIL\Parser\Sequence.h" />
     <ClInclude Include="src\GIL\SaveFunctions.h" />
+    <ClInclude Include="src\GIL\Utils\Utils.h" />
     <ClInclude Include="src\Todos.h" />
     <ClInclude Include="src\gilpch.h" />
   </ItemGroup>
@@ -153,6 +154,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClCompile Include="src\gilpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\GIL\Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CadBerry\CadBerry.vcxproj">

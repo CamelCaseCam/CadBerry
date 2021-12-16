@@ -35,7 +35,7 @@ namespace utils
 //Expose the module to GIL
 extern "C"
 {
-	__declspec(dllexport) GIL::GILModule* __stdcall GetBuildEngine()
+	__declspec(dllexport) GIL::GILModule* __stdcall GetModule()
 	{
 		DataPath = CDB::Application::Get().PathToEXE + "\\GILModules\\";
 		return new utils::utilsModule();
