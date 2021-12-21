@@ -12,6 +12,8 @@
 #include "CadBerry/Events/KeyEvent.h"
 #include "CadBerry/Events/MouseEvent.h"
 
+#include "CadBerry/Rendering/RenderCommand.h"
+
 namespace CDB
 {
 	static bool s_GLFWInitialized = false;
@@ -158,6 +160,8 @@ namespace CDB
 	{
 		glfwPollEvents();
 		m_GraphicsContext->SwapBuffers();
+		RenderCommand::SetClearColour({ 0.1, 0.1, 0.1, 1.0 });
+		RenderCommand::Clear();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)

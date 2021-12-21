@@ -15,6 +15,7 @@ namespace CDB
 		virtual void OnUpdate() {}
 		virtual void OnEvent(Event& e) {}
 		virtual void OnImGuiRender() {}
+		virtual void Draw() {}
 
 		inline const std::string& GetName() const { return m_Name; }
 	private:

@@ -11,3 +11,5 @@
 #include "CadBerry/Module/Viewport.h"
 #include "CadBerry/Project/Project.h"
 #include "CadBerry/BuildEngine/BuildEngine.h"
+#include "CadBerry/Rendering/Renderer.h"
+#include "CadBerry/Rendering/RenderCommand.h"

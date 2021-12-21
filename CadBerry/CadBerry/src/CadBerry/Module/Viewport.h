@@ -2,6 +2,7 @@
 #include <cdbpch.h>
 #include "CadBerry/Core.h"
 #include "CadBerry/Layer.h"
+#include "CadBerry/Utils/memory.h"
 
 namespace CDB
 {
@@ -14,6 +15,7 @@ namespace CDB
 
 		virtual void Start() {}
 		virtual void Draw() {}
+		virtual void GUIDraw() {}
 		virtual void Update(float dt) {}
 		virtual void OnClose() {}
 
@@ -27,6 +29,7 @@ namespace CDB
 	{
 	public:
 		virtual void OnImGuiRender() override;
+		virtual void Draw() override;
 		~ViewportLayer();
 
 		void AddViewport(Viewport* viewport);

@@ -14,6 +14,10 @@
 #include "CadBerry/BuildEngine/BuildEngine.h"
 
 #include "CadBerry/Rendering/Shader.h"
+#include "CadBerry/Rendering/Buffer.h"
+#include "CadBerry/Rendering/VertexArray.h"
+
+#include "CadBerry/Utils/memory.h"
 
 namespace CDB
 {
@@ -55,6 +59,8 @@ namespace CDB
 		bool ShouldExit = false;
 		bool NewProj = false;    //Should we check if the user already has a project?
 		bool ShowBuildWindow = false;
+
+		scoped_ptr<VertexArray> VertexArray;
 	private:
 		void Main();
 		void CheckExit();
@@ -68,7 +74,9 @@ namespace CDB
 
 		Window* EditorWindow;
 
-		unsigned int VertexArray, VertexBuffer, IndexBuffer;
+		//Both of these are owned by VertexArray, but a copy is "borrowed" by Application.h
+		IndexBuffer* IndexBuffer;
+		VertexBuffer* VertexBuffer;
 
 		Shader* shader;
 	};

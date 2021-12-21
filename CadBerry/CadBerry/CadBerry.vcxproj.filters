@@ -37,6 +37,9 @@
     <Filter Include="CadBerry\Threading">
       <UniqueIdentifier>{166CA8E9-0250-693F-6BB0-639257B353C1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\Utils">
+      <UniqueIdentifier>{B1F641A5-9DC4-35AB-8658-A6D172C51110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CadBerry.h" />
@@ -97,7 +100,19 @@
     <ClInclude Include="src\CadBerry\MouseCode.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.h">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLContext.h">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLShader.h">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Platform\Windows\WindowsInput.h">
@@ -112,10 +127,25 @@
     <ClInclude Include="src\CadBerry\Project\Project.h">
       <Filter>CadBerry\Project</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Buffer.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h">
       <Filter>CadBerry\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Renderer.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\RendererAPI.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\Shader.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\VertexArray.h">
       <Filter>CadBerry\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h">
@@ -127,10 +157,15 @@
     <ClInclude Include="src\CadBerry\Threading\ThreadPool.h">
       <Filter>CadBerry\Threading</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Utils\memory.h">
+      <Filter>CadBerry\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Window.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
     <ClInclude Include="src\cdbpch.h" />
+    <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h" />
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -157,7 +192,19 @@
     <ClCompile Include="src\CadBerry\Module\Viewport.cpp">
       <Filter>CadBerry\Module</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.cpp">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Platform\Windows\WindowsInput.cpp">
@@ -172,12 +219,32 @@
     <ClCompile Include="src\CadBerry\Project\Project.cpp">
       <Filter>CadBerry\Project</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\Buffer.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\RenderCommand.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\Renderer.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\RendererAPI.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp">
       <Filter>CadBerry\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp">
       <Filter>CadBerry\Threading</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Utils\memory.cpp">
+      <Filter>CadBerry\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp" />
   </ItemGroup>
 </Project>

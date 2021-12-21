@@ -60,6 +60,7 @@ namespace Core
 	
 	void Reverse(std::string& Input, std::string& Output)
 	{
+		Output = "";
 		Output.reserve(Input.length());
 		for (int i = Input.length() - 1; i >= 0; --i)
 		{

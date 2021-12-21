@@ -1,4 +1,6 @@
 #define FMT_HEADER_ONLY
+
+#include "CadBerry/Utils/memory.h"
 #include "CadBerry.h"
 #include "CadBerry/Project/Project.h"
 
@@ -28,8 +30,23 @@ public:
 	std::string DNA;
 	std::string Output;
 
-	virtual void Draw() override
+	virtual void GUIDraw() override
 	{
+		CDB::Renderer::BeginScene(Target.raw());
+
+		CDB::RenderCommand::SetClearColour({ 1.0, 0.0, 0.0, 1.0 });
+		CDB::RenderCommand::Clear();
+
+		CDB::Renderer::Submit(vertexArray.raw());
+
+		CDB::Renderer::EndScene();
+
+		if (ImgSize.x == 0 && ImgSize.y == 0)
+		{
+			ImgSize = ImGui::GetWindowSize();
+		}
+
+		Target->Draw(ImgSize, ImVec2(1, 1));
 		ImGui::ListBox("DNA transformation", &DNAOperation, DNAOperations.data(), DNAOperations.size());
 		ImGui::InputText("DNA", &DNA);
 		if (ImGui::Button("Transform"))
@@ -56,7 +73,37 @@ public:
 		}
 	}
 
-	virtual void Start() override {}
+	CDB::scoped_ptr<CDB::VertexArray> vertexArray;
+	CDB::scoped_ptr<CDB::RenderTarget> Target;
+	ImVec2 ImgSize = ImVec2(0, 0);
+	virtual void Start() override 
+	{
+		Target = CDB::RenderTarget::Create();
+		vertexArray = CDB::VertexArray::Create();
+
+		float vertices[3 * 7] = {
+			0.1f, 0.6f, 0.1f,     0.5f, 0.2f, 0.8f, 1.0f,
+			-0.4f, -0.4f, 0.1f,   0.2f, 0.2f, 0.8f,	1.0f,
+			0.6f, -0.4f, 0.1f,    0.8f, 0.8f, 0.4f,	1.0f,
+		};
+
+		CDB::VertexBuffer* buffer = CDB::VertexBuffer::Create(sizeof(vertices), vertices);
+
+		{
+			CDB::BufferLayout layout = {
+				{CDB::ShaderDataType::Float3, "pos"},
+				{CDB::ShaderDataType::Float4, "colour"},
+			};
+
+			buffer->SetLayout(layout);
+		}
+
+		uint32_t indices[3] = { 0, 1, 2 };
+		CDB::IndexBuffer* indexBuffer = CDB::IndexBuffer::Create(3, indices);
+
+		vertexArray->AddVertexBuffer(buffer);
+		vertexArray->SetIndexBuffer(indexBuffer);
+	}
 	virtual void OnClose() override {}
 };
 

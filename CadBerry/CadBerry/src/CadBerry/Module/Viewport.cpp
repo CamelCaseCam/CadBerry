@@ -5,6 +5,8 @@
 #include "CadBerry/Application.h"
 #include "CadBerry/BuildEngine/BuildDialog.h"
 
+#include <GLFW/glfw3.h>
+
 #include "imgui.h"
 
 namespace CDB
@@ -12,7 +14,7 @@ namespace CDB
 	void ViewportLayer::OnImGuiRender()
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+		ImGuiWindowFlags flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoBackground;
 
 		const ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -24,7 +26,7 @@ namespace CDB
 		ImGui::Begin("CadBerry Editor window", NULL, flags);
 
 		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
 		if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("Project"))
@@ -82,7 +84,7 @@ namespace CDB
 			if (viewport->Background) continue;
 
 			ImGui::Begin(viewport->Name.c_str(), &viewport->IsOpen);
-			viewport->Draw();
+			viewport->GUIDraw();
 			ImGui::End();
 			if (!viewport->IsOpen)    //If the user has closed the viewport, mark that viewport to be deleted. 
 			{
@@ -94,6 +96,14 @@ namespace CDB
 		{
 			OpenViewports.erase(std::remove(OpenViewports.begin(), OpenViewports.end(), ToBeDeleted), OpenViewports.end());
 			delete ToBeDeleted;
+		}
+	}
+
+	void ViewportLayer::Draw()
+	{
+		for (Viewport* viewport : OpenViewports)
+		{
+			viewport->Draw();
 		}
 	}
 

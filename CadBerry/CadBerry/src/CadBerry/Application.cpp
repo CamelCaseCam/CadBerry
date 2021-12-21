@@ -10,6 +10,8 @@
 #include "CadBerry/BuildEngine/BuildEngine.h"
 #include "CadBerry/Tests/SimpleViewport.h"
 #include "CadBerry/BuildEngine/BuildDialog.h"
+#include "CadBerry/Rendering/Renderer.h"
+#include "CadBerry/Rendering/RenderCommand.h"
 
 #include "whereami.h"
 
@@ -28,41 +30,46 @@ namespace CDB
 		GuiLayer = new ImGuiLayer();    //CheckEnd will delete EditorWindow which will delete GuiLayer, so we're initializing a new one
 		Viewports = new ViewportLayer();
 
-		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
 		EditorWindow->m_LayerStack.PushLayer(Viewports);
-		glGenVertexArrays(1, &VertexArray);
-		glBindVertexArray(VertexArray);
+		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
+		VertexArray = VertexArray::Create();
 
-		glGenBuffers(1, &VertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
-
-		float vertices[3 * 3] = {
-			0.0f, 0.5f, 0.0f,
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f
+		float vertices[3 * 7] = {
+			0.0f, 0.5f, 0.0f,     1.0f, 0.0f, 1.0f, 1.0f,
+			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,	1.0f,
+			0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 0.0f,	1.0f,
 		};
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		VertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+		{
+			BufferLayout layout = {
+				{ShaderDataType::Float3, "pos"},
+				{ShaderDataType::Float4, "colour"},
+			};
 
-		glGenBuffers(1, &IndexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBuffer);
+			VertexBuffer->SetLayout(layout);
+		}
 		
-		unsigned int indices[3] = { 0, 1, 2 };
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		uint32_t indices[3] = { 0, 1, 2 };
+		IndexBuffer = IndexBuffer::Create(3, indices);
+
+		VertexArray->AddVertexBuffer(VertexBuffer);
+		VertexArray->SetIndexBuffer(IndexBuffer);
 
 		std::string VertSrc = R"(
 			#version 330 core
 
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Colour;
 			out vec3 OutPos;
+			out vec4 v_Colour;
 
 			void main()
 			{
 				OutPos = a_Position;
 				gl_Position = vec4(a_Position, 1.0);
+				v_Colour = a_Colour;
 			}
 		)";
 
@@ -71,32 +78,47 @@ namespace CDB
 
 			layout(location = 0) out vec4 colour;
 			in vec3 OutPos;
+			in vec4 v_Colour;
 			vec3 C1 = vec3(1.0, 0.0, 0.0);
 			vec3 C2 = vec3(0.0, 1.0, 0.0);
 			vec3 C3 = vec3(0.0, 0.0, 1.0);
 
 			void main()
 			{
-				colour = vec4(C1 * OutPos.x + (1.0 - C2 * OutPos.x) + C3 * OutPos.y, 1.0);
+				colour = v_Colour;
 			}
 		)";
 
-		shader = new Shader(VertSrc, FragSrc);
+		shader = Shader::Create(VertSrc, FragSrc);
 
 		running = true;
 
 		EditorWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		while (running)
-		{
-			shader->Bind();
-			glBindVertexArray(VertexArray);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-
+		{	
 			EditorWindow->OnUpdate();
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnUpdate();
 
+			//_______________________________________________________________________________________________________________
+			// **IMPORTANT**
+			// A new frame isn't generated at the beginning of this loop. The new frame is created by GuiLayer->Begin. Anything before this
+			// will be drawn on top of the old frame
+			//_______________________________________________________________________________________________________________
+
 			GuiLayer->Begin();
+
+			Renderer::BeginScene();
+
+			shader->Bind();
+			Renderer::Submit(VertexArray.raw());
+
+			Renderer::EndScene();
+
+
+			for (Layer* layer : EditorWindow->m_LayerStack)
+				layer->Draw();
+
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnImGuiRender();
 

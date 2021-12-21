@@ -139,6 +139,7 @@ project "Berry"
 		"CadBerry/vendor/spdlog/include",
 		"CadBerry/src",
 		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.BlockingCollection}",
 	}
 
@@ -412,6 +413,7 @@ project "Core"
 		"Core/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.GLFW}",
+		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.BlockingCollection}",
 	}
 
