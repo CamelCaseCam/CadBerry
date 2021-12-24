@@ -4,7 +4,6 @@
 #include "RendererAPI.h"
 #include "Buffer.h"
 #include "VertexArray.h"
-#include "RendererAPI.h"
 #include "RenderTarget.h"
 
 namespace CDB

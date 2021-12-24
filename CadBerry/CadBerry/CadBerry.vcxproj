@@ -131,8 +131,8 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\MouseCode.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.h" />
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\CadBerry\Platform\Windows\WindowsInput.h" />
@@ -142,9 +142,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Rendering\Buffer.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
     <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h" />
+    <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h" />
     <ClInclude Include="src\CadBerry\Rendering\Renderer.h" />
     <ClInclude Include="src\CadBerry\Rendering\RendererAPI.h" />
-    <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h" />
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
@@ -165,8 +165,8 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Module\Viewport.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\CadBerry\Platform\Windows\WindowsInput.cpp" />
@@ -175,9 +175,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Project\Project.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Buffer.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RenderCommand.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Renderer.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RendererAPI.cpp" />
-    <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp" />

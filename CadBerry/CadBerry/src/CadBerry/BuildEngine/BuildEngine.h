@@ -6,6 +6,7 @@ namespace CDB
 	class CDBAPI BuildEngine
 	{
 	public:
+		virtual ~BuildEngine() {}
 		inline std::vector<std::string>* GetBuildableTypes() { return &BuildableTypes; }
 		inline std::vector<std::string>* GetOutputTypes() { return &OutputTypes; }
 
@@ -16,7 +17,6 @@ namespace CDB
 	protected:
 		BuildEngine(std::vector<std::string> buildableTypes, std::vector<std::string> outputTypes) : BuildableTypes(buildableTypes), 
 			OutputTypes(outputTypes) {}
-		virtual ~BuildEngine() {}
 		std::vector<std::string> BuildableTypes;
 		std::vector<std::string> OutputTypes;
 	};

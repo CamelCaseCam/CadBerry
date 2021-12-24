@@ -41,10 +41,10 @@ namespace CDB
 		inline Window& GetWindow() { return *EditorWindow; }
 		inline void AddViewport(Viewport* viewport) { Viewports->AddViewport(viewport); }
 
-		Project* OpenProject = nullptr;
+		scoped_ptr<Project> OpenProject = nullptr;
 
 		//The BuildEngine
-		BuildEngine* m_BuildEngine;
+		scoped_ptr<BuildEngine> m_BuildEngine;
 
 		//Module stuff
 		std::vector<Module*> Modules;

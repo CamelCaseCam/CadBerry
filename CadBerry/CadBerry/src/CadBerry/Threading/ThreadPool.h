@@ -37,11 +37,6 @@ namespace CDB
 		code_machina::BlockingCollection<std::function<void()>> PriorityTasks;
 		code_machina::BlockingCollection<std::function<void()>> BackgroundTasks;
 
-		/*
-		BackgroundTasks is a list of functions that threads can do while they're sitting idle. This isn't thread-safe, but that doesn't really
-		matter. It's fine if two threads are running the same function at the same time, since that's what they're for. One thread will always 
-		be kept free. 
-		*/
 		std::vector<std::thread> WorkerThreads;
 	};
 }

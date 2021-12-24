@@ -106,6 +106,9 @@
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLContext.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.h">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClInclude>
@@ -136,6 +139,9 @@
     <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h">
       <Filter>CadBerry\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\Renderer.h">
       <Filter>CadBerry\Rendering</Filter>
     </ClInclude>
@@ -164,8 +170,6 @@
       <Filter>CadBerry</Filter>
     </ClInclude>
     <ClInclude Include="src\cdbpch.h" />
-    <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h" />
-    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -198,6 +202,9 @@
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClCompile>
@@ -225,6 +232,9 @@
     <ClCompile Include="src\CadBerry\Rendering\RenderCommand.cpp">
       <Filter>CadBerry\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\Renderer.cpp">
       <Filter>CadBerry\Rendering</Filter>
     </ClCompile>
@@ -244,7 +254,5 @@
       <Filter>CadBerry\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
-    <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp" />
-    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp" />
   </ItemGroup>
 </Project>

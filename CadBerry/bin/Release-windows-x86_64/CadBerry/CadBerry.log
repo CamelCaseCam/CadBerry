@@ -1,6 +1,4 @@
 ﻿cl : command line warning D9025: overriding '/MT' with '/MD'
-  cdbpch.cpp
-cl : command line warning D9025: overriding '/MT' with '/MD'
   Application.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -55,9 +53,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -120,9 +122,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -132,11 +138,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(63,27): warning C4251: 'CDB::Application::VertexArray': class 'CDB::scoped_ptr<CDB::VertexArray>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(63): message : see declaration of 'CDB::scoped_ptr<CDB::VertexArray>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildDialog.cpp(34,99): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  ImGuiBuild.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\IMGUI\backends\imgui_impl_opengl3.cpp(249,5): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\IMGUI\backends\imgui_impl_opengl3.cpp(250,5): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\IMGUI\backends\imgui_impl_opengl3.cpp(221,9): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\IMGUI\backends\imgui_impl_opengl3.cpp(608,5): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   ImGuiLayer.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -191,9 +192,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -206,23 +211,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\ImGui\ImGuiLayer.cpp(5,1)
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\IMGUI\imgui.h(79): message : see previous definition of 'IMGUI_IMPL_API'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\ImGui\ImGuiLayer.cpp(75,80): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\ImGui\ImGuiLayer.cpp(75,51): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-  Layer.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-  LayerStack.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(23,23): warning C4251: 'CDB::LayerStack::Layers': class 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>' needs to have dll-interface to be used by clients of class 'CDB::LayerStack'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(20): message : see declaration of 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-  Log.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
   Viewport.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -277,9 +265,13 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(36
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(45,28): warning C4251: 'CDB::ThreadPool::WorkerThreads': class 'std::vector<std::thread,std::allocator<std::thread>>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(45): message : see declaration of 'std::vector<std::thread,std::allocator<std::thread>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -289,16 +281,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(63,27): warning C4251: 'CDB::Application::VertexArray': class 'CDB::scoped_ptr<CDB::VertexArray>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(63): message : see declaration of 'CDB::scoped_ptr<CDB::VertexArray>'
   OpenGLBuffer.cpp
-  OpenGLContext.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(23,23): warning C4251: 'CDB::LayerStack::Layers': class 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>' needs to have dll-interface to be used by clients of class 'CDB::LayerStack'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(20): message : see declaration of 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-  OpenGLRendererAPI.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
@@ -359,9 +341,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -376,7 +362,7 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Platform\OpenGL\OpenGLRen
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp(40,30): warning C4244: 'argument': conversion from 'float' to 'GLsizei', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp(51,38): warning C4312: 'type cast': conversion from 'GLuint' to 'ImTextureID' of greater size
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp(56,66): warning C4312: 'type cast': conversion from 'GLuint' to 'ImTextureID' of greater size
-  OpenGLShader.cpp
+  OpenGLRendererAPI.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
@@ -441,9 +427,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -506,9 +496,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -571,9 +565,13 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(20,28): warning C4251: 'CDB::BuildEngine::BuildableTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(21,28): warning C4251: 'CDB::BuildEngine::OutputTypes': class 'std::vector<std::string,std::allocator<std::string>>' needs to have dll-interface to be used by clients of class 'CDB::BuildEngine'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(9): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\BuildEngine\BuildEngine.h(10): message : see declaration of 'std::vector<std::string,std::allocator<std::string>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44,23): warning C4251: 'CDB::Application::OpenProject': class 'CDB::scoped_ptr<CDB::Project>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(44): message : see declaration of 'CDB::scoped_ptr<CDB::Project>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47,27): warning C4251: 'CDB::Application::m_BuildEngine': class 'CDB::scoped_ptr<CDB::BuildEngine>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(47): message : see declaration of 'CDB::scoped_ptr<CDB::BuildEngine>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50,24): warning C4251: 'CDB::Application::Modules': class 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(50): message : see declaration of 'std::vector<CDB::Module *,std::allocator<CDB::Module *>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): warning C4251: 'CDB::Application::PathToEXE': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
@@ -582,19 +580,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(54,15): war
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(63,27): warning C4251: 'CDB::Application::VertexArray': class 'CDB::scoped_ptr<CDB::VertexArray>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(63): message : see declaration of 'CDB::scoped_ptr<CDB::VertexArray>'
-  Project.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(14,15): warning C4251: 'CDB::Project::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(15,15): warning C4251: 'CDB::Project::Path': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(16,15): warning C4251: 'CDB::Project::PreBuildDir': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.cpp(22,31): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.cpp(27,38): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   Buffer.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
@@ -605,9 +590,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C42
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-  Generating Code...
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Buffer.h(65): warning C4715: 'CDB::BufferElement::GetElementCount': not all control paths return a value
-  Compiling...
   Renderer.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
@@ -618,9 +600,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C42
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-  RenderTarget.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.h(23,10): warning C4251: 'CDB::OpenGLRenderTarget::WindowSize': struct 'ImVec2' needs to have dll-interface to be used by clients of class 'CDB::OpenGLRenderTarget'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\IMGUI\imgui.h(252): message : see declaration of 'ImVec2'
   Shader.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
@@ -676,6 +655,7 @@ D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\r
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
   Generating Code...
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Buffer.h(66): warning C4715: 'CDB::BufferElement::GetElementCount': not all control paths return a value
      Creating library ..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib and object ..\bin\Release-windows-x86_64\CadBerry\CadBerry.exp
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   CadBerry.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry\CadBerry.dll

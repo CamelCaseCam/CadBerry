@@ -89,6 +89,7 @@ namespace CDB
 			if (!viewport->IsOpen)    //If the user has closed the viewport, mark that viewport to be deleted. 
 			{
 				ToBeDeleted = viewport;    //Since this is called every frame, it's impossible for the user to close more than one viewport. 
+				viewport->OnClose();
 			}
 		}
 
@@ -110,7 +111,10 @@ namespace CDB
 	ViewportLayer::~ViewportLayer()
 	{
 		for (Viewport* vp : OpenViewports)
+		{
+			vp->OnClose();
 			delete vp;
+		}
 	}
 
 	void ViewportLayer::AddViewport(Viewport* viewport)

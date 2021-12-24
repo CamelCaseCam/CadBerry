@@ -338,8 +338,6 @@ namespace CDB
 	{
 		if (ShouldExit)
 		{
-			for (Layer* layer : EditorWindow->m_LayerStack)
-				layer->OnDetach();
 			delete EditorWindow;
 			running = false;
 			ShouldExit = false;

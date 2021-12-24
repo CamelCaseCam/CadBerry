@@ -7,6 +7,7 @@ scoped_ptr is my own version of unique_ptr, with a couple of modifications.
 Modification 1: You can use operator= to set the pointer. If the original pointer isn't nullptr, it will be deleted. 
 Modification 2: You can use scoped_ptr.raw() to "borrow" the raw pointer (you shouldn't delete it)
 Modification 3: You can use scoped_ptr.forget() to remove the object's ownership of the pointer. This can cause memory leaks. 
+Modification 4: You can use == to test if the pointer equals another pointer
 */
 
 namespace CDB
@@ -54,6 +55,11 @@ namespace CDB
 
 			this->ptr = other.ptr;
 			other.ptr = nullptr;
+		}
+
+		bool operator==(T* other)
+		{
+			return this->ptr == other;
 		}
 
 

@@ -46,6 +46,7 @@ namespace CDB
 		{
 			thread.join();
 		}
+		Pool = nullptr;
 	}
 
 	void ThreadPool::CompleteTasksAndDelete()

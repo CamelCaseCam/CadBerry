@@ -281,6 +281,7 @@ project "GILBuildEngine"
 		"GILBuildEngine/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.glm}",
 	}
 
 	links

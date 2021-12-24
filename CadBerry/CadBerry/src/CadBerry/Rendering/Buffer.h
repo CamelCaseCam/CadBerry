@@ -1,5 +1,6 @@
 #pragma once
 #include "CadBerry/Core.h"
+#include "CadBerry/Log.h"
 #include <cdbpch.h>
 
 namespace CDB
