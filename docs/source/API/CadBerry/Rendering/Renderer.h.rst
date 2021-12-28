@@ -1,0 +1,37 @@
+CadBerry/Rendering/Renderer.h
+#############################
+
+Imports
+=======
+* :doc:`/API/CadBerry/Core.h`
+* :doc:`RendererAPI.h`
+* :doc:`Buffer.h`
+* :doc:`VertexArray.h`
+* :doc:`RenderTarget.h`
+
+Renderer class
+==============
+Functions
+---------
+static void BeginScene(RenderTarget* Target = nullptr)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sets up the scene. If Target isn't given, commands will affect whatever target was already bound. Otherwise, it will bind Target. If you bind a 
+RenderTarget and forget to unbind it, commands will continue to affect that target until you bind another target. 
+
+static void EndScene()
+^^^^^^^^^^^^^^^^^^^^^^
+Ends the scene and rebinds the default RenderTarget. You MUST call EndScene if you called BeginScene, otherwise your RenderTarget will stay bound. 
+
+static void Submit(const VertexArray* vertexArray)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Renders the vertex array. In the future, I might change this to use batched rendering. For the time being, it isn't high on my priority list. 
+
+static RendererAPI::API GetAPI()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Returns the API being used
+
+Fields
+------
+static RenderTarget* CurrentTarget
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The target that was bound at the start of the frame, if one was bound. Otherwise, it will be nullptr. 

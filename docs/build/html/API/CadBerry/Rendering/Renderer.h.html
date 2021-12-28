@@ -1,0 +1,163 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Rendering/Renderer.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Rendering/RendererAPI.h" href="RendererAPI.h.html" />
+    <link rel="prev" title="CadBerry/Rendering/RenderCommand.h" href="RenderCommand.h.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-rendering-renderer-h">
+<h1>CadBerry/Rendering/Renderer.h<a class="headerlink" href="#cadberry-rendering-renderer-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p><a class="reference internal" href="RendererAPI.h.html"><span class="doc">CadBerry/Rendering/RendererAPI.h</span></a></p></li>
+<li><p><span class="xref std std-doc">Buffer.h</span></p></li>
+<li><p><a class="reference internal" href="VertexArray.h.html"><span class="doc">CadBerry/Rendering/VertexArray.h</span></a></p></li>
+<li><p><a class="reference internal" href="RenderTarget.h.html"><span class="doc">CadBerry/Rendering/RenderTarget.h</span></a></p></li>
+</ul>
+</section>
+<section id="renderer-class">
+<h2>Renderer class<a class="headerlink" href="#renderer-class" title="Permalink to this headline">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="static-void-beginscene-rendertarget-target-nullptr">
+<h4>static void BeginScene(RenderTarget* Target = nullptr)<a class="headerlink" href="#static-void-beginscene-rendertarget-target-nullptr" title="Permalink to this headline">¶</a></h4>
+<p>Sets up the scene. If Target isn’t given, commands will affect whatever target was already bound. Otherwise, it will bind Target. If you bind a
+RenderTarget and forget to unbind it, commands will continue to affect that target until you bind another target.</p>
+</section>
+<section id="static-void-endscene">
+<h4>static void EndScene()<a class="headerlink" href="#static-void-endscene" title="Permalink to this headline">¶</a></h4>
+<p>Ends the scene and rebinds the default RenderTarget. You MUST call EndScene if you called BeginScene, otherwise your RenderTarget will stay bound.</p>
+</section>
+<section id="static-void-submit-const-vertexarray-vertexarray">
+<h4>static void Submit(const VertexArray* vertexArray)<a class="headerlink" href="#static-void-submit-const-vertexarray-vertexarray" title="Permalink to this headline">¶</a></h4>
+<p>Renders the vertex array. In the future, I might change this to use batched rendering. For the time being, it isn’t high on my priority list.</p>
+</section>
+<section id="static-rendererapi-api-getapi">
+<h4>static RendererAPI::API GetAPI()<a class="headerlink" href="#static-rendererapi-api-getapi" title="Permalink to this headline">¶</a></h4>
+<p>Returns the API being used</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="static-rendertarget-currenttarget">
+<h4>static RenderTarget* CurrentTarget<a class="headerlink" href="#static-rendertarget-currenttarget" title="Permalink to this headline">¶</a></h4>
+<p>The target that was bound at the start of the frame, if one was bound. Otherwise, it will be nullptr.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Rendering.html">CadBerry/Rendering</a><ul>
+      <li>Previous: <a href="RenderCommand.h.html" title="previous chapter">CadBerry/Rendering/RenderCommand.h</a></li>
+      <li>Next: <a href="RendererAPI.h.html" title="next chapter">CadBerry/Rendering/RendererAPI.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Rendering/Renderer.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

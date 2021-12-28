@@ -1,0 +1,167 @@
+CadBerry/Events/MouseEvent.h
+############################
+
+Imports
+=======
+* :doc:`/API/cdbpch.h`
+* :doc:`Event.h`
+
+
+
+MouseMovedEvent class
+=====================
+Inherits from :doc:`CDB::Event <Event.h>`
+
+Event type
+----------
+MouseMoved
+
+Event categories
+----------------
+* EventCategoryMouse
+* EventCategoryInput
+
+Functions
+---------
+Constructor(float x, float y)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Create MouseMovedEvent with mouse position
+
+float GetX()
+^^^^^^^^^^^^
+Returns the mouse's X position
+
+float GetY()
+^^^^^^^^^^^^
+Returns the mouse's Y position
+
+std::string ToString()
+^^^^^^^^^^^^^^^^^^^^^^
+Returns "MouseMovedEvent at position (MouseX, MouseY)"
+
+Fields
+------
+float MouseX, MouseY
+^^^^^^^^^^^^^^^^^^^^
+The X and Y position of the mouse
+
+
+
+MouseButtonEvent class
+======================
+Inherits from :doc:`CDB::Event <Event.h>`. This isn't an event itself, rather, it's a parent class for any events that involve mouse buttons
+
+Event categories
+----------------
+* EventCategoryMouse
+* EventCategoryMouseButton
+* EventCategoryInput
+
+Functions
+---------
+int GetButtonCode()
+^^^^^^^^^^^^^^^^^^^
+Returns what button was pressed
+
+float GetX()
+^^^^^^^^^^^^
+Returns the X position of the mouse (when the button was pressed)
+
+float GetY()
+^^^^^^^^^^^^
+Returns the Y position of the mouse (when the button was pressed)
+
+Constructor(float x, float y, int button)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initializes the data for this event type
+
+Fields
+------
+int ButtonCode
+^^^^^^^^^^^^^^
+The mouse button that was pressed
+
+float MouseX, MouseY
+^^^^^^^^^^^^^^^^^^^^
+The X and Y position of the mouse
+
+
+
+MouseScrolledEvent class
+========================
+Inherits from :doc:`CDB::Event <Event.h>`. I'm going to be 100% honest, I'm probably never going to use this. Having mouse wheel support is great, 
+but I'm coding this on a laptop with a touchpad. I'm never personally going to make something that uses the mouse wheel because that's hard for me 
+to test. 
+
+Event type
+----------
+MouseScrolled
+
+Event categories
+----------------
+* EventCategoryMouse
+* EventCategoryInput
+
+Functions
+---------
+Constructor(float x, float y)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creates a MouseScrolledEvent with the offset (x, y)
+
+float GetXOffset()
+^^^^^^^^^^^^^^^^^^
+Get the amount scrolled in the X direction
+
+float GetYOffset()
+^^^^^^^^^^^^^^^^^^
+Get the amount scrolled in the X direction
+
+std::string ToString()
+^^^^^^^^^^^^^^^^^^^^^^
+Returns "MouseScrolledEvent: OffsetX, OffsetY"
+
+Fields
+------
+float XOffset, YOffset
+^^^^^^^^^^^^^^^^^^^^^^
+The X and Y offsets
+
+
+
+MouseButtonPressedEvent class
+=============================
+Inherits from MouseButtonEvent
+
+Event type
+----------
+MouseButtonPressed
+
+Functions
+---------
+Constructor(float x, float y, int button)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creates the MouseButtonEvent
+
+std::string ToString()
+^^^^^^^^^^^^^^^^^^^^^^
+Returns "MouseButtonPressedEvent at pos (MouseX, MouseY)"
+
+
+
+MouseButtonReleasedEvent class
+==============================
+Inherits from MouseButtonEvent
+
+Event type
+----------
+MouseButtonReleased
+
+Functions
+---------
+Constructor(float x, float y, int button)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creates the MouseButtonEvent
+
+std::string ToString()
+^^^^^^^^^^^^^^^^^^^^^^
+Returns "MouseButtonReleasedEvent at pos (MouseX, MouseY)"

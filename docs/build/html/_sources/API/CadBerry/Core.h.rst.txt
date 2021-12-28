@@ -1,0 +1,35 @@
+CadBerry/Core.h
+###############
+Macro definitions
+
+Defines
+=======
+CDBAPI
+------
+Defined as __declspec(dllexport) if CDB_BUILD_DLL is defined, otherwise it will be defined as __declspec(dllimport)
+
+CDB_EditorAssert(x, ...)
+------------------------
+Assert statement that is only defined if CDB_ENABLE_ASSERTS is defined
+
+CDB_BuildAssert(x, ...)
+-----------------------
+Assert statement that is only defined if CDB_ENABLE_ASSERTS is defined
+
+Bit(x)
+------
+Returns 1 bitshifted by x. For example, Bit(2) = 0b00000010 and Bit(5) = 0b00010000
+
+CDB_MajorVersion
+----------------
+CadBerry's major version
+
+CDB_MinorVersion
+----------------
+CadBerry's minor version
+
+CDB_Fix
+-------
+CadBerry's fix number
+
+CadBerry's full version number is CDB_MajorVersion.CDB_MinorVersion.CDB_Fix

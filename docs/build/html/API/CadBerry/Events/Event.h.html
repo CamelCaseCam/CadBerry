@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Events/Event.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-events-event-h">
+<h1>CadBerry/Events/Event.h<a class="headerlink" href="#cadberry-events-event-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../cdbpch.h.html"><span class="doc">CadBerry pch file</span></a></p></li>
+<li><p><a class="reference internal" href="../Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p>spdlog/fmt/ostr.h</p></li>
+</ul>
+</section>
+<section id="enum-class-eventtype">
+<h2>enum class EventType<a class="headerlink" href="#enum-class-eventtype" title="Permalink to this headline">¶</a></h2>
+<section id="contents">
+<h3>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>None = 0</p></li>
+<li><p>WindowClose</p></li>
+<li><p>WindowResize</p></li>
+<li><p>Start (to be implemented)</p></li>
+<li><p>Update (to be implemented)</p></li>
+<li><p>PanelOpened (to be implemented)</p></li>
+<li><p>PanelClosed (to be implemented)</p></li>
+<li><p>KeyPressed</p></li>
+<li><p>KeyReleased</p></li>
+<li><p>MouseButtonPressed</p></li>
+<li><p>MouseButtonReleased</p></li>
+<li><p>MouseMoved</p></li>
+<li><p>MouseScrolled</p></li>
+<li><p>Prebuild (to be implemented)</p></li>
+<li><p>BuildStart (to be implemented)</p></li>
+<li><p>Postbuild (to be implemented)</p></li>
+</ul>
+</section>
+</section>
+<section id="enum-eventcategory">
+<h2>enum EventCategory<a class="headerlink" href="#enum-eventcategory" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3>Contents<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>None = 0b00000000</p></li>
+<li><p>EventCategoryApplication = 0b00000001</p></li>
+<li><p>EventCategoryInput = 0b00000010</p></li>
+<li><p>EventCategoryKeyboard = 0b00000100</p></li>
+<li><p>EventCategoryMouse = 0b00001000</p></li>
+<li><p>EventCategoryMouseButton = 0b00010000</p></li>
+<li><p>EventCategoryBuild = 0b00100000</p></li>
+</ul>
+</section>
+</section>
+<section id="macros">
+<h2>Macros<a class="headerlink" href="#macros" title="Permalink to this headline">¶</a></h2>
+<section id="event-class-type-type">
+<h3>EVENT_CLASS_TYPE(type)<a class="headerlink" href="#event-class-type-type" title="Permalink to this headline">¶</a></h3>
+<p>Defines some of the event’s virtual functions</p>
+<section id="defined-as">
+<h4>Defined as<a class="headerlink" href="#defined-as" title="Permalink to this headline">¶</a></h4>
+<p>static EventType GetStaticType() { return EventType::##type; }
+virtual EventType GetEventType() const override { return GetStaticType(); }
+virtual const char* GetName() const override { return #type; }</p>
+</section>
+</section>
+<section id="event-class-category-category">
+<h3>EVENT_CLASS_CATEGORY(category)<a class="headerlink" href="#event-class-category-category" title="Permalink to this headline">¶</a></h3>
+<p>Defines the event’s category flags</p>
+<section id="id2">
+<h4>Defined as<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>virtual int GetCategoryFlags() const override { return category; }</p>
+</section>
+</section>
+<section id="bind-event-fn-x">
+<h3>BIND_EVENT_FN(x)<a class="headerlink" href="#bind-event-fn-x" title="Permalink to this headline">¶</a></h3>
+<section id="id3">
+<h4>Defined as<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>std::bind(&amp;x, this, std::placeholders::_1)</p>
+</section>
+</section>
+</section>
+<section id="event-class">
+<h2>Event class<a class="headerlink" href="#event-class" title="Permalink to this headline">¶</a></h2>
+<p>Base class for all events. EventDispatcher is a friend class.</p>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="virtual-eventtype-geteventtype">
+<h4>virtual EventType GetEventType()<a class="headerlink" href="#virtual-eventtype-geteventtype" title="Permalink to this headline">¶</a></h4>
+<p>Returns the event type</p>
+</section>
+<section id="virtual-const-char-getname">
+<h4>virtual const char* GetName()<a class="headerlink" href="#virtual-const-char-getname" title="Permalink to this headline">¶</a></h4>
+<p>Returns the event’s name</p>
+</section>
+<section id="virtual-int-getcategoryflags">
+<h4>virtual int GetCategoryFlags()<a class="headerlink" href="#virtual-int-getcategoryflags" title="Permalink to this headline">¶</a></h4>
+<p>Returns the event’s category flags</p>
+</section>
+<section id="virtual-std-string-tostring">
+<h4>virtual std::string ToString()<a class="headerlink" href="#virtual-std-string-tostring" title="Permalink to this headline">¶</a></h4>
+<p>Converts the event to a string</p>
+</section>
+<section id="bool-handled">
+<h4>bool Handled()<a class="headerlink" href="#bool-handled" title="Permalink to this headline">¶</a></h4>
+<p>Is the event handled?</p>
+</section>
+<section id="bool-isincategory-eventcategory-category">
+<h4>bool IsInCategory(EventCategory Category)<a class="headerlink" href="#bool-isincategory-eventcategory-category" title="Permalink to this headline">¶</a></h4>
+<p>Does this event have that category flag?</p>
+</section>
+<section id="std-ostream-operator-std-ostream-os-const-event-e">
+<h4>std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Event&amp; e)<a class="headerlink" href="#std-ostream-operator-std-ostream-os-const-event-e" title="Permalink to this headline">¶</a></h4>
+<p>Calls the event’s ToString method and prints it to the console</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="bool-m-handled">
+<h4>bool m_Handled<a class="headerlink" href="#bool-m-handled" title="Permalink to this headline">¶</a></h4>
+<p>Has the event been handled? If it has, it will not be propagated to the other layers</p>
+</section>
+</section>
+</section>
+<section id="eventdispatcher-class">
+<h2>EventDispatcher class<a class="headerlink" href="#eventdispatcher-class" title="Permalink to this headline">¶</a></h2>
+<p>Defines EventFn as a template of std::function&lt;bool(T&amp;)&gt;</p>
+<section id="id4">
+<h3>Functions<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<section id="constructor-event-evnt">
+<h4>Constructor(Event&amp; evnt)<a class="headerlink" href="#constructor-event-evnt" title="Permalink to this headline">¶</a></h4>
+<p>Creates the event dispatcher and sets the event</p>
+</section>
+<section id="template-typename-t-bool-dispatch-eventfn-t-func">
+<h4>template&lt;typename T&gt; bool Dispatch(EventFn&lt;T&gt; func)<a class="headerlink" href="#template-typename-t-bool-dispatch-eventfn-t-func" title="Permalink to this headline">¶</a></h4>
+<p>Dispatches the event to the function. If the function returns true, the event will be set as handles and won’t be propagated further</p>
+</section>
+</section>
+<section id="id5">
+<h3>Fields<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<section id="event-m-event">
+<h4>Event&amp; m_Event<a class="headerlink" href="#event-m-event" title="Permalink to this headline">¶</a></h4>
+<p>The event that’s being dispatched</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Events/Event.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Creating CadBerry modules &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CadBerry viewport API" href="Viewport%20API.html" />
+    <link rel="prev" title="utils" href="../GIL/Libraries/std/utils.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="creating-cadberry-modules">
+<h1>Creating CadBerry modules<a class="headerlink" href="#creating-cadberry-modules" title="Permalink to this headline">¶</a></h1>
+<p>CadBerry allows you to create modules to quickly add functionality to the editor.</p>
+<section id="how-to-create-a-module">
+<h2>How to create a module<a class="headerlink" href="#how-to-create-a-module" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Clone the entire CadBerry repository (this way it has all the libraries that CadBerry depends on)</p></li>
+<li><p>Open the premake file and copy the VSCodeIntegration project</p></li>
+<li><p>Change the name of the duplicated project to the name of your module</p></li>
+<li><p>Scroll down to postbuildcommands and change “/VSCodeIntegration/VSCodeIntegration.pdb” to “/YourModuleName/YourModuleName.pdb”</p></li>
+<li><p>Use premake to regenerate the project files</p></li>
+</ol>
+<p>At this point, your module has been created. Now we need to create the module and window classes.</p>
+<ol class="arabic simple">
+<li><p>Create a file that will contain your module. I usually call it “Module.cpp”. This is like your main file.</p></li>
+<li><p>Include “CadBerry.h”</p></li>
+<li><p>Create a TestWindow class that inherits from CDB::Viewport. Inside the constructor, call the CDB::Viewport constructor with the name of the window as a parameter</p></li>
+<li><p>Create a TestModule class that inherits from CDB::Module. Inside the constructor, call the CDB::Module constructor with the name of your module as a parameter</p></li>
+<li><p>Override the GetModuleNames function. This function sets the NumViewports variable to the number of viewports and returns the raw pointer to an array of std::strings. Each of these strings is the name of a window that your module adds. In this example, you’d set NumViewports to 1 and the array you return should contain “TestModule”.</p></li>
+<li><p>Override the CreateViewport function, this function returns a raw pointer to a viewport that it creates based on the viewport name paramater. Since we only have one viewport, you can just return a new TestWindow.</p></li>
+</ol>
+<p>Now that the module and window is created, we need to expose the module to CadBerry.</p>
+<ol class="arabic simple">
+<li><p>Wrap everything after this in extern “C”</p></li>
+<li><p>Define the function <cite>__declspec(dllexport) CDB::Module* __stdcall GetModule()</cite></p></li>
+<li><p>Within this function, return a new TestModule</p></li>
+</ol>
+<p>If everything worked, you should be able to compile this and have it automatically add the module to CadBerry’s modules folder. If you run
+Berry.exe, you should see an option with the name of your module in the windows menu option.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Viewport%20API.html">CadBerry viewport API</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Creating CadBerry modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-create-a-module">How to create a module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../API/CadBerry%20API.html">CadBerry API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../GIL/Libraries/std/utils.html" title="previous chapter">utils</a></li>
+      <li>Next: <a href="Viewport%20API.html" title="next chapter">CadBerry viewport API</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/Modules/Creating modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

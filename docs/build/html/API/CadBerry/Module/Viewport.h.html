@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Module/Viewport.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Platform" href="../Platform/Platform.html" />
+    <link rel="prev" title="CadBerry/Module/Module.h" href="Module.h.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-module-viewport-h">
+<h1>CadBerry/Module/Viewport.h<a class="headerlink" href="#cadberry-module-viewport-h" title="Permalink to this headline">¶</a></h1>
+<p>An ImGui window with some other useful functions</p>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../cdbpch.h.html"><span class="doc">CadBerry pch file</span></a></p></li>
+<li><p><a class="reference internal" href="../Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p><a class="reference internal" href="../Layer.h.html"><span class="doc">CadBerry/Layer.h</span></a></p></li>
+<li><p><a class="reference internal" href="../Utils/memory.h.html"><span class="doc">CadBerry/Utils/memory.h</span></a></p></li>
+</ul>
+</section>
+<section id="viewport-class">
+<h2>Viewport class<a class="headerlink" href="#viewport-class" title="Permalink to this headline">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="constructor-std-string-name">
+<h4>Constructor(std::string name)<a class="headerlink" href="#constructor-std-string-name" title="Permalink to this headline">¶</a></h4>
+<p>Sets the name of the viewport</p>
+</section>
+<section id="virtual-void-start">
+<h4>virtual void Start()<a class="headerlink" href="#virtual-void-start" title="Permalink to this headline">¶</a></h4>
+<p>Called when the viewport is created</p>
+</section>
+<section id="virtual-void-draw">
+<h4>virtual void Draw()<a class="headerlink" href="#virtual-void-draw" title="Permalink to this headline">¶</a></h4>
+<p>Called once per frame before ImGui rendering (designed for OpenGL rendering to the default RenderTarget)</p>
+</section>
+<section id="virtual-void-guidraw">
+<h4>virtual void GUIDraw()<a class="headerlink" href="#virtual-void-guidraw" title="Permalink to this headline">¶</a></h4>
+<p>Called once per frame to draw GUI elements. GUI elements drawn here will affect the viewport, not the main editor. I don’t have an official way to
+draw GUI elements to the main editor from inside a viewport, but you could try calling ImGui functions from Draw()</p>
+</section>
+<section id="virtual-void-update-float-dt">
+<h4>virtual void Update(float dt)<a class="headerlink" href="#virtual-void-update-float-dt" title="Permalink to this headline">¶</a></h4>
+<p>Called once per frame and gives the delta time since the last frame.</p>
+</section>
+<section id="virtual-void-onclose">
+<h4>virtual void OnClose()<a class="headerlink" href="#virtual-void-onclose" title="Permalink to this headline">¶</a></h4>
+<p>Called when the user closes the viewport.</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="std-string-name">
+<h4>std::string Name<a class="headerlink" href="#std-string-name" title="Permalink to this headline">¶</a></h4>
+<p>The name of the viewport</p>
+</section>
+<section id="bool-isopen">
+<h4>bool IsOpen<a class="headerlink" href="#bool-isopen" title="Permalink to this headline">¶</a></h4>
+<p>Is the window open? If you set this to false, the window will close</p>
+</section>
+<section id="bool-background">
+<h4>bool Background<a class="headerlink" href="#bool-background" title="Permalink to this headline">¶</a></h4>
+<p>Is the window visible?</p>
+</section>
+</section>
+</section>
+<section id="viewportlayer-class">
+<h2>ViewportLayer class<a class="headerlink" href="#viewportlayer-class" title="Permalink to this headline">¶</a></h2>
+<p>Handles viewport rendering. Inherits from <a class="reference internal" href="../Layer.h.html"><span class="doc">CDB::Layer</span></a></p>
+<section id="id1">
+<h3>Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="virtual-void-onimguirender">
+<h4>virtual void OnImGuiRender()<a class="headerlink" href="#virtual-void-onimguirender" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>Creates (most of) the CadBerry editor window (this should be moved)</p></li>
+<li><p>Creates any viewports</p></li>
+<li><p>Updates viewports</p></li>
+<li><p>Creates viewport windows</p></li>
+<li><p>Calls GUIDraw functions</p></li>
+<li><p>Deletes any closed viewports</p></li>
+</ol>
+</section>
+<section id="id2">
+<h4>virtual void Draw()<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Calls each of the viewports’ Draw functions</p>
+</section>
+<section id="destructor">
+<h4>Destructor<a class="headerlink" href="#destructor" title="Permalink to this headline">¶</a></h4>
+<p>Closes all open viewports and deletes them</p>
+</section>
+<section id="void-viewportlayer-addviewport-viewport-viewport">
+<h4>void ViewportLayer::AddViewport(Viewport* viewport)<a class="headerlink" href="#void-viewportlayer-addviewport-viewport-viewport" title="Permalink to this headline">¶</a></h4>
+<p>Adds a viewport. If you (for some reason) want to prevent the user from closing your viewport, you could theoretically use std::move in OnClose()
+to move the viewport into a new viewport and add that. The only problem is that doing that would freeze the window when it’s closed. Maybe you
+could use a WindowCloseEvent and delete this?</p>
+</section>
+</section>
+<section id="id3">
+<h3>Fields<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<section id="std-vector-viewport-openviewports">
+<h4>std::vector&lt;Viewport*&gt; OpenViewports<a class="headerlink" href="#std-vector-viewport-openviewports" title="Permalink to this headline">¶</a></h4>
+<p>The open viewports</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Module.html">CadBerry/Module</a><ul>
+      <li>Previous: <a href="Module.h.html" title="previous chapter">CadBerry/Module/Module.h</a></li>
+      <li>Next: <a href="../Platform/Platform.html" title="next chapter">CadBerry/Platform</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Module/Viewport.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

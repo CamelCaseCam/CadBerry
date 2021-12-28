@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Error messages &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="For keyword" href="For.html" />
+    <link rel="prev" title="Comments in GIL" href="Comments.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="error-messages">
+<h1>Error messages<a class="headerlink" href="#error-messages" title="Permalink to this headline">¶</a></h1>
+<p>This page contains all the errors and in which situations they apply. Each one also has an associated
+error code in the format “error GILxx” where x is the error number. For example, error GIL01</p>
+</section>
+<section id="errors">
+<h1>Errors:<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Error GIL01: No region to end</p></li>
+</ul>
+<p>You’ve either tried to end a region (#EndRegion) before any were created, or you tried to end a region that
+is closed by name later in your project (#EndRegion region name).</p>
+<ul class="simple">
+<li><p>Error GIL02: Region “Region name” does not exist</p></li>
+</ul>
+<p>This error is caused when you try to end a region by name that does not exist. For example, you might have
+created a region with the name “TestRegion”, but you tried to close the region “TesRegion”</p>
+<ul class="simple">
+<li><p>Error GIL03: No GIL project (.gil) in current directory</p></li>
+</ul>
+<p>Gil compile couldn’t find a .gil file</p>
+<ul class="simple">
+<li><p>Error GIL04: Project template “Template” not found</p></li>
+<li><p>Error GIL05: End token (“}”) expected</p></li>
+<li><p>Error GIL06: The name “Name” does not exist</p></li>
+</ul>
+<p>You referenced a sequence or operation that does not exist.</p>
+<ul class="simple">
+<li><p>Error GIL07: Illegal character ‘char’ in complement</p></li>
+</ul>
+<p>GIL tried to find the complement of a string containing letters other than a, t, c, g, and u. If you’re developing a library, this might have been caused by calling HelperFunctions.GetComplement() on a string that isn’t DNA or RNA.</p>
+<ul class="simple">
+<li><p>Error GIL08: Attribute “attribute” requires value of type “type”</p></li>
+</ul>
+<p>You tried to set an attribute to an unsupported type. For example, you tried to set RNAI_Len to ‘a’ or to 1.1</p>
+<ul class="simple">
+<li><p>Error GIL09: Attribute “attribute” does not exist</p></li>
+</ul>
+<p>You used “#SetAttribute Attribute:Value” on an attribute that does not exist. Check your spelling and if the attribute is spelled right, add an issue on the GitHub (I might have forgot to add the attribute)</p>
+<ul class="simple">
+<li><p>Error GIL10: Unable to find siRNA matching given params</p></li>
+</ul>
+<p>GIL was unable to find a siRNA that satisfies all the paramaters in Block</p>
+<ul class="simple">
+<li><p>Error GIL11: Sequence contained the following non amino acid characters:</p></li>
+</ul>
+<p>GIL (or a library you’re using/writing) was expecting a sequence of amino acids, but one of the characters wasn’t an amino acid. For example, MQPF_R wouldn’t work because the _ isn’t an amino acid</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="GIL.html">GIL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AminoSequence.html">AminoSequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Block.html">RNAi in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Comments.html">Comments in GIL</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Error messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#errors">Errors:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="For.html">For keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="From.html">From keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Operations.html">Operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Regions.html">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sequence.html">Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Target%20organisms.html">Target organisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Target%20organisms.html#organism-names">Organism names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Target%20organisms.html#adding-support-for-other-organisms">Adding support for other organisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Libraries/Libs.html">Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../What%20I%27m%20working%20on.html">What I’m working on</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="GIL.html">GIL</a><ul>
+      <li>Previous: <a href="Comments.html" title="previous chapter">Comments in GIL</a></li>
+      <li>Next: <a href="For.html" title="next chapter">For keyword</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/GIL/Error messages.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

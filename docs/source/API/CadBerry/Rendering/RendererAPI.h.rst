@@ -1,0 +1,43 @@
+CadBerry/Rendering/RendererAPI.h
+################################
+
+Imports
+=======
+* :doc:`/API/CadBerry/Core.h`
+* :doc:`VertexArray.h`
+* glm/glm.hpp
+
+RendererAPI class
+=================
+enum class API
+--------------
+The API being used
+
+Defines
+^^^^^^^
+* None = 0
+* OpenGL = 1
+
+Functions
+---------
+virtual void SetClearColour(const glm::vec4& Colour)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sets the screen's clear colour
+
+virtual void Clear()
+^^^^^^^^^^^^^^^^^^^^
+Clears the screen
+
+virtual void DrawIndexed(const VertexArray* vertexArray)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Draws the VertexArray. This function DOES NOT take ownership of the VertexArray
+
+static API GetAPI()
+^^^^^^^^^^^^^^^^^^^
+Returns the API being used (s_API)
+
+Fields
+------
+static API s_API
+^^^^^^^^^^^^^^^^
+The renderer API being used

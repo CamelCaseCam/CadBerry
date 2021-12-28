@@ -1,0 +1,44 @@
+CadBerry/Events/ApplicationEvent.h
+##################################
+
+Imports
+=======
+* :doc:`/API/cdbpch.h`
+* :doc:`Event.h`
+
+WindowResizeEvent class
+=======================
+Inherits from :doc:`CDB::Event <Event.h>`. Dispatched when the window's size is updated
+
+Categories
+----------
+* EventCategoryApplication
+
+Event type
+----------
+WindowResize
+
+WindowCloseEvent event
+======================
+Inherits from :doc:`CDB::Event <Event.h>`. Dispatched when the editor is closed
+
+Categories
+----------
+* EventCategoryApplication
+
+Event type
+----------
+WindowClose
+
+StartEvent class
+================
+Inherits from :doc:`CDB::Event <Event.h>`. Dispatched when the editor is first opened
+
+Categories
+----------
+* EventCategoryApplication
+
+Event type
+----------
+Start
+

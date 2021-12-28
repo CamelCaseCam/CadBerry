@@ -1,0 +1,17 @@
+CadBerry pch file
+=================
+CadBerry precompiled header
+
+Imports
+-------
+* algorithm
+* iostream
+* utility
+* functional
+* filesystem
+* fstream
+* string
+* sstream
+* vector
+* memory
+* Windows.h

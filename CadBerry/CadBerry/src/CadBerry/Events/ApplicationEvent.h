@@ -37,6 +37,7 @@ namespace CDB
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
+	//Called when the application starts
 	class CDBAPI StartEvent : public Event
 	{
 	public:
@@ -49,6 +50,7 @@ namespace CDB
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
+	//Will be removed
 	class CDBAPI UpdateEvent : public Event
 	{
 	public:
@@ -69,6 +71,7 @@ namespace CDB
 		float dt;
 	};
 
+	//Not yet implemented
 	class CDBAPI PanelOpenedEvent : public Event
 	{
 	public:
@@ -81,6 +84,7 @@ namespace CDB
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 
+	//Not yet implemented
 	class CDBAPI PanelClosedEvent : public Event
 	{
 	public:

@@ -1,0 +1,61 @@
+CadBerry/Project/Project.h
+##########################
+
+Imports
+=======
+* :doc:`/API/CadBerry/Core.h`
+* string
+
+Defines
+=======
+BerryProjectVersion
+-------------------
+CadBerry project version
+
+Project class
+=============
+Fields
+------
+std::string Name
+^^^^^^^^^^^^^^^^
+The project name
+
+std::string Path
+^^^^^^^^^^^^^^^^
+The absolute path to the project
+
+std::string PreBuildDir
+^^^^^^^^^^^^^^^^^^^^^^^
+The path to the directory for precompiled CGIL files (relative to the project path). Defaults to /.GILCache/
+
+Functions
+---------
+Constructor(std::string Name, std::string Path)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Initializes a project with a name and at a path
+
+Constructor
+^^^^^^^^^^^
+Initializes an empty project
+
+void WriteToFile()
+^^^^^^^^^^^^^^^^^^
+Saves the project to a .berry file. Output file path will be Path/Name.berry where Path is the absolute path to the project and Name is the name 
+of the project. 
+
+static Project* ReadFromFile(std::string path)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Loads a project from path and returns a pointer to it
+
+.berry format
+=============
+CadBerry project files are stored in binary. Right now, there's a glitch where the project doesn't properly save, but that will be fixed in the 
+future. CadBerry project files have the following format:
+
+1. CadBerry project version (int)
+2. CadBerry editor major version (int)
+3. CadBerry editor minor version (int)
+4. Name length (int)
+5. Name (char * Name length)
+6. Prebuild path length (int)
+7. Prebuild path (char * Prebuild path length)

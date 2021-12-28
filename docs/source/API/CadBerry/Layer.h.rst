@@ -1,0 +1,51 @@
+CadBerry/Layer.h
+################
+
+Imports
+=======
+* :doc:`/API/CadBerry/Core.h`
+* :doc:`/API/CadBerry/Events/Event.h`
+
+Layer class
+===========
+Interface for implementing your own layers
+
+Functions
+---------
+Layer(const std::string& name = "Layer")
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sets the name of the layer if a name is provided
+
+virtual void OnAttach()
+^^^^^^^^^^^^^^^^^^^^^^^
+Called when the layer is added to a :doc:`LayerStack <LayerStack.h>`
+
+virtual void OnDetach()
+^^^^^^^^^^^^^^^^^^^^^^^
+Called when the layer is removed from a :doc:`LayerStack <LayerStack.h>`
+
+virtual void OnUpdate()
+^^^^^^^^^^^^^^^^^^^^^^^
+Called once per frame before rendering
+
+virtual void OnEvent()
+^^^^^^^^^^^^^^^^^^^^^^
+Called whenever an event happens
+
+virtual void OnImGuiRender()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Used to render ImGui elements
+
+virtual void Draw()
+^^^^^^^^^^^^^^^^^^^
+Used to draw before ImGui elements are drawn. Intended for OpenGL rendering to the default RenderTarget
+
+const std::string& GetName()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Inline function returning the name of the layer
+
+Fields
+------
+std::string m_Name
+^^^^^^^^^^^^^^^^^^
+The name of the layer

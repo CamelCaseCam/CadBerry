@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Threading/ThreadPool.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Utils" href="../Utils/Utils.html" />
+    <link rel="prev" title="CadBerry/Threading" href="Threading.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-threading-threadpool-h">
+<h1>CadBerry/Threading/ThreadPool.h<a class="headerlink" href="#cadberry-threading-threadpool-h" title="Permalink to this headline">¶</a></h1>
+<p>CadBerry’s thread pool implementation. If there’s two or fewer threads available on the device, it will create one worker thread. Otherwise, it
+will leave two threads free for other tasks and create a worker thread per additional thread (keep in mind, CadBerry is designed for genetic
+engineering, so it might need all those threads).</p>
+<p>The thread pool has three task levels:</p>
+<ol class="arabic simple">
+<li><p>Priority tasks - these tasks will be run as soon as a thread becomes available.</p></li>
+<li><p>Standard tasks - these tasks will be run as soon as a thread becomes available and all the priority tasks have been run.</p></li>
+<li><p>Background tasks - these tasks will be run if there aren’t any other tasks to avoid idle threads. One thread will always wait for new tasks, so background tasks will only be run if your system has more than 4 threads (it probably should)</p></li>
+</ol>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../cdbpch.h.html"><span class="doc">CadBerry pch file</span></a></p></li>
+<li><p>BlockingCollection.h (outside library)</p></li>
+<li><p><a class="reference internal" href="../Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p>thread</p></li>
+<li><p>atomic</p></li>
+</ul>
+</section>
+<section id="threadpool-class">
+<h2>ThreadPool class<a class="headerlink" href="#threadpool-class" title="Permalink to this headline">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="constructor">
+<h4>Constructor<a class="headerlink" href="#constructor" title="Permalink to this headline">¶</a></h4>
+<p>The thread pool constructor is private, to enforce the fact that you really shouldn’t be creating it using new. If you want to create the thread
+pool, call the Get() function. This will create a new thread pool if one doesn’t already exist.</p>
+</section>
+<section id="destructor">
+<h4>Destructor<a class="headerlink" href="#destructor" title="Permalink to this headline">¶</a></h4>
+<p>Gets the threads to finish their current task and exit. You can call this function by deleting the thread pool, but you really shouldn’t. Instead,
+call CompleteTasksAndDelete, which completes any queued tasks and then deletes the thread pool.</p>
+</section>
+<section id="static-threadpool-get">
+<h4>static ThreadPool* Get()<a class="headerlink" href="#static-threadpool-get" title="Permalink to this headline">¶</a></h4>
+<p>If a thread pool exists it returns a pointer to that pool, otherwise it creates a new thread pool.</p>
+</section>
+<section id="void-completetasksanddelete">
+<h4>void CompleteTasksAndDelete()<a class="headerlink" href="#void-completetasksanddelete" title="Permalink to this headline">¶</a></h4>
+<p>Prevents new tasks from being added to the thread pool, completes any queued tasks (excluding background tasks), and frees all the threads.</p>
+</section>
+<section id="bool-addstandardtask-std-function-void-func">
+<h4>bool AddStandardTask(std::function&lt;void()&gt; Func)<a class="headerlink" href="#bool-addstandardtask-std-function-void-func" title="Permalink to this headline">¶</a></h4>
+<p>Adds a standard task to the task queue and returns whether the task was successfully added. If the thread pool is closed, it will return false</p>
+</section>
+<section id="bool-addprioritytask-std-function-void-func">
+<h4>bool AddPriorityTask(std::function&lt;void()&gt; Func)<a class="headerlink" href="#bool-addprioritytask-std-function-void-func" title="Permalink to this headline">¶</a></h4>
+<p>Adds a priority task to the task queue and returns whether the task was successfully added. If the thread pool is closed, it will return false</p>
+</section>
+<section id="bool-addbackgroundtask-std-function-void-func">
+<h4>bool AddBackgroundTask(std::function&lt;void()&gt; Func)<a class="headerlink" href="#bool-addbackgroundtask-std-function-void-func" title="Permalink to this headline">¶</a></h4>
+<p>Adds a background task to the task queue and returns whether the task was successfully added. If the thread pool is closed, it will return false.
+Keep in mind, there’s no guarantee that background tasks will ever be evaluated. This is more “do this if you have time”</p>
+</section>
+<section id="void-maintainthread">
+<h4>void MaintainThread()<a class="headerlink" href="#void-maintainthread" title="Permalink to this headline">¶</a></h4>
+<p>While the thread pool is running, does the following:</p>
+<ol class="arabic simple">
+<li><p>Checks if there’s a priority task. If there is, it runs the task and goes back to the start of the loop</p></li>
+<li><p>Checks if there’s a standard task (waits up to 50 milliseconds for a task). If there is, it runs the task and goes back to the start of the loop</p></li>
+<li><p>Checks if the thread pool is open. If it isn’t, the thread exits</p></li>
+<li><p>Checks if a thread is waiting for tasks. If one isn’t it waits 25 milliseconds for a priority task and 25 milliseconds for a standard task and goes back to the start of the loop</p></li>
+<li><p>Checks if there’s a background task (waits up to 150 milliseconds for a task). If there is, it runs the task and goes back to the start of the loop</p></li>
+</ol>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="bool-endthreads">
+<h4>bool EndThreads<a class="headerlink" href="#bool-endthreads" title="Permalink to this headline">¶</a></h4>
+<p>Should the threads immediately exit after finishing their current task?</p>
+</section>
+<section id="bool-isopen">
+<h4>bool IsOpen<a class="headerlink" href="#bool-isopen" title="Permalink to this headline">¶</a></h4>
+<p>Is the thread pool accepting new tasks?</p>
+</section>
+<section id="std-atomic-bool-iswaiting">
+<h4>std::atomic&lt;bool&gt; IsWaiting<a class="headerlink" href="#std-atomic-bool-iswaiting" title="Permalink to this headline">¶</a></h4>
+<p>atomic bool saying whether a thread is waiting for new tasks</p>
+</section>
+<section id="unsigned-int-numavailablethreads">
+<h4>unsigned int NumAvailableThreads<a class="headerlink" href="#unsigned-int-numavailablethreads" title="Permalink to this headline">¶</a></h4>
+<p>The number of threads available on the device</p>
+</section>
+<section id="static-threadpool-pool">
+<h4>static ThreadPool* Pool<a class="headerlink" href="#static-threadpool-pool" title="Permalink to this headline">¶</a></h4>
+<p>The thread pool</p>
+</section>
+<section id="code-machina-blockingcollection-std-function-void-standardtasks">
+<h4>code_machina::BlockingCollection&lt;std::function&lt;void()&gt;&gt; StandardTasks<a class="headerlink" href="#code-machina-blockingcollection-std-function-void-standardtasks" title="Permalink to this headline">¶</a></h4>
+<p>Standard tasks queue</p>
+</section>
+<section id="code-machina-blockingcollection-std-function-void-prioritytasks">
+<h4>code_machina::BlockingCollection&lt;std::function&lt;void()&gt;&gt; PriorityTasks<a class="headerlink" href="#code-machina-blockingcollection-std-function-void-prioritytasks" title="Permalink to this headline">¶</a></h4>
+<p>Priority tasks queue</p>
+</section>
+<section id="code-machina-blockingcollection-std-function-void-backgroundtasks">
+<h4>code_machina::BlockingCollection&lt;std::function&lt;void()&gt;&gt; BackgroundTasks<a class="headerlink" href="#code-machina-blockingcollection-std-function-void-backgroundtasks" title="Permalink to this headline">¶</a></h4>
+<p>Background tasks queue</p>
+</section>
+<section id="std-vector-std-thread-workerthreads">
+<h4>std::vector&lt;std::thread&gt; WorkerThreads<a class="headerlink" href="#std-vector-std-thread-workerthreads" title="Permalink to this headline">¶</a></h4>
+<p>All the worker threads</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Threading.html">CadBerry/Threading</a><ul>
+      <li>Previous: <a href="Threading.html" title="previous chapter">CadBerry/Threading</a></li>
+      <li>Next: <a href="../Utils/Utils.html" title="next chapter">CadBerry/Utils</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Threading/ThreadPool.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

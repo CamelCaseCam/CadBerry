@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Events/MouseEvent.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/ImGui" href="../ImGui/ImGui.html" />
+    <link rel="prev" title="CadBerry/Events" href="Events.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-events-mouseevent-h">
+<h1>CadBerry/Events/MouseEvent.h<a class="headerlink" href="#cadberry-events-mouseevent-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../cdbpch.h.html"><span class="doc">CadBerry pch file</span></a></p></li>
+<li><p><span class="xref std std-doc">Event.h</span></p></li>
+</ul>
+</section>
+<section id="mousemovedevent-class">
+<h2>MouseMovedEvent class<a class="headerlink" href="#mousemovedevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from <span class="xref std std-doc">CDB::Event</span></p>
+<section id="event-type">
+<h3>Event type<a class="headerlink" href="#event-type" title="Permalink to this headline">¶</a></h3>
+<p>MouseMoved</p>
+</section>
+<section id="event-categories">
+<h3>Event categories<a class="headerlink" href="#event-categories" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>EventCategoryMouse</p></li>
+<li><p>EventCategoryInput</p></li>
+</ul>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="constructor-float-x-float-y">
+<h4>Constructor(float x, float y)<a class="headerlink" href="#constructor-float-x-float-y" title="Permalink to this headline">¶</a></h4>
+<p>Create MouseMovedEvent with mouse position</p>
+</section>
+<section id="float-getx">
+<h4>float GetX()<a class="headerlink" href="#float-getx" title="Permalink to this headline">¶</a></h4>
+<p>Returns the mouse’s X position</p>
+</section>
+<section id="float-gety">
+<h4>float GetY()<a class="headerlink" href="#float-gety" title="Permalink to this headline">¶</a></h4>
+<p>Returns the mouse’s Y position</p>
+</section>
+<section id="std-string-tostring">
+<h4>std::string ToString()<a class="headerlink" href="#std-string-tostring" title="Permalink to this headline">¶</a></h4>
+<p>Returns “MouseMovedEvent at position (MouseX, MouseY)”</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="float-mousex-mousey">
+<h4>float MouseX, MouseY<a class="headerlink" href="#float-mousex-mousey" title="Permalink to this headline">¶</a></h4>
+<p>The X and Y position of the mouse</p>
+</section>
+</section>
+</section>
+<section id="mousebuttonevent-class">
+<h2>MouseButtonEvent class<a class="headerlink" href="#mousebuttonevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from <span class="xref std std-doc">CDB::Event</span>. This isn’t an event itself, rather, it’s a parent class for any events that involve mouse buttons</p>
+<section id="id1">
+<h3>Event categories<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>EventCategoryMouse</p></li>
+<li><p>EventCategoryMouseButton</p></li>
+<li><p>EventCategoryInput</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Functions<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<section id="int-getbuttoncode">
+<h4>int GetButtonCode()<a class="headerlink" href="#int-getbuttoncode" title="Permalink to this headline">¶</a></h4>
+<p>Returns what button was pressed</p>
+</section>
+<section id="id3">
+<h4>float GetX()<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>Returns the X position of the mouse (when the button was pressed)</p>
+</section>
+<section id="id4">
+<h4>float GetY()<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>Returns the Y position of the mouse (when the button was pressed)</p>
+</section>
+<section id="constructor-float-x-float-y-int-button">
+<h4>Constructor(float x, float y, int button)<a class="headerlink" href="#constructor-float-x-float-y-int-button" title="Permalink to this headline">¶</a></h4>
+<p>Initializes the data for this event type</p>
+</section>
+</section>
+<section id="id5">
+<h3>Fields<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<section id="int-buttoncode">
+<h4>int ButtonCode<a class="headerlink" href="#int-buttoncode" title="Permalink to this headline">¶</a></h4>
+<p>The mouse button that was pressed</p>
+</section>
+<section id="id6">
+<h4>float MouseX, MouseY<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>The X and Y position of the mouse</p>
+</section>
+</section>
+</section>
+<section id="mousescrolledevent-class">
+<h2>MouseScrolledEvent class<a class="headerlink" href="#mousescrolledevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from <span class="xref std std-doc">CDB::Event</span>. I’m going to be 100% honest, I’m probably never going to use this. Having mouse wheel support is great,
+but I’m coding this on a laptop with a touchpad. I’m never personally going to make something that uses the mouse wheel because that’s hard for me
+to test.</p>
+<section id="id7">
+<h3>Event type<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>MouseScrolled</p>
+</section>
+<section id="id8">
+<h3>Event categories<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>EventCategoryMouse</p></li>
+<li><p>EventCategoryInput</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Functions<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<section id="id10">
+<h4>Constructor(float x, float y)<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>Creates a MouseScrolledEvent with the offset (x, y)</p>
+</section>
+<section id="float-getxoffset">
+<h4>float GetXOffset()<a class="headerlink" href="#float-getxoffset" title="Permalink to this headline">¶</a></h4>
+<p>Get the amount scrolled in the X direction</p>
+</section>
+<section id="float-getyoffset">
+<h4>float GetYOffset()<a class="headerlink" href="#float-getyoffset" title="Permalink to this headline">¶</a></h4>
+<p>Get the amount scrolled in the X direction</p>
+</section>
+<section id="id11">
+<h4>std::string ToString()<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>Returns “MouseScrolledEvent: OffsetX, OffsetY”</p>
+</section>
+</section>
+<section id="id12">
+<h3>Fields<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<section id="float-xoffset-yoffset">
+<h4>float XOffset, YOffset<a class="headerlink" href="#float-xoffset-yoffset" title="Permalink to this headline">¶</a></h4>
+<p>The X and Y offsets</p>
+</section>
+</section>
+</section>
+<section id="mousebuttonpressedevent-class">
+<h2>MouseButtonPressedEvent class<a class="headerlink" href="#mousebuttonpressedevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from MouseButtonEvent</p>
+<section id="id13">
+<h3>Event type<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>MouseButtonPressed</p>
+</section>
+<section id="id14">
+<h3>Functions<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<section id="id15">
+<h4>Constructor(float x, float y, int button)<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>Creates the MouseButtonEvent</p>
+</section>
+<section id="id16">
+<h4>std::string ToString()<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>Returns “MouseButtonPressedEvent at pos (MouseX, MouseY)”</p>
+</section>
+</section>
+</section>
+<section id="mousebuttonreleasedevent-class">
+<h2>MouseButtonReleasedEvent class<a class="headerlink" href="#mousebuttonreleasedevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from MouseButtonEvent</p>
+<section id="id17">
+<h3>Event type<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>MouseButtonReleased</p>
+</section>
+<section id="id18">
+<h3>Functions<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<section id="id19">
+<h4>Constructor(float x, float y, int button)<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<p>Creates the MouseButtonEvent</p>
+</section>
+<section id="id20">
+<h4>std::string ToString()<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<p>Returns “MouseButtonReleasedEvent at pos (MouseX, MouseY)”</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Events.html">CadBerry/Events</a><ul>
+      <li>Previous: <a href="Events.html" title="previous chapter">CadBerry/Events</a></li>
+      <li>Next: <a href="../ImGui/ImGui.html" title="next chapter">CadBerry/ImGui</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Events/MouseEvent.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

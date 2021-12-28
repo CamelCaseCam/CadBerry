@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Rendering/RenderCommand.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Rendering/Renderer.h" href="Renderer.h.html" />
+    <link rel="prev" title="CadBerry/Rendering/GraphicsContext.h" href="GraphicsContext.h.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-rendering-rendercommand-h">
+<h1>CadBerry/Rendering/RenderCommand.h<a class="headerlink" href="#cadberry-rendering-rendercommand-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="RendererAPI.h.html"><span class="doc">CadBerry/Rendering/RendererAPI.h</span></a></p></li>
+<li><p>glm/glm.hpp</p></li>
+</ul>
+</section>
+<section id="rendercommand-class">
+<h2>RenderCommand class<a class="headerlink" href="#rendercommand-class" title="Permalink to this headline">¶</a></h2>
+<p>Used to call renderer commands</p>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="static-void-setclearcolour-const-glm-vec4-colour">
+<h4>static void SetClearColour(const glm::vec4&amp; Colour)<a class="headerlink" href="#static-void-setclearcolour-const-glm-vec4-colour" title="Permalink to this headline">¶</a></h4>
+<p>Sets the screen’s clear colour</p>
+</section>
+<section id="static-void-clear">
+<h4>static void Clear()<a class="headerlink" href="#static-void-clear" title="Permalink to this headline">¶</a></h4>
+<p>Clears the screen</p>
+</section>
+<section id="static-void-drawindexed-const-vertexarray-vertexarray">
+<h4>static void DrawIndexed(const VertexArray* vertexArray)<a class="headerlink" href="#static-void-drawindexed-const-vertexarray-vertexarray" title="Permalink to this headline">¶</a></h4>
+<p>Draws the vertex array</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="static-rendererapi-s-rendererapi">
+<h4>static RendererAPI* s_RendererAPI<a class="headerlink" href="#static-rendererapi-s-rendererapi" title="Permalink to this headline">¶</a></h4>
+<p>The API used by the commands</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Rendering.html">CadBerry/Rendering</a><ul>
+      <li>Previous: <a href="GraphicsContext.h.html" title="previous chapter">CadBerry/Rendering/GraphicsContext.h</a></li>
+      <li>Next: <a href="Renderer.h.html" title="next chapter">CadBerry/Rendering/Renderer.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Rendering/RenderCommand.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

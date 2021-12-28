@@ -1,0 +1,25 @@
+CadBerry/Platform/Windows/WindowsInput.h
+########################################
+Windows-specific input manager
+
+Imports
+=======
+* :doc:`/API/CadBerry/Input.h`
+
+WindowsInput class
+==================
+Inherits from :doc:`CDB::Input </API/CadBerry/Input.h>`
+
+Functions
+---------
+virtual bool IsKeyPressedImpl(int KeyCode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Returns whether a certain key is pressed
+
+virtual bool IsMouseButtonPressedImpl(int MouseButton)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Returns whether a certain mouse button is pressed
+
+virtual Vec2f GetMousePosImpl()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Returns the mouse's position

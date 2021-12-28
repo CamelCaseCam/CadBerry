@@ -1,0 +1,33 @@
+CadBerry/Rendering/RenderTarget.h
+#################################
+The target that the renderer renders to. In OpenGL, this is implemented using an FBO, RenderBuffer, and a texture. CadBerry uses RenderTargets so 
+that you can render to other windows
+
+Imports
+=======
+* :doc:`/API/CadBerry/Core.h`
+* imgui.h
+
+RenderTarget class
+==================
+Functions
+---------
+virtual void Bind()
+^^^^^^^^^^^^^^^^^^^
+Binds the RenderTarget. All subsequent rendering operations will affect this RenderTarget
+
+virtual void Unbind()
+^^^^^^^^^^^^^^^^^^^^^
+Unbinds the RenderTarget. All subsequent rendering operations will affect the main editor window
+
+virtual void Draw(ImVec2 Location, ImVec2 Scale)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Draws the RenderTarget in the ImGui window. Location and Scale are misleading and will be changed, because they're really just the size to draw it. 
+
+virtual void SetAsBackground(ImVec2 Location, ImVec2 Scale)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Supposed to set the RenderTarget as the window's background, but this function is broken and doesn't do anything. 
+
+static RenderTarget* Create()
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creates the API-specific RenderTarget implementation

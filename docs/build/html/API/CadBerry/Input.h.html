@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Input.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CadBerry/KeyCode.h" href="KeyCode.h.html" />
+    <link rel="prev" title="CadBerry/Core.h" href="Core.h.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-input-h">
+<h1>CadBerry/Input.h<a class="headerlink" href="#cadberry-input-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p><a class="reference internal" href="Math.h.html"><span class="doc">CadBerry/Math.h</span></a></p></li>
+<li><p><a class="reference internal" href="KeyCode.h.html"><span class="doc">CadBerry/KeyCode.h</span></a></p></li>
+<li><p><a class="reference internal" href="MouseCode.h.html"><span class="doc">CadBerry/MouseCode.h</span></a></p></li>
+</ul>
+</section>
+<section id="input-class">
+<h2>Input class<a class="headerlink" href="#input-class" title="Permalink to this headline">¶</a></h2>
+<p>Interface for a per-platform input API</p>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="static-bool-iskeypressed-int-keycode">
+<h4>static bool IsKeyPressed(int KeyCode)<a class="headerlink" href="#static-bool-iskeypressed-int-keycode" title="Permalink to this headline">¶</a></h4>
+<p>Returns whether a certain key is down</p>
+</section>
+<section id="static-bool-iskeypressed-keyboard-keycode">
+<h4>static bool IsKeyPressed(Keyboard KeyCode)<a class="headerlink" href="#static-bool-iskeypressed-keyboard-keycode" title="Permalink to this headline">¶</a></h4>
+<p>Returns whether a certain key is down based on the Keyboard enum key code</p>
+</section>
+<section id="static-bool-ismousebuttonpressed-int-mousebutton">
+<h4>static bool IsMouseButtonPressed(int MouseButton)<a class="headerlink" href="#static-bool-ismousebuttonpressed-int-mousebutton" title="Permalink to this headline">¶</a></h4>
+<p>Returns whether a mouse button is being pressed</p>
+</section>
+<section id="static-vec2f-getmousepos">
+<h4>static Vec2f GetMousePos()<a class="headerlink" href="#static-vec2f-getmousepos" title="Permalink to this headline">¶</a></h4>
+<p>Returns the mouse position using the deprecated Vec2f. I will change this to use ImVec2 in the future</p>
+</section>
+<section id="static-void-setinstance-input-i">
+<h4>static void SetInstance(Input* i)<a class="headerlink" href="#static-void-setinstance-input-i" title="Permalink to this headline">¶</a></h4>
+<p>Sets the input API implementation</p>
+</section>
+<section id="bool-iskeypressedimpl">
+<h4>bool IsKeyPressedImpl()<a class="headerlink" href="#bool-iskeypressedimpl" title="Permalink to this headline">¶</a></h4>
+<p>Platform-specific implementation for IsKeyPressed</p>
+</section>
+<section id="bool-ismousebuttonpressedimpl">
+<h4>bool IsMouseButtonPressedImpl()<a class="headerlink" href="#bool-ismousebuttonpressedimpl" title="Permalink to this headline">¶</a></h4>
+<p>Platform-specific implementation for IsMouseButtonPressed</p>
+</section>
+<section id="vec2f-getmouseposimpl">
+<h4>Vec2f GetMousePosImpl()<a class="headerlink" href="#vec2f-getmouseposimpl" title="Permalink to this headline">¶</a></h4>
+<p>Platform-specific implementation for GetMousePos</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="static-input-s-instance">
+<h4>static Input* s_Instance<a class="headerlink" href="#static-input-s-instance" title="Permalink to this headline">¶</a></h4>
+<p>The platform-specific input implementation</p>
+</section>
+</section>
+</section>
+<section id="enum-class-mouse">
+<h2>enum class Mouse<a class="headerlink" href="#enum-class-mouse" title="Permalink to this headline">¶</a></h2>
+<p>Enum of mouse buttons (using button codes defined in <a class="reference internal" href="MouseCode.h.html"><span class="doc">MouseCode.h</span></a>)</p>
+<section id="defines">
+<h3>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h3>
+<p>BUTTON_1: CDB_MOUSE_BUTTON_1
+BUTTON_2: CDB_MOUSE_BUTTON_2
+BUTTON_3: CDB_MOUSE_BUTTON_3
+BUTTON_4: CDB_MOUSE_BUTTON_4
+BUTTON_5: CDB_MOUSE_BUTTON_5
+BUTTON_6: CDB_MOUSE_BUTTON_6
+BUTTON_7: CDB_MOUSE_BUTTON_7
+BUTTON_8: CDB_MOUSE_BUTTON_8
+LAST: CDB_MOUSE_BUTTON_LAST
+LEFT: CDB_MOUSE_BUTTON_LEFT
+RIGHT: CDB_MOUSE_BUTTON_RIGHT
+MIDDLE: CDB_MOUSE_BUTTON_MIDDLE</p>
+</section>
+</section>
+<section id="enum-class-keyboard">
+<h2>enum class Keyboard<a class="headerlink" href="#enum-class-keyboard" title="Permalink to this headline">¶</a></h2>
+<p>Enum of keyboard keys (using keycodes defined in <a class="reference internal" href="KeyCode.h.html"><span class="doc">KeyCode.h</span></a>)</p>
+<section id="id1">
+<h3>Defines<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>SPACE: CDB_KEY_SPACE
+APOSTROPHE: CDB_KEY_APOSTROPHE
+COMMA: CDB_KEY_COMMA
+MINUS: CDB_KEY_COMMA
+PERIOD: CDB_KEY_PERIOD
+SLASH: CDB_KEY_SLASH
+ZERO: CDB_KEY_0
+ONE: CDB_KEY_1
+TWO: CDB_KEY_2
+THREE: CDB_KEY_3
+FOUR: CDB_KEY_4
+FIVE: CDB_KEY_5
+SIX: CDB_KEY_6
+SEVEN: CDB_KEY_7
+EIGHT: CDB_KEY_8
+NINE: CDB_KEY_9
+SEMICOLON: CDB_KEY_SEMICOLON
+EQUAL: CDB_KEY_EQUAL
+A: CDB_KEY_A
+B: CDB_KEY_B
+C: CDB_KEY_C
+D: CDB_KEY_D
+E: CDB_KEY_E
+F: CDB_KEY_F
+G: CDB_KEY_G
+H: CDB_KEY_H
+I: CDB_KEY_I
+J: CDB_KEY_J
+K: CDB_KEY_K
+L: CDB_KEY_L
+M: CDB_KEY_M
+N: CDB_KEY_N
+O: CDB_KEY_O
+P: CDB_KEY_P
+Q: CDB_KEY_Q
+R: CDB_KEY_R
+S: CDB_KEY_S
+T: CDB_KEY_T
+U: CDB_KEY_U
+V: CDB_KEY_V
+W: CDB_KEY_W
+X: CDB_KEY_X
+Y: CDB_KEY_Y
+Z: CDB_KEY_Z
+LEFT_BRACKET: CDB_KEY_LEFT_BRACKET
+BACKSLASH: CDB_KEY_BACKSLASH
+RIGHT_BRACKET: CDB_KEY_RIGHT_BRACKET
+GRAVE_ACCENT: CDB_KEY_GRAVE_ACCENT
+WORLD_1: CDB_KEY_WORLD_1
+WORLD_2: CDB_KEY_WORLD_2</p>
+<p>ESCAPE: CDB_KEY_ESCAPE
+ENTER: CDB_KEY_ENTER
+TAB: CDB_KEY_TAB
+BACKSPACE: CDB_KEY_BACKSPACE
+INSERT: CDB_KEY_INSERT
+DEL: CDB_KEY_DELETE
+RIGHT: CDB_KEY_RIGHT
+LEFT: CDB_KEY_LEFT
+DOWN: CDB_KEY_DOWN
+UP: CDB_KEY_UP
+PAGE_UP: CDB_KEY_PAGE_UP
+PAGE_DOWN: CDB_KEY_PAGE_DOWN
+HOME: CDB_KEY_HOME
+END: CDB_KEY_END
+CAPS_LOCK: CDB_KEY_CAPS_LOCK
+SCROLL_LOCK: CDB_KEY_SCROLL_LOCK
+NUM_LOCK: CDB_KEY_NUM_LOCK
+PRINT_SCREEN: CDB_KEY_PRINT_SCREEN
+PAUSE: CDB_KEY_PAUSE
+F1: CDB_KEY_F1
+F2: CDB_KEY_F2
+F3: CDB_KEY_F3
+F4: CDB_KEY_F4
+F5: CDB_KEY_F5
+F6: CDB_KEY_F6
+F7: CDB_KEY_F7
+F8: CDB_KEY_F8
+F9: CDB_KEY_F9
+F10: CDB_KEY_F10
+F11: CDB_KEY_F11
+F12: CDB_KEY_F12
+F13: CDB_KEY_F13
+F14: CDB_KEY_F14
+F15: CDB_KEY_F15
+F16: CDB_KEY_F16
+F17: CDB_KEY_F17
+F18: CDB_KEY_F18
+F19: CDB_KEY_F19
+F20: CDB_KEY_F20
+F21: CDB_KEY_F21
+F22: CDB_KEY_F22
+F23: CDB_KEY_F23
+F24: CDB_KEY_F24
+F25: CDB_KEY_F25
+KP_0: CDB_KEY_KP_0
+KP_1: CDB_KEY_KP_1
+KP_2: CDB_KEY_KP_2
+KP_3: CDB_KEY_KP_3
+KP_4: CDB_KEY_KP_4
+KP_5: CDB_KEY_KP_5
+KP_6: CDB_KEY_KP_6
+KP_7: CDB_KEY_KP_7
+KP_8: CDB_KEY_KP_8
+KP_9: CDB_KEY_KP_9
+KP_DECIMAL: CDB_KEY_KP_DECIMAL
+KP_DIVIDE: CDB_KEY_KP_DIVIDE
+KP_MULTIPLY: CDB_KEY_KP_MULTIPLY
+KP_SUBTRACT: CDB_KEY_KP_SUBTRACT
+KP_ADD: CDB_KEY_KP_ADD
+KP_ENTER: CDB_KEY_KP_ENTER
+KP_EQUAL: CDB_KEY_KP_EQUAL
+LEFT_SHIFT: CDB_KEY_LEFT_SHIFT
+LEFT_CONTROL: CDB_KEY_LEFT_CONTROL
+LEFT_ALT: CDB_KEY_LEFT_ALT
+LEFT_SUPER: CDB_KEY_LEFT_SUPER
+RIGHT_SHIFT: CDB_KEY_RIGHT_SHIFT
+RIGHT_CONTROL: CDB_KEY_RIGHT_CONTROL
+RIGHT_ALT: CDB_KEY_RIGHT_ALT
+RIGHT_SUPER: CDB_KEY_RIGHT_SUPER
+MENU: CDB_KEY_MENU,</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="CadBerry.html">CadBerry folder</a><ul>
+      <li>Previous: <a href="Core.h.html" title="previous chapter">CadBerry/Core.h</a></li>
+      <li>Next: <a href="KeyCode.h.html" title="next chapter">CadBerry/KeyCode.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/API/CadBerry/Input.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Application.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CadBerry/Core.h" href="Core.h.html" />
+    <link rel="prev" title="CadBerry folder" href="CadBerry.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-application-h">
+<h1>CadBerry/Application.h<a class="headerlink" href="#cadberry-application-h" title="Permalink to this headline">¶</a></h1>
+<p>CadBerry’s main application class</p>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p><a class="reference internal" href="Window.h.html"><span class="doc">CadBerry/Window.h</span></a></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Events/ApplicationEvent.h</span></p></li>
+<li><p><a class="reference internal" href="LayerStack.h.html"><span class="doc">CadBerry/LayerStack.h</span></a></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/ImGui/ImGuiLayer.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Project/Project.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Threading/ThreadPool.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Module/Viewport.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Module/Module.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/BuildEngine/BuildEngine.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Rendering/Shader.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Rendering/Buffer.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Rendering/VertexArray.h</span></p></li>
+<li><p><span class="xref std std-doc">/API/CadBerry/Utils/memory.h</span></p></li>
+</ul>
+</section>
+<section id="application-class">
+<h2>Application class<a class="headerlink" href="#application-class" title="Permalink to this headline">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="constructor">
+<h4>Constructor<a class="headerlink" href="#constructor" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>Initializes the log</p></li>
+<li><p>Creates a new GuiLayer and thread pool</p></li>
+<li><p>Loads the modules from the Modules folder</p></li>
+<li><p>Loads the BuildEngine from the build folder</p></li>
+</ol>
+</section>
+<section id="destructor">
+<h4>Destructor<a class="headerlink" href="#destructor" title="Permalink to this headline">¶</a></h4>
+<p>Calls the thread pool’s CompleteTasksAndDelete function which runs any queued tasks and then deletes the thread pool. Everything else is
+automatically deleted by scoped_ptr’s destructor</p>
+</section>
+<section id="void-getproject">
+<h4>void GetProject()<a class="headerlink" href="#void-getproject" title="Permalink to this headline">¶</a></h4>
+<p>Either loads an existing project from the disk or prompts the user to create a new one.</p>
+</section>
+<section id="void-starteditor">
+<h4>void StartEditor()<a class="headerlink" href="#void-starteditor" title="Permalink to this headline">¶</a></h4>
+<p>Prints that CadBerry is starting and calls the private Main function</p>
+</section>
+<section id="void-onevent-event-e">
+<h4>void OnEvent(Event&amp; e)<a class="headerlink" href="#void-onevent-event-e" title="Permalink to this headline">¶</a></h4>
+<p>Dispatches the event to the layers until one of them sets Event.IsHandled to true</p>
+</section>
+<section id="void-pushlayer-layer-layer">
+<h4>void PushLayer(Layer* layer)<a class="headerlink" href="#void-pushlayer-layer-layer" title="Permalink to this headline">¶</a></h4>
+<p>Pushes a layer to the LayerStack</p>
+</section>
+<section id="void-pushoverlay-layer-overlay">
+<h4>void PushOverlay(Layer* overlay)<a class="headerlink" href="#void-pushoverlay-layer-overlay" title="Permalink to this headline">¶</a></h4>
+<p>Pushes an overlay to the LayerStack</p>
+</section>
+<section id="void-precompilefile-std-string-path-std-string-prebuildpath">
+<h4>void PrecompileFile(std::string Path, std::string PreBuildPath)<a class="headerlink" href="#void-precompilefile-std-string-path-std-string-prebuildpath" title="Permalink to this headline">¶</a></h4>
+<p>Instructs the build engine to precompile the file at the local path Path, with PreBuildPath as the output directory</p>
+</section>
+<section id="static-application-get">
+<h4>static Application&amp; Get()<a class="headerlink" href="#static-application-get" title="Permalink to this headline">¶</a></h4>
+<p>Returns a reference to the application</p>
+</section>
+<section id="window-getwindow">
+<h4>Window&amp; GetWindow()<a class="headerlink" href="#window-getwindow" title="Permalink to this headline">¶</a></h4>
+<p>Returns the open window</p>
+</section>
+<section id="void-addviewport-viewport-viewport">
+<h4>void AddViewport(Viewport* viewport)<a class="headerlink" href="#void-addviewport-viewport-viewport" title="Permalink to this headline">¶</a></h4>
+<p>Adds a viewport to the viewport layer</p>
+</section>
+<section id="void-main">
+<h4>void Main()<a class="headerlink" href="#void-main" title="Permalink to this headline">¶</a></h4>
+<p>The core editor loop. Main does the following things:</p>
+<ol class="arabic simple">
+<li><p>Sets PreBuildDir to the absolute path to the prebuild directory</p></li>
+<li><p>Creates the editor window</p></li>
+<li><p>Initializes the ImGuiLayer and the ViewportLayer</p></li>
+<li><p>Enters the core editor loop</p></li>
+</ol>
+<p>The core editor loop does this:</p>
+<ol class="arabic simple">
+<li><p>Calls the window’s OnUpdate function</p></li>
+<li><p>Calls each of the layers’ OnUpdate functions</p></li>
+<li><p>Sets up the next frame (using ImGui)</p></li>
+<li><p>Calls each of the layers’ Draw functions</p></li>
+<li><p>Calls each of the layers’ OnImGuiRender functions</p></li>
+<li><p>Shows the build dialog if the build dialog is active</p></li>
+<li><p>Cleans up, swaps buffers, and checks if it needs to exit</p></li>
+</ol>
+</section>
+<section id="void-checkexit">
+<h4>void CheckExit()<a class="headerlink" href="#void-checkexit" title="Permalink to this headline">¶</a></h4>
+<p>CadBerry can’t exit in the middle of a frame because that would cause problems, so when something tries to exit the window it sets ShouldExit to
+true. CheckExit is called at the end of the frame, and exits the window if ShouldExit is true.</p>
+</section>
+<section id="bool-windowcloseevent-windowcloseevent-e">
+<h4>bool WindowCloseEvent(WindowCloseEvent&amp; e)<a class="headerlink" href="#bool-windowcloseevent-windowcloseevent-e" title="Permalink to this headline">¶</a></h4>
+<p>Handles WindowCloseEvents by setting ShouldExit to true.</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="scoped-ptr-project-openproject">
+<h4>scoped_ptr&lt;Project&gt; OpenProject<a class="headerlink" href="#scoped-ptr-project-openproject" title="Permalink to this headline">¶</a></h4>
+<p>Scoped pointer to the currently open project</p>
+</section>
+<section id="scoped-ptr-buildengine-m-buildengine">
+<h4>scoped_ptr&lt;BuildEngine&gt; m_BuildEngine<a class="headerlink" href="#scoped-ptr-buildengine-m-buildengine" title="Permalink to this headline">¶</a></h4>
+<p>Scoped pointer to the build engine. The build engine should exist for the lifetime of the program, but using scoped_ptr makes it clear thet it’s
+owned by the application class</p>
+</section>
+<section id="std-vector-module-modules">
+<h4>std::vector&lt;Module*&gt; Modules<a class="headerlink" href="#std-vector-module-modules" title="Permalink to this headline">¶</a></h4>
+<p>A vector of all the modules</p>
+</section>
+<section id="std-string-pathtoexe">
+<h4>std::string PathToEXE<a class="headerlink" href="#std-string-pathtoexe" title="Permalink to this headline">¶</a></h4>
+<p>The path to the executable, given by the WhereAmI library</p>
+</section>
+<section id="int-dirnamelength">
+<h4>int DirNameLength<a class="headerlink" href="#int-dirnamelength" title="Permalink to this headline">¶</a></h4>
+<p>The length of PathToEXE, WhereAmI gives the path as a non null terminated char array, so we have to convert it to a string</p>
+</section>
+<section id="std-string-prebuilddir">
+<h4>std::string PreBuildDir<a class="headerlink" href="#std-string-prebuilddir" title="Permalink to this headline">¶</a></h4>
+<p>The absolute path to the prebuild directory</p>
+</section>
+<section id="bool-shouldexit">
+<h4>bool ShouldExit<a class="headerlink" href="#bool-shouldexit" title="Permalink to this headline">¶</a></h4>
+<p>Should the application exit at the end of this frame?</p>
+</section>
+<section id="bool-newproject">
+<h4>bool NewProject<a class="headerlink" href="#bool-newproject" title="Permalink to this headline">¶</a></h4>
+<p>should we create a new project or check if one already exists</p>
+</section>
+<section id="bool-showbuildwindow">
+<h4>bool ShowBuildWindow<a class="headerlink" href="#bool-showbuildwindow" title="Permalink to this headline">¶</a></h4>
+<p>Should we display the build window</p>
+</section>
+<section id="imguilayer-guilayer">
+<h4>ImGuiLayer* GuiLayer<a class="headerlink" href="#imguilayer-guilayer" title="Permalink to this headline">¶</a></h4>
+<p>Pointer to the GUI layer (owned by the layer stack)</p>
+</section>
+<section id="viewportlayer-viewports">
+<h4>ViewportLayer* Viewports<a class="headerlink" href="#viewportlayer-viewports" title="Permalink to this headline">¶</a></h4>
+<p>Pointer to the viewport layer (owned by the layer stack)</p>
+</section>
+<section id="threadpool-m-threadpool">
+<h4>ThreadPool* m_ThreadPool<a class="headerlink" href="#threadpool-m-threadpool" title="Permalink to this headline">¶</a></h4>
+<p>Pointer to the thread pool. The thread pool is owned by itself. Don’t create a thread pool using new, instead use ThreadPool::Get(). If one
+doesn’t exist, it will create it for you. Likewise, never delete the thread pool. Instead, call CompleteTasksAndDelete. This prevents new tasks
+from being added and waits for all queued tasks to be completed and deletes itself.</p>
+</section>
+<section id="static-application-s-instance">
+<h4>static Application* s_Instance<a class="headerlink" href="#static-application-s-instance" title="Permalink to this headline">¶</a></h4>
+<p>Global application instance</p>
+</section>
+<section id="window-editorwindow">
+<h4>Window* EditorWindow<a class="headerlink" href="#window-editorwindow" title="Permalink to this headline">¶</a></h4>
+<p>A pointer to the editor window. Using a raw pointer here might seem a little iffy, but EditorWindow lives for the lifetime of the program and has
+to be deleted before the program can exit. If EditorWindow leaks, the program’s still running.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="CadBerry.html">CadBerry folder</a><ul>
+      <li>Previous: <a href="CadBerry.html" title="previous chapter">CadBerry folder</a></li>
+      <li>Next: <a href="Core.h.html" title="next chapter">CadBerry/Core.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/API/CadBerry/Application.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

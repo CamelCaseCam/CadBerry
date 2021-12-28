@@ -1,0 +1,77 @@
+CadBerry/Window.h
+#################
+Header file containing a window interface that is implemented per platform
+
+Classes and Structs
+===================
+WindowProps
+-----------
+Contains window properties. Not exported to the dll, can only be used from within CadBerry
+
+Fields
+^^^^^^
+std::string Title
+"""""""""""""""""
+The window's title
+
+unsigned int Width
+""""""""""""""""""
+The window's width
+
+unsigned int Height
+"""""""""""""""""""
+The window's height
+
+Constructor
+"""""""""""
+The Constuctor has no required arguements, but it optionally accepts the window's width, height, and title. 
+
+Window
+------
+CadBerry window interface. Exported to the dll
+
+Defines EventCallbackFn as std::function<void(Event&)>
+
+Functions
+^^^^^^^^^
+void OnUpdate()
+"""""""""""""""
+Pure virtual function called once per frame
+
+unsigned int GetWidth()
+"""""""""""""""""""""""
+Pure virtual function to get the width of the window
+
+unsigned int GetHeight()
+""""""""""""""""""""""""
+Pure virtual function to get the height of the window
+
+Vec2f GetMousePos()
+"""""""""""""""""""
+Function using CadBerry's deprecated vector type to give the mouse position. This will be changed to use ImVec2 in the future. 
+
+void SetEventCallback(EventCallbackFn)
+""""""""""""""""""""""""""""""""""""""
+Function to set the event callback function. This function should be called on every event. 
+
+void SetVSync(bool)
+"""""""""""""""""""
+Turns on or off VSync depending on the parameter
+
+bool IsVSync()
+""""""""""""""
+returns whether VSync is enabled
+
+void* GetNativeWindow()
+"""""""""""""""""""""""
+returns a void pointer to the window implementation
+
+static Window* Create(WindowProps&)
+"""""""""""""""""""""""""""""""""""
+Creates a window using whatever implementation is specified
+
+Fields
+^^^^^^
+LayerStack m_LayerStack
+"""""""""""""""""""""""
+The LayerStack tied to this window

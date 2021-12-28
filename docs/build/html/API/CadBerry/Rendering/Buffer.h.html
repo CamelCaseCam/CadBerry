@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Rendering/Buffer.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Rendering/GraphicsContext.h" href="GraphicsContext.h.html" />
+    <link rel="prev" title="CadBerry/Rendering" href="Rendering.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-rendering-buffer-h">
+<h1>CadBerry/Rendering/Buffer.h<a class="headerlink" href="#cadberry-rendering-buffer-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../Core.h.html"><span class="doc">CadBerry/Core.h</span></a></p></li>
+<li><p><a class="reference internal" href="../Log.h.html"><span class="doc">CadBerry/Log.h</span></a></p></li>
+<li><p><a class="reference internal" href="../../cdbpch.h.html"><span class="doc">CadBerry pch file</span></a></p></li>
+</ul>
+</section>
+<section id="enum-class-shaderdatatype">
+<h2>enum class ShaderDataType<a class="headerlink" href="#enum-class-shaderdatatype" title="Permalink to this headline">¶</a></h2>
+<p>The data type of the buffer elements</p>
+<section id="contains">
+<h3>Contains<a class="headerlink" href="#contains" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>None</p></li>
+<li><p>Float</p></li>
+<li><p>Float2</p></li>
+<li><p>Float3</p></li>
+<li><p>Float4</p></li>
+<li><p>Mat3 (3x3 matrix)</p></li>
+<li><p>Mat4 (4x4 matrix)</p></li>
+<li><p>Int</p></li>
+<li><p>Int2</p></li>
+<li><p>Int3</p></li>
+<li><p>Int4</p></li>
+<li><p>Bool</p></li>
+</ul>
+</section>
+</section>
+<section id="uint32-t-shaderdatatypesize-shaderdatatype-datatype">
+<h2>uint32_t ShaderDataTypeSize(ShaderDataType DataType)<a class="headerlink" href="#uint32-t-shaderdatatypesize-shaderdatatype-datatype" title="Permalink to this headline">¶</a></h2>
+<p>Returns the size (in bytes) of the DataType</p>
+</section>
+<section id="bufferelement-struct">
+<h2>BufferElement struct<a class="headerlink" href="#bufferelement-struct" title="Permalink to this headline">¶</a></h2>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="shaderdatatype-elementtype">
+<h4>ShaderDataType ElementType<a class="headerlink" href="#shaderdatatype-elementtype" title="Permalink to this headline">¶</a></h4>
+<p>The element’s type</p>
+</section>
+<section id="uint32-t-offset">
+<h4>uint32_t Offset<a class="headerlink" href="#uint32-t-offset" title="Permalink to this headline">¶</a></h4>
+<p>The element’s offset</p>
+</section>
+<section id="uint32-t-size">
+<h4>uint32_t Size<a class="headerlink" href="#uint32-t-size" title="Permalink to this headline">¶</a></h4>
+<p>The element’s size (in bytes)</p>
+</section>
+<section id="std-string-name">
+<h4>std::string Name<a class="headerlink" href="#std-string-name" title="Permalink to this headline">¶</a></h4>
+<p>The element’s name</p>
+</section>
+<section id="bool-normalized">
+<h4>bool Normalized<a class="headerlink" href="#bool-normalized" title="Permalink to this headline">¶</a></h4>
+<p>Is the data normalized?</p>
+</section>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="uint32-t-getelementcount">
+<h4>uint32_t GetElementCount()<a class="headerlink" href="#uint32-t-getelementcount" title="Permalink to this headline">¶</a></h4>
+<p>Returns the number of whatever OpenGL primitive type (float, int, bool) that is used. For example, Float4 returns 4 because it’s 4 floats</p>
+</section>
+</section>
+</section>
+<section id="bufferlayout-class">
+<h2>BufferLayout class<a class="headerlink" href="#bufferlayout-class" title="Permalink to this headline">¶</a></h2>
+<p>This class provides iterators, so you can iterate through it like a vector</p>
+<section id="id1">
+<h3>Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="const-std-vector-bufferelement-getelements">
+<h4>const std::vector&lt;BufferElement&gt;&amp; GetElements()<a class="headerlink" href="#const-std-vector-bufferelement-getelements" title="Permalink to this headline">¶</a></h4>
+<p>Returns the elements in the buffer</p>
+</section>
+<section id="uint32-t-getstride">
+<h4>uint32_t GetStride()<a class="headerlink" href="#uint32-t-getstride" title="Permalink to this headline">¶</a></h4>
+<p>Returns the stride between verticies</p>
+</section>
+<section id="void-calculateoffsetsandstride">
+<h4>void CalculateOffsetsAndStride()<a class="headerlink" href="#void-calculateoffsetsandstride" title="Permalink to this headline">¶</a></h4>
+<p>Calculates each element’s offset and calculates the stride between each vertex</p>
+</section>
+</section>
+<section id="id2">
+<h3>Fields<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<section id="uint32-t-stride">
+<h4>uint32_t Stride<a class="headerlink" href="#uint32-t-stride" title="Permalink to this headline">¶</a></h4>
+<p>The stride between each vertex</p>
+</section>
+<section id="std-vector-bufferelement-elements">
+<h4>std::vector&lt;BufferElement&gt; Elements<a class="headerlink" href="#std-vector-bufferelement-elements" title="Permalink to this headline">¶</a></h4>
+<p>The elements of the buffer</p>
+</section>
+</section>
+</section>
+<section id="vertexbuffer-class">
+<h2>VertexBuffer class<a class="headerlink" href="#vertexbuffer-class" title="Permalink to this headline">¶</a></h2>
+<p>Interface for API-specific vertex buffer implementation</p>
+<section id="id3">
+<h3>Functions<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<section id="virtual-void-bind">
+<h4>virtual void Bind()<a class="headerlink" href="#virtual-void-bind" title="Permalink to this headline">¶</a></h4>
+<p>Binds the vertex buffer</p>
+</section>
+<section id="virtual-void-unbind">
+<h4>virtual void Unbind()<a class="headerlink" href="#virtual-void-unbind" title="Permalink to this headline">¶</a></h4>
+<p>Unbinds the vertex buffer</p>
+</section>
+<section id="virtual-void-setlayout-const-bufferlayout-layout">
+<h4>virtual void SetLayout(const BufferLayout&amp; Layout)<a class="headerlink" href="#virtual-void-setlayout-const-bufferlayout-layout" title="Permalink to this headline">¶</a></h4>
+<p>Sets the vertex buffer’s layout</p>
+</section>
+<section id="static-vertexbuffer-create-uint32-t-size-float-vertices">
+<h4>static VertexBuffer* Create(uint32_t size, float* vertices)<a class="headerlink" href="#static-vertexbuffer-create-uint32-t-size-float-vertices" title="Permalink to this headline">¶</a></h4>
+<p>Creates an API-specific vertex buffer</p>
+</section>
+</section>
+</section>
+<section id="indexbuffer-class">
+<h2>IndexBuffer class<a class="headerlink" href="#indexbuffer-class" title="Permalink to this headline">¶</a></h2>
+<p>Interface for API-specific index buffer implementation</p>
+<section id="id4">
+<h3>Functions<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<section id="id5">
+<h4>virtual void Bind()<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>Binds the index buffer</p>
+</section>
+<section id="id6">
+<h4>virtual void Unbind()<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>Unbinds the index buffer</p>
+</section>
+<section id="virtual-uint32-t-getcount">
+<h4>virtual uint32_t GetCount()<a class="headerlink" href="#virtual-uint32-t-getcount" title="Permalink to this headline">¶</a></h4>
+<p>Returns the number of indices</p>
+</section>
+<section id="static-indexbuffer-create-uint32-t-count-uint32-t-indices">
+<h4>static IndexBuffer* Create(uint32_t count, uint32_t* indices)<a class="headerlink" href="#static-indexbuffer-create-uint32-t-count-uint32-t-indices" title="Permalink to this headline">¶</a></h4>
+<p>Creates an API-specific index buffer</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Rendering.html">CadBerry/Rendering</a><ul>
+      <li>Previous: <a href="Rendering.html" title="previous chapter">CadBerry/Rendering</a></li>
+      <li>Next: <a href="GraphicsContext.h.html" title="next chapter">CadBerry/Rendering/GraphicsContext.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Rendering/Buffer.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

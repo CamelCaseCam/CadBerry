@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>GIL.HelperFunctions &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing other GIL files" href="Import.html" />
+    <link rel="prev" title="Libraries" href="Libs.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="gil-helperfunctions">
+<h1>GIL.HelperFunctions<a class="headerlink" href="#gil-helperfunctions" title="Permalink to this headline">¶</a></h1>
+<p>The HelperFunctions class contains a number of functions that you’ll probably need to write GIL C#
+libraries. Below is a list of everything it contains.</p>
+<section id="helperfunctions-writewarning-string">
+<h2>HelperFunctions.WriteWarning(string)<a class="headerlink" href="#helperfunctions-writewarning-string" title="Permalink to this headline">¶</a></h2>
+<p>Writes the message to the console in yellow.</p>
+</section>
+<section id="helperfunctions-writeerror-string">
+<h2>HelperFunctions.WriteError(string)<a class="headerlink" href="#helperfunctions-writeerror-string" title="Permalink to this headline">¶</a></h2>
+<p>Writes the message to the console in red and exits the program</p>
+</section>
+<section id="helperfunctions-getend-token-or-list-token-int">
+<h2>HelperFunctions.GetEnd(Token[] or List&lt;Token&gt;, int)<a class="headerlink" href="#helperfunctions-getend-token-or-list-token-int" title="Permalink to this headline">¶</a></h2>
+<p>Returns the index of the closing curly bracket corresponding to the current one</p>
+</section>
+<section id="helperfunctions-getargs-string">
+<h2>HelperFunctions.GetArgs(string)<a class="headerlink" href="#helperfunctions-getargs-string" title="Permalink to this headline">¶</a></h2>
+<p>Parses the string to command line arguments</p>
+</section>
+<section id="helperfunctions-getcomplement-string">
+<h2>HelperFunctions.GetComplement(string)<a class="headerlink" href="#helperfunctions-getcomplement-string" title="Permalink to this headline">¶</a></h2>
+<p>Returns the complement of a sequence of RNA or DNA</p>
+</section>
+<section id="helperfunctions-getparams-token-or-list-token">
+<h2>HelperFunctions.GetParams(Token[] or List&lt;Token&gt;)<a class="headerlink" href="#helperfunctions-getparams-token-or-list-token" title="Permalink to this headline">¶</a></h2>
+<p>Takes a list or array of Tokens and returns any non-parameter Tokens and a Params object as a tuple</p>
+</section>
+<section id="helperfunctions-getaminos-token">
+<h2>HelperFunctions.GetAminos(Token[])<a class="headerlink" href="#helperfunctions-getaminos-token" title="Permalink to this headline">¶</a></h2>
+<p>Extracts all amino acid characters from a Token array. If there’s non amino acid characters and you
+didn’t pass Unsafe:true as a parameter, it will throw an error (using HelperFunctions.WriteError) with all
+the illegal characters. If Unsafe is true, it’ll return non amino acid characters, so only do this if you
+know the input’s safe</p>
+</section>
+<section id="helperfunctions-verifyaminos-string">
+<h2>HelperFunctions.VerifyAminos(string)<a class="headerlink" href="#helperfunctions-verifyaminos-string" title="Permalink to this headline">¶</a></h2>
+<p>Makes sure that all characters in the string are valid amino acids</p>
+</section>
+<section id="helperfunctions-aminoletters">
+<h2>HelperFunctions.AminoLetters<a class="headerlink" href="#helperfunctions-aminoletters" title="Permalink to this headline">¶</a></h2>
+<p>A list of all the valid amino acid letter codes</p>
+</section>
+</section>
+<section id="params-class">
+<h1>Params class<a class="headerlink" href="#params-class" title="Permalink to this headline">¶</a></h1>
+<p>A collection of parameters returned by HelperFunctions.GetParams()</p>
+<section id="params-add-string-name-string-value">
+<h2>Params.Add(string Name, string Value)<a class="headerlink" href="#params-add-string-name-string-value" title="Permalink to this headline">¶</a></h2>
+<p>Adds a parameter with the name <code class="docutils literal notranslate"><span class="pre">Name</span></code> and value <code class="docutils literal notranslate"><span class="pre">Value</span></code> to the object if that parameter doesn’t exist,
+otherwise sets parameter <code class="docutils literal notranslate"><span class="pre">Name</span></code> to <code class="docutils literal notranslate"><span class="pre">Value</span></code></p>
+</section>
+<section id="params-get-name-throwonfail-false-errormessage">
+<h2>Params.Get(Name, ThrowOnFail = false, ErrorMessage = “”)<a class="headerlink" href="#params-get-name-throwonfail-false-errormessage" title="Permalink to this headline">¶</a></h2>
+<p>If a parameter with name <code class="docutils literal notranslate"><span class="pre">Name</span></code> exists, returns the parameter’s value. Otherwise, it throws the error
+message <code class="docutils literal notranslate"><span class="pre">ErrorMessage</span></code> if ThrowOnFail is true or returns an empty string if it is false. If ThrowOnFail
+is an empty string, it throws the error message <code class="docutils literal notranslate"><span class="pre">You</span> <span class="pre">must</span> <span class="pre">provide</span> <span class="pre">a</span> <span class="pre">value</span> <span class="pre">for</span> <span class="pre">parameter</span> <span class="pre">&quot;{Param}&quot;</span></code></p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../GIL.html">GIL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../AminoSequence.html">AminoSequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Comments.html">Comments in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html">Error messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html#errors">Errors:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../From.html">From keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Operations.html">Operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Regions.html">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sequence.html">Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Target%20organisms.html">Target organisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Target%20organisms.html#organism-names">Organism names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Target%20organisms.html#adding-support-for-other-organisms">Adding support for other organisms</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Libs.html">Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">What I’m working on</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../GIL.html">GIL</a><ul>
+  <li><a href="Libs.html">Libraries</a><ul>
+      <li>Previous: <a href="Libs.html" title="previous chapter">Libraries</a></li>
+      <li>Next: <a href="Import.html" title="next chapter">Importing other GIL files</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/GIL/Libraries/HelperFunctions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

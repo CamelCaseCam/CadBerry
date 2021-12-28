@@ -1,0 +1,24 @@
+CadBerry/Rendering/Shader.h
+###########################
+Interface for API-specific shader implementation
+
+Imports
+=======
+* :doc:`/API/cdbpch.h`
+* :doc:`/API/CadBerry/Core.h`
+
+Shader class
+============
+Functions
+---------
+virtual void Bind()
+^^^^^^^^^^^^^^^^^^^
+Binds the shader
+
+virtual void Unbind()
+^^^^^^^^^^^^^^^^^^^^^
+Unbinds the shader
+
+static Shader* Create(const std::string& VertSrc, const std::string& FragSrc)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creates an API-specific vertex shader and fragment shader from their source code

@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Platform/Windows/WindowWindow.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="CadBerry/Project" href="../../Project/Project.html" />
+    <link rel="prev" title="CadBerry/Platform/Windows/WindowsInput.h" href="WindowsInput.h.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-platform-windows-windowwindow-h">
+<h1>CadBerry/Platform/Windows/WindowWindow.h<a class="headerlink" href="#cadberry-platform-windows-windowwindow-h" title="Permalink to this headline">¶</a></h1>
+<p>Windows-specific window implementation</p>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../Window.h.html"><span class="doc">CadBerry/Window.h</span></a></p></li>
+<li><p><a class="reference internal" href="../../Math.h.html"><span class="doc">CadBerry/Math.h</span></a></p></li>
+<li><p><a class="reference internal" href="../../Rendering/GraphicsContext.h.html"><span class="doc">CadBerry/Rendering/GraphicsContext.h</span></a></p></li>
+<li><p>GLFW/glfw3.h</p></li>
+</ul>
+</section>
+<section id="windowswindow-class">
+<h2>WindowsWindow class<a class="headerlink" href="#windowswindow-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from <a class="reference internal" href="../../Window.h.html"><span class="doc">CDB::Window</span></a></p>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="constructor-const-windowprops-props">
+<h4>Constructor(const WindowProps&amp; props)<a class="headerlink" href="#constructor-const-windowprops-props" title="Permalink to this headline">¶</a></h4>
+<p>Creates a new window and initializes glfw</p>
+</section>
+<section id="destructor">
+<h4>Destructor<a class="headerlink" href="#destructor" title="Permalink to this headline">¶</a></h4>
+<p>Closes the window, but keeps glfw active</p>
+</section>
+<section id="void-onupdate">
+<h4>void OnUpdate()<a class="headerlink" href="#void-onupdate" title="Permalink to this headline">¶</a></h4>
+<p>Polls events, swaps buffers, and clears the screen</p>
+</section>
+<section id="unsigned-int-getwidth">
+<h4>unsigned int GetWidth()<a class="headerlink" href="#unsigned-int-getwidth" title="Permalink to this headline">¶</a></h4>
+<p>Returns the width of the window</p>
+</section>
+<section id="unsigned-int-getheight">
+<h4>unsigned int GetHeight()<a class="headerlink" href="#unsigned-int-getheight" title="Permalink to this headline">¶</a></h4>
+<p>Returns the height of the window</p>
+</section>
+<section id="vec2f-getmousepos">
+<h4>Vec2f GetMousePos()<a class="headerlink" href="#vec2f-getmousepos" title="Permalink to this headline">¶</a></h4>
+<p>Returns the position of the mouse</p>
+</section>
+<section id="void-seteventcallback-const-eventcallbackfn-callback">
+<h4>void SetEventCallback(const EventCallbackFn&amp; callback)<a class="headerlink" href="#void-seteventcallback-const-eventcallbackfn-callback" title="Permalink to this headline">¶</a></h4>
+<p>Sets the event callback function</p>
+</section>
+<section id="void-setvsync-bool-enabled">
+<h4>void SetVSync(bool enabled)<a class="headerlink" href="#void-setvsync-bool-enabled" title="Permalink to this headline">¶</a></h4>
+<p>Turns VSync on or off depending on the value of enabled</p>
+</section>
+<section id="bool-isvsync">
+<h4>bool IsVSync()<a class="headerlink" href="#bool-isvsync" title="Permalink to this headline">¶</a></h4>
+<p>Returns whether VSync is on or off</p>
+</section>
+<section id="virtual-void-getnativewindow">
+<h4>virtual void* GetNativeWindow()<a class="headerlink" href="#virtual-void-getnativewindow" title="Permalink to this headline">¶</a></h4>
+<p>Returns a pointer to this window</p>
+</section>
+<section id="void-init-const-windowprops-props">
+<h4>void Init(const WindowProps&amp; props)<a class="headerlink" href="#void-init-const-windowprops-props" title="Permalink to this headline">¶</a></h4>
+<p>If glwf isn’t initialized, it initializes glfw. After that, it creates the window and creates a new OpenGL context</p>
+</section>
+<section id="void-shutdown-bool-preserveglfw-false">
+<h4>void Shutdown(bool PreserveGLFW = false)<a class="headerlink" href="#void-shutdown-bool-preserveglfw-false" title="Permalink to this headline">¶</a></h4>
+<p>Shuts down the window. If PreserveGLFW is false, it will shut down glfw</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="glfwwindow-m-window">
+<h4>GLFWwindow* m_Window<a class="headerlink" href="#glfwwindow-m-window" title="Permalink to this headline">¶</a></h4>
+<p>The actual window</p>
+</section>
+<section id="graphicscontext-m-graphicscontext">
+<h4>GraphicsContext* m_GraphicsContext<a class="headerlink" href="#graphicscontext-m-graphicscontext" title="Permalink to this headline">¶</a></h4>
+<p>The graphics context (in this case, an OpenGL context)</p>
+</section>
+<section id="windowdata-m-data">
+<h4>WindowData m_Data<a class="headerlink" href="#windowdata-m-data" title="Permalink to this headline">¶</a></h4>
+<p>Data about the window</p>
+</section>
+</section>
+</section>
+<section id="windowdata-struct">
+<h2>WindowData struct<a class="headerlink" href="#windowdata-struct" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3>Fields<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="bool-vsync">
+<h4>bool VSync<a class="headerlink" href="#bool-vsync" title="Permalink to this headline">¶</a></h4>
+<p>Is VSync enabled?</p>
+</section>
+<section id="unsigned-int-width-height">
+<h4>unsigned int Width, Height<a class="headerlink" href="#unsigned-int-width-height" title="Permalink to this headline">¶</a></h4>
+<p>The window’s width and height</p>
+</section>
+<section id="float-mousey-mousex">
+<h4>float MouseY, MouseX<a class="headerlink" href="#float-mousey-mousex" title="Permalink to this headline">¶</a></h4>
+<p>The mouse’s X and Y position</p>
+</section>
+<section id="std-string-title">
+<h4>std::string Title<a class="headerlink" href="#std-string-title" title="Permalink to this headline">¶</a></h4>
+<p>The name of the window</p>
+</section>
+<section id="eventcallbackfn-eventcallback">
+<h4>EventCallbackFn EventCallback<a class="headerlink" href="#eventcallbackfn-eventcallback" title="Permalink to this headline">¶</a></h4>
+<p>The function that handles events</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="../Platform.html">CadBerry/Platform</a><ul>
+  <li><a href="Windows.html">CadBerry/Platform/Windows</a><ul>
+      <li>Previous: <a href="WindowsInput.h.html" title="previous chapter">CadBerry/Platform/Windows/WindowsInput.h</a></li>
+      <li>Next: <a href="../../Project/Project.html" title="next chapter">CadBerry/Project</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../_sources/API/CadBerry/Platform/Windows/WindowsWindow.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

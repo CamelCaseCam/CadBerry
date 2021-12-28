@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/LayerStack.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CadBerry/Log.h" href="Log.h.html" />
+    <link rel="prev" title="CadBerry/Layer.h" href="Layer.h.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-layerstack-h">
+<h1>CadBerry/LayerStack.h<a class="headerlink" href="#cadberry-layerstack-h" title="Permalink to this headline">¶</a></h1>
+<p>Stores the layers being rendered by the CadBerry renderer. While this is only used by the Window class, you can include it in viewports added by
+modules if you want to.</p>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><span class="xref std std-doc">APICadBerryCore.h</span></p></li>
+<li><p><span class="xref std std-doc">APICadBerryLayer.h</span></p></li>
+<li><p>vector</p></li>
+</ul>
+</section>
+<section id="layerstack-class">
+<h2>LayerStack class<a class="headerlink" href="#layerstack-class" title="Permalink to this headline">¶</a></h2>
+<p>Contains a stack of layers and overlays. Can be iterated over like a vector.</p>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="void-pushlayer-layer-layer">
+<h4>void PushLayer(Layer* layer)<a class="headerlink" href="#void-pushlayer-layer-layer" title="Permalink to this headline">¶</a></h4>
+<p>Calls the layer’s OnAttach function and pushes it onto the layer stack underneath the overlay layers.</p>
+</section>
+<section id="void-pushoverlay-layer-layer">
+<h4>void PushOverlay(Layer* layer)<a class="headerlink" href="#void-pushoverlay-layer-layer" title="Permalink to this headline">¶</a></h4>
+<p>Calls the Layer’s OnAttach function and pushes it on top of all the other layers as an overlay.</p>
+</section>
+<section id="void-poplayer-layer-layer">
+<h4>void PopLayer(Layer* layer)<a class="headerlink" href="#void-poplayer-layer-layer" title="Permalink to this headline">¶</a></h4>
+<p>Calls the layer’s OnDetach function and removes any copies of it from the layer stack.</p>
+</section>
+<section id="void-popoverlay-layer-overlay">
+<h4>void PopOverlay(Layer* overlay)<a class="headerlink" href="#void-popoverlay-layer-overlay" title="Permalink to this headline">¶</a></h4>
+<p>Calls the layer’s OnDetach function and removes any copies of it from the layer stack. You need to use PopOverlay for overlays and PopLayer for
+layers so that the LayerStack knows which layers are overlays and where to insert new layers</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="std-vector-layer-layers-private">
+<h4>std::vector&lt;Layer*&gt; Layers (private)<a class="headerlink" href="#std-vector-layer-layers-private" title="Permalink to this headline">¶</a></h4>
+<p>The vector containing the layers</p>
+</section>
+<section id="unsigned-int-layerinsertindex-private">
+<h4>unsigned int LayerInsertIndex (private)<a class="headerlink" href="#unsigned-int-layerinsertindex-private" title="Permalink to this headline">¶</a></h4>
+<p>The index at which new layers should be inserted so that overlays stay on top.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="CadBerry.html">CadBerry folder</a><ul>
+      <li>Previous: <a href="Layer.h.html" title="previous chapter">CadBerry/Layer.h</a></li>
+      <li>Next: <a href="Log.h.html" title="next chapter">CadBerry/Log.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/API/CadBerry/LayerStack.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,16 @@
+CadBerry/Rendering
+##################
+Contains all the non platform-specific rendering code
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contents:
+
+   Buffer.h
+   GraphicsContext.h
+   RenderCommand.h
+   Renderer.h
+   RendererAPI.h
+   RenderTarget.h
+   Shader.h
+   VertexArray.h

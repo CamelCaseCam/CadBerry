@@ -1,0 +1,35 @@
+Creating CadBerry modules
+=========================
+CadBerry allows you to create modules to quickly add functionality to the editor. 
+
+How to create a module
+----------------------
+1. Clone the entire CadBerry repository (this way it has all the libraries that CadBerry depends on)
+2. Open the premake file and copy the VSCodeIntegration project
+3. Change the name of the duplicated project to the name of your module
+4. Scroll down to postbuildcommands and change "/VSCodeIntegration/VSCodeIntegration.pdb" to "/YourModuleName/YourModuleName.pdb"
+5. Use premake to regenerate the project files
+
+At this point, your module has been created. Now we need to create the module and window classes. 
+
+1. Create a file that will contain your module. I usually call it "Module.cpp". This is like your main file. 
+2. Include "CadBerry.h"
+3. Create a TestWindow class that inherits from CDB::Viewport. Inside the constructor, call the CDB::Viewport constructor with the name of the window as a parameter
+4. Create a TestModule class that inherits from CDB::Module. Inside the constructor, call the CDB::Module constructor with the name of your module as a parameter
+5. Override the GetModuleNames function. This function sets the NumViewports variable to the number of viewports and returns the raw pointer to an array of std::strings. Each of these strings is the name of a window that your module adds. In this example, you'd set NumViewports to 1 and the array you return should contain "TestModule". 
+6. Override the CreateViewport function, this function returns a raw pointer to a viewport that it creates based on the viewport name paramater. Since we only have one viewport, you can just return a new TestWindow. 
+
+Now that the module and window is created, we need to expose the module to CadBerry. 
+
+1. Wrap everything after this in extern "C"
+2. Define the function `__declspec(dllexport) CDB::Module* __stdcall GetModule()`
+3. Within this function, return a new TestModule
+
+If everything worked, you should be able to compile this and have it automatically add the module to CadBerry's modules folder. If you run 
+Berry.exe, you should see an option with the name of your module in the windows menu option. 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   Viewport API

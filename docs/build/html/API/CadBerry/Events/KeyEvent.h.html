@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Events/KeyEvent.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Events/MouseEvent.h" href="MouseEvent.h.html" />
+    <link rel="prev" title="CadBerry/Events" href="Events.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-events-keyevent-h">
+<h1>CadBerry/Events/KeyEvent.h<a class="headerlink" href="#cadberry-events-keyevent-h" title="Permalink to this headline">¶</a></h1>
+<section id="imports">
+<h2>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../cdbpch.h.html"><span class="doc">CadBerry pch file</span></a></p></li>
+<li><p><span class="xref std std-doc">Event.h</span></p></li>
+</ul>
+</section>
+<section id="keyevent-class">
+<h2>KeyEvent class<a class="headerlink" href="#keyevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from <span class="xref std std-doc">CDB::Event</span>. Base class for all events involving keyboard keys</p>
+<section id="categories">
+<h3>Categories<a class="headerlink" href="#categories" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>EventCategoryKeyboard</p></li>
+<li><p>EventCategoryInput</p></li>
+</ul>
+</section>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<section id="int-getkeycode">
+<h4>int GetKeyCode()<a class="headerlink" href="#int-getkeycode" title="Permalink to this headline">¶</a></h4>
+<p>Returns the code of the key that was pressed</p>
+</section>
+<section id="constructor-int-keycode">
+<h4>Constructor(int KeyCode)<a class="headerlink" href="#constructor-int-keycode" title="Permalink to this headline">¶</a></h4>
+<p>Sets the key code</p>
+</section>
+</section>
+<section id="fields">
+<h3>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h3>
+<section id="int-m-keycode">
+<h4>int m_KeyCode<a class="headerlink" href="#int-m-keycode" title="Permalink to this headline">¶</a></h4>
+<p>The keycode</p>
+</section>
+</section>
+</section>
+<section id="keypressedevent-class">
+<h2>KeyPressedEvent class<a class="headerlink" href="#keypressedevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from KeyEvent</p>
+<section id="event-type">
+<h3>Event type<a class="headerlink" href="#event-type" title="Permalink to this headline">¶</a></h3>
+<p>KeyPressed</p>
+</section>
+<section id="id1">
+<h3>Functions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="constructor-int-keycode-int-repeatcount">
+<h4>Constructor(int KeyCode, int RepeatCount)<a class="headerlink" href="#constructor-int-keycode-int-repeatcount" title="Permalink to this headline">¶</a></h4>
+<p>Creates the event. RepeatCount is the number of times the key was held down (useful for something like a text editor)</p>
+</section>
+<section id="int-getrepeatcount">
+<h4>int GetRepeatCount()<a class="headerlink" href="#int-getrepeatcount" title="Permalink to this headline">¶</a></h4>
+<p>Get how long the key was held down for</p>
+</section>
+<section id="std-string-tostring">
+<h4>std::string ToString()<a class="headerlink" href="#std-string-tostring" title="Permalink to this headline">¶</a></h4>
+<p>Returns “KeyPressedEvent: m_KeyCode (m_RepeatCount repeats)”</p>
+</section>
+</section>
+<section id="id2">
+<h3>Fields<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<section id="int-m-repeatcount">
+<h4>int m_RepeatCount<a class="headerlink" href="#int-m-repeatcount" title="Permalink to this headline">¶</a></h4>
+<p>How long the key was/has been held down</p>
+</section>
+</section>
+</section>
+<section id="keyreleasedevent-class">
+<h2>KeyReleasedEvent class<a class="headerlink" href="#keyreleasedevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from KeyEvent</p>
+<section id="id3">
+<h3>Event type<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>KeyReleased</p>
+</section>
+<section id="id4">
+<h3>Functions<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<section id="id5">
+<h4>Constructor(int KeyCode)<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>Creates the event</p>
+</section>
+<section id="id6">
+<h4>std::string ToString()<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>Returns “KeyReleasedEvent: m_KeyCode”</p>
+</section>
+</section>
+</section>
+<section id="keytypedevent-class">
+<h2>KeyTypedEvent class<a class="headerlink" href="#keytypedevent-class" title="Permalink to this headline">¶</a></h2>
+<p>Inherits from KeyEvent. Literally just KeyPressedEvent without the repeat count</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Events.html">CadBerry/Events</a><ul>
+      <li>Previous: <a href="Events.html" title="previous chapter">CadBerry/Events</a></li>
+      <li>Next: <a href="MouseEvent.h.html" title="next chapter">CadBerry/Events/MouseEvent.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Events/KeyEvent.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Target organisms &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Libraries" href="Libraries/Libs.html" />
+    <link rel="prev" title="Sequence" href="Sequence.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="target-organisms">
+<h1>Target organisms<a class="headerlink" href="#target-organisms" title="Permalink to this headline">¶</a></h1>
+<p>Currently, GIL supports Saccharomyces Cerevisiae (baker’s yeast), Pichia, E.coli, and Humans as compilation
+targets.</p>
+<p>To specify a target, use <code class="docutils literal notranslate"><span class="pre">#target</span> <span class="pre">Organism</span></code>. GIL also supports using multiple names for the same organism. To add a name for an organism,
+add the organism’s name.gilEncoding to the CompilationTargets folder. Add <code class="docutils literal notranslate"><span class="pre">goto</span></code> the name of the file with the full codon encodings for the organism.</p>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>goto S.cerevisiae
+</pre></div>
+</div>
+</section>
+<section id="organism-names">
+<h1>Organism names<a class="headerlink" href="#organism-names" title="Permalink to this headline">¶</a></h1>
+<section id="saccharomyces-cerevisiae">
+<h2>Saccharomyces Cerevisiae<a class="headerlink" href="#saccharomyces-cerevisiae" title="Permalink to this headline">¶</a></h2>
+<p>Saccharomyces cerevisiae, S.cerevisiae, Yeast</p>
+</section>
+<section id="pichia">
+<h2>Pichia<a class="headerlink" href="#pichia" title="Permalink to this headline">¶</a></h2>
+<p>Pichia pastoris, Pichia</p>
+</section>
+<section id="e-coli">
+<h2>E.Coli<a class="headerlink" href="#e-coli" title="Permalink to this headline">¶</a></h2>
+<p>E.coli, Escherichia coli</p>
+</section>
+<section id="human">
+<h2>Human<a class="headerlink" href="#human" title="Permalink to this headline">¶</a></h2>
+<p>Human</p>
+</section>
+</section>
+<section id="adding-support-for-other-organisms">
+<h1>Adding support for other organisms<a class="headerlink" href="#adding-support-for-other-organisms" title="Permalink to this headline">¶</a></h1>
+<p>GIL stores codon encodings in .gilEncoding files in the CompilationTargets folder. To add support for another organism, add the file
+organism name.gilEncoding to the CompilationTargets folder. In this file, add the lower case single letter abreviation of the amino acid
+and its associated codons in order of codon availability, seperated by a colon.</p>
+<p>That was hard to describe, so here’s an example for baker’s yeast:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>g : GGT GGA GGC GGG
+</pre></div>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="GIL.html">GIL</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="AminoSequence.html">AminoSequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Block.html">RNAi in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Comments.html">Comments in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Error%20messages.html">Error messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Error%20messages.html#errors">Errors:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="For.html">For keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="From.html">From keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Operations.html">Operation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Regions.html">Regions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sequence.html">Sequence</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Target organisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#organism-names">Organism names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-support-for-other-organisms">Adding support for other organisms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Libraries/Libs.html">Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../What%20I%27m%20working%20on.html">What I’m working on</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="GIL.html">GIL</a><ul>
+      <li>Previous: <a href="Sequence.html" title="previous chapter">Sequence</a></li>
+      <li>Next: <a href="Libraries/Libs.html" title="next chapter">Libraries</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/GIL/Target organisms.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CadBerry/Utils/memory.h &#8212; CadBerry 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CadBerry/Application.h" href="../Application.h.html" />
+    <link rel="prev" title="CadBerry/Utils" href="Utils.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cadberry-utils-memory-h">
+<h1>CadBerry/Utils/memory.h<a class="headerlink" href="#cadberry-utils-memory-h" title="Permalink to this headline">¶</a></h1>
+<p>At this point, I’m going to have to explain myself. I’m fairly new to C++ (I used to be a C# programmer), so I don’t have much experience with
+manual memory management. While raw pointers are bad, I started using C++ for the performance benefits, so I REALLY don’t want to use something
+like shared_ptr if I can avoid it.</p>
+<p>Because of this, I decided to create my own modified version of unique_ptr called scoped_ptr. scoped_ptr has a few improvements over unique_ptr
+that I like for my purposes:</p>
+<ol class="arabic simple">
+<li><p>You can use = to set the pointer. Instead of calling std::make_unique, you can just say ptr = some pointer. If the pointer already points to an object, the object will be deleted.</p></li>
+<li><p>You can use ptr.raw() to get a copy of the raw pointer. I’m using a memory management system where one object owns a pointer, but can lend it to other objects.</p></li>
+<li><p>You can use ptr.forget() to remove the object’s ownership of the pointer without deleting it. This is the most dangerous function, because the memory will be leaked if you don’t keep a copy of the pointer.</p></li>
+<li><p>You can use == to test if the pointer owned by the object equals another pointer. For example, ptr == nullptr works</p></li>
+</ol>
+<p>It’s possible that unique_ptr has all of this and I created this for nothing, but I didn’t know about it and I prefer to work with something I
+understand. Also, be aware of the fact that this class is new, so I might change it and I haven’t changed all the raw pointers to smart pointers
+yet.</p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">CadBerry</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../GIL/GIL.html">GIL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../CadBerry%20API.html">CadBerry API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../CadBerry.html">CadBerry folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../CadBerry.h.html">CadBerry.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../cdbpch.h.html">CadBerry pch file</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../What%20I%27m%20working%20on.html">To do</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../CadBerry%20API.html">CadBerry API</a><ul>
+  <li><a href="../CadBerry.html">CadBerry folder</a><ul>
+  <li><a href="Utils.html">CadBerry/Utils</a><ul>
+      <li>Previous: <a href="Utils.html" title="previous chapter">CadBerry/Utils</a></li>
+      <li>Next: <a href="../Application.h.html" title="next chapter">CadBerry/Application.h</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Cameron Kroll.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../_sources/API/CadBerry/Utils/memory.h.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
