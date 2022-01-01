@@ -23,6 +23,8 @@ namespace CDB
 			this->Path = Path;
 		}
 
+		~Project() {}
+
 		void WriteToFile();
 		static Project* ReadFromFile(std::string path);
 	};

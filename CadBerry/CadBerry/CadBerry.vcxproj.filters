@@ -16,6 +16,9 @@
     <Filter Include="CadBerry\Module">
       <UniqueIdentifier>{26757A3A-9200-E8FE-9B11-6BF3071C44FF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\Packages">
+      <UniqueIdentifier>{DF72F24E-4B89-F0E4-9400-7C060056C16C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CadBerry\Platform">
       <UniqueIdentifier>{057CAE99-7192-AC2F-BA09-3851265F7DB7}</UniqueIdentifier>
     </Filter>
@@ -99,6 +102,15 @@
     </ClInclude>
     <ClInclude Include="src\CadBerry\MouseCode.h">
       <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Packages\LoadPackages.h">
+      <Filter>CadBerry\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Packages\Package.h">
+      <Filter>CadBerry\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Packages\Update.h">
+      <Filter>CadBerry\Packages</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
@@ -195,6 +207,12 @@
     </ClCompile>
     <ClCompile Include="src\CadBerry\Module\Viewport.cpp">
       <Filter>CadBerry\Module</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Packages\LoadPackages.cpp">
+      <Filter>CadBerry\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Packages\Update.cpp">
+      <Filter>CadBerry\Packages</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>

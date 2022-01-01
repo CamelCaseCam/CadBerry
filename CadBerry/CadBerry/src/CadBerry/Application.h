@@ -59,6 +59,7 @@ namespace CDB
 		bool ShouldExit = false;
 		bool NewProj = false;    //Should we check if the user already has a project?
 		bool ShowBuildWindow = false;
+		bool ShowPackages = false;
 
 		scoped_ptr<VertexArray> VertexArray;
 	private:

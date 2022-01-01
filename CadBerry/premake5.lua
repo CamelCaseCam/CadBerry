@@ -58,14 +58,17 @@ project "CadBerry"
 		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.nfd}",
 		"%{IncludeDirs.WhereAmI}",
-		"%{IncludeDirs.BlockingCollection}",
+		"CadBerry/vendor/BlockingCollection",
+		"CadBerry/vendor/cpr/include",
+		"CadBerry/vendor/cpr/cpr_generated_includes",
+		"CadBerry/vendor/cpr/_deps/curl-src/include",
+		"CadBerry/vendor/yaml-cpp/include",
 	}
 
 	libdirs
 	{
 		"%{prj.name}/vendor/SFML/lib",
 		"CadBerry/vendor/nfd/build/lib/Debug/x64",
-		"CadBerry/vendor/nfd/build/lib/Release/x64"
 	}
 
 	links
@@ -75,6 +78,7 @@ project "CadBerry"
 		"ImGui",
 		"opengl32.lib",
 		"WhereAmI",
+		"cpr"
 	}
 
 	filter "system:windows"
@@ -105,7 +109,13 @@ project "CadBerry"
 		}
 		links
 		{
-			"nfd_d"
+			"nfd_d",
+			"yaml-cppd"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/yaml-cpp/Debug",
+			"CadBerry/vendor/cpr/lib/Debug"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
@@ -113,11 +123,13 @@ project "CadBerry"
 		optimize "On"
 		links
 		{
-			"nfd"
+			"nfd",
+			"yaml-cpp"
 		}
-		defines
+		libdirs
 		{
-			"FMT_HEADER_ONLY"
+			"CadBerry/vendor/yaml-cpp/RelWithDebInfo",
+			"CadBerry/vendor/cpr/lib/RelWithDebInfo",
 		}
 project "Berry"
 	location "Berry"
@@ -140,7 +152,7 @@ project "Berry"
 		"CadBerry/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.glm}",
-		"%{IncludeDirs.BlockingCollection}",
+		"CadBerry/vendor/BlockingCollection"
 	}
 
 	libdirs
@@ -192,6 +204,65 @@ project "Berry"
 		"Release"
 	}
 
+project "CadBerry_updater"
+	location "CadBerry_updater"
+	kind "ConsoleApp"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/**.h",
+		"%{prj.name}/**.hpp",
+		"%{prj.name}/**.cpp"
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/cpr/include",
+		"CadBerry/vendor/cpr/cpr_generated_includes",
+		"CadBerry/vendor/cpr/_deps/curl-src/include",
+	}
+
+	links
+	{
+		"cpr"
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry_updater/CadBerry_updater.pdb ../bin/" .. OutputDir .. "/Berry")
+		}
+
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		symbols "On"
+
+		libdirs
+		{
+			"CadBerry/vendor/cpr/lib/Debug"
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		optimize "On"
+
+		libdirs
+		{
+			"CadBerry/vendor/cpr/lib/RelWithDebInfo"
+		}
+	architecture "x64"
+	configurations
+	{
+		"Debug",
+		"Release"
+	}
+
 project "VSCodeIntegration"
 	location "Modules/VSCodeIntegration"
 	kind "SharedLib"
@@ -216,6 +287,7 @@ project "VSCodeIntegration"
 		"VSCodeIntegration/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.glm}",
 	}
 
 	links

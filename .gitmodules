@@ -28,3 +28,9 @@
 [submodule "CadBerry/CadBerry/vendor/BlockingCollection"]
 	path = CadBerry/CadBerry/vendor/BlockingCollection
 	url = https://github.com/CodeExMachina/BlockingCollection.git
+[submodule "CadBerry/CadBerry/CadBerry/vendor/cpr"]
+	path = CadBerry/CadBerry/CadBerry/vendor/cpr
+	url = https://github.com/libcpr/cpr.git
+[submodule "CadBerry/CadBerry/CadBerry/vendor/yaml-cpp"]
+	path = CadBerry/CadBerry/CadBerry/vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git

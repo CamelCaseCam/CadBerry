@@ -10,8 +10,8 @@
 #include "CadBerry/BuildEngine/BuildEngine.h"
 #include "CadBerry/Tests/SimpleViewport.h"
 #include "CadBerry/BuildEngine/BuildDialog.h"
-#include "CadBerry/Rendering/Renderer.h"
-#include "CadBerry/Rendering/RenderCommand.h"
+#include "CadBerry/Packages/LoadPackages.h"
+#include "CadBerry/Packages/Update.h"
 
 #include "whereami.h"
 
@@ -19,106 +19,34 @@
 
 namespace CDB
 {
+	void FetchPackages() { GetPackages(Application::Get().PathToEXE); }
+
 	Application* Application::s_Instance = nullptr;
 	void Application::Main()
 	{
 		this->PreBuildDir = this->OpenProject->Path + this->OpenProject->PreBuildDir;
 
+		this->m_ThreadPool->AddStandardTask(FetchPackages);
 
 		EditorWindow = Window::Create();
 
 		GuiLayer = new ImGuiLayer();    //CheckEnd will delete EditorWindow which will delete GuiLayer, so we're initializing a new one
 		Viewports = new ViewportLayer();
 
-		EditorWindow->m_LayerStack.PushLayer(Viewports);
 		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
-		VertexArray = VertexArray::Create();
-
-		float vertices[3 * 7] = {
-			0.0f, 0.5f, 0.0f,     1.0f, 0.0f, 1.0f, 1.0f,
-			-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,	1.0f,
-			0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 0.0f,	1.0f,
-		};
-
-		VertexBuffer = VertexBuffer::Create(sizeof(vertices), vertices);
-
-		{
-			BufferLayout layout = {
-				{ShaderDataType::Float3, "pos"},
-				{ShaderDataType::Float4, "colour"},
-			};
-
-			VertexBuffer->SetLayout(layout);
-		}
-		
-		uint32_t indices[3] = { 0, 1, 2 };
-		IndexBuffer = IndexBuffer::Create(3, indices);
-
-		VertexArray->AddVertexBuffer(VertexBuffer);
-		VertexArray->SetIndexBuffer(IndexBuffer);
-
-		std::string VertSrc = R"(
-			#version 330 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Colour;
-			out vec3 OutPos;
-			out vec4 v_Colour;
-
-			void main()
-			{
-				OutPos = a_Position;
-				gl_Position = vec4(a_Position, 1.0);
-				v_Colour = a_Colour;
-			}
-		)";
-
-		std::string FragSrc = R"(
-			#version 330 core
-
-			layout(location = 0) out vec4 colour;
-			in vec3 OutPos;
-			in vec4 v_Colour;
-			vec3 C1 = vec3(1.0, 0.0, 0.0);
-			vec3 C2 = vec3(0.0, 1.0, 0.0);
-			vec3 C3 = vec3(0.0, 0.0, 1.0);
-
-			void main()
-			{
-				colour = v_Colour;
-			}
-		)";
-
-		shader = Shader::Create(VertSrc, FragSrc);
+		EditorWindow->m_LayerStack.PushLayer(Viewports);
 
 		running = true;
 
 		EditorWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		while (running)
-		{	
+		{
+
 			EditorWindow->OnUpdate();
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnUpdate();
 
-			//_______________________________________________________________________________________________________________
-			// **IMPORTANT**
-			// A new frame isn't generated at the beginning of this loop. The new frame is created by GuiLayer->Begin. Anything before this
-			// will be drawn on top of the old frame
-			//_______________________________________________________________________________________________________________
-
 			GuiLayer->Begin();
-
-			Renderer::BeginScene();
-
-			shader->Bind();
-			Renderer::Submit(VertexArray.raw());
-
-			Renderer::EndScene();
-
-
-			for (Layer* layer : EditorWindow->m_LayerStack)
-				layer->Draw();
-
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnImGuiRender();
 
@@ -126,6 +54,12 @@ namespace CDB
 			{
 				ImGui::Begin("Build project", &ShowBuildWindow, ImGuiWindowFlags_NoDocking);
 				BuildDialog();
+				ImGui::End();
+			}
+			if (ShowPackages)
+			{
+				ImGui::Begin("Packages", &ShowPackages, ImGuiWindowFlags_NoDocking);
+				ShowPackageManager();
 				ImGui::End();
 			}
 			GuiLayer->End();
@@ -203,8 +137,8 @@ namespace CDB
 		Log::Init();
 		CDB_EditorAssert(!s_Instance, "Application already exists")
 		s_Instance = this;
-		GuiLayer = new ImGuiLayer();
 		m_ThreadPool = ThreadPool::Get();
+		GuiLayer = new ImGuiLayer();
 
 		//load modules
 		const std::filesystem::directory_iterator end{};
@@ -290,7 +224,6 @@ namespace CDB
 
 	Application::~Application()
 	{
-		m_ThreadPool->CompleteTasksAndDelete();    //Executes all the tasks submitted to the thread pool and exits
 		//GuiLayer will have already been deleted
 	}
 
@@ -338,6 +271,8 @@ namespace CDB
 	{
 		if (ShouldExit)
 		{
+			for (Layer* layer : EditorWindow->m_LayerStack)
+				layer->OnDetach();
 			delete EditorWindow;
 			running = false;
 			ShouldExit = false;

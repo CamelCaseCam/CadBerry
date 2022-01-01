@@ -22,12 +22,12 @@ namespace CDB
 		IntVal = this->Name.length();
 		OutputFile.write((char*)&IntVal, sizeof(int));    //Write the length of name to the file
 
-		OutputFile.write((char*)&this->Name, sizeof(char) * IntVal);    //Write the string to file
+		OutputFile.write(this->Name.data(), sizeof(char) * IntVal);    //Write the string to file
 
 		IntVal = this->PreBuildDir.length();
 		OutputFile.write((char*)&IntVal, sizeof(int));    //Write the length of Prebuild path to the file
 
-		OutputFile.write((char*)&this->PreBuildDir, sizeof(char) * IntVal);    //Write the string to file
+		OutputFile.write(this->PreBuildDir.data(), sizeof(char) * IntVal);    //Write the string to file
 
 		OutputFile.close();
 	}
@@ -72,7 +72,7 @@ namespace CDB
 			NewProject->Name.reserve(NumChars);
 			CDB_EditorInfo(NumChars);
 			
-			InputFile.read((char*)&NewProject->Name, sizeof(char) * NumChars);
+			InputFile.read((char*)NewProject->Name.data(), sizeof(char) * NumChars);
 
 			InputFile.close();
 			NewProject->PreBuildDir = "\\.GILCache\\";
@@ -90,13 +90,13 @@ namespace CDB
 			NewProject->Name.reserve(NumChars);
 			CDB_EditorInfo(NumChars);
 
-			InputFile.read((char*)&NewProject->Name, sizeof(char) * NumChars);
+			InputFile.read(NewProject->Name.data(), sizeof(char) * NumChars);
 
 			NumChars = 0;
 			InputFile.read((char*)&NumChars, sizeof(int));
 			NewProject->PreBuildDir.reserve(NumChars);
 
-			InputFile.read((char*)&NewProject->PreBuildDir, sizeof(char) * NumChars);
+			InputFile.read(NewProject->PreBuildDir.data(), sizeof(char) * NumChars);
 
 			InputFile.close();
 			return NewProject;

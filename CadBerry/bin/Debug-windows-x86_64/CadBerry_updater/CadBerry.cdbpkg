@@ -1,0 +1,14 @@
+Name: "CadBerry core"
+Version: "0.1"
+Downloaded: "AutoUpdate"
+Source:
+    Owner: "CamelCaseCam"
+    Repo: "CadBerry"
+    Branch: "developer-branch"
+    Path: "CadBerry/bin/Release-windows-x86_64/Berry/"
+Files: [
+    Berry.exe
+    CadBerry.dll
+    Modules/Core.dll
+    GILModules/utils.dll
+    Build/GILBuildEngine.dll ]
