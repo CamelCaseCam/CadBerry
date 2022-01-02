@@ -5,6 +5,10 @@
 
 #include "imgui.h"
 
+#define YAML_CPP_STATIC_DEFINE
+
+#include "yaml-cpp/yaml.h"
+
 #include <sys/stat.h>
 #include <stdlib.h>
 
@@ -22,6 +26,16 @@ namespace CDB
 					ImGui::Text(("Last updated: " + pkg.Downloaded).c_str());
 					if (ImGui::Button("Update"))
 					{
+						//Update the package download time
+						{
+							YAML::Node Package = YAML::LoadFile(pkg.PathToPackageDefinition);
+							Package["Downloaded"] = pkg.NewUpdateTime;
+							YAML::Emitter Out;
+							Out << Package;
+							std::ofstream OutFile(pkg.PathToPackageDefinition);
+							OutFile << Out.c_str();
+						}
+
 						std::string tmp1 = "\"https://github.com/" + pkg.Owner + "/" + pkg.Repo + "/raw/" + pkg.Branch + "/" + pkg.Path 
 							+ "\" \"" + Application::Get().PathToEXE + "/\" " + std::to_string(pkg.Files.size()) + " ";
 						for (std::string& file : pkg.Files)

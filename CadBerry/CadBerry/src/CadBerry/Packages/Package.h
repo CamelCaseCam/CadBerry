@@ -13,6 +13,8 @@ namespace CDB
 		std::string Branch;
 		std::string Path;
 		bool changed = false;
+		std::string NewUpdateTime;
+		std::string PathToPackageDefinition;
 
 		std::vector<std::string> Files;
 

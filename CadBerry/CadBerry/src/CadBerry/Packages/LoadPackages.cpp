@@ -67,6 +67,8 @@ namespace CDB
 			if (pkg.changed)
 			{
 				Application::Get().ShowPackages = true;
+				pkg.NewUpdateTime = Date;
+				pkg.PathToPackageDefinition = path.string();
 			}
 		}
 	}

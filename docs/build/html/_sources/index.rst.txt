@@ -5,7 +5,7 @@
 .. To build, run command "sphinx-build -b html source build"
 
 Welcome to CadBerry's documentation!
-===============================
+====================================
 CadBerry is an open-source IDE for synthetic biology built around a C++ version of the GIL compiler. 
 CadBerry is still early in development, so built versions might be unstable
 
@@ -50,6 +50,7 @@ Download the bin folder if on windows. If you're on another platform, you'll hav
    GIL/GIL
 
    Modules/Creating modules
+   Modules/Packages
 
    API/CadBerry API
 
