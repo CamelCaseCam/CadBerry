@@ -68,7 +68,6 @@ project "CadBerry"
 	libdirs
 	{
 		"%{prj.name}/vendor/SFML/lib",
-		"CadBerry/vendor/nfd/build/lib/Debug/x64",
 	}
 
 	links
@@ -91,7 +90,8 @@ project "CadBerry"
 			"CDB_BUILD_DLL",
 			"CDB_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE",
-			"IMGUI_IMPL_OPENGL_LOADER_GLAD2"
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
 		}
 
 		postbuildcommands
@@ -115,7 +115,8 @@ project "CadBerry"
 		libdirs
 		{
 			"CadBerry/vendor/yaml-cpp/Debug",
-			"CadBerry/vendor/cpr/lib/Debug"
+			"CadBerry/vendor/cpr/lib/Debug",
+			"CadBerry/vendor/nfd/build/lib/Debug/x64",
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
@@ -130,6 +131,7 @@ project "CadBerry"
 		{
 			"CadBerry/vendor/yaml-cpp/RelWithDebInfo",
 			"CadBerry/vendor/cpr/lib/RelWithDebInfo",
+			"CadBerry/vendor/nfd/build/lib/Release/x64",
 		}
 project "Berry"
 	location "Berry"
@@ -172,7 +174,8 @@ project "Berry"
 
 		defines
 		{
-			"CDB_PLATFORM_WINDOWS"
+			"CDB_PLATFORM_WINDOWS",
+			"FMT_HEADER_ONLY"
 		}
 
 	filter "configurations:Debug"
@@ -305,7 +308,8 @@ project "VSCodeIntegration"
 		{
 			"CDB_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE",
-			"IMGUI_IMPL_OPENGL_LOADER_GLAD2"
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
 		}
 
 		postbuildcommands
@@ -576,7 +580,8 @@ project "Core"
 		{
 			"CDB_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE",
-			"IMGUI_IMPL_OPENGL_LOADER_GLAD2"
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
 		}
 
 		postbuildcommands
