@@ -25,7 +25,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
 D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(57,2): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(132,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(133,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(182,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(187,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
   sensing.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Debug-windows-x86_64\sensing\sensing.dll
           1 file(s) copied.
           1 file(s) copied.

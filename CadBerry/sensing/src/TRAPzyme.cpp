@@ -146,7 +146,7 @@ namespace sensing
 		int Binding = DetectBinding(AntiAttenuator);    //Returns the chunk size where binding was first found or 0 if none was found
 		if (Binding != 0)
 		{
-			if (Binding < binding)    //If this has more binding than whatever function called it, return nothing
+			if (Binding < binding)    //If this has more binding than whatever function called it, see if there's a better one later on
 			{
 				//Try to find a better candidate
 				std::pair<std::string, std::string> OtherOption = FindValidAttenuator(Tar, result.second + 1, Binding);
@@ -157,14 +157,19 @@ namespace sensing
 			}
 			else if (Binding == binding)    //All else being equal, optimize for a higher or lower GC content
 			{
+				float SelfGC = utils::GetGCRAtio(AntiAttenuator);
+				std::pair<std::string, std::string> OtherOption = FindValidAttenuator(Tar, result.second + 1, Binding, SelfGC);
+				if (OtherOption.first != "")
+					return OtherOption;
+
 				double Other = pow(OtherGC - 0.5f, 2);
-				double Self = pow(utils::GetGCRAtio(AntiAttenuator) - 0.5f, 2);
+				double Self = pow(SelfGC - 0.5f, 2);
 
 				if (Other > Self)
 					return { "", "" };
 				return { result.first, AntiAttenuator };
 			}
-			return { "", "" };
+			return FindValidAttenuator(Tar, result.second + 1, binding);    //If there's a better attenuator later on, return it
 		}
 		//If there's no binding, return this candidate
 		return { result.first, AntiAttenuator };

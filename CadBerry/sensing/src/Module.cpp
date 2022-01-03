@@ -30,7 +30,7 @@ namespace sensing
 
 		virtual GIL::Sequence* GetSequence(std::string name) override
 		{
-			CDB_BuildError("utils module does not contain sequence {0}", name);
+			CDB_BuildError("sensing module does not contain sequence {0}", name);
 			return nullptr;
 		}
 	};
