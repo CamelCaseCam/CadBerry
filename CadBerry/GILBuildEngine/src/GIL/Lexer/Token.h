@@ -2,11 +2,13 @@
 #include <gilpch.h>
 #include "LexerTokens.h"
 
+#include "Core.h"
+
 namespace GIL
 {
 	namespace Lexer
 	{
-		class Token
+		class GILAPI Token
 		{
 		public:
 			Token() {}

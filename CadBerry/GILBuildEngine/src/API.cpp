@@ -24,7 +24,7 @@ std::string DataPath;
 
 using GIL::OutputType;
 
-class GILEXPORT GILBuildEngine : public CDB::BuildEngine
+class GILAPI GILBuildEngine : public CDB::BuildEngine
 {
 public:
 	GILBuildEngine() : CDB::BuildEngine({ "gil", "rzyme" }, { "gb", "cgil", "fasta" }) {}
@@ -112,7 +112,7 @@ public:
 //Expose the module to CadBerry
 extern "C"
 {
-	GILEXPORT CDB::BuildEngine* __stdcall GetBuildEngine()
+	__declspec(dllexport) CDB::BuildEngine* __stdcall GetBuildEngine()
 	{
 		DataPath = CDB::Application::Get().PathToEXE + "\\Build\\";
 		return new GILBuildEngine();

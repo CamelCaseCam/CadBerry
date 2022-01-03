@@ -362,6 +362,11 @@ project "GILBuildEngine"
 		"ImGui",
 	}
 
+	defines
+	{
+		"GIL_BUILD_DLL",
+	}
+
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "On"
@@ -448,6 +453,71 @@ project "utils"
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/GILModules"),
 			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/Berry/GILModules")
+		}
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		buildoptions "/MDd"
+		symbols "On"
+		defines
+		{
+			"CDB_ENABLE_ASSERTS"
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		buildoptions "/MD"
+		optimize "On"
+
+project "sensing"
+	location "sensing"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	--linkoptions { '/DEFAULTLIB:"LIBCMT',  }
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"GILBuildEngine/src",
+		"utils/src",
+		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.BlockingCollection}",
+	}
+
+	links
+	{
+		"CadBerry",
+		"ImGui",
+		"GILBuildEngine",
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "On"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/GILModules"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/sensing/sensing.pdb ../bin/" .. OutputDir .. "/Berry/GILModules")
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"

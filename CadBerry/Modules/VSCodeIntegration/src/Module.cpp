@@ -32,7 +32,7 @@ public:
 	{
 		CDBApp = &CDB::Application::Get();
 		CDB::Project* OpenProject = CDBApp->OpenProject.raw();    //If this returns nullptr, something is seriously broken with the core editor
-		std::string tmp1 = "/C code " + OpenProject->Path;
+		std::string tmp1 = "/C code \"" + OpenProject->Path + "\"";
 		std::wstring tmp2 = std::wstring(tmp1.begin(), tmp1.end());
 		LPCWSTR params = tmp2.c_str();
 		ShellExecute(nullptr, NULL, L"cmd.exe", params, 0, SW_HIDE);

@@ -1,11 +1,13 @@
 #pragma once
 #include <gilpch.h>
 
+#include "Core.h"
+
 namespace GIL
 {
 	namespace Parser
 	{
-		class Region    //Could have been done with a struct
+		class GILAPI Region    //Could have been done with a struct
 		{
 		public:
 			Region() {}

@@ -5,10 +5,45 @@ namespace GIL
 {
 	namespace utils
 	{
+		const std::unordered_map<char, char> Complements = std::unordered_map<char, char>({
+			{'a', 't'},
+			{'A', 'T'},
+			{'t', 'a'},
+			{'T', 'A'},
+			{'c', 'g'},
+			{'C', 'G'},
+			{'g', 'c'},
+			{'G', 'C'},
+			{'u', 'a'},
+			{'U', 'A'},
+			{'m', 'k'},
+			{'M', 'K'},
+			{'r', 'y'},
+			{'R', 'Y'},
+			{'w', 'w'},
+			{'W', 'W'},
+			{'s', 's'},
+			{'S', 'S'},
+			{'y', 'r'},
+			{'Y', 'R'},
+			{'k', 'm'},
+			{'K', 'M'},
+			{'v', 'b'},
+			{'V', 'B'},
+			{'h', 'd'},
+			{'H', 'D'},
+			{'d', 'h'},
+			{'D', 'H'},
+			{'b', 'v'},
+			{'B', 'V'},
+			{'n', 'n'},
+			{'N', 'N'},
+		});
+
 		bool Matches(char c, char p);
 
 		/*
-		Function to find sequence matching an IUPAC nucleotide sequence. 
+		Function to find sequence matching an IUPAC nucleotide sequence, starting at start or 0 if start isn't provided. 
 
 		IUPAC nucleotides:
 		 - A
@@ -28,7 +63,7 @@ namespace GIL
 		 - V: A, C, or G
 		 - N: A, C, G, or T
 		*/
-		std::string Find(std::string& Code, std::string pattern)
+		std::pair<std::string, int> Find(std::string& Code, std::string pattern, int start)
 		{
 			//Convert u to t
 			for (char& c : Code)
@@ -48,19 +83,80 @@ namespace GIL
 			}
 
 			//Loop through code
-			for (int i = 0; i < Code.length(); ++i)
+			for (int i = start; i < Code.length(); ++i)
 			{
 				for (int p = 0; p < pattern.length(); ++p)    //Loop through pattern
 				{
 					if (!Matches(Code[i + p], pattern[p]))
 						goto ContinueLoop;
 				}
-				return Code.substr(i, pattern.length());
+				return { Code.substr(i, pattern.length()), i };
 
 			ContinueLoop:
 				continue;
 			}
-			return std::string();
+			return { std::string(), -1 };
+		}
+
+		std::string GetComplement(std::string& Code)
+		{
+			std::string Output = "";
+			Output.reserve(Code.size());
+			for (char c : Code)
+			{
+				Output += Complements.at(c);
+			}
+			return Output;
+		}
+
+		std::string GetReverseComplement(std::string& Code)
+		{
+			std::string Output = GetComplement(Code);
+			int n = Output.length() - 1;
+			for (int i = 0; i < Output.length() / 2; ++i)
+			{
+				std::swap(Output[i], Output[n]);
+				--n;
+			}
+			return Output;
+		}
+
+		float GetGCRAtio(const std::string& Code)
+		{
+			float NumGC = 0;
+			for (char c : Code)
+			{
+				switch (c)
+				{
+				case 'g':
+				case 'c':
+				case 'G':
+				case 'C':
+				case 's':
+				case 'S':
+					NumGC++;
+				}
+			}
+			return NumGC / Code.size();
+		}
+
+		float GetAGRatio(const std::string& Code)
+		{
+			float NumAG = 0;
+			for (char c : Code)
+			{
+				switch (c)
+				{
+				case 'a':
+				case 'g':
+				case 'A':
+				case 'G':
+				case 'r':
+				case 'R':
+					NumAG++;
+				}
+			}
+			return NumAG / Code.size();
 		}
 
 		bool Matches(char c, char p)

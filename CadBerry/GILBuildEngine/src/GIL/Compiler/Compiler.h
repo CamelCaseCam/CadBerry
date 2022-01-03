@@ -4,11 +4,13 @@
 #include "GIL/Lexer/Token.h"
 #include "GIL/Parser/Project.h"
 
+#include "Core.h"
+
 namespace GIL
 {
 	namespace Compiler
 	{
-		std::pair<std::vector<GIL::Parser::Region>, std::string> Compile(GIL::Parser::Project* Proj, 
+		GILAPI std::pair<std::vector<GIL::Parser::Region>, std::string> Compile(GIL::Parser::Project* Proj,
 			std::vector<GIL::Lexer::Token*>* Tokens = nullptr);
 	}
 }

@@ -3,7 +3,11 @@
 
 extern std::string DataPath;
 
-#define GILEXPORT __declspec(dllexport)
+#ifdef GIL_BUILD_DLL
+	#define GILAPI __declspec(dllexport)
+#else
+	#define GILAPI __declspec(dllimport)
+#endif
 
 #define GIL_MAJOR 0
 #define GIL_MINOR 2

@@ -7,12 +7,14 @@
 
 #include "GIL/Lexer/Token.h"
 
+#include "Core.h"
+
 namespace GIL
 {
 	namespace Parser
 	{
-		class Project;
-		class Project
+		class GILAPI Project;
+		class GILAPI Project
 		{
 		public:
 			//The parsing step of compilation

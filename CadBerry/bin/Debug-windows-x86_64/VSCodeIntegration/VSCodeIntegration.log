@@ -70,7 +70,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(64,27): war
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(64): message : see declaration of 'CDB::scoped_ptr<CDB::VertexArray>'
 D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp(115,14): warning C4251: 'VSCodeIntegrationModule::Viewports': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'VSCodeIntegrationModule'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-     Creating library ..\..\bin\Debug-windows-x86_64\VSCodeIntegration\VSCodeIntegration.lib and object ..\..\bin\Debug-windows-x86_64\VSCodeIntegration\VSCodeIntegration.exp
   VSCodeIntegration.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Debug-windows-x86_64\VSCodeIntegration\VSCodeIntegration.dll
           1 file(s) copied.
           1 file(s) copied.

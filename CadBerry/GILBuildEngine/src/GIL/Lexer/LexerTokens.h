@@ -1,6 +1,8 @@
 #pragma once
 #include <gilpch.h>
 
+#include "Core.h"
+
 namespace GIL
 {
 	namespace Lexer
@@ -64,6 +66,6 @@ namespace GIL
 			LPAREN,
 		};
 
-		extern std::unordered_map<LexerToken, std::string> LexerToken2Str;
+		GILAPI extern std::unordered_map<LexerToken, std::string> LexerToken2Str;
 	}
 }
