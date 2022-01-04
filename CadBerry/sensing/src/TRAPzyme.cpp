@@ -1,5 +1,7 @@
 #include "TRAPzyme.h"
 
+#include <stdlib.h>
+
 namespace sensing
 {
 	//__________________________________________________________________________________________________________________________
@@ -229,5 +231,30 @@ namespace sensing
 		return self;
 	}
 
+	std::pair<std::vector<GIL::Parser::Region>, std::string> CreateAttenuator::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+	{
+		std::string pattern = "nnnnnnnnnnnnnnnragna";
+		std::string Candidate;
+		Candidate = utils::GenWithPattern(pattern);
+
+		//HACK: Definitely room for optimization
+		while (DetectBinding(Candidate) != 0)
+			Candidate = utils::GenWithPattern(pattern);
+
+
+		return { {}, Candidate };
+	}
+
+
+
+	GIL::Operation* CreateAttenuator::self = nullptr;
+	GIL::Operation* CreateAttenuator::GetPtr()
+	{
+		if (self == nullptr)
+		{
+			self = new CreateAttenuator();
+		}
+		return self;
+	}
 
 }

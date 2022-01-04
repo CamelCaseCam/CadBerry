@@ -296,6 +296,12 @@ namespace GIL
 				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PreBuildDir + "\\" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
 			}
+			else if (std::filesystem::exists(CDB::Application::Get().PathToEXE + "/Build/Libs/" + path.parent_path().string() + "\\" 
+				+ path.stem().string() + ".cgil"))    //If a compiled file in the libs folder exists
+			{
+				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/" 
+					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
+			}
 			else if (std::filesystem::exists(CDB::Application::Get().OpenProject->Path + "\\" + path.parent_path().string() + "\\" + path.stem().string() + ".gil"))
 			{
 				std::ifstream t(CDB::Application::Get().OpenProject->Path + "\\" + path.parent_path().string() + "\\" 

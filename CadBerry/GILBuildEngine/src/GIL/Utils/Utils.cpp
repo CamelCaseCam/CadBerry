@@ -159,6 +159,224 @@ namespace GIL
 			return NumAG / Code.size();
 		}
 
+		/*
+		Function to generate a sequence matching an IUPAC nucleotide sequence.
+
+		IUPAC nucleotides:
+		 - A
+		 - T
+		 - C
+		 - G
+		 - U: gets converted to T
+		 - R: A or G
+		 - Y: C or T
+		 - S: G or C
+		 - W: A or T
+		 - K: G or T
+		 - M: A or C
+		 - B: C, G, or T
+		 - D: A, G, or T
+		 - H: A, C, or T
+		 - V: A, C, or G
+		 - N: A, C, G, or T
+		*/
+
+		std::string GenWithPattern(std::string& pattern)
+		{
+			std::string Output;
+			Output.reserve(pattern.size());
+			for (int i = 0; i < pattern.size(); ++i)
+			{
+				switch (std::tolower(pattern[i]))
+				{
+				case 'r':
+				{
+					bool b = rand() & 1;    //Masking
+					if (b)
+					{
+						Output += 'a';
+					}
+					else
+					{
+						Output += 'g';
+					}
+					break;
+				}
+				case 'y':
+				{
+					bool b = rand() & 1;    //Masking
+					if (b)
+					{
+						Output += 'c';
+					}
+					else
+					{
+						Output += 't';
+					}
+					break;
+				}
+				case 's':
+				{
+					bool b = rand() & 1;    //Masking
+					if (b)
+					{
+						Output += 'g';
+					}
+					else
+					{
+						Output += 'c';
+					}
+					break;
+				}
+				case 'w':
+				{
+					bool b = rand() & 1;    //Masking
+					if (b)
+					{
+						Output += 'a';
+					}
+					else
+					{
+						Output += 't';
+					}
+					break;
+				}
+				case 'k':
+				{
+					bool b = rand() & 1;    //Masking
+					if (b)
+					{
+						Output += 'g';
+					}
+					else
+					{
+						Output += 't';
+					}
+					break;
+				}
+				case 'm':
+				{
+					bool b = rand() & 1;    //Masking
+					if (b)
+					{
+						Output += 'a';
+					}
+					else
+					{
+						Output += 'c';
+					}
+					break;
+				}
+				case 'b':
+				{
+					int r = rand() % 3;
+					if (r == 0)
+					{
+						Output += 'c';
+					}
+					else if (r == 1)
+					{
+						Output += 'g';
+					}
+					else
+					{
+						Output += 't';
+					}
+					break;
+				}
+				case 'd':
+				{
+					int r = rand() % 3;
+					if (r == 0)
+					{
+						Output += 'a';
+					}
+					else if (r == 1)
+					{
+						Output += 'g';
+					}
+					else
+					{
+						Output += 't';
+					}
+					break;
+				}
+				case 'h':
+				{
+					int r = rand() % 3;
+					if (r == 0)
+					{
+						Output += 'a';
+					}
+					else if (r == 1)
+					{
+						Output += 'c';
+					}
+					else
+					{
+						Output += 't';
+					}
+					break;
+				}
+				case 'v':
+				{
+					int r = rand() % 3;
+					if (r == 0)
+					{
+						Output += 'a';
+					}
+					else if (r == 1)
+					{
+						Output += 'c';
+					}
+					else
+					{
+						Output += 'g';
+					}
+					break;
+				}
+				case 'n':
+				{
+					int r = rand();
+					bool b1 = r & 0b01;    //Masking
+					bool b2 = r & 0b10;
+
+					if (b1)
+					{
+						if (b2)
+						{
+							Output += 'a';
+						}
+						else
+						{
+							Output += 't';
+						}
+					}
+					else
+					{
+						if (b2)
+						{
+							Output += 'c';
+						}
+						else
+						{
+							Output += 'g';
+						}
+					}
+					break;
+				}
+
+				case 'a':
+				case 't':
+				case 'c':
+				case 'g':
+				case 'u':
+				default:
+					break;
+				}
+			}
+		}
+
 		bool Matches(char c, char p)
 		{
 			c = std::tolower(c);

@@ -441,6 +441,7 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\SaveFunctions.cpp(10,27)
   Utils.cpp
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Utils\Utils.cpp(115,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Utils\Utils.cpp(378): warning C4715: 'GIL::utils::GenWithPattern': not all control paths return a value
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.cpp(676): warning C4715: 'GIL::Parser::Project::Load': not all control paths return a value
      Creating library ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.lib and object ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.exp
   GILBuildEngine.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.dll

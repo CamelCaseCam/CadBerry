@@ -45,12 +45,12 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.h(50,36):
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.h(50): message : see declaration of 'std::map<std::string,GIL::Parser::Project *,std::less<std::string>,std::allocator<std::pair<const std::string,GIL::Parser::Project *>>>'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.h(52,16): warning C4251: 'GIL::Parser::Project::TargetOrganism': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Parser::Project'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(57,2): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(132,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(133,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(187,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(59,2): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(134,7): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(135,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\sensing\src\TRAPzyme.cpp(189,2): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
-D:\Development\CadBerry\CadBerry\sensing\src\Module.cpp(29): warning C4715: 'sensing::sensingModule::GetOperation': not all control paths return a value
+D:\Development\CadBerry\CadBerry\sensing\src\Module.cpp(33): warning C4715: 'sensing::sensingModule::GetOperation': not all control paths return a value
      Creating library ..\bin\Release-windows-x86_64\sensing\sensing.lib and object ..\bin\Release-windows-x86_64\sensing\sensing.exp
   sensing.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\sensing\sensing.dll
           1 file(s) copied.

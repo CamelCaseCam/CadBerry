@@ -12,5 +12,7 @@ namespace GIL
 		GILAPI std::string GetReverseComplement(std::string& Code);
 		GILAPI float GetGCRAtio(const std::string& Code);
 		GILAPI float GetAGRatio(const std::string& Code);
+		
+		GILAPI std::string GenWithPattern(std::string& pattern);
 	}
 }
