@@ -1,5 +1,5 @@
-For keyword
-===========
+For keyword (not yet implemented)
+=================================
 For compiles a section of code for the specified organism. 
 
 Example:
@@ -8,8 +8,5 @@ Example:
 
    For Pichia
    {
-      AminoSequence
-      {
-          MAAAAAAQX
-      }
+      @MAAAAAAQX@
    }

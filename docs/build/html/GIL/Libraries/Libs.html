@@ -15,7 +15,7 @@
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="GIL.HelperFunctions" href="HelperFunctions.html" />
+    <link rel="next" title="Importing other GIL files" href="Import.html" />
     <link rel="prev" title="Target organisms" href="../Target%20organisms.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -39,30 +39,13 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="HelperFunctions.html">GIL.HelperFunctions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-writewarning-string">HelperFunctions.WriteWarning(string)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-writeerror-string">HelperFunctions.WriteError(string)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-getend-token-or-list-token-int">HelperFunctions.GetEnd(Token[] or List&lt;Token&gt;, int)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-getargs-string">HelperFunctions.GetArgs(string)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-getcomplement-string">HelperFunctions.GetComplement(string)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-getparams-token-or-list-token">HelperFunctions.GetParams(Token[] or List&lt;Token&gt;)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-getaminos-token">HelperFunctions.GetAminos(Token[])</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-verifyaminos-string">HelperFunctions.VerifyAminos(string)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#helperfunctions-aminoletters">HelperFunctions.AminoLetters</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="HelperFunctions.html#params-class">Params class</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#params-add-string-name-string-value">Params.Add(string Name, string Value)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="HelperFunctions.html#params-get-name-throwonfail-false-errormessage">Params.Get(Name, ThrowOnFail = false, ErrorMessage = “”)</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="Import.html">Importing other GIL files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Using.html">Linking to outside dlls</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Using.html#writing-outside-dlls">Writing outside dlls</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="std/std.html">GIL standard library</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="std/Colour/Colour.html">Colour</a></li>
+<li class="toctree-l2"><a class="reference internal" href="std/sensing.html">sensing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="std/utils.html">utils</a></li>
 </ul>
 </li>
@@ -91,12 +74,11 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../GIL.html">GIL</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../AminoSequence.html">AminoSequence</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Comments.html">Comments in GIL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html">Error messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html#errors">Errors:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../From.html">From keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Namespaces.html">GIL Namespaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Operations.html">Operation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Regions.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sequence.html">Sequence</a></li>
@@ -107,6 +89,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Packages.html">CadBerry Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../API/CadBerry%20API.html">CadBerry API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">To do</a></li>
 </ul>
@@ -117,7 +100,7 @@
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../GIL.html">GIL</a><ul>
       <li>Previous: <a href="../Target%20organisms.html" title="previous chapter">Target organisms</a></li>
-      <li>Next: <a href="HelperFunctions.html" title="next chapter">GIL.HelperFunctions</a></li>
+      <li>Next: <a href="Import.html" title="next chapter">Importing other GIL files</a></li>
   </ul></li>
   </ul></li>
 </ul>

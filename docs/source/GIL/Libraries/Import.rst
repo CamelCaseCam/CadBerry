@@ -1,7 +1,13 @@
 Importing other GIL files
 =========================
-You can import other GIL files using the import keyword. This will let you access any sequences and 
-operations in that file. This is still **incredibly** glitchy, so proceed at your own risk. 
+You can import other GIL files using the import keyword. These files are put into their own namespace with the name used to import it to prevent 
+clashes with your code. 
 
-You can import a file by name if it's in the same directory as your current project or if it's in your 
-compiler's Libraries folder. Otherwise, you can import a GIL file by its exact or relative path
+You can import a file by name if it's in the same directory as your current project or (by the 0.1 release) if it's in your 
+compiler's Libraries folder.
+
+Example:
+
+.. code-block:: none
+   
+   import "TestFile"    //Will be loaded into the TestFile namespace

@@ -14,10 +14,7 @@ Example:
 
    .OperationName
    {
-       AminoSequence
-       {
-           MFPMAX
-       }
+       @MFPMAX@
    }
 
 

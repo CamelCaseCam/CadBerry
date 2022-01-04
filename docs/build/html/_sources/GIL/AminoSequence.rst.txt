@@ -1,12 +1,10 @@
 AminoSequence
 =============
-Converts a squence of amino acids to a DNA sequence optimized for the target organism.
+Converts a squence of amino acids to a DNA sequence optimized for the target organism. Specify that a string is an AminoSequence by 
+surrounding it with an ``@`` on either side. 
 
 Example:
 
 .. code-block:: none
 
-   AminoSequence
-   {
-       MALP...
-   }
+   @MALP...@

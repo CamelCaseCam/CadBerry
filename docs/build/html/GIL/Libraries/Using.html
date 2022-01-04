@@ -35,20 +35,52 @@
             
   <section id="linking-to-outside-dlls">
 <h1>Linking to outside dlls<a class="headerlink" href="#linking-to-outside-dlls" title="Permalink to this headline">¶</a></h1>
-<p>GIL supports linking to outside C# dlls using the using keyword.</p>
-<p>You can import a file by name or by path (excluding the file extension). However, the dll and the manifest
-<strong>must</strong> be in the same folder.</p>
+<p>GIL supports linking to outside C++ dlls using the using keyword. You can import a file by name or by path (excluding the file extension)</p>
 <section id="writing-outside-dlls">
 <h2>Writing outside dlls<a class="headerlink" href="#writing-outside-dlls" title="Permalink to this headline">¶</a></h2>
-<p>To create an outside dll, create a C# class library project with a Main class inside the project namespace.
-Inside this class, reference GIL.dll and add a Dictionary&lt;string, Func&lt;List&lt;Token&gt;, Compiler, RelativeFeature&gt;&gt;
-called <code class="docutils literal notranslate"><span class="pre">Operations</span></code>. This Dictionary will contain any functions that you want to expose to users. The
-functions in this Dictionary will appear as operations. Finally, add the names of all the operations to the
-manifest file (A file with the same name as the dll but no file extension).</p>
-<p>Each of the operations inside this Dictionary must return a RelativeFeature. If you don’t want to return
-anything, return RelativeFeature.Empty.</p>
-<p>The function HelperFunctions.GetParams(Token[] or List&lt;Token&gt;) returns the inside tokens excluding the
-parameters and a Params object which contains any parameters specified with ParameterName:Value</p>
+<p>To create a GIL module, write a class that inherits from GIL::GILModule and overrides the GetOperation and GetSequence functions. Then, write an
+<code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">&quot;C&quot;</span></code> function that exposes the module to GIL with the following signature: <code class="docutils literal notranslate"><span class="pre">__declspec(dllexport)</span> <span class="pre">GIL::GILModule*</span> <span class="pre">__stdcall</span> <span class="pre">GetModule()</span></code></p>
+<p>The GetOperation and GetSequence functions return a pointer to any special operation and sequences that you create based on their names. If you
+get an operation that your module doesn’t add, you can just return nullptr.</p>
+<section id="creating-sequences-and-operations">
+<h3>Creating sequences and operations<a class="headerlink" href="#creating-sequences-and-operations" title="Permalink to this headline">¶</a></h3>
+<section id="operations">
+<h4>Operations<a class="headerlink" href="#operations" title="Permalink to this headline">¶</a></h4>
+<p>Create a class that inherits from GIL::Operation. Override the Save and Load functions with an empty function (because these operation subclasses
+have to be loaded from the dll, not from a CGIL file). Finally, override the Get function. This function is called when your operation is called.</p>
+<p>Example:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SetTRAPzymeTarget</span> <span class="o">:</span> <span class="k">public</span> <span class="n">GIL</span><span class="o">::</span><span class="n">Operation</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+             <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GIL</span><span class="o">::</span><span class="n">Parser</span><span class="o">::</span><span class="n">Region</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">Get</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">GIL</span><span class="o">::</span><span class="n">Lexer</span><span class="o">::</span><span class="n">Token</span><span class="o">*&gt;</span> <span class="n">InnerTokens</span><span class="p">,</span> <span class="n">GIL</span><span class="o">::</span><span class="n">Parser</span><span class="o">::</span><span class="n">Project</span><span class="o">*</span> <span class="n">Proj</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+             <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">Save</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="o">&amp;</span> <span class="n">OutputFile</span><span class="p">)</span> <span class="k">override</span> <span class="p">{}</span>
+             <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">Load</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">&amp;</span> <span class="n">InputFile</span><span class="p">)</span> <span class="k">override</span> <span class="p">{}</span>
+
+             <span class="k">static</span> <span class="n">GIL</span><span class="o">::</span><span class="n">Operation</span><span class="o">*</span> <span class="n">self</span><span class="p">;</span>
+             <span class="k">static</span> <span class="n">GIL</span><span class="o">::</span><span class="n">Operation</span><span class="o">*</span> <span class="nf">GetPtr</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="sequences">
+<h4>Sequences<a class="headerlink" href="#sequences" title="Permalink to this headline">¶</a></h4>
+<p>Exactly the same as with operations, but instead of having a Get function, it has GetRegions and GetCode. In the future, I will update this to use
+<code class="docutils literal notranslate"><span class="pre">std::pair</span></code> instead of two functions.</p>
+<p>Example:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Sequence</span>    <span class="c1">//Base sequence class that is inherited by different sequence types</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+             <span class="k">virtual</span> <span class="o">~</span><span class="n">Sequence</span><span class="p">()</span> <span class="p">{}</span>
+             <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Parser</span><span class="o">::</span><span class="n">Region</span><span class="o">&gt;*</span> <span class="n">GetRegions</span><span class="p">(</span><span class="n">Parser</span><span class="o">::</span><span class="n">Project</span><span class="o">*</span> <span class="n">Proj</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+             <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">*</span> <span class="nf">GetCode</span><span class="p">(</span><span class="n">Parser</span><span class="o">::</span><span class="n">Project</span><span class="o">*</span> <span class="n">Proj</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+             <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">Save</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ofstream</span><span class="o">&amp;</span> <span class="n">OutputFile</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+             <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">Load</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ifstream</span><span class="o">&amp;</span> <span class="n">InputFile</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 </section>
 
@@ -73,12 +105,11 @@ parameters and a Params object which contains any parameters specified with Para
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../GIL.html">GIL</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../AminoSequence.html">AminoSequence</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Comments.html">Comments in GIL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html">Error messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html#errors">Errors:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../From.html">From keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Namespaces.html">GIL Namespaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Operations.html">Operation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Regions.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sequence.html">Sequence</a></li>
@@ -89,6 +120,7 @@ parameters and a Params object which contains any parameters specified with Para
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Packages.html">CadBerry Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../API/CadBerry%20API.html">CadBerry API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">To do</a></li>
 </ul>

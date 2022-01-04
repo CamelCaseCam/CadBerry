@@ -1,21 +1,54 @@
 Linking to outside dlls
-=======================
-GIL supports linking to outside C# dlls using the using keyword. 
-
-You can import a file by name or by path (excluding the file extension). However, the dll and the manifest 
-**must** be in the same folder. 
+#######################
+GIL supports linking to outside C++ dlls using the using keyword. You can import a file by name or by path (excluding the file extension)
 
 
 Writing outside dlls
---------------------
-To create an outside dll, create a C# class library project with a Main class inside the project namespace. 
-Inside this class, reference GIL.dll and add a Dictionary<string, Func<List<Token>, Compiler, RelativeFeature>>
-called ``Operations``. This Dictionary will contain any functions that you want to expose to users. The 
-functions in this Dictionary will appear as operations. Finally, add the names of all the operations to the 
-manifest file (A file with the same name as the dll but no file extension). 
+====================
+To create a GIL module, write a class that inherits from GIL::GILModule and overrides the GetOperation and GetSequence functions. Then, write an 
+``extern "C"`` function that exposes the module to GIL with the following signature: ``__declspec(dllexport) GIL::GILModule* __stdcall GetModule()``
 
-Each of the operations inside this Dictionary must return a RelativeFeature. If you don't want to return 
-anything, return RelativeFeature.Empty. 
+The GetOperation and GetSequence functions return a pointer to any special operation and sequences that you create based on their names. If you 
+get an operation that your module doesn't add, you can just return nullptr. 
 
-The function HelperFunctions.GetParams(Token[] or List<Token>) returns the inside tokens excluding the 
-parameters and a Params object which contains any parameters specified with ParameterName:Value
+Creating sequences and operations
+---------------------------------
+Operations
+^^^^^^^^^^
+Create a class that inherits from GIL::Operation. Override the Save and Load functions with an empty function (because these operation subclasses 
+have to be loaded from the dll, not from a CGIL file). Finally, override the Get function. This function is called when your operation is called. 
+
+Example:
+
+.. code-block:: c++
+   
+   class SetTRAPzymeTarget : public GIL::Operation
+   {
+   public:
+		virtual std::pair<std::vector<GIL::Parser::Region>, std::string> Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj) override;
+		virtual void Save(std::ofstream& OutputFile) override {}
+		virtual void Load(std::ifstream& InputFile) override {}
+
+		static GIL::Operation* self;
+		static GIL::Operation* GetPtr();
+   };
+
+Sequences
+^^^^^^^^^
+Exactly the same as with operations, but instead of having a Get function, it has GetRegions and GetCode. In the future, I will update this to use 
+``std::pair`` instead of two functions. 
+
+Example:
+
+.. code-block:: c++
+   
+   class Sequence    //Base sequence class that is inherited by different sequence types
+   {
+   public:
+		virtual ~Sequence() {}
+		virtual std::vector<Parser::Region>* GetRegions(Parser::Project* Proj) = 0;
+		virtual std::string* GetCode(Parser::Project* Proj) = 0;
+
+		virtual void Save(std::ofstream& OutputFile) = 0;
+		virtual void Load(std::ifstream& InputFile) = 0;
+   };

@@ -16,7 +16,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Linking to outside dlls" href="Using.html" />
-    <link rel="prev" title="GIL.HelperFunctions" href="HelperFunctions.html" />
+    <link rel="prev" title="Libraries" href="Libs.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -35,10 +35,14 @@
             
   <section id="importing-other-gil-files">
 <h1>Importing other GIL files<a class="headerlink" href="#importing-other-gil-files" title="Permalink to this headline">¶</a></h1>
-<p>You can import other GIL files using the import keyword. This will let you access any sequences and
-operations in that file. This is still <strong>incredibly</strong> glitchy, so proceed at your own risk.</p>
-<p>You can import a file by name if it’s in the same directory as your current project or if it’s in your
-compiler’s Libraries folder. Otherwise, you can import a GIL file by its exact or relative path</p>
+<p>You can import other GIL files using the import keyword. These files are put into their own namespace with the name used to import it to prevent
+clashes with your code.</p>
+<p>You can import a file by name if it’s in the same directory as your current project or (by the 0.1 release) if it’s in your
+compiler’s Libraries folder.</p>
+<p>Example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import &quot;TestFile&quot;    //Will be loaded into the TestFile namespace
+</pre></div>
+</div>
 </section>
 
 
@@ -62,12 +66,11 @@ compiler’s Libraries folder. Otherwise, you can import a GIL file by its exact
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../GIL.html">GIL</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../AminoSequence.html">AminoSequence</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Block.html">RNAi in GIL (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Comments.html">Comments in GIL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html">Error messages</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../Error%20messages.html#errors">Errors:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../For.html">For keyword (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../From.html">From keyword</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Namespaces.html">GIL Namespaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Operations.html">Operation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Regions.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sequence.html">Sequence</a></li>
@@ -78,6 +81,7 @@ compiler’s Libraries folder. Otherwise, you can import a GIL file by its exact
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Modules/Creating%20modules.html">Creating CadBerry modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Modules/Packages.html">CadBerry Packages</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../API/CadBerry%20API.html">CadBerry API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../What%20I%27m%20working%20on.html">To do</a></li>
 </ul>
@@ -88,7 +92,7 @@ compiler’s Libraries folder. Otherwise, you can import a GIL file by its exact
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../GIL.html">GIL</a><ul>
   <li><a href="Libs.html">Libraries</a><ul>
-      <li>Previous: <a href="HelperFunctions.html" title="previous chapter">GIL.HelperFunctions</a></li>
+      <li>Previous: <a href="Libs.html" title="previous chapter">Libraries</a></li>
       <li>Next: <a href="Using.html" title="next chapter">Linking to outside dlls</a></li>
   </ul></li>
   </ul></li>

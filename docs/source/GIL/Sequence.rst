@@ -9,8 +9,5 @@ Example:
    sequence Example
    {
        ATTTATTT
-       AminoSequence
-       {
-           MPFNX
-       }
+       @MPFNX@
    }

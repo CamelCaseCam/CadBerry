@@ -6,3 +6,4 @@ To do
 * Change ProjectCreationLayer::ProjectName to use std::string instead of char[64]
 * Make sure all events are being dispatched
 * Remove UpdateEvent, since it's redundant
+* Add importing GIL files from Build/Libraries

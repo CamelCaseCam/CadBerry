@@ -1,19 +1,17 @@
 utils
-=====
+#####
 A collection of helpful operations
 
-utils.MutProt
--------------
-Using the Mutations parameter, you can specify one or more protein mutations separated by /. This will 
-mutate the amino acid at that location (starting at 1) to the specified amino acid. 
+utils: .PrintWarning
+====================
+Prints a warning to the console. 
 
 Example:
 
 .. code-block:: none
 
-   using utils
-   .MutProt
+   using "utils"
+   utils: .PrintWarning
    {
-        Mutations:Q3N/P4A
-        MAQPX
+		"You shouldn't have done that"
    }

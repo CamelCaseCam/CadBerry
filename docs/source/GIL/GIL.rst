@@ -9,9 +9,9 @@ CadBerry is based on the GIL language. Here are the core features of the languag
    AminoSequence
    Block
    Comments
-   Error messages
    For
    From
+   Namespaces
    Operations
    Regions
    Sequence

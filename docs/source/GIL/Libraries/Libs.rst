@@ -6,7 +6,6 @@ All the information on GIL libraries
    :maxdepth: 2
    :caption: Contents:
    
-   HelperFunctions
    Import
    Using
    std/std

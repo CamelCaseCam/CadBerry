@@ -1,8 +1,11 @@
-RNAi in GIL
-===========
+RNAi in GIL (not yet implemented)
+=================================
 GIL will automatically generate a siRNA for RNAi using the ``Block`` keyword. GIL will attempt to generate 
 a siRNA which blocks specific genes while ignoring others. Start by putting any GIL code into the curly 
 brackets. To add gene to be blocked, use ``&``. To ignore a gene, use ``!``. 
+
+Note: This documentation page was created for the C# version of GIL. In the C++ version, this will probably be implemented as an operation in the 
+standard library. 
 
 Example:
 

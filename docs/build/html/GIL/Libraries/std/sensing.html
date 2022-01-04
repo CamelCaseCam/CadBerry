@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>utils &#8212; CadBerry 0.1 documentation</title>
+    <title>sensing &#8212; CadBerry 0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
@@ -15,7 +15,7 @@
     <script src="../../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Creating CadBerry modules" href="../../../Modules/Creating%20modules.html" />
+    <link rel="next" title="utils" href="utils.html" />
     <link rel="prev" title="GIL standard library" href="std.html" />
    
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
@@ -33,20 +33,66 @@
 
           <div class="body" role="main">
             
-  <section id="utils">
-<h1>utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h1>
-<p>A collection of helpful operations</p>
-<section id="utils-printwarning">
-<h2>utils: .PrintWarning<a class="headerlink" href="#utils-printwarning" title="Permalink to this headline">¶</a></h2>
-<p>Prints a warning to the console.</p>
+  <section id="sensing">
+<h1>sensing<a class="headerlink" href="#sensing" title="Permalink to this headline">¶</a></h1>
+<p>Contains operations to help the cell sense its environment</p>
+<section id="creating-trapzymes">
+<h2>Creating TRAPzymes<a class="headerlink" href="#creating-trapzymes" title="Permalink to this headline">¶</a></h2>
+<p>The sensing library contains two operations that can be used together to generate a TRAPzyme in a couple of seconds. Something important to
+remember is that these operations will always create <em>something</em> if possible. Even if the only option is a TRAPzyme that probably won’t work,
+these operations are designed to make something rather than nothing.</p>
+<p>Because of this, it’s important to check the console for warnings if you’re using these operations. It’s fine if you get a warning about
+attenuator/antiattenuator self-binding (though you should aim for a chunk size of less than 4), but any warnings about attenuator-ribozyme binding
+are a bad sign. This warning means that your attenuator is binding to parts of the ribozyme that aren’t the catalytic core.</p>
+<section id="sensing-settrapzymetarget">
+<h3>sensing: .SetTRAPzymeTarget<a class="headerlink" href="#sensing-settrapzymetarget" title="Permalink to this headline">¶</a></h3>
+<p>This operation sets the TRAPzyme’s substrate. When using this operation, use the biggest possible sequence that will be present, because this gives
+the optimizer the most freedom to minimize attenuator-ribozyme binding. You must call this operation before calling GenTZFromAttenuator, but the
+target is preserved, so you only have to call it when you want to change the target.</p>
 <p>Example:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>using &quot;utils&quot;
-utils: .PrintWarning
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>using &quot;sensing&quot;
+
+sensing: .SetTRAPzymeTarget
 {
-             &quot;You shouldn&#39;t have done that&quot;
+             ATGAATCTTCCGTCTTTCGTCCAACGTCTCTCCACAGCAAGCAGTCGCAGTATAGCGATTACTTGCGTAGTTGTCCTTGCCTCTGCAATCGCCTTTCCCTTCATCCGCAGAGACTACCAGACCTTCCTGGAAGTGGGACCCTCGTACGCCCCGCAGAACTTTAGAGGATACATCATCGTCTGTGTCCTCTCGTTGTTCCGCCAAGAACAAAAAGGACTCGAAATCTACGATCGGCTCCCAGAGAAACGAAGGTGGTTGTCCGACCTTCCCTTTCGTGACGGGCCCAGACCCAGCATCACAAGCCATATCATTCAACGACAGCGTACCCAACTAGTTGATCCGGACTTCGCTACCCAGGAGCTCATAGGCAAAGTCATCCCTCGTGTGCAAGCACGACACACCGACAAAACATTCCTCAGCACCTCCAAATTCGAATTTCACGCAAAAGCCATATTCCTCCTGCCTTCCATCCCAATCAACGACCCTCTGAACGTTCCAAGCCACGACACTGTCCGACGAACGAAGCGCGAGATCGCGCATATGCATGATTATCATGATTGCACTCTTCACATCGCTCTCGCTGCTCAGGACGGAAAGGAGGTTTTGAAGAAGGGATGGGGGCAACGACACCCACTCGCTGGACCTGGAGTGCCCGGCCCACCGACGGAGTGGACGTTTCTCTATGCGCCTCGAAACGAAGAAGAGGTTCGAGTTGTGGAGATGATTATTGAGGCTGCCATAGGTTACATGACGAATGATCCGGCAGGAAAAGTTGTAGAAGCCACTGGAAAG
 }
 </pre></div>
 </div>
+</section>
+<section id="sensing-gentzfromattenuator">
+<h3>sensing: .GenTZFromAttenuator<a class="headerlink" href="#sensing-gentzfromattenuator" title="Permalink to this headline">¶</a></h3>
+<p>Generates a TRAPzyme from the attenuator sequence. This operation does the following things:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>Finds the attenuator with the least self-binding and (if it has to decide between multiple equal attenuators) highest or lowest GC content</dt><dd><ol class="arabic simple">
+<li><dl class="simple">
+<dt>Finds an attenuator candidate. If this candidate doesn’t self-bind, it picks it and returns</dt><dd><ol class="arabic simple" start="2">
+<li><p>Recursively calls itself to try to find a better attenuator later on in the sequence.</p></li>
+<li><p>If it can’t find a better option later in the sequence, returns this candidate</p></li>
+<li><p>If it finds an equal option later in the sequence, returns the candidate with the higher or lower GC content (calculated using (GC - 0.5f)^2 )</p></li>
+<li><p>If the candidate it returned exibits self-binding, prints a warning to the console.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><p>If it couldn’t find a valid attenuator at the last step, prints an error and returns</p></li>
+<li><dl class="simple">
+<dt>Find the TRAPzyme body with the least self-binding</dt><dd><ol class="arabic simple">
+<li><p>Finds a valid target site in the substrate</p></li>
+<li><p>If the ribozyme generated from this target site doesn’t bind with the attenuator (in chunks of 7 or more, since it’s supposed to bind with the catalytic core), it returns it</p></li>
+<li><p>Otherwise, recursively calls itself to try to find a better target site</p></li>
+<li><p>If no perfect target site was found, prints an error to the console.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+<p>As you can see, this algorithm works best if you provide bigger target and attenuator sequences.</p>
+</section>
 </section>
 </section>
 
@@ -99,7 +145,7 @@ utils: .PrintWarning
   <li><a href="../Libs.html">Libraries</a><ul>
   <li><a href="std.html">GIL standard library</a><ul>
       <li>Previous: <a href="std.html" title="previous chapter">GIL standard library</a></li>
-      <li>Next: <a href="../../../Modules/Creating%20modules.html" title="next chapter">Creating CadBerry modules</a></li>
+      <li>Next: <a href="utils.html" title="next chapter">utils</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -136,7 +182,7 @@ utils: .PrintWarning
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../../../_sources/GIL/Libraries/std/utils.rst.txt"
+      <a href="../../../_sources/GIL/Libraries/std/sensing.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

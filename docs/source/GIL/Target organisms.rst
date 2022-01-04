@@ -43,4 +43,4 @@ That was hard to describe, so here's an example for baker's yeast:
 
 .. code-block:: none
 
-   g : GGT GGA GGC GGG
+   g:GGT GGA GGC GGG

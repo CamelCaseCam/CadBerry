@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>For keyword (not yet implemented) &#8212; CadBerry 0.1 documentation</title>
+    <title>GIL Namespaces &#8212; CadBerry 0.1 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
@@ -15,8 +15,8 @@
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="From keyword" href="From.html" />
-    <link rel="prev" title="Comments in GIL" href="Comments.html" />
+    <link rel="next" title="Operation" href="Operations.html" />
+    <link rel="prev" title="From keyword" href="From.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -33,16 +33,17 @@
 
           <div class="body" role="main">
             
-  <section id="for-keyword-not-yet-implemented">
-<h1>For keyword (not yet implemented)<a class="headerlink" href="#for-keyword-not-yet-implemented" title="Permalink to this headline">¶</a></h1>
-<p>For compiles a section of code for the specified organism.</p>
-<p>Example:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>For Pichia
-{
-   @MAAAAAAQX@
-}
-</pre></div>
-</div>
+  <section id="gil-namespaces">
+<h1>GIL Namespaces<a class="headerlink" href="#gil-namespaces" title="Permalink to this headline">¶</a></h1>
+<p>GIL supports namespaces as a way to organize your code. This feature is extremely buggy, so expect lots of changes in the future.</p>
+<p>You can specify a namespace using <code class="docutils literal notranslate"><span class="pre">namespace</span> <span class="pre">Name</span></code>. Everything inside this namespace will be put into a child GIL project. One problem with the
+current approach is that things within the namespace can’t directly access the namespace.</p>
+<p>Because GIL sequences and operations aren’t compiled until they’re first called, they’re actually compiled in the main namespace of your program.</p>
+<section id="accessing-namespaces">
+<h2>Accessing namespaces<a class="headerlink" href="#accessing-namespaces" title="Permalink to this headline">¶</a></h2>
+<p>GIL allows you to access namespaces in a similar way to C++. In GIL, you put <code class="docutils literal notranslate"><span class="pre">NamespaceName:</span> <span class="pre">Something</span></code> or <code class="docutils literal notranslate"><span class="pre">NamespaceName:Something</span></code>. In the
+future, I’ll update this to make it exactly like C++.</p>
+</section>
 </section>
 
 
@@ -68,9 +69,9 @@
 <li class="toctree-l2"><a class="reference internal" href="AminoSequence.html">AminoSequence</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Block.html">RNAi in GIL (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Comments.html">Comments in GIL</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">For keyword (not yet implemented)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="For.html">For keyword (not yet implemented)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="From.html">From keyword</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Namespaces.html">GIL Namespaces</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GIL Namespaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Operations.html">Operation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Regions.html">Regions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Sequence.html">Sequence</a></li>
@@ -91,8 +92,8 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="GIL.html">GIL</a><ul>
-      <li>Previous: <a href="Comments.html" title="previous chapter">Comments in GIL</a></li>
-      <li>Next: <a href="From.html" title="next chapter">From keyword</a></li>
+      <li>Previous: <a href="From.html" title="previous chapter">From keyword</a></li>
+      <li>Next: <a href="Operations.html" title="next chapter">Operation</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -127,7 +128,7 @@
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/GIL/For.rst.txt"
+      <a href="../_sources/GIL/Namespaces.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

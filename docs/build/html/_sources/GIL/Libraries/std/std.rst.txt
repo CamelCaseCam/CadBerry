@@ -6,5 +6,5 @@ All the modules in the GIL standard library
    :maxdepth: 2
    :caption: Contents:
 
-   Colour/Colour
+   sensing
    utils
