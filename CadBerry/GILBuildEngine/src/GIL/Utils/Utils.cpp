@@ -83,14 +83,15 @@ namespace GIL
 			}
 
 			//Loop through code
-			for (int i = start; i < Code.length(); ++i)
+			for (int i = start; i < Code.length() - pattern.length() + 1; ++i)
 			{
 				for (int p = 0; p < pattern.length(); ++p)    //Loop through pattern
 				{
 					if (!Matches(Code[i + p], pattern[p]))
 						goto ContinueLoop;
 				}
-				return { Code.substr(i, pattern.length()), i };
+				CDB_BuildInfo(Code);
+				return { Code.substr(i, pattern.size()), i };
 
 			ContinueLoop:
 				continue;
@@ -371,10 +372,13 @@ namespace GIL
 				case 'c':
 				case 'g':
 				case 'u':
+					Output += pattern[i];
+					break;
 				default:
 					break;
 				}
 			}
+			return Output;
 		}
 
 		bool Matches(char c, char p)

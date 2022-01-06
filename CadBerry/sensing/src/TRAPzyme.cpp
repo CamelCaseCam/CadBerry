@@ -65,6 +65,11 @@ namespace sensing
 	{
 		//Now find a valid target sequence. It's probably fine if the target kinda binds to itself
 		auto Target = utils::Find(TargetText, "nnnnnnnnnnnnnnnnnnnnhtnnnn", Start);
+		if (Target.first == "")
+		{
+			CDB_BuildError("Could not find TRAPzyme target");
+			return "";
+		}
 		std::string TZymeCandidate = GenTRAPzymeBody(Target.first.substr(14, 12), Attenuator);
 
 		//Find the biggest chunk of the AA sequence binds to the TZymeCandidate 
@@ -233,9 +238,20 @@ namespace sensing
 
 	std::pair<std::vector<GIL::Parser::Region>, std::string> CreateAttenuator::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
 	{
-		std::string pattern = "nnnnnnnnnnnnnnnragna";
+		/*
+		Pattern is vvvvvvvvvvvvvvvvsvvvhtragna
+
+		Breakdown:
+		vvvvvvvvvvvvvvvvsvvvhtragna
+						^	 ^
+						|	 |Only possibe cut site
+						|Attenuator must be created to include the cut site, because the only other option is blocked by this s
+		*/
+
+		std::string pattern = "vvvvvvvvvvvvvvvvsvvvhtragna";
 		std::string Candidate;
 		Candidate = utils::GenWithPattern(pattern);
+		CDB_BuildInfo("Candidate");
 
 		//HACK: Definitely room for optimization
 		while (DetectBinding(Candidate) != 0)
