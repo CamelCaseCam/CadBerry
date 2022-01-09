@@ -5,6 +5,8 @@
 
 #include "imgui.h"
 
+#include "ImPlot.h"
+
 #include "CadBerry/Events/ApplicationEvent.h"
 #include "CadBerry/Events/KeyEvent.h"
 #include "CadBerry/Events/MouseEvent.h"

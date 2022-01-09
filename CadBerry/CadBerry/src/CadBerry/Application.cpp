@@ -12,6 +12,7 @@
 #include "CadBerry/BuildEngine/BuildDialog.h"
 #include "CadBerry/Packages/LoadPackages.h"
 #include "CadBerry/Packages/Update.h"
+#include "Math/Equation.h"
 
 #include "whereami.h"
 
@@ -24,6 +25,8 @@ namespace CDB
 	Application* Application::s_Instance = nullptr;
 	void Application::Main()
 	{
+
+
 		this->PreBuildDir = this->OpenProject->Path + this->OpenProject->PreBuildDir;
 
 		this->m_ThreadPool->AddStandardTask(FetchPackages);

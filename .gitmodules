@@ -34,3 +34,6 @@
 [submodule "CadBerry/CadBerry/CadBerry/vendor/yaml-cpp"]
 	path = CadBerry/CadBerry/CadBerry/vendor/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "CadBerry/CadBerry/vendor/implot"]
+	path = CadBerry/CadBerry/vendor/implot
+	url = https://github.com/epezent/implot.git

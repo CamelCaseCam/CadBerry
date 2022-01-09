@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\Core\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\Core\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;..\..\CadBerry\vendor\implot;..\..\CadBerry\vendor\nfd\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -69,6 +69,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Debug\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\bin\Debug-windows-x86_64\Core\Core.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -81,7 +83,7 @@ copy /B /Y ..\..\bin\Debug-windows-x86_64\Core\Core.pdb ..\..\bin\Debug-windows-
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\Core\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\Core\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;..\..\CadBerry\vendor\implot;..\..\CadBerry\vendor\nfd\src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -95,6 +97,8 @@ copy /B /Y ..\..\bin\Debug-windows-x86_64\Core\Core.pdb ..\..\bin\Debug-windows-
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\bin\Release-windows-x86_64\Core\Core.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -104,10 +108,12 @@ copy /B /Y ..\..\bin\Release-windows-x86_64\Core\Core.pdb ..\..\bin\Release-wind
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Complement.h" />
+    <ClInclude Include="src\Simulation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Complement.cpp" />
     <ClCompile Include="src\Module.cpp" />
+    <ClCompile Include="src\Simulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CadBerry\CadBerry.vcxproj">

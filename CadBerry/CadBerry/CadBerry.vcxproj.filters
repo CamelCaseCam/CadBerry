@@ -13,6 +13,12 @@
     <Filter Include="CadBerry\ImGui">
       <UniqueIdentifier>{7B6A64A4-6738-58AA-50CC-C8D03C39340F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\ImGui\ImPlot">
+      <UniqueIdentifier>{DF56C6E5-4BC3-81E0-14B7-193E80E2A348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Math">
+      <UniqueIdentifier>{0A749871-7634-14A8-3F6F-5D25ABEE5884}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CadBerry\Module">
       <UniqueIdentifier>{26757A3A-9200-E8FE-9B11-6BF3071C44FF}</UniqueIdentifier>
     </Filter>
@@ -76,6 +82,9 @@
     <ClInclude Include="src\CadBerry\ImGui\ImGuiLayer.h">
       <Filter>CadBerry\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\ImGui\ImPlot\implot.h">
+      <Filter>CadBerry\ImGui\ImPlot</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Input.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
@@ -93,6 +102,9 @@
     </ClInclude>
     <ClInclude Include="src\CadBerry\Math.h">
       <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Math\Equation.h">
+      <Filter>CadBerry\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Module\Module.h">
       <Filter>CadBerry\Module</Filter>
@@ -181,6 +193,7 @@
     <ClInclude Include="src\CadBerry\Window.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
+    <ClInclude Include="src\ImPlot.h" />
     <ClInclude Include="src\cdbpch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -204,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="src\CadBerry\Log.cpp">
       <Filter>CadBerry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Math\Equation.cpp">
+      <Filter>CadBerry\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Module\Viewport.cpp">
       <Filter>CadBerry\Module</Filter>

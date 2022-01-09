@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;FMT_HEADER_ONLY;CDB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\glm;..\CadBerry\vendor\BlockingCollection;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\glm;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -77,7 +77,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\glm;..\CadBerry\vendor\BlockingCollection;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\glm;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

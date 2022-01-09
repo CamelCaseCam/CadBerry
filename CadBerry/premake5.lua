@@ -16,6 +16,7 @@ IncludeDirs["glm"] = "CadBerry/vendor/glm"
 IncludeDirs["nfd"] = "CadBerry/vendor/nfd/src/include"
 IncludeDirs["WhereAmI"] = "CadBerry/vendor/WhereAmI/src"
 IncludeDirs["BlockingCollection"] = "CadBerry/vendor/BlockingCollection"
+IncludeDirs["ImPlot"] = "CadBerry/vendor/implot"
 
 include "CadBerry/vendor/GLFW"
 include "CadBerry/vendor/Glad"
@@ -58,6 +59,7 @@ project "CadBerry"
 		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.nfd}",
 		"%{IncludeDirs.WhereAmI}",
+		"%{IncludeDirs.ImPlot}",
 		"CadBerry/vendor/BlockingCollection",
 		"CadBerry/vendor/cpr/include",
 		"CadBerry/vendor/cpr/cpr_generated_includes",
@@ -154,7 +156,8 @@ project "Berry"
 		"CadBerry/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.glm}",
-		"CadBerry/vendor/BlockingCollection"
+		"CadBerry/vendor/BlockingCollection",
+		"%{IncludeDirs.ImPlot}",
 	}
 
 	libdirs
@@ -562,6 +565,8 @@ project "Core"
 		"%{IncludeDirs.GLFW}",
 		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.nfd}",
 	}
 
 	links
@@ -597,7 +602,23 @@ project "Core"
 		{
 			"CDB_ENABLE_ASSERTS"
 		}
+		links
+		{
+			"nfd_d"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/nfd/build/lib/Debug/x64",
+		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
 		buildoptions "/MD"
 		optimize "On"
+		links
+		{
+			"nfd"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/nfd/build/lib/Release/x64",
+		}
