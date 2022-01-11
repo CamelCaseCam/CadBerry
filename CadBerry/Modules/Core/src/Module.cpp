@@ -9,6 +9,7 @@
 
 #include "imgui.h"
 #include "misc/cpp/imgui_stdlib.h"
+#include "ImPlot.h"
 
 #include "CadBerry/Threading/ThreadPool.h"
 
@@ -41,6 +42,7 @@ public:
 	float Timestep = 0.1f;
 	bool RunCSV = false;
 	std::string OutputPath = "";
+	float GraphSizes[4] = { 0.0, 10.0, 0.0, 10.0 };
 
 	static void RunSimulation() { SimulationForThreadPool->Run(TotalTimeForThreadPool); }
 	static void RunSimulationCSV() { SimulationForThreadPool->RunToCSV(TotalTimeForThreadPool, OutputPathForThreadPool); }
@@ -49,6 +51,7 @@ public:
 		ImGui::InputTextMultiline("Simulation source code", &SimSrc);
 		ImGui::InputFloat("Simulation timestep", &Timestep);
 		ImGui::InputFloat("Total time of simulation", &TotalTime);
+		ImGui::InputFloat4("Graph window size", &GraphSizes[0]);
 		ImGui::Checkbox("Export to CSV", &RunCSV);
 
 		if (RunCSV)
@@ -81,6 +84,7 @@ public:
 				CDB::ThreadPool::Get()->AddStandardTask(RunSimulationCSV);
 			}
 		}
+		ImPlot::SetNextAxesLimits(GraphSizes[0], GraphSizes[1], GraphSizes[2], GraphSizes[3], ImPlotCond_Always);
 		CurrentSimulation.Draw();
 	}
 

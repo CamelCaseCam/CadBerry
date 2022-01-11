@@ -140,8 +140,8 @@ case 'v':\
 case 'w':\
 case 'x':\
 case 'y':\
-case 'z'
-
+case 'z':\
+case '_'
 
 		Token GetNumber(const std::string& src, int& i);
 		Token GetWord(const std::string& src, int& i);
@@ -153,7 +153,7 @@ case 'z'
 			bool WasOp = false;
 			for (int i = start; i < src.length(); ++i)
 			{
-				switch (src[i])
+				switch (std::tolower(src[i]))
 				{
 				IsNumber:
 				Number:
@@ -244,7 +244,7 @@ case 'z'
 			Token Output;
 			for (i; i < src.length(); ++i)
 			{
-				switch (src[i])
+				switch (std::tolower(src[i]))
 				{
 				IsNumber:
 				InAlphabet:

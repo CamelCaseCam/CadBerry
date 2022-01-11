@@ -294,6 +294,7 @@ project "VSCodeIntegration"
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.glm}",
+		"%{IncludeDirs.ImPlot}",
 	}
 
 	links
@@ -361,6 +362,7 @@ project "GILBuildEngine"
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.glm}",
+		"%{IncludeDirs.ImPlot}",
 	}
 
 	links
@@ -434,6 +436,7 @@ project "utils"
 		"utils/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.ImPlot}",
 	}
 
 	links
@@ -499,6 +502,7 @@ project "sensing"
 		"utils/src",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.ImPlot}",
 	}
 
 	links

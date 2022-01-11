@@ -83,7 +83,6 @@ void Simulation::GetVar(std::string Line)
 
 void Simulation::Draw()
 {
-	ImPlot::SetNextAxesLimits(0, 30, 0, 3000);
 	ImPlot::BeginPlot("TestPlot");
 	ImPlot::SetupAxes("Time", "Value");
 	for (VarInfo& vi : this->Variables)

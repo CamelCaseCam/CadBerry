@@ -9,11 +9,15 @@ namespace sensing
 	{
 		SetTRAPzymeTarget,
 		GenTZFromAttenuator,
+		GenTZV2FromAttenuator,
+		GenTZTarget,
 		CreateAttenuator,
 	};
 	const std::unordered_map<std::string, OpName> Str2OpName = {
 		{"SetTRAPzymeTarget", OpName::SetTRAPzymeTarget},
 		{"GenTZFromAttenuator", OpName::GenTZFromAttenuator},
+		{"GenTZV2FromAttenuator", OpName::GenTZV2FromAttenuator},
+		{"GenTZTarget", OpName::GenTZTarget},
 		{"CreateAttenuator", OpName::CreateAttenuator},
 	};
 	class sensingModule : public GIL::GILModule
@@ -27,6 +31,10 @@ namespace sensing
 				return SetTRAPzymeTarget::GetPtr();
 			case OpName::GenTZFromAttenuator:
 				return GenTZFromAttenuator::GetPtr();
+			case OpName::GenTZV2FromAttenuator:
+				return GenTZV2FromAttenuator::GetPtr();
+			case OpName::GenTZTarget:
+				return GenTZTarget::GetPtr();
 			case OpName::CreateAttenuator:
 				return CreateAttenuator::GetPtr();
 			}

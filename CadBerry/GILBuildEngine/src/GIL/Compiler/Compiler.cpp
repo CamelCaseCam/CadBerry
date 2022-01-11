@@ -299,6 +299,7 @@ namespace GIL
 			else if (std::filesystem::exists(CDB::Application::Get().PathToEXE + "/Build/Libs/" + path.parent_path().string() + "\\" 
 				+ path.stem().string() + ".cgil"))    //If a compiled file in the libs folder exists
 			{
+				CDB_BuildInfo("Worked");
 				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
 			}
