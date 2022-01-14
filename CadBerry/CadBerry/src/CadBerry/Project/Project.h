@@ -8,6 +8,12 @@
 
 namespace CDB
 {
+	struct ProjInfo
+	{
+		std::string Name;
+		std::string Path;
+	};
+
 	class CDBAPI Project
 	{
 	public:

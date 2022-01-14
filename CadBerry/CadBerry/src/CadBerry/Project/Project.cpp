@@ -2,6 +2,8 @@
 #include "Project.h"
 #include "CadBerry/Log.h"
 
+#include "CadBerry/Utils/SaveFunctions.h"
+
 
 namespace CDB
 {
@@ -19,15 +21,9 @@ namespace CDB
 		IntVal = CDB_MinorVersion;
 		OutputFile.write((char*)&IntVal, sizeof(int));    //Write CadBerry project minor version
 
-		IntVal = this->Name.length();
-		OutputFile.write((char*)&IntVal, sizeof(int));    //Write the length of name to the file
+		SaveString(this->Name, OutputFile);
 
-		OutputFile.write(this->Name.data(), sizeof(char) * IntVal);    //Write the string to file
-
-		IntVal = this->PreBuildDir.length();
-		OutputFile.write((char*)&IntVal, sizeof(int));    //Write the length of Prebuild path to the file
-
-		OutputFile.write(this->PreBuildDir.data(), sizeof(char) * IntVal);    //Write the string to file
+		SaveString(this->PreBuildDir, OutputFile);
 
 		OutputFile.close();
 	}
@@ -67,12 +63,7 @@ namespace CDB
 			NewProject->Path = std::filesystem::path(path).parent_path().string();
 			CDB_EditorInfo(NewProject->Path);
 
-			int NumChars;
-			InputFile.read((char*)&NumChars, sizeof(int));
-			NewProject->Name.reserve(NumChars);
-			CDB_EditorInfo(NumChars);
-			
-			InputFile.read((char*)NewProject->Name.data(), sizeof(char) * NumChars);
+			LoadStringFromFile(NewProject->Name, InputFile);
 
 			InputFile.close();
 			NewProject->PreBuildDir = "\\.GILCache\\";
@@ -85,18 +76,9 @@ namespace CDB
 			NewProject->Path = std::filesystem::path(path).parent_path().string();
 			CDB_EditorInfo(NewProject->Path);
 
-			int NumChars;
-			InputFile.read((char*)&NumChars, sizeof(int));
-			NewProject->Name.reserve(NumChars);
-			CDB_EditorInfo(NumChars);
+			LoadStringFromFile(NewProject->Name, InputFile);
 
-			InputFile.read(NewProject->Name.data(), sizeof(char) * NumChars);
-
-			NumChars = 0;
-			InputFile.read((char*)&NumChars, sizeof(int));
-			NewProject->PreBuildDir.reserve(NumChars);
-
-			InputFile.read(NewProject->PreBuildDir.data(), sizeof(char) * NumChars);
+			LoadStringFromFile(NewProject->PreBuildDir, InputFile);
 
 			InputFile.close();
 			return NewProject;

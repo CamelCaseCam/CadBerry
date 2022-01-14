@@ -44,6 +44,9 @@ namespace GIL
 			std::map<std::string, Sequence*> Sequences;
 			std::vector<Lexer::Token*> Main;
 
+			std::map<std::string, std::string> Attributes;
+			std::vector<std::string> AvoidRSites;
+
 			//TODO: make GIL be able to be statically or dynamically linked
 			std::vector<std::string> Imports;
 			std::vector<std::string> Usings;

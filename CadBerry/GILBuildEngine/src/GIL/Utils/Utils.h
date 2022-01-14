@@ -2,6 +2,7 @@
 #include <gilpch.h>
 
 #include "Core.h"
+#include "GIL/RestrictionSites.h"
 
 namespace GIL
 {
@@ -14,5 +15,10 @@ namespace GIL
 		GILAPI float GetAGRatio(const std::string& Code);
 		
 		GILAPI std::string GenWithPattern(std::string& pattern);
+
+		GILAPI bool FindNearby(std::string& Code1, std::string& Code2, std::string& Pattern);
+
+		GILAPI std::string GetRestrictionSite(RestrictionSite rs);
+		GILAPI std::string GetRestrictionSite(std::string& rs);
 	}
 }

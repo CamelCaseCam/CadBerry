@@ -23,6 +23,12 @@ namespace GIL
 			{"#target", LexerToken::SETTARGET},
 			{"#Target", LexerToken::SETTARGET},
 
+			{"#SetAttr", LexerToken::SETATTR},
+			{"#setAttr", LexerToken::SETATTR},
+
+			{"#Optimize", LexerToken::OPTIMIZE},
+			{"#optimize", LexerToken::OPTIMIZE},
+
 			{"#Region", LexerToken::BEGINREGION},
 			{"#region", LexerToken::BEGINREGION},
 

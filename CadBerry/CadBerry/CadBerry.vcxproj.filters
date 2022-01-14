@@ -195,6 +195,7 @@
     </ClInclude>
     <ClInclude Include="src\ImPlot.h" />
     <ClInclude Include="src\cdbpch.h" />
+    <ClInclude Include="src\CadBerry\Utils\SaveFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -288,5 +289,6 @@
       <Filter>CadBerry\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
+    <ClCompile Include="src\CadBerry\Utils\SaveFunctions.cpp" />
   </ItemGroup>
 </Project>

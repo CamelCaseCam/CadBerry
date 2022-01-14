@@ -2,8 +2,12 @@
 #include "Compiler.h"
 #include "CodonEncoding.h"
 #include "GIL/Lexer/Lexer.h"
+#include "GIL/Lexer/LexerMacros.h"
 #include "GIL/Modules/GILModule.h"
 #include "CompilerMacros.h"
+
+#include "GIL/Utils/Utils.h"
+#include "GIL/RestrictionSites.h"
 
 #include "CadBerry.h"
 
@@ -236,13 +240,30 @@ namespace GIL
 			return std::pair<std::vector<Region>, std::string>(Output, Code);
 		}
 
+		bool HasRestrictionSites(std::string& DNA, std::string& Codon, Project* Proj);
+
 		void AminosToDNA(std::string& DNA, std::string& aminos, Project* Proj, CodonEncoding& CurrentEncoding)
 		{
 			DNA.reserve(DNA.length() + (aminos.length() * 3));
 
 			for (char a : aminos)
 			{
-				DNA += *CurrentEncoding.GetFromLetter(a);
+				if (IsWhiteSpace(a))
+					continue;
+				auto Codons = CurrentEncoding.GetCodons(std::tolower(a));
+				for (std::string* codon : *Codons)
+				{
+					if (!HasRestrictionSites(DNA, *codon, Proj))
+					{
+						DNA += *codon;
+						goto continueLoop;
+					}
+				}
+				CDB_BuildWarning("Added avoided restriction site");
+				DNA += *(*Codons)[0];
+
+			continueLoop:
+				continue;
 			}
 		}
 
@@ -354,6 +375,18 @@ namespace GIL
 				}
 				Modules[LibPath.stem().string()] = GetModule();
 			}
+		}
+
+		bool HasRestrictionSites(std::string& DNA, std::string& Codon, Project* Proj)
+		{
+			for (std::string& rs : Proj->AvoidRSites)
+			{
+				std::string Pattern = utils::GetRestrictionSite(rs);
+
+				if (utils::FindNearby(DNA, Codon, Pattern))
+					return true;
+			}
+			return false;
 		}
 	}
 }

@@ -77,7 +77,7 @@ void PrecompileFiles(std::string Subdir)
 		{
 			if (CurrentFolder->path().extension().string() == ".gil")
 			{
-				if (IsChanged(Subdir + CurrentFolder->path().stem().string()))
+				if (IsChanged(std::filesystem::relative(CDBApp->OpenProject->Path, std::filesystem::path(CDBApp->OpenProject->Path).append(Subdir)).string()))
 				{
 					//TODO: This could cause problems if precompilation takes too long, as the user might modify the gil file before the old version finishes compiling
 					CDBApp->PrecompileFile(CurrentFolder->path().string(), FullPrebuildPath + "\\" + CurrentFolder->path().stem().string() + ".cgil");
@@ -94,7 +94,7 @@ void PrecompileFiles(std::string Subdir)
 bool IsChanged(std::string RelativePath)
 {
 	//HACK: I need to make this portable
-	std::filesystem::path Path = CDBApp->OpenProject->Path + "\\" + RelativePath + ".gil";    //Get the last edit time of the gil file
+	std::filesystem::path Path = CDBApp->OpenProject->Path + "\\" + RelativePath;    //Get the last edit time of the gil file
 	auto LWTime = std::filesystem::last_write_time(Path);
 
 	Path = FullPrebuildPath + "\\" + RelativePath + ".cgil";

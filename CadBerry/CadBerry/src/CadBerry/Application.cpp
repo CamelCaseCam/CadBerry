@@ -31,7 +31,7 @@ namespace CDB
 
 		this->m_ThreadPool->AddStandardTask(FetchPackages);
 
-		EditorWindow = Window::Create();
+		EditorWindow = Window::Create(WindowProps("CadBerry Editor - " + OpenProject->Name));
 
 		GuiLayer = new ImGuiLayer();    //CheckEnd will delete EditorWindow which will delete GuiLayer, so we're initializing a new one
 		Viewports = new ViewportLayer();
@@ -89,12 +89,27 @@ namespace CDB
 			return;
 		}
 		NewProj = false;
-
 		LProj.close();
+
+		std::ifstream ProjIn;
+		std::vector<ProjInfo> Projects;
+		ProjIn.open(this->PathToEXE + "/CDBProjectList.cfg", std::ios::in);
+
+		std::string ProjName;
+		while (std::getline(ProjIn, ProjName))
+		{
+			int ColonIdx = ProjName.find(":");
+			ProjInfo proj;
+			proj.Name = ProjName.substr(0, ColonIdx);
+			proj.Path = ProjName.substr(ColonIdx + 1);
+			Projects.push_back(proj);
+		}
+		ProjIn.close();
+
 		EditorWindow = Window::Create(WindowProps("New Project", 480U, 720U));
 		EditorWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
-		EditorWindow->m_LayerStack.PushLayer(new ProjectCreationLayer());
+		EditorWindow->m_LayerStack.PushLayer(new ProjectCreationLayer(Projects));
 		running = true;
 
 		while (running)

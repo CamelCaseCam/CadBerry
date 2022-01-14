@@ -105,11 +105,13 @@ copy /B /Y ..\bin\Release-windows-x86_64\utils\utils.pdb ..\bin\Release-windows-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Operations\MCS.h" />
     <ClInclude Include="src\Operations\PrintWarning.h" />
     <ClInclude Include="src\utilspch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
+    <ClCompile Include="src\Operations\MCS.cpp" />
     <ClCompile Include="src\Operations\PrintWarning.cpp" />
     <ClCompile Include="src\utilspch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

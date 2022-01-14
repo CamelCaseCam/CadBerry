@@ -120,6 +120,50 @@ namespace GIL
 					Target->TargetOrganism = Tokens[i]->Value;
 					break;
 				}
+				case LexerToken::SETATTR:
+				{
+					++i;
+					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
+					{
+						CDB_BuildError("Expected attribute name after #SetAttr");
+						break;
+					}
+					std::string AttrName = Tokens[i]->Value;
+					++i;
+					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
+					{
+						CDB_BuildError("Expected value after attribute name \"{0}\"", AttrName);
+						break;
+					}
+					Target->Attributes[AttrName] = Tokens[i]->Value;
+					break;
+				}
+				case LexerToken::OPTIMIZE:    //Optimization settings
+				{
+					++i;
+					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
+					{
+						CDB_BuildError("Expected optimization name after #Optimize");
+						break;
+					}
+					//TODO: If the number of optimizations get big enough, I should rewrite this to use a switch statement
+					if (Tokens[i]->Value == "AVOID_RS")
+					{
+						++i;
+						if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
+						{
+							CDB_BuildError("Expected restriction site name after #Optimize AVOID_RS");
+							break;
+						}
+						Target->AvoidRSites.push_back(Tokens[i]->Value);
+						break;
+					}
+					else
+					{
+						CDB_BuildError("Unknown optimization name \"{0}\"", Tokens[i]->Value);
+						break;
+					}
+				}
 				case LexerToken::IMPORT:    //Adds file name to imports, but the compiler imports the files
 					++i;
 					if (Tokens[i]->TokenType != LexerToken::STRING)

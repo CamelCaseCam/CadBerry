@@ -100,6 +100,7 @@
     </ClInclude>
     <ClInclude Include="src\Todos.h" />
     <ClInclude Include="src\gilpch.h" />
+    <ClInclude Include="src\GIL\RestrictionSites.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
@@ -155,5 +156,6 @@
       <Filter>GIL\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\gilpch.cpp" />
+    <ClCompile Include="src\GIL\RestrictionSites.cpp" />
   </ItemGroup>
 </Project>

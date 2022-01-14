@@ -381,6 +381,102 @@ namespace GIL
 			return Output;
 		}
 
+		bool FindNearby(std::string& Code1, std::string& Code2, std::string& Pattern)
+		{
+			/*
+			Slides along the strand like so (for pattern nnn and Code1, Code2 of aaaa, tttt
+			aaaatttt
+			  nnn
+			   nnn
+			    nnn
+				 nnn
+			*/
+			if (Code1.length() == 0 && Code2.length() < Pattern.length())
+				return false;
+
+			for (int i = 0; i < Code2.length(); ++i)    //We will always check Code2.length() bases
+			{
+				int Offset = -Pattern.length() + 1 + i;
+				for (int p = 0; p < Pattern.length(); ++p)
+				{
+					for (int i = Code1.length() + Offset; i < Code1.length(); ++i)
+					{
+						if (!Matches(Code1[i], Pattern[p]))
+							return false;
+						++p;
+					}
+					for (p; p < Pattern.length(); ++p)
+					{
+						if (!Matches(Code2[p + Offset], Pattern[p]))
+							return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		std::string GetRestrictionSite(RestrictionSite rs)
+		{
+			switch (rs)
+			{
+			case RestrictionSite::EcoRI:
+				return "CTTAAG";
+			case RestrictionSite::EcoRII:
+				return "GGWCC";
+			case RestrictionSite::BamHI:
+				return "CCTAGG";
+			case RestrictionSite::HindIII:
+				return "TTCGAA";
+			case RestrictionSite::TaqI:
+				return "AGCT";
+			case RestrictionSite::NotI:
+				return "CGCCGGCG";
+			case RestrictionSite::HinFI:
+				return "CTNAG";
+			case RestrictionSite::Sau3AI:
+				return "CTAG";
+			case RestrictionSite::PvuII:
+				return "GTCGAC";
+			case RestrictionSite::SmaI:
+				return "GGGCCC";
+			case RestrictionSite::HaeIII:
+				return "CCGG";
+			case RestrictionSite::HgaI:
+				return "CTGCG";
+			case RestrictionSite::AluI:
+				return "TCGA";
+			case RestrictionSite::EcoRV:
+				return "CTATAG";
+			case RestrictionSite::EcoP15I:
+				return "GTCGTCNNNNNNNNNNNNNNNNNNNNNNNNNNN";
+			case RestrictionSite::KpnI:
+				return "CCATGG";
+			case RestrictionSite::PstI:
+				return "GACGTC";
+			case RestrictionSite::SacI:
+				return "CTCGAG";
+			case RestrictionSite::SaII:
+				return "CAGCTG";
+			case RestrictionSite::ScaI:
+				return "TCATGA";
+			case RestrictionSite::SpeI:
+				return "TGATCA";
+			case RestrictionSite::SphI:
+				return "CGTACG";
+			case RestrictionSite::StuI:
+				return "TCCGGA";
+			case RestrictionSite::XbaI:
+				return "AGATCT";
+			default:
+				return "";
+			}
+		}
+
+		std::string GetRestrictionSite(std::string& rs)
+		{
+			return GetRestrictionSite(Str2RestrictionSite.at(rs));
+		}
+
 		bool Matches(char c, char p)
 		{
 			c = std::tolower(c);

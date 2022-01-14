@@ -15,6 +15,7 @@ namespace GIL
 			std::string* GetFromLetter(char l, int idx = 0);
 			std::pair<char, int> CodonToLetter(std::string codon);
 			static char CodonToLetterOnly(std::string codon);
+			std::vector<std::string*>* GetCodons(char l) { return Code2Codon[l]; }
 
 			~CodonEncoding();
 

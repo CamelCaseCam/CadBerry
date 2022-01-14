@@ -156,6 +156,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h" />
     <ClInclude Include="src\CadBerry\Threading\ThreadPool.h" />
     <ClInclude Include="src\CadBerry\Utils\memory.h" />
+    <ClInclude Include="src\CadBerry\Utils\SaveFunctions.h" />
     <ClInclude Include="src\CadBerry\Window.h" />
     <ClInclude Include="src\ImPlot.h" />
     <ClInclude Include="src\cdbpch.h" />
@@ -191,6 +192,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp" />
     <ClCompile Include="src\CadBerry\Utils\memory.cpp" />
+    <ClCompile Include="src\CadBerry\Utils\SaveFunctions.cpp" />
     <ClCompile Include="src\cdbpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

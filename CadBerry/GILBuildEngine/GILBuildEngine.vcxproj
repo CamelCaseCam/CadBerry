@@ -128,6 +128,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Parser\Project.h" />
     <ClInclude Include="src\GIL\Parser\Region.h" />
     <ClInclude Include="src\GIL\Parser\Sequence.h" />
+    <ClInclude Include="src\GIL\RestrictionSites.h" />
     <ClInclude Include="src\GIL\SaveFunctions.h" />
     <ClInclude Include="src\GIL\Utils\Utils.h" />
     <ClInclude Include="src\Todos.h" />
@@ -150,6 +151,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClCompile Include="src\GIL\Parser\Project.cpp" />
     <ClCompile Include="src\GIL\Parser\Region.cpp" />
     <ClCompile Include="src\GIL\Parser\Sequence.cpp" />
+    <ClCompile Include="src\GIL\RestrictionSites.cpp" />
     <ClCompile Include="src\GIL\SaveFunctions.cpp" />
     <ClCompile Include="src\GIL\Utils\Utils.cpp" />
     <ClCompile Include="src\gilpch.cpp">

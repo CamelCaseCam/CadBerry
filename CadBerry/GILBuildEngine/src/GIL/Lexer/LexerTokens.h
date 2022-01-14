@@ -22,6 +22,8 @@ namespace GIL
 			BEGINREGION,
 			ENDREGION,
 
+			OPTIMIZE,
+
 			AMINOS,
 			DNA,
 
