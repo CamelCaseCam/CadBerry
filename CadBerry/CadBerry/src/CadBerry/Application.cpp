@@ -20,16 +20,15 @@
 
 namespace CDB
 {
-	void FetchPackages() { GetPackages(Application::Get().PathToEXE); }
+	void* FetchPackages(void* NoParams) { GetPackages(Application::Get().PathToEXE); return nullptr; }
 
 	Application* Application::s_Instance = nullptr;
 	void Application::Main()
 	{
 
-
 		this->PreBuildDir = this->OpenProject->Path + this->OpenProject->PreBuildDir;
 
-		this->m_ThreadPool->AddStandardTask(FetchPackages);
+		this->m_ThreadPool->AddStandardTask(FetchPackages, nullptr);
 
 		EditorWindow = Window::Create(WindowProps("CadBerry Editor - " + OpenProject->Name));
 

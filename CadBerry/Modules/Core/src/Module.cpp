@@ -44,8 +44,8 @@ public:
 	std::string OutputPath = "";
 	float GraphSizes[4] = { 0.0, 10.0, 0.0, 10.0 };
 
-	static void RunSimulation() { SimulationForThreadPool->Run(TotalTimeForThreadPool); }
-	static void RunSimulationCSV() { SimulationForThreadPool->RunToCSV(TotalTimeForThreadPool, OutputPathForThreadPool); }
+	static void* RunSimulation(void* Params) { SimulationForThreadPool->Run(TotalTimeForThreadPool); return nullptr; }
+	static void* RunSimulationCSV(void* Params) { SimulationForThreadPool->RunToCSV(TotalTimeForThreadPool, OutputPathForThreadPool); return nullptr; }
 	virtual void GUIDraw() override
 	{
 		ImGui::InputTextMultiline("Simulation source code", &SimSrc);
@@ -76,12 +76,12 @@ public:
 			if (!RunCSV)
 			{
 				//Run the simulation asynchronously
-				CDB::ThreadPool::Get()->AddStandardTask(RunSimulation);
+				CDB::ThreadPool::Get()->AddStandardTask(RunSimulation, nullptr);
 			}
 			else
 			{
 				OutputPathForThreadPool = OutputPath + ".csv";
-				CDB::ThreadPool::Get()->AddStandardTask(RunSimulationCSV);
+				CDB::ThreadPool::Get()->AddStandardTask(RunSimulationCSV, nullptr);
 			}
 		}
 		ImPlot::SetNextAxesLimits(GraphSizes[0], GraphSizes[1], GraphSizes[2], GraphSizes[3], ImPlotCond_Always);

@@ -10,46 +10,46 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(23,23): warning C4251: 'CDB::LayerStack::Layers': class 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>' needs to have dll-interface to be used by clients of class 'CDB::LayerStack'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(20): message : see declaration of 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(14,15): warning C4251: 'CDB::Project::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(20,15): warning C4251: 'CDB::Project::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(15,15): warning C4251: 'CDB::Project::Path': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(21,15): warning C4251: 'CDB::Project::Path': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(16,15): warning C4251: 'CDB::Project::PreBuildDir': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Project\Project.h(22,15): warning C4251: 'CDB::Project::PreBuildDir': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Project'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(30,21): warning C4251: 'CDB::ThreadPool::IsWaiting': struct 'std::atomic<bool>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(37,21): warning C4251: 'CDB::ThreadPool::IsWaiting': struct 'std::atomic<bool>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\atomic(2859): message : see declaration of 'std::atomic<bool>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(36,59): warning C4251: 'CDB::ThreadPool::StandardTasks': class 'code_machina::BlockingCollection<std::function<void (void)>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(43,85): warning C4251: 'CDB::ThreadPool::StandardTasks': class 'code_machina::BlockingCollection<std::pair<CDB::FuncIO,std::function<void *(void *)>>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
           with
           [
-              T=std::function<void (void)>
+              T=std::pair<CDB::FuncIO,std::function<void *(void *)>>
           ]
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(36): message : see declaration of 'code_machina::BlockingCollection<std::function<void (void)>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(43): message : see declaration of 'code_machina::BlockingCollection<std::pair<CDB::FuncIO,std::function<void *(void *)>>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>'
           with
           [
-              T=std::function<void (void)>
+              T=std::pair<CDB::FuncIO,std::function<void *(void *)>>
           ]
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(37,59): warning C4251: 'CDB::ThreadPool::PriorityTasks': class 'code_machina::BlockingCollection<std::function<void (void)>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(44,85): warning C4251: 'CDB::ThreadPool::PriorityTasks': class 'code_machina::BlockingCollection<std::pair<CDB::FuncIO,std::function<void *(void *)>>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
           with
           [
-              T=std::function<void (void)>
+              T=std::pair<CDB::FuncIO,std::function<void *(void *)>>
           ]
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(36): message : see declaration of 'code_machina::BlockingCollection<std::function<void (void)>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(43): message : see declaration of 'code_machina::BlockingCollection<std::pair<CDB::FuncIO,std::function<void *(void *)>>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>'
           with
           [
-              T=std::function<void (void)>
+              T=std::pair<CDB::FuncIO,std::function<void *(void *)>>
           ]
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(38,59): warning C4251: 'CDB::ThreadPool::BackgroundTasks': class 'code_machina::BlockingCollection<std::function<void (void)>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(45,85): warning C4251: 'CDB::ThreadPool::BackgroundTasks': class 'code_machina::BlockingCollection<std::pair<CDB::FuncIO,std::function<void *(void *)>>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
           with
           [
-              T=std::function<void (void)>
+              T=std::pair<CDB::FuncIO,std::function<void *(void *)>>
           ]
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(36): message : see declaration of 'code_machina::BlockingCollection<std::function<void (void)>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(43): message : see declaration of 'code_machina::BlockingCollection<std::pair<CDB::FuncIO,std::function<void *(void *)>>,code_machina::detail::Container<T,code_machina::detail::QueueType>,code_machina::StdConditionVariableGenerator>'
           with
           [
-              T=std::function<void (void)>
+              T=std::pair<CDB::FuncIO,std::function<void *(void *)>>
           ]
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(40,28): warning C4251: 'CDB::ThreadPool::WorkerThreads': class 'std::vector<std::thread,std::allocator<std::thread>>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(40): message : see declaration of 'std::vector<std::thread,std::allocator<std::thread>>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(47,28): warning C4251: 'CDB::ThreadPool::WorkerThreads': class 'std::vector<std::thread,std::allocator<std::thread>>' needs to have dll-interface to be used by clients of class 'CDB::ThreadPool'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Threading\ThreadPool.h(47): message : see declaration of 'std::vector<std::thread,std::allocator<std::thread>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Viewport.h(22,15): warning C4251: 'CDB::Viewport::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Viewport'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'

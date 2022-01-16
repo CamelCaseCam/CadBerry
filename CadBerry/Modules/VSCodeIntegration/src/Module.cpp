@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 
 //Function definitions
-void PrecompileFiles();
+void* PrecompileFilesTP(void* Params);
 void PrecompileFiles(std::string Subdir);
 bool IsChanged(std::string RelativePath);
 
@@ -18,8 +18,6 @@ bool IsChanged(std::string RelativePath);
 const float PrecompilationInterval = 10.0f;
 std::string FullPrebuildPath;
 CDB::Application* CDBApp;
-
-void (*PC)() = PrecompileFiles;
 
 
 class __declspec(dllexport) VSCodeWindow : public CDB::Viewport
@@ -57,14 +55,15 @@ public:
 		{
 			CurrentTime = 0;
 			CDB_EditorInfo("Precompiling files");
-			CDB::ThreadPool::Get()->AddStandardTask(PC);
+			CDB::ThreadPool::Get()->AddStandardTask(PrecompileFilesTP, nullptr);
 		}
 	}
 };
 
-void PrecompileFiles()
+void* PrecompileFilesTP(void* Params)
 {
 	PrecompileFiles("");
+	return nullptr;
 }
 
 void PrecompileFiles(std::string Subdir)

@@ -5,9 +5,16 @@
 
 #include <thread>
 #include <atomic>
+#include <future>
 
 namespace CDB
 {
+	struct FuncIO
+	{
+		void* Params;
+		std::promise<void*>* Returnpromise;
+	};
+
 	class ThreadPool;
 	class CDBAPI ThreadPool
 	{
@@ -16,10 +23,10 @@ namespace CDB
 		~ThreadPool();
 		void CompleteTasksAndDelete();
 
-		bool AddStandardTask(std::function<void()> Func);
-		bool AddPriorityTask(std::function<void()> Func);
+		std::pair<bool, std::future<void*>> AddStandardTask(std::function<void* (void*)> Func, void* Params);
+		std::pair<bool, std::future<void*>> AddPriorityTask(std::function<void* (void*)> Func, void* Params);
 
-		bool AddBackgroundTask(std::function<void()> Func);
+		std::pair<bool, std::future<void*>> AddBackgroundTask(std::function<void* (void*)> Func, void* Params);
 	private:
 		ThreadPool();
 
@@ -33,9 +40,9 @@ namespace CDB
 
 		static ThreadPool* Pool;
 
-		code_machina::BlockingCollection<std::function<void()>> StandardTasks;
-		code_machina::BlockingCollection<std::function<void()>> PriorityTasks;
-		code_machina::BlockingCollection<std::function<void()>> BackgroundTasks;
+		code_machina::BlockingCollection<std::pair<FuncIO, std::function<void* (void*)>>> StandardTasks;
+		code_machina::BlockingCollection<std::pair<FuncIO, std::function<void* (void*)>>> PriorityTasks;
+		code_machina::BlockingCollection<std::pair<FuncIO, std::function<void* (void*)>>> BackgroundTasks;
 
 		std::vector<std::thread> WorkerThreads;
 	};

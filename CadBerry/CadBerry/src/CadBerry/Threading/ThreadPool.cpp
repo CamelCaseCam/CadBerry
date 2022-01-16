@@ -61,53 +61,63 @@ namespace CDB
 		delete this;
 	}
 	
-	bool ThreadPool::AddStandardTask(std::function<void()> Func)
+	std::pair<bool, std::future<void*>> ThreadPool::AddStandardTask(std::function<void* (void*)> Func, void* Params)
 	{
 		if (IsOpen)
 		{
-			StandardTasks.add(Func);
-			return true;
+			Func = std::bind(Func, Params);
+			auto p = new std::promise<void*>();
+			StandardTasks.add({ {Params, p}, Func });
+			return { true, p->get_future() };
 		}
-		return false;
+		return { false, std::future<void*>() };
 	}
 	
-	bool ThreadPool::AddPriorityTask(std::function<void()> Func)
+	std::pair<bool, std::future<void*>> ThreadPool::AddPriorityTask(std::function<void* (void*)> Func, void* Params)
 	{
 		if (IsOpen)
 		{
-			PriorityTasks.add(Func);
-			return true;
+			Func = std::bind(Func, Params);
+			auto p = new std::promise<void*>();
+			PriorityTasks.add({ {Params, p}, Func });
+			return { true, p->get_future() };
 		}
-		return false;
+		return { false, std::future<void*>() };
 	}
 	
-	bool ThreadPool::AddBackgroundTask(std::function<void()> Func)
+	std::pair<bool, std::future<void*>> ThreadPool::AddBackgroundTask(std::function<void* (void*)> Func, void* Params)
 	{
 		if (IsOpen)
 		{
-			BackgroundTasks.add(Func);
-			return true;
+			Func = std::bind(Func, Params);
+			auto p = new std::promise<void*>();
+			BackgroundTasks.add({ {Params, p}, Func });
+			return { true, p->get_future() };
 		}
-		return false;
+		return { false, std::future<void*>() };
 	}
 
+	//TODO: Refactor this (maybe by writing my own promise class) so that I don't have to use pointers
 	void ThreadPool::MaintainThread()
 	{
+		std::promise<void*> Placeholderpromise;
+		std::pair<FuncIO, std::function<void* (void*)>> ToBeExecuted = { {nullptr, nullptr}, {} };
 		while (!EndThreads)
 		{
-			std::function<void()> ToBeExecuted;
 			auto Success = PriorityTasks.try_take(ToBeExecuted);    //Check if there is a priority task, these will be executed first
 
 			if (Success == code_machina::BlockingCollectionStatus::Ok)
 			{
-				ToBeExecuted();
+				ToBeExecuted.first.Returnpromise->set_value(ToBeExecuted.second(ToBeExecuted.first.Params));
+				delete ToBeExecuted.first.Returnpromise;
 				continue;
 			}
 			Success = StandardTasks.try_take(ToBeExecuted, std::chrono::milliseconds(50));    //Check if there is a standard task
 
 			if (Success == code_machina::BlockingCollectionStatus::Ok)
 			{
-				ToBeExecuted();
+				ToBeExecuted.first.Returnpromise->set_value(ToBeExecuted.second(ToBeExecuted.first.Params));
+				delete ToBeExecuted.first.Returnpromise;
 				continue;
 			}
 
@@ -121,14 +131,16 @@ namespace CDB
 				Success = PriorityTasks.try_take(ToBeExecuted, std::chrono::milliseconds(25));
 				if (Success == code_machina::BlockingCollectionStatus::Ok)
 				{
-					ToBeExecuted();
+					ToBeExecuted.first.Returnpromise->set_value(ToBeExecuted.second(ToBeExecuted.first.Params));
+					delete ToBeExecuted.first.Returnpromise;
 					continue;
 				}
 
 				Success = StandardTasks.try_take(ToBeExecuted, std::chrono::milliseconds(25));
 				if (Success == code_machina::BlockingCollectionStatus::Ok)
 				{
-					ToBeExecuted();
+					ToBeExecuted.first.Returnpromise->set_value(ToBeExecuted.second(ToBeExecuted.first.Params));
+					delete ToBeExecuted.first.Returnpromise;
 					continue;
 				}
 				IsWaiting = false;
@@ -138,7 +150,8 @@ namespace CDB
 			Success = BackgroundTasks.try_take(ToBeExecuted, std::chrono::milliseconds(150));
 			if (Success == code_machina::BlockingCollectionStatus::Ok)
 			{
-				ToBeExecuted();
+				ToBeExecuted.first.Returnpromise->set_value(ToBeExecuted.second(ToBeExecuted.first.Params));
+				delete ToBeExecuted.first.Returnpromise;
 			}
 		}
 	}
