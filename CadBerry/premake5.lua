@@ -17,8 +17,11 @@ IncludeDirs["nfd"] = "CadBerry/vendor/nfd/src/include"
 IncludeDirs["WhereAmI"] = "CadBerry/vendor/WhereAmI/src"
 IncludeDirs["BlockingCollection"] = "CadBerry/vendor/BlockingCollection"
 IncludeDirs["ImPlot"] = "CadBerry/vendor/implot"
+IncludeDirs["CDBRNA_inc"] = "CadBerry/vendor/RNAstructure/CDBRNA/include"
+IncludeDirs["CDBRNA"] = "CadBerry/vendor/RNAstructure"
 
 include "CadBerry/vendor/GLFW"
+include "CadBerry/vendor/RNAstructure/CDBRNA"
 include "CadBerry/vendor/Glad"
 include "CadBerry/vendor/IMGUI"
 include "CadBerry/vendor/WhereAmI"
@@ -65,6 +68,8 @@ project "CadBerry"
 		"CadBerry/vendor/cpr/cpr_generated_includes",
 		"CadBerry/vendor/cpr/_deps/curl-src/include",
 		"CadBerry/vendor/yaml-cpp/include",
+		"%{IncludeDirs.CDBRNA}",
+		"%{IncludeDirs.CDBRNA_inc}",
 	}
 
 	libdirs
@@ -79,7 +84,8 @@ project "CadBerry"
 		"ImGui",
 		"opengl32.lib",
 		"WhereAmI",
-		"cpr"
+		"cpr",
+		"CDBRNA"
 	}
 
 	filter "system:windows"
@@ -119,6 +125,7 @@ project "CadBerry"
 			"CadBerry/vendor/yaml-cpp/Debug",
 			"CadBerry/vendor/cpr/lib/Debug",
 			"CadBerry/vendor/nfd/build/lib/Debug/x64",
+			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Debug-windows-x86_64/CDBRNA"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
@@ -134,6 +141,7 @@ project "CadBerry"
 			"CadBerry/vendor/yaml-cpp/RelWithDebInfo",
 			"CadBerry/vendor/cpr/lib/RelWithDebInfo",
 			"CadBerry/vendor/nfd/build/lib/Release/x64",
+			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Release-windows-x86_64/CDBRNA"
 		}
 project "Berry"
 	location "Berry"
@@ -625,4 +633,95 @@ project "Core"
 		libdirs
 		{
 			"CadBerry/vendor/nfd/build/lib/Release/x64",
+		}
+
+project "IRESGenerator"
+	location "Modules/IRESGenerator"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	--linkoptions { '/DEFAULTLIB:"LIBCMT',  }
+
+	files
+	{
+		"Modules/%{prj.name}/src/**.h",
+		"Modules/%{prj.name}/src/**.hpp",
+		"Modules/%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"IRESGenerator/src",
+		"GILBuildEngine/src",
+		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.GLFW}",
+		"%{IncludeDirs.glm}",
+		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.nfd}",
+		"%{IncludeDirs.CDBRNA}",
+		"%{IncludeDirs.CDBRNA_inc}",
+	}
+
+	links
+	{
+		"CadBerry",
+		"ImGui",
+		"GLFW",
+		"GILBuildEngine",
+		"CDBRNA",
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "On"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/IRESGenerator/IRESGenerator.pdb ../../bin/" .. OutputDir .. "/Berry/Modules")
+		}
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		buildoptions "/MDd"
+		symbols "On"
+		defines
+		{
+			"CDB_ENABLE_ASSERTS"
+		}
+		links
+		{
+			"nfd_d"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/nfd/build/lib/Debug/x64",
+			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Debug-windows-x86_64/CDBRNA",
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		buildoptions "/MD"
+		optimize "On"
+		links
+		{
+			"nfd"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/nfd/build/lib/Release/x64",
+			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Release-windows-x86_64/CDBRNA"
 		}

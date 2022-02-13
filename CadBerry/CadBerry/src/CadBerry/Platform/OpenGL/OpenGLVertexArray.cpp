@@ -34,6 +34,7 @@ namespace CDB
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		CDB_EditorInfo(this->ArrayID);
 		glDeleteVertexArrays(1, &this->ArrayID);
 	}
 

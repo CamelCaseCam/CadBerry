@@ -4,6 +4,8 @@
 #include "CadBerry/Module/Module.h"
 #include "CadBerry/Application.h"
 #include "CadBerry/BuildEngine/BuildDialog.h"
+#include "CadBerry/DNAVis/DisplayDNA.h"
+#include "CadBerry/RenderUtils/RichText.h"
 
 #include <GLFW/glfw3.h>
 
@@ -11,6 +13,12 @@
 
 namespace CDB
 {
+	DNAVisualization Vis;
+	void ViewportLayer::OnAttach()
+	{
+		Vis = DNAVisualization("AAAAATTTAATATTTATTTATATATATATTTTATAT", { {1, 6, "Test region"}, {9, 15, "Test region 2"}, {16, 25, "Test region 2"} });
+	}
+
 	void ViewportLayer::OnImGuiRender()
 	{
 		ImGuiIO& io = ImGui::GetIO();
@@ -27,6 +35,11 @@ namespace CDB
 
 		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
 		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
+
+		Vis.DrawCode(500, 600);
+		ImGui::SameLine(510);
+		Vis.DrawDiagram(600, 600);
+
 		if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("Project"))

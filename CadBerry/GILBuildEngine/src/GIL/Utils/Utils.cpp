@@ -99,7 +99,7 @@ namespace GIL
 			return { std::string(), -1 };
 		}
 
-		std::string GetComplement(std::string& Code)
+		std::string GetComplement(const std::string& Code)
 		{
 			std::string Output = "";
 			Output.reserve(Code.size());
@@ -110,7 +110,7 @@ namespace GIL
 			return Output;
 		}
 
-		std::string GetReverseComplement(std::string& Code)
+		std::string GetReverseComplement(const std::string& Code)
 		{
 			std::string Output = GetComplement(Code);
 			int n = Output.length() - 1;

@@ -83,6 +83,9 @@
     <ClInclude Include="src\GIL\Parser\Operation.h">
       <Filter>GIL\Parser</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\Parser\Parser.h">
+      <Filter>GIL\Parser</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\Parser\Project.h">
       <Filter>GIL\Parser</Filter>
     </ClInclude>
@@ -92,6 +95,9 @@
     <ClInclude Include="src\GIL\Parser\Sequence.h">
       <Filter>GIL\Parser</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\RestrictionSites.h">
+      <Filter>GIL</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\SaveFunctions.h">
       <Filter>GIL</Filter>
     </ClInclude>
@@ -100,7 +106,6 @@
     </ClInclude>
     <ClInclude Include="src\Todos.h" />
     <ClInclude Include="src\gilpch.h" />
-    <ClInclude Include="src\GIL\RestrictionSites.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
@@ -149,6 +154,9 @@
     <ClCompile Include="src\GIL\Parser\Sequence.cpp">
       <Filter>GIL\Parser</Filter>
     </ClCompile>
+    <ClCompile Include="src\GIL\RestrictionSites.cpp">
+      <Filter>GIL</Filter>
+    </ClCompile>
     <ClCompile Include="src\GIL\SaveFunctions.cpp">
       <Filter>GIL</Filter>
     </ClCompile>
@@ -156,6 +164,5 @@
       <Filter>GIL\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\gilpch.cpp" />
-    <ClCompile Include="src\GIL\RestrictionSites.cpp" />
   </ItemGroup>
 </Project>

@@ -60,7 +60,7 @@
       <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\implot;vendor\BlockingCollection;vendor\cpr\include;vendor\cpr\cpr_generated_includes;vendor\cpr\_deps\curl-src\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\implot;vendor\BlockingCollection;vendor\cpr\include;vendor\cpr\cpr_generated_includes;vendor\cpr\_deps\curl-src\include;vendor\yaml-cpp\include;vendor\RNAstructure;vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -71,7 +71,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;cpr.lib;nfd_d.lib;yaml-cppd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\Debug;vendor\cpr\lib\Debug;vendor\nfd\build\lib\Debug\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\Debug;vendor\cpr\lib\Debug;vendor\nfd\build\lib\Debug\x64;vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -85,7 +85,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Debug-window
       <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\implot;vendor\BlockingCollection;vendor\cpr\include;vendor\cpr\cpr_generated_includes;vendor\cpr\_deps\curl-src\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\implot;vendor\BlockingCollection;vendor\cpr\include;vendor\cpr\cpr_generated_includes;vendor\cpr\_deps\curl-src\include;vendor\yaml-cpp\include;vendor\RNAstructure;vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -100,7 +100,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Debug-window
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;cpr.lib;nfd.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\lib\RelWithDebInfo;vendor\nfd\build\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\lib\RelWithDebInfo;vendor\nfd\build\lib\Release\x64;vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -114,6 +114,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\BuildEngine\BuildDialog.h" />
     <ClInclude Include="src\CadBerry\BuildEngine\BuildEngine.h" />
     <ClInclude Include="src\CadBerry\Core.h" />
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayColours.h" />
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayDNA.h" />
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayRegion.h" />
     <ClInclude Include="src\CadBerry\Events\ApplicationEvent.h" />
     <ClInclude Include="src\CadBerry\Events\BuildEvent.h" />
     <ClInclude Include="src\CadBerry\Events\Event.h" />
@@ -144,6 +147,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\CadBerry\Project\CreateProject.h" />
     <ClInclude Include="src\CadBerry\Project\Project.h" />
+    <ClInclude Include="src\CadBerry\ProteinStructure\PDBFile.h" />
     <ClInclude Include="src\CadBerry\Rendering\Buffer.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
     <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h" />
@@ -152,11 +156,15 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Rendering\RendererAPI.h" />
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h" />
     <ClInclude Include="src\CadBerry\Threading\ThreadPool.h" />
-    <ClInclude Include="src\CadBerry\Utils\memory.h" />
+    <ClInclude Include="src\CadBerry\Utils\Quicksort.h" />
+    <ClInclude Include="src\CadBerry\Utils\RNAFuncs.h" />
     <ClInclude Include="src\CadBerry\Utils\SaveFunctions.h" />
+    <ClInclude Include="src\CadBerry\Utils\memory.h" />
     <ClInclude Include="src\CadBerry\Window.h" />
     <ClInclude Include="src\ImPlot.h" />
     <ClInclude Include="src\cdbpch.h" />
@@ -164,6 +172,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp" />
     <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp" />
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayColours.cpp" />
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayDNA.cpp" />
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayRegion.cpp" />
     <ClCompile Include="src\CadBerry\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\CadBerry\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\CadBerry\Layer.cpp" />
@@ -190,9 +201,12 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Rendering\RendererAPI.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp" />
-    <ClCompile Include="src\CadBerry\Utils\memory.cpp" />
+    <ClCompile Include="src\CadBerry\Utils\RNAFuncs.cpp" />
     <ClCompile Include="src\CadBerry\Utils\SaveFunctions.cpp" />
+    <ClCompile Include="src\CadBerry\Utils\memory.cpp" />
     <ClCompile Include="src\cdbpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -209,6 +223,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     </ProjectReference>
     <ProjectReference Include="vendor\WhereAmI\WhereAmI.vcxproj">
       <Project>{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\RNAstructure\CDBRNA\CDBRNA.vcxproj">
+      <Project>{4FC11CA9-3B63-477F-241E-5BD3105FCECF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

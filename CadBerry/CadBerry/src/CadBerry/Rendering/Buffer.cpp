@@ -22,6 +22,7 @@ namespace CDB
 		return nullptr;
 	}
 
+	//TODO: document this so it's clear that size is the number of indices, NOT the number of bytes
 	IndexBuffer* IndexBuffer::Create(uint32_t size, uint32_t* indices)
 	{
 		switch (Renderer::GetAPI())

@@ -310,12 +310,14 @@ namespace GIL
 		void ImportFile(std::string& Path, Project* Proj)
 		{
 			std::filesystem::path path = std::filesystem::path(Path);
-			
+			bool imported = false;
+
 			if (std::filesystem::exists(CDB::Application::Get().PreBuildDir + "\\" + path.parent_path().string() + "\\"
 				+ path.stem().string() + ".cgil"))    //if cached/precompiled file exists
 			{
 				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PreBuildDir + "\\" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
+				imported = true;
 			}
 			else if (std::filesystem::exists(CDB::Application::Get().PathToEXE + "/Build/Libs/" + path.parent_path().string() + "\\" 
 				+ path.stem().string() + ".cgil"))    //If a compiled file in the libs folder exists
@@ -323,6 +325,7 @@ namespace GIL
 				CDB_BuildInfo("Worked");
 				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
+				imported = true;
 			}
 			else if (std::filesystem::exists(CDB::Application::Get().OpenProject->Path + "\\" + path.parent_path().string() + "\\" + path.stem().string() + ".gil"))
 			{
@@ -339,10 +342,31 @@ namespace GIL
 					+ path.stem().string() + ".cgil");
 
 				Proj->Namespaces[path.stem().string()] = p;
+				imported = true;
 			}
-			else
+
+			if (Proj->TargetOrganism != "")
 			{
-				CDB_BuildError("File not found at local path {0}", Path + ".gil");
+				if (std::filesystem::exists(CDB::Application::Get().PreBuildDir + "\\" + path.parent_path().string() + "\\"
+					+ Proj->TargetOrganism + "@" + path.stem().string() + ".cgil"))    //if cached/precompiled file exists
+				{
+					Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PreBuildDir + "\\"
+						+ path.parent_path().string() + "\\" + Proj->TargetOrganism + "@" + path.stem().string() + ".cgil");
+					imported = true;
+				}
+				else if (std::filesystem::exists(CDB::Application::Get().PathToEXE + "/Build/Libs/" + path.parent_path().string() + "\\"
+					+ Proj->TargetOrganism + "@" + path.stem().string() + ".cgil"))    //If a compiled file in the libs folder exists
+				{
+					CDB_BuildInfo("Worked");
+					Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/"
+						+ path.parent_path().string() + "\\" + Proj->TargetOrganism + "@" + path.stem().string() + ".cgil");
+					imported = true;
+				}
+			}
+
+			if (!imported)
+			{
+				CDB_BuildError("Could not find file \"{0}\"", path.string());
 			}
 		}
 
