@@ -1,1 +1,0 @@
-/home/jzuber/source/domain_find/RNAstructure/partition-smp/prna.cu

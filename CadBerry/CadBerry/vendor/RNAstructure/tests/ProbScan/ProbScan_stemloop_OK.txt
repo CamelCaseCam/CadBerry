@@ -1,1 +1,0 @@
-Probability of hairpin stem-loop 53-61,52-62: 0.929007

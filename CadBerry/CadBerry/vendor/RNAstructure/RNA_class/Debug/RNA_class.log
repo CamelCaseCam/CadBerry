@@ -1,4 +1,0 @@
-﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  BuildLibs.cpp
-algorithm.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  RNA_class.vcxproj -> D:\Development\PersonalCadBerry\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\RNA_class\Debug\RNA_class.exe

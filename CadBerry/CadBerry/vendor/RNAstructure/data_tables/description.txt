@@ -1,3 +1,0 @@
-Description of Thermodynamic Parameters:
-Please refer to RNAstructure/manual/Overview/Parameters.html for a description of these files.
-
