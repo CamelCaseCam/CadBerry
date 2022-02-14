@@ -12,7 +12,13 @@
 #include "../RNA_class/RNA.h"
 
 #define TEST_EQUAL(ACTUAL,EXPECTED)  test_result(ACTUAL, EXPECTED, __LINE__)
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 void post_result(bool passed);
 

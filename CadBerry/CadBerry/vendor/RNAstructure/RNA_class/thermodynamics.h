@@ -2,6 +2,10 @@
 //Use the precompiler to make sure the class definition is not included more than once.
 #if !defined(THERMODYNAMICS_H)
 #define THERMODYNAMICS_H
+<<<<<<< HEAD
+=======
+#include "Core.h"    //For library exports
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 //Import the definition of struct datatable.
@@ -21,7 +25,11 @@
 
 //Note the stylized comments provide facility for automatic documentation via doxygen.
 
+<<<<<<< HEAD
 class Thermodynamics {
+=======
+class RNAPI Thermodynamics {
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	
 	public:
 		//**********************************************

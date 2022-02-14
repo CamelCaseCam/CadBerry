@@ -30,7 +30,13 @@ Jan 2018 - Significantly revised interface - Richard Watson
 #include "../../src/intermolecular.h"
 #include "../../src/ParseCommandLine.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // Open a sub-section of an RNA sequence.
 // Returns 0 on error or 1 on success.

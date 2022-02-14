@@ -14,7 +14,14 @@
 #include <cerrno>
 #include <climits>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: NO NO NO. This wouldn't be a problem if I wasn't including a cpp file, but I need to change this
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //Determine if the path <directory>/<file> exists and (is not itself a directory)
 bool fileExists(const char* const directory, const char* const file) {

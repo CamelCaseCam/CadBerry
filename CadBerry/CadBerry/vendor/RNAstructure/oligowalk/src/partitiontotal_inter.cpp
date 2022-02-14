@@ -89,7 +89,11 @@ int main(int argc, char *argv[]) {
 
 	//getinfo (&cntrl6,&cntrl8,&cntrl9);
 
+<<<<<<< HEAD
    ifstream inf;
+=======
+   std::ifstream inf;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	inf.open(list);
 
 

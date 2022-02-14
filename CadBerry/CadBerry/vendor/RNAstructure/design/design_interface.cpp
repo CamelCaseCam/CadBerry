@@ -14,7 +14,13 @@
 #include "../src/ParseCommandLine.h"
 
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 const char* bstr(bool value) { return value ? "true" : "false"; }
 const char* yn(bool value) { return value ? "yes" : "no"; }

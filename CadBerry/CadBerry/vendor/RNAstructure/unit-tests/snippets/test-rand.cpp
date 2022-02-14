@@ -2,7 +2,13 @@
 #include <iostream>
 #include <vector>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 int main() {
 	rand64 r(234);

@@ -20,13 +20,21 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+<<<<<<< HEAD
     <PlatformToolset>Intel C++ Compiler XE 12.0</PlatformToolset>
+=======
+    <PlatformToolset>v142</PlatformToolset>
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
     <InterproceduralOptimization>true</InterproceduralOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+<<<<<<< HEAD
     <PlatformToolset>Intel C++ Compiler XE 12.0</PlatformToolset>
+=======
+    <PlatformToolset>v142</PlatformToolset>
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">

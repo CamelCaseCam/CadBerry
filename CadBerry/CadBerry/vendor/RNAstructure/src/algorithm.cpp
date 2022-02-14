@@ -29,7 +29,16 @@
 #include "../partition-smp/base.h"
 #include "../partition-smp/util.h"
 #endif
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 //#define maxfil 250    //maximum length of file names
@@ -2790,11 +2799,18 @@ int traceback(structure *ct, datatable *data, DynProgArray<integersize> *v, DynP
 	//Savfile is for creating a file with arrays and parameters for refolding with different 
 	//suboptimal tracebacks
 	//quickenergy indicates whether to find the lowest free energy for the sequence without a structure
+<<<<<<< HEAD
 #ifndef INSTRUMENTED
 	int dynamic(structure* ct,datatable* data,int cntrl6, int cntrl8,int cntrl9,
 			ProgressHandler* update, bool quickenergy, char* save, int maxinter, bool quickstructure, bool simple_iloops, bool disablecoax)
 
 
+=======
+
+#ifndef INSTRUMENTED
+	int dynamic(structure* ct,datatable* data,int cntrl6, int cntrl8,int cntrl9,
+			ProgressHandler* update, bool quickenergy, char* save, int maxinter, bool quickstructure, bool simple_iloops, bool disablecoax)
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 #else //INSTRUMENTED IS DEFINED
 		void dynamic(structure* ct,datatable* data,int cntrl6, int cntrl8,int cntrl9,
 				DynProgArray<integersize> *v, DynProgArray<integersize> *vmb/*tracks MB loops*/, DynProgArray<integersize> *vext/*tracks exterior loops*/,
@@ -3307,6 +3323,10 @@ void fill(structure *ct, DynProgArray<integersize> &v, DynProgArray<integersize>
 					int k,p;
 					int ip,jp,ii,jj,di;
 #define can_pair(i,j) (data->can_pair((i),(j),ct->numseq))
+<<<<<<< HEAD
+=======
+#define can_pair(i, j) (data->pairing[ct->numseq[i]][ct->numseq[j]])
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #ifndef disablecoax
 					register int castack; //variable for coaxial stacking, not needed if coaxial stacking is disabled

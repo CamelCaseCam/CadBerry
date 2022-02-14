@@ -113,21 +113,24 @@ public:
 
 	virtual void GUIDraw() override
 	{
-		CDB::Renderer::BeginScene(Target.raw());
+		//RenderTarget example:
+		//CDB::Renderer::BeginScene(Target.raw());
 
-		CDB::RenderCommand::SetClearColour({ 1.0, 0.0, 0.0, 1.0 });
-		CDB::RenderCommand::Clear();
+		//CDB::RenderCommand::SetClearColour({ 1.0, 0.0, 0.0, 1.0 });
+		//CDB::RenderCommand::Clear();
 
-		CDB::Renderer::Submit(vertexArray.raw());
+		//CDB::Renderer::Submit(vertexArray.raw());
 
-		CDB::Renderer::EndScene();
+		//CDB::Renderer::EndScene();
 
-		if (ImgSize.x == 0 && ImgSize.y == 0)
-		{
-			ImgSize = ImGui::GetWindowSize();
-		}
+		//if (ImgSize.x == 0 && ImgSize.y == 0)
+		//{
+		//	ImgSize = ImGui::GetWindowSize();
+		//}
 
-		Target->Draw(ImgSize, ImVec2(1, 1));
+		//Target->Draw(ImgSize, ImVec2(1, 1));
+
+
 		ImGui::ListBox("DNA transformation", &DNAOperation, DNAOperations.data(), DNAOperations.size());
 		ImGui::InputText("DNA", &DNA);
 		if (ImGui::Button("Transform"))
@@ -154,12 +157,13 @@ public:
 		}
 	}
 
-	CDB::scoped_ptr<CDB::VertexArray> vertexArray;
+	/*CDB::scoped_ptr<CDB::VertexArray> vertexArray;
 	CDB::scoped_ptr<CDB::RenderTarget> Target;
-	ImVec2 ImgSize = ImVec2(0, 0);
+	ImVec2 ImgSize = ImVec2(0, 0);*/
 	virtual void Start() override 
 	{
-		Target = CDB::RenderTarget::Create();
+		//Part of RenderTarget example:
+		/*Target = CDB::RenderTarget::Create();
 		vertexArray = CDB::VertexArray::Create();
 
 		float vertices[3 * 7] = {
@@ -183,7 +187,7 @@ public:
 		CDB::IndexBuffer* indexBuffer = CDB::IndexBuffer::Create(3, indices);
 
 		vertexArray->AddVertexBuffer(buffer);
-		vertexArray->SetIndexBuffer(indexBuffer);
+		vertexArray->SetIndexBuffer(indexBuffer);*/
 	}
 	virtual void OnClose() override {}
 };

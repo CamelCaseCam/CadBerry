@@ -3,7 +3,16 @@
 
 #include <vector> 
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 enum{V_FILE, WL_FILE, W_FILE, WMBL_FILE, WMB_FILE, VMHE_FILE, N_ARRAYS_LOGGED};
 static char array_file_names[N_ARRAYS_LOGGED][20] = {"V", "WL", "W", "WMBL", "WMB", "VMHE"};

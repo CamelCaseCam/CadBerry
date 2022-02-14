@@ -125,6 +125,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Modules\GILModule.h" />
     <ClInclude Include="src\GIL\OutputTypes.h" />
     <ClInclude Include="src\GIL\Parser\Operation.h" />
+    <ClInclude Include="src\GIL\Parser\Parser.h" />
     <ClInclude Include="src\GIL\Parser\Project.h" />
     <ClInclude Include="src\GIL\Parser\Region.h" />
     <ClInclude Include="src\GIL\Parser\Sequence.h" />

@@ -8,7 +8,16 @@
 #include "algorithm.h"
 #include "thermo.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 thermo::thermo(const string& path) {
    short int i,j,k,l;

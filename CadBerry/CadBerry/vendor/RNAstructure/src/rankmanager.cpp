@@ -18,7 +18,13 @@
 #define MIN_RANK_QUEUE_SIZE 5
 #define MAX_RANK_QUEUE_SIZE 25
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 RankManager::RankManager(int _numRanks, int _numConsumers)
   : numRanks(_numRanks),

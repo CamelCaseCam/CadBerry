@@ -14,7 +14,16 @@
 #include <cstring>
 #include <chrono>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 void bimoltracebackV(int i, int j, int jct3, int k, int N1, int N2, int maxloop, short **V, structure *ct3, datatable *data);
@@ -50,7 +59,11 @@ void bimol(structure *ct1, structure *ct2, structure *ct3, int maxloop, int maxt
   //Set the location of the thermodynamic data tables
   ct3->SetThermodynamicDataTable(data);
 
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   
   //ct3 must contain a sequence that concatonates the sequences of ct1 and ct2  
   string label;
@@ -437,7 +450,11 @@ void bimoltracebackV(int i, int j, int jct3, int k, int N1, int N2, int maxloop,
   bool done, found;
   int jpct3, ip, jp;
   int biggest, big, end; 
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   
   //done will switch to true when the end of this traceback is complete
   done = false; 
@@ -532,7 +549,11 @@ void bimoltracebackVp(int i, int j, int jct3, int k, int N1, int N2, int maxloop
   bool done, found;
   int jpct3, ip, jp;
   int biggest, big, end;
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   
   //done will switch to true when this traceback is complete
   done = false;
@@ -632,7 +653,11 @@ void accessfold(structure *ct1, structure *ct2, structure *ct3, int maxloop, int
   int iret, jret, sort;
   int *heapi, *heapj; 
   double vmin, crit, *energy;
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
   //ct3->allocate(maxseq);
 //  ct3->allocatestructure();          called during accessfold_interface
@@ -1176,7 +1201,11 @@ void accessfoldtracebackV(int i, int j, int jct3, int k, int N1, int N2, int max
   bool done, found;
   int jpct3, ip, jp;
   int biggest, big, end; 
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   
   //done will switch to true when the end of this traceback is complete
   done = false; 
@@ -1272,7 +1301,11 @@ void accessfoldtracebackVp(int i, int j, int jct3, int k, int N1, int N2, int ma
   bool done, found;
   int jpct3, ip, jp;
   int biggest, big, end;
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   
   //done will switch to true when this traceback is complete
   done = false;

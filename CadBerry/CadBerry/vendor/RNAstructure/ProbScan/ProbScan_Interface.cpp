@@ -241,7 +241,11 @@ void probscanInterface::run() {
             show_stacks(ps.probability_of_all_helices(threshold,numstacks));
         }
         if(multibranch){
+<<<<<<< HEAD
             ifstream infile(loop_file.c_str());
+=======
+            std::ifstream infile(loop_file.c_str());
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
             if (!infile.good()) throw "failed to open multibranch loop file\n";
             std::string line;
             while(getline(infile,line)){

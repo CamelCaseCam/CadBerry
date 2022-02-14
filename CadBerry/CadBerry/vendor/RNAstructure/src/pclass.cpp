@@ -22,7 +22,16 @@ Change the filling rules and get rid of the length limitation of internal loop
 #include <iostream>
 #include <cstdlib>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #undef pfdebugmode  //flag to indicate debugging
 //#define pfdebugmode  //flag to indicate debugging
@@ -240,7 +249,11 @@ void readpfsave(char *filename, structure *ct,PFPRECISION *w5, PFPRECISION *w3,
 	read(&sav, &(data->alphabet));
 	read(&sav, &(data->pairing));
 
+<<<<<<< HEAD
 	vector< vector<bool> > inc = data->pairing;
+=======
+	vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 	//now read the thermodynamic data:
 	read(&sav,&(data->pftemp));

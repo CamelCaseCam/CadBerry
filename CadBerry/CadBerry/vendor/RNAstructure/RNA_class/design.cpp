@@ -38,7 +38,11 @@ int design::design_sequence(double &pernucdefect, const bool random, const bool 
 	//This code handles a selection bias for nucleotides and pairs.  The default (bias=false) is a flat prob across the possibilities.
 	if(bias){
 		//move the following section to a separate function later, but for now:
+<<<<<<< HEAD
 		ifstream in;
+=======
+		std::ifstream in;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		in.open(prob_info);
 		string line;
 		int stage=-1;
@@ -874,8 +878,13 @@ double design::SelectSequence(int **tree, bool random, bool bias, int depth, con
 		lf=dp+"/"+lf;
 		string lineoftext;//String that temporarily holds strings of data from the read files.
 		//Open file 
+<<<<<<< HEAD
 		ifstream readHfile(hf.c_str());
 		ifstream readLfile(lf.c_str());
+=======
+		std::ifstream readHfile(hf.c_str());
+		std::ifstream readLfile(lf.c_str());
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		//			cerr << "lf=" << lf.c_str() << endl;
 
 		while(!readHfile.eof()){
@@ -1638,8 +1647,13 @@ double design::SelectSequenceHeuristic(int **tree, bool random, bool bias, int d
 
 		string lineoftext;//String that temporarily holds strings of data from the read files.
 		//Open file 
+<<<<<<< HEAD
 		ifstream readHfile(hf.c_str());
 		ifstream readLfile(lf.c_str());
+=======
+		std::ifstream readHfile(hf.c_str());
+		std::ifstream readLfile(lf.c_str());
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		//			cerr << "lf=" << lf.c_str() << endl;
 		while(!readHfile.eof()){
 			readHfile >> lineoftext;

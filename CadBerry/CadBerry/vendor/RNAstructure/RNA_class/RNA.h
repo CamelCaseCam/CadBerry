@@ -3,6 +3,10 @@
 //Use the precompiler to make sure the class definition is not included more than once.
 #if !defined(RNA_H)
 #define RNA_H
+<<<<<<< HEAD
+=======
+#include "Core.h"    //For library exports
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 
@@ -57,7 +61,11 @@ typedef int RNAInputType; // Just to help new programmers find the right constan
 //! Dot-Bracket Notation Structure file (*.dbn, *.dot, *.bracket)
 #define	FILE_DBN 5
 
+<<<<<<< HEAD
 class RNA: public Thermodynamics {
+=======
+class RNAPI RNA: public Thermodynamics {
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	public:
 		//******************************
 		//Constructors:

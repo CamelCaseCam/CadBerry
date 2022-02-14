@@ -21,9 +21,12 @@
     <ClCompile Include="..\src\alltrace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\src\arrayclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
     <ClCompile Include="..\src\dotarray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -84,6 +87,15 @@
     <ClCompile Include="..\src\gamma.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="..\src\DynProgArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildLibs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\algorithm.h">
@@ -92,9 +104,12 @@
     <ClInclude Include="..\src\alltrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\src\arrayclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
     <ClInclude Include="..\src\defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -155,5 +170,11 @@
     <ClInclude Include="..\src\gamma.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="..\src\DynProgArray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   </ItemGroup>
 </Project>

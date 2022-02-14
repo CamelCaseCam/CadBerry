@@ -15,7 +15,16 @@
 #include <cmath>
 #include <iostream>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 double extended_double::cap = 1.0e307;  //the cap size is predefined as this number.  1e307 is the largest possible cap size based on the implementation
 

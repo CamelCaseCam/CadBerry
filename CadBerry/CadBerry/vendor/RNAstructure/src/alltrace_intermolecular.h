@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+#pragma once
+
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 #include <math.h>
 //#include "stdafx.h"
 #include "rna_library.h"

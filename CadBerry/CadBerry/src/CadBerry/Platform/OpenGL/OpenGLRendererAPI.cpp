@@ -15,8 +15,12 @@ namespace CDB
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
+	const std::unordered_map<DisplayType, int> DisplayType2GLType = { {DisplayType::TRIANGLES, GL_TRIANGLES}, {DisplayType::LINES, GL_LINES} };
+
 	void OpenGLRendererAPI::DrawIndexed(const VertexArray* vertexArray)
 	{
-		glDrawElements(GL_TRIANGLES, vertexArray->BorrowIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		vertexArray->BorrowIndexBuffer()->Bind();
+		glDrawElements(DisplayType2GLType.at(vertexArray->m_DisplayType), vertexArray->BorrowIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		vertexArray->BorrowIndexBuffer()->Unbind();
 	}
 }

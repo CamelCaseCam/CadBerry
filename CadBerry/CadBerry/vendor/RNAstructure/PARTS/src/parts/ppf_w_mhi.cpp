@@ -24,7 +24,13 @@
 #include "map_structures.h"
 #include "map_alignment.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // t_ppf_W_mhi: Handles base pair insertions on V array, note that t_ppf_W_mhi inserts base pairs one by one to each sequence
 // so it can handle INS1 followed by an INS2 or vice versa, so this is basically different in how insertions are handled

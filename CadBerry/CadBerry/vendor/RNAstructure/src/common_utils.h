@@ -9,6 +9,11 @@
 #include <sstream>
 #include <cstring>
 
+<<<<<<< HEAD
+=======
+//
+using namespace std;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 using namespace std;
 
 #define MAX_FILENAME_LEN 255 // maximum filename length (in Windows) used by createSafeFilename
@@ -19,12 +24,20 @@ bool fileExists(const char* const directory, const char* const file);
 //! Determine if the file specified by filePath exists and is not itself a directory.
 bool fileExists(const char* const filePath, const bool verifyReadable = false);
 //! Determine if the file specified by filePath exists and is not itself a directory.
+<<<<<<< HEAD
 inline bool fileExists(const string& filePath, const bool verifyReadable = false) { return fileExists(filePath.c_str(), verifyReadable); }
+=======
+inline bool fileExists(const std::string& filePath, const bool verifyReadable = false) { return fileExists(filePath.c_str(), verifyReadable); }
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Determine if the specified directory exists.
 bool dirExists(const char* const fullDirPath);
 //! Determine if the file specified by filePath exists and is not itself a directory.
+<<<<<<< HEAD
 inline bool dirExists(const string& fullDirPath) { return dirExists(fullDirPath.c_str()); }
+=======
+inline bool dirExists(const std::string& fullDirPath) { return dirExists(fullDirPath.c_str()); }
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Determine whether the specified file path signifies that STDIO should
 //! be used instead of a regular file. Currently this means the file path must be
@@ -34,6 +47,7 @@ bool isStdIoFile(const char* const fullPath);
 //! Gets the portion of a path that represents the filename.
 //! I.e. removes the directory portion of a path. 
 //! If removeExtension is true, the file extension is also removed.
+<<<<<<< HEAD
 string getFileName(const char * const path, bool removeExtension = false);
 
 //! Gets the portion of a path that represents the file extension 
@@ -43,15 +57,33 @@ string getFileExt(const string& filePath);
 //! Gets the directory portion of a path. 
 //! It is assumed that the path represents a file.
 string getDirName(const char * const path);
+=======
+std::string getFileName(const char * const path, bool removeExtension = false);
+
+//! Gets the portion of a path that represents the file extension 
+//! i.e. the part of the file name after the last dot (.)
+std::string getFileExt(const std::string& filePath);
+
+//! Gets the directory portion of a path. 
+//! It is assumed that the path represents a file.
+std::string getDirName(const char * const path);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 //###################### STRING Utilities ##################################
 
 //! Create a valid file name from a string label (which could contain invalid characters)
 //! and an optional extension.
 //! If the label is too long for a filename, the name is truncated.
+<<<<<<< HEAD
 string createSafeFilename(const string& label, const string& extension="", bool replaceSpaceChar=false);
 
 // Utility function that creates a string and fills it by sprintf-formatting the arguments. 
 string sfmt(const char* const format, ...);
+=======
+std::string createSafeFilename(const std::string& label, const std::string& extension="", bool replaceSpaceChar=false);
+
+// Utility function that creates a string and fills it by sprintf-formatting the arguments. 
+std::string sfmt(const char* const format, ...);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 // The following string functions operate in-place on their subjects
@@ -62,11 +94,16 @@ string sfmt(const char* const format, ...);
 //! e.g. "Hello\n" becomes "Hello\\n" 
 //! i.e. The linefeed is converted into a literal slash and the letter 'n'
 //! (operates in-place on subject and returns it).
+<<<<<<< HEAD
 string& escapeChars(string &subject);
+=======
+std::string& escapeChars(std::string &subject);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Finds invalid file name characters in a string and replaces them with the 
 //!   specified character (usually underscore '_').
 //! Operates in-place on the subject string.
+<<<<<<< HEAD
 string& replaceInvalidFileNameChars(string &subject, char replaceWith='_', bool replaceSpace=false);
 
 //! Trim leading whitespace from a string (operates in-place on subject and returns it).
@@ -80,12 +117,28 @@ string& trim(string &subject);
 
 //! Converts a string to lower-case (operates in-place on subject and returns it).
 string& toLower(string &subject);
+=======
+std::string& replaceInvalidFileNameChars(std::string &subject, char replaceWith='_', bool replaceSpace=false);
+
+//! Trim leading whitespace from a string (operates in-place on subject and returns it).
+std::string& trimLeft(std::string &subject);
+
+//! Trim trailing whitespace from a string (operates in-place on subject and returns it).
+std::string& trimRight(std::string &subject);
+
+//! Trim leading and trailing whitespace from a string (operates in-place on subject and returns it).
+std::string& trim(std::string &subject);
+
+//! Converts a string to lower-case (operates in-place on subject and returns it).
+std::string& toLower(std::string &subject);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 // The following string functions operate on const strings and 
 // return a copy of the string with the desired modifiations.
 
 //! Converts a string to upper-case (operates in-place on subject and returns it).
+<<<<<<< HEAD
 string& toUpper(string &subject);
 
 //! Returns a copy of the subject in which leading whitespace has been removed.
@@ -102,6 +155,24 @@ string toLower(const string &subject);
 
 //! Returns a copy of the subject in which all characters have been converted to upper case.
 string toUpper(const string &subject);
+=======
+std::string& toUpper(std::string &subject);
+
+//! Returns a copy of the subject in which leading whitespace has been removed.
+std::string trimLeft(const std::string &s);
+
+//! Returns a copy of the subject in which trailing whitespace has been removed.
+std::string trimRight(const std::string &s);
+
+//! Returns a copy of the subject in which leading and trailing whitespace has been removed.
+std::string trim(const std::string &s);
+
+//! Returns a copy of the subject in which all characters have been converted to lower case.
+std::string toLower(const std::string &subject);
+
+//! Returns a copy of the subject in which all characters have been converted to upper case.
+std::string toUpper(const std::string &subject);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Find a character in subject (a c-string)
 //! Returns the 0-based index where the char is found or string::npos if it is not found.
@@ -121,7 +192,11 @@ char* copy_cstr(const char* src);
 //! Converts a cstring (char*) into a string, making sure not to
 //! dereference a NULL pointer.
 //! \return A string copy of cstr or an empty string if cstr is NULL.
+<<<<<<< HEAD
 inline string as_str(const char*const cstr) { return cstr==NULL?"":cstr; }
+=======
+inline std::string as_str(const char*const cstr) { return cstr==NULL?"":cstr; }
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // Find the next non-whitespace character and return a pointer to it.
 // Note:  '\0' is not considered whitespace, so every valid 
@@ -160,20 +235,33 @@ inline bool tryParseDbl(const char* input, const double defaultValue){ double va
 //!  (e.g. the value was NOT a number or the number was out of range).
 //! Whitespace before or after the number is ignored, but extra text after 
 //! the number will cause the conversion to fail.
+<<<<<<< HEAD
 inline bool parseInt(const string& s, int& intResult) { return parseInt(s.c_str(), intResult); /*stringstream ss(s); return !(ss >> intVal).fail();*/ }
+=======
+inline bool parseInt(const std::string& s, int& intResult) { return parseInt(s.c_str(), intResult); /*stringstream ss(s); return !(ss >> intVal).fail();*/ }
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Attempts to convert a string into a double (e.g. "6.02E23" becomes (double)6.02E23)
 //! Returns true if the conversion succeeded or false if it failed 
 //! (e.g. the value was NOT a number or the number was out of range).
 //! Whitespace before or after the number is ignored, but extra text after 
 //! the number will cause the conversion to fail.
+<<<<<<< HEAD
 inline bool parseDbl(const string& s, double& dblResult) { return parseDbl(s.c_str(), dblResult); /*stringstream ss(s); return !(ss >> dblVal).fail();*/ }
+=======
+inline bool parseDbl(const std::string& s, double& dblResult) { return parseDbl(s.c_str(), dblResult); /*stringstream ss(s); return !(ss >> dblVal).fail();*/ }
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Attempts to convert a string into another type (e.g. short, char, long int, etc)
 //! returns true if the conversion succeded or false if it failed (e.g. the value was NOT convertible, using a stringstream).
 template<typename T>
+<<<<<<< HEAD
 bool parseVal(const string &subject, T& result) {
 	stringstream ss(subject); return !(ss >> result).fail();
+=======
+bool parseVal(const std::string &subject, T& result) {
+	std::stringstream ss(subject); return !(ss >> result).fail();
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 }
 
 //! write vector contents to an output stream. used by join and the 'ofstream<<vector' operator.
@@ -185,12 +273,21 @@ void join(ostream &out, const vector<T> &v, const char* const delim=",") {
 //! join any vector into a string with elements separated by the specified delimiter.
 //! (Useful for cout debugging.)
 template<class T>
+<<<<<<< HEAD
 string join(const vector<T> &v, const char* const delim=",") {
 	ostringstream oss; join(oss,v,delim); return oss.str();
 }
 
 //! Split a string using a delimiter.
 vector<string> split(const string& str, const string& delim, const bool includeEmptyValues=true);
+=======
+std::string join(const vector<T> &v, const char* const delim=",") {
+	std::ostringstream oss; join(oss,v,delim); return oss.str();
+}
+
+//! Split a string using a delimiter.
+vector<std::string> split(const std::string& str, const std::string& delim, const bool includeEmptyValues=true);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //! Define the ostream << vector operator. (useful for debugging)
 //! e.g. cout << "Vector Contents: " << v << endl;

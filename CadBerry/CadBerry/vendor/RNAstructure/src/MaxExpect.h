@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+#pragma once
+
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 #define MAX_INTER 30
 #include "DynProgArray.h"
 #include "TProgressDialog.h"
@@ -18,7 +23,11 @@ void bpMatch(structure *ct, char* pfsfile, double gamma, double maxPercent, int 
 void MaxExpectFill(structure *ct, DynProgArray<PFPRECISION> *v, PFPRECISION *w5, pfdatatable *pfdata, bool *lfce, bool *mod, forceclass *fce, double maxPercent, int maxStructures, int Window, double gamma=1.0, ProgressHandler *progress=NULL);
 
 //This is actual fill routine
+<<<<<<< HEAD
 void MEAFill(structure *ct, double **bpProbArray, double *bpSSProbArray, double **vwArray, double **vwPArray, double *w5Array, double *w3Array, std::vector< std::vector<bool> >* pfdata, double gamma, double maxPercent, ProgressHandler *progress, bool OnlyCanonical=true);
+=======
+void MEAFill(structure *ct, double **bpProbArray, double *bpSSProbArray, double **vwArray, double **vwPArray, double *w5Array, double *w3Array, std::vector< std::vector<char> >* pfdata, double gamma, double maxPercent, ProgressHandler *progress, bool OnlyCanonical=true);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // execute the recursion function based on probabilities from the partition function
 void bpProbRecursion(double **bpProbArray, double **vwArray, structure *ct, char* pfsfile);

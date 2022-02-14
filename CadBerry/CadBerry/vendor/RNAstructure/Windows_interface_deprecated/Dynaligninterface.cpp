@@ -29,7 +29,13 @@ static char THIS_FILE[] = __FILE__;
 #define filter //filter out pairs from dynalign calculation
 //#undef filter
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 //This is the backend functions, set up to run in a seperate thread

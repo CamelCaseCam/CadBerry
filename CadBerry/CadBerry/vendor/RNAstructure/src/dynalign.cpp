@@ -44,7 +44,17 @@
 #include "rankmanager.h"
 #include "rankproducer.h"
 #endif //COMPILE_SMP
+<<<<<<< HEAD
 using namespace std;
+=======
+
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //#define timer //flag to turn on a timer that writes a file
 #undef timer
@@ -594,7 +604,11 @@ int dynalign(structure *ct1, structure *ct2, short **alignment,
 
   wendarray *w5,*w3;
 
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
   dynalignarray *vmod;
 
@@ -2150,7 +2164,11 @@ void dynalignstep(structure *ct1, structure *ct2, datatable *data,
   bool ikincrement,jldecrement,ikincrement2,jldecrement2;
   short int startd,endd,starte,ende,startf,endf;
 
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
   integersize einternal[maxloop+1][maxloop+1]; //precalculate internal loop free energies
   integersize einternal2[maxloop+1][maxloop+1]; //precalculate internal loop free energies
@@ -3751,7 +3769,11 @@ int  dyntrace(short i, short j, short a, short b, structure *ct1, structure *ct2
   modification = ( (ct1->GetNumberofModified() > 0) || (ct2->GetNumberofModified() > 0) );
 #else
 #endif
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
   //put the whole fragment on the stack
   //a and b originally referred to positions in the large arrays -
@@ -6779,7 +6801,11 @@ int  dyntraceback(short maxtracebacks, short window, short awindow,
    else modification = false;
 #else
 #endif
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
   //declarations for traceback portion:
 
@@ -7175,7 +7201,11 @@ void alignout(short** align, const char *aout, structure *ct1, structure *ct2) {
 
 void parse(structure *ct, char *seq1, char *seq2, datatable* data) {
   short int *seqone, *seqtwo;
+<<<<<<< HEAD
   vector< vector<bool> > inc = data->pairing;
+=======
+  vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   short int i,j;
   //char temp;
 

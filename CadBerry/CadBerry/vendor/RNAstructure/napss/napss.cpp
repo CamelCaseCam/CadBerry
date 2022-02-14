@@ -137,7 +137,11 @@ int napss(RNA *rnaCT, const string inNMRconstraints,
 	// Load NMR constraints
 	short maxConLength = 0, numOfCon = 0, totalConLength = 0;
 	
+<<<<<<< HEAD
 	ifstream inNMRConFile(inNMRconstraints.c_str());
+=======
+	std::ifstream inNMRConFile(inNMRconstraints.c_str());
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	if (!inNMRConFile.good()) return NAPSS_BAD_CONSTRAINT_FILE;
 	string s;
 

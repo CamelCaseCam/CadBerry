@@ -13,6 +13,11 @@
 #include "CadBerry/Packages/LoadPackages.h"
 #include "CadBerry/Packages/Update.h"
 #include "Math/Equation.h"
+#include "DNAVis/DisplayDNA.h"
+
+#include "Utils/RNAFuncs.h"
+
+#include "RNA.h"
 
 #include "whereami.h"
 
@@ -168,7 +173,9 @@ namespace CDB
 			DirName[len] = '\0';    //Add nul termination char to path
 			PathToEXE = DirName;    //Convert path to string
 		}
+		RNAContext::InitRNAContext(PathToEXE + "\\Data\\data_tables\\");
 
+		SetDllDirectory(std::filesystem::path(PathToEXE).append("Build\\").c_str());
 		std::filesystem::directory_iterator ModuleFolder{ std::filesystem::path(PathToEXE).append("Modules\\")};
 		for (ModuleFolder; ModuleFolder != end; ++ModuleFolder)
 		{
@@ -181,12 +188,13 @@ namespace CDB
 				{
 					continue;
 				}
+
 				//Load the dll
 				HINSTANCE DLLID = LoadLibrary(CPath);
 
 				if (!DLLID)
 				{
-					CDB_EditorError("Could not load dll \"{0}\"", Path);
+					CDB_EditorError("Could not load dll \"{0}\" with error {1}", Path, GetLastError());
 					continue;
 				}
 

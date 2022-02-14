@@ -9,7 +9,13 @@
 #include "process_sequences.h"
 #include "ppf_math.h"
 #include <iostream>
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // Constructor: Allocate and init state prob array.
 t_pf_alignment::t_pf_alignment(t_seq_man* seq_man)

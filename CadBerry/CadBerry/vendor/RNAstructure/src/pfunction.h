@@ -78,7 +78,11 @@ class pfdatatable {
     // paring info 2D bool vector paring    
     // notparing info 1D char vector single
     std::vector<std::vector<char> > alphabet;
+<<<<<<< HEAD
     std::vector<std::vector<bool> > pairing;  
+=======
+    std::vector<std::vector<char> > pairing;  
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	std::vector<char> not_pairing; // Single bases
     std::vector<char> non_interacting; // non-interacting bases
     std::vector<char> linker; // linker

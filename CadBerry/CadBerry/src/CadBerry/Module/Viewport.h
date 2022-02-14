@@ -28,6 +28,7 @@ namespace CDB
 	class ViewportLayer : public Layer
 	{
 	public:
+		virtual void OnAttach() override;
 		virtual void OnImGuiRender() override;
 		virtual void Draw() override;
 		~ViewportLayer();

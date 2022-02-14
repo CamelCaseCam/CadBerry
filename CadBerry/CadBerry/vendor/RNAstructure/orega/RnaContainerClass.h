@@ -8,7 +8,13 @@
 #include <iomanip>
 
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //This class provides an RNA class, and allows an array because there is a default constructor.
 class RNA_Container {

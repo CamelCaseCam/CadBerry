@@ -374,7 +374,11 @@ string RNAstructureBackendCalculator::readDynalignAlignmentConstraintsFile(
 	string file ) {
 
 	string result = "";
+<<<<<<< HEAD
 	ifstream fileStream( file.c_str() );
+=======
+	std::ifstream fileStream( file.c_str() );
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	string line;
 	stringstream lineStream( stringstream::in | stringstream::out );
 
@@ -1740,7 +1744,11 @@ string RNAstructureBackendCalculator::getSequenceTitle() {
 void RNAstructureBackendCalculator::readSequenceData( string file ) {
 
 	// Open the file and initialize the line variable.
+<<<<<<< HEAD
 	ifstream in( file.c_str() );
+=======
+	std::ifstream in( file.c_str() );
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	string line = "";
 
 	// Read the first line of the file, then use that line to determine what

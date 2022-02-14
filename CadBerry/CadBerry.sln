@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Berry", "Berry\Berry.vcxproj", "{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CDBRNA", "CadBerry\vendor\RNAstructure\CDBRNA\CDBRNA.vcxproj", "{4FC11CA9-3B63-477F-241E-5BD3105FCECF}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry", "CadBerry\CadBerry.vcxproj", "{918CE669-7D59-4175-A672-2F1D929E7603}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry_updater", "CadBerry_updater\CadBerry_updater.vcxproj", "{C5D584DF-B1CE-A331-DA00-89B6C658833D}"
@@ -14,6 +16,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "CadBerry\vendor\GLFW\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glad", "CadBerry\vendor\Glad\Glad.vcxproj", "{BDD6857C-A90D-870D-52FA-6C103E10030F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IRESGenerator", "Modules\IRESGenerator\IRESGenerator.vcxproj", "{1F69548A-8B29-D0C0-5464-193EC0E3149D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "CadBerry\vendor\IMGUI\ImGui.vcxproj", "{C0FF640D-2C14-8DBE-F595-301E616989EF}"
 EndProject
@@ -35,6 +39,10 @@ Global
 		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Debug|x64.Build.0 = Debug|x64
 		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Release|x64.ActiveCfg = Release|x64
 		{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}.Release|x64.Build.0 = Release|x64
+		{4FC11CA9-3B63-477F-241E-5BD3105FCECF}.Debug|x64.ActiveCfg = Debug|x64
+		{4FC11CA9-3B63-477F-241E-5BD3105FCECF}.Debug|x64.Build.0 = Debug|x64
+		{4FC11CA9-3B63-477F-241E-5BD3105FCECF}.Release|x64.ActiveCfg = Release|x64
+		{4FC11CA9-3B63-477F-241E-5BD3105FCECF}.Release|x64.Build.0 = Release|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Debug|x64.ActiveCfg = Debug|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Debug|x64.Build.0 = Debug|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.ActiveCfg = Release|x64
@@ -59,6 +67,10 @@ Global
 		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Debug|x64.Build.0 = Debug|x64
 		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Release|x64.ActiveCfg = Release|x64
 		{BDD6857C-A90D-870D-52FA-6C103E10030F}.Release|x64.Build.0 = Release|x64
+		{1F69548A-8B29-D0C0-5464-193EC0E3149D}.Debug|x64.ActiveCfg = Debug|x64
+		{1F69548A-8B29-D0C0-5464-193EC0E3149D}.Debug|x64.Build.0 = Debug|x64
+		{1F69548A-8B29-D0C0-5464-193EC0E3149D}.Release|x64.ActiveCfg = Release|x64
+		{1F69548A-8B29-D0C0-5464-193EC0E3149D}.Release|x64.Build.0 = Release|x64
 		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Debug|x64.ActiveCfg = Debug|x64
 		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Debug|x64.Build.0 = Debug|x64
 		{C0FF640D-2C14-8DBE-F595-301E616989EF}.Release|x64.ActiveCfg = Release|x64

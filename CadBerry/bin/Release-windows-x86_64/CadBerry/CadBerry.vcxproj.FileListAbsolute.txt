@@ -1,1 +1,2 @@
 D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry\CadBerry.dll
+D:\Development\PersonalCadBerry\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry\CadBerry.dll

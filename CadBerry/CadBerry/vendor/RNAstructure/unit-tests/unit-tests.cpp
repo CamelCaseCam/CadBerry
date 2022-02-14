@@ -2,7 +2,13 @@
 
 #include "unit-tests.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 int total_passed = 0, total_failed = 0; // global counters of test results
 void post_result(bool passed) { if (passed) total_passed++; else total_failed++; }

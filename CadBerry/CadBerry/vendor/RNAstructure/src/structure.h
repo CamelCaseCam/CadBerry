@@ -10,7 +10,13 @@
 #include "DotBracketFormat.h"
 #include "../src/phmm/utils/xmath/log/xlog_math.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #ifdef _WINDOWS_GUI
 	#include "../Windows_interface_deprecated/platform.h"
@@ -661,11 +667,24 @@ class structure //this structure contains all the info for a structure
 		// 	else return false;
 
 		// }
+<<<<<<< HEAD
 		inline bool IsNuc(int i, char c) {
 			VERIFY_NUC_INDEX(i);
 			return (std::find(data->alphabet[numseq[i]].begin(), data->alphabet[numseq[i]].end(), c) != data->alphabet[numseq[i]].end());
 		}
 		inline bool IsNuc(int i, char c, datatable *data) {
+=======
+		__forceinline bool IsNuc(int i, char c) {
+			VERIFY_NUC_INDEX(i);
+			for (char ch : data->alphabet[numseq[i]])
+			{
+				if (ch == c) return true;
+			}
+			return false;
+			//return (std::find(data->alphabet[numseq[i]].begin(), data->alphabet[numseq[i]].end(), c) != data->alphabet[numseq[i]].end());
+		}
+		__forceinline bool IsNuc(int i, char c, datatable *data) {
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 			VERIFY_NUC_INDEX(i);
 			return (std::find(data->alphabet[numseq[i]].begin(), data->alphabet[numseq[i]].end(), c) != data->alphabet[numseq[i]].end());
 		}
@@ -849,7 +868,11 @@ inline integersize SHAPEend(int i, structure *ct);//calculate the SHAPE pseudo e
 									//paired nucleotide
 
 //this function calculates whether a terminal pair i,j requires the end penalty
+<<<<<<< HEAD
 inline integersize penalty(int i,int j,structure* ct, datatable *data) {
+=======
+__forceinline integersize penalty(int i,int j,structure* ct, datatable *data) {
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	integersize energy;
 	VERIFY_NUC_INDEX_CT(i,ct);
 	VERIFY_NUC_INDEX_CT(j,ct);

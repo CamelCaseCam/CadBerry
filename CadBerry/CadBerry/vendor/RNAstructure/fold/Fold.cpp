@@ -433,7 +433,11 @@ bool Fold_Interface::parse( int argc, char** argv ) {
 
 string Fold_Interface::sample_file(string shapefile, int numnuc, int iter) {
 	char numstr[21];
+<<<<<<< HEAD
 	ifstream infile;
+=======
+	std::ifstream infile;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	sprintf(numstr, "%d", iter);
 	string outname = shapefile + "_boot" + numstr;
 	ofstream outfile;

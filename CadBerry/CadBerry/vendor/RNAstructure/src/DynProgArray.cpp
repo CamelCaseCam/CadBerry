@@ -9,6 +9,10 @@
 #include <iostream>
 #include "DynProgArray.h"
 #include "defines.h"
+<<<<<<< HEAD
+=======
+#include <type_traits>
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #ifdef EXTENDED_DOUBLE
 #include "extended_double.h"
@@ -17,6 +21,7 @@
 // this "function" checks at compile time whether
 // two types are the same (i.e. one is an alias
 // of the other)
+<<<<<<< HEAD
 template<typename T, typename U>
 struct is_same {
 	enum { value = 0 };
@@ -26,15 +31,35 @@ template<typename T>
 struct is_same<T, T> {
 	enum { value = 1 };
 };
+=======
+
+//Cameron: update to use std::is_same (this implementation doesn't work in VC++ 20)
+//template<typename T, typename U>
+//struct is_same {
+//	enum { value = 0 };
+//};
+//
+//template<typename T>
+//struct is_same {
+//	enum { value = 1 };
+//};
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // this chooses a reasonable default value for "infinite
 // energy". T should be either PFPRECISION or integersize.
 template<typename T>
 int get_infinity () {
+<<<<<<< HEAD
 	if (is_same<T,PFPRECISION>::value){
 		return ZERO;
 	}
 	else if (is_same<T,integersize>::value){
+=======
+	if (std::is_same<T,PFPRECISION>::value){
+		return ZERO;
+	}
+	else if (std::is_same<T,integersize>::value){
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		return INFINITE_ENERGY;
 	}
 	else {

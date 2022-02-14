@@ -28,7 +28,16 @@ const log_double xlog_zero(0); // i.e. xlog(0)
 const log_double xlog_one(1); // i.e. xlog(1)
 #endif
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #undef pfdebugmode  //flag to indicate debugging
 //#define pfdebugmode  //flag to indicate debugging
@@ -1779,10 +1788,17 @@ struct DataWriter {
 	TWriter& write(const TData& data);
 };
 
+<<<<<<< HEAD
 template<typename TWriter, typename TData>
 TWriter& operator<<(TWriter& writer, const TData& data) {
 	return writer.write(data);
 };
+=======
+//template<typename TWriter, typename TData>
+//TWriter& operator<<(TWriter& writer, const TData& data) {
+//	return writer.write(data);
+//};
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 struct BinaryWriter : DataWriter<BinaryWriter> {
 	BinaryWriter(ostream& out) : DataWriter<BinaryWriter>(&out, false) { }
@@ -3640,3 +3656,9 @@ void thresh_structure(structure *ct, char *pfsfile, double thresh) {
 	delete wcoax;
 
 }
+<<<<<<< HEAD
+=======
+
+#undef maxinter
+#undef maxasym
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807

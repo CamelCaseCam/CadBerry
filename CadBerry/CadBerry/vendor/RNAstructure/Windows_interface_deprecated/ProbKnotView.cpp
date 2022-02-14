@@ -9,7 +9,13 @@
 #include "..\src\structure.h"
 #include "..\src\probknot.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //This is the backend functions, set up to run in a seperate thread
 UINT PKProc( LPVOID pParam ){    

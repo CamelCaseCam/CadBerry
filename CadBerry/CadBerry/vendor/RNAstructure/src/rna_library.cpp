@@ -5,6 +5,11 @@
 	#include "platform.h"
 #endif //_WINDOWS
 
+<<<<<<< HEAD
+=======
+#include "RNAContext.h"
+
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 #include "rna_library.h"
 #include <cmath>
 #include <cstdlib>
@@ -14,7 +19,16 @@
 #include <stdlib.h> 
 #include <numeric>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #define DEBUG_OPENDAT 0
 #define outprecision 0
@@ -101,7 +115,11 @@ inline int floor_entry_to_short(const char * inum) {
     return onum;
 }  
 
+<<<<<<< HEAD
 bool datatable::can_pair(int i, int j, short* sequence){
+=======
+inline bool datatable::can_pair(int i, int j, short* sequence){
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	return pairing[sequence[i]][sequence[j]];
 }
 
@@ -2007,8 +2025,15 @@ const char* getDataPath(const char* const alphabetName) {
 	// if it was previously set, return immediately.
     if (!is_blank(CachedDataPath)) return CachedDataPath;
 
+<<<<<<< HEAD
     // Test whether the DATAPATH environment variable is set.
 	const char* const env = getenv(DATAPATH_ENV_VAR);
+=======
+    //Cameron: Modifying this to work with CadBerry. We know that the data tables will be in the data directory, so we can grab them directly
+    // Test whether the DATAPATH environment variable is set.
+    const char* const env = RNAContext::GetDataPath();
+	//const char* const env = getenv(DATAPATH_ENV_VAR);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	if (!is_blank(env)) {
         if (!dirExists(env)) // Determine whether or not it is a valid directory.
             showDataPathWarning(DP_WARN_ENV_FAIL_DIR, env);

@@ -1,6 +1,10 @@
 
 #if !defined(HYBRIDRNA_H)
 #define HYBRIDRNA_H
+<<<<<<< HEAD
+=======
+#include "Core.h"    //For library exports
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 #include "TwoRNA.h"
@@ -15,7 +19,11 @@
 
 //Note the stylized comments provide facility for automatic documentation via doxygen.
 
+<<<<<<< HEAD
 class HybridRNA:  public RNA {
+=======
+class RNAPI HybridRNA:  public RNA {
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 	public:

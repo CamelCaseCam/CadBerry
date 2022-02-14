@@ -187,6 +187,15 @@
     <ClInclude Include="src\CadBerry\Threading\ThreadPool.h">
       <Filter>CadBerry\Threading</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Utils\Quicksort.h">
+      <Filter>CadBerry\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Utils\RNAFuncs.h">
+      <Filter>CadBerry\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Utils\SaveFunctions.h">
+      <Filter>CadBerry\Utils</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Utils\memory.h">
       <Filter>CadBerry\Utils</Filter>
     </ClInclude>
@@ -195,7 +204,12 @@
     </ClInclude>
     <ClInclude Include="src\ImPlot.h" />
     <ClInclude Include="src\cdbpch.h" />
-    <ClInclude Include="src\CadBerry\Utils\SaveFunctions.h" />
+    <ClInclude Include="src\CadBerry\ProteinStructure\PDBFile.h" />
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayDNA.h" />
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayColours.h" />
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayRegion.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -285,10 +299,20 @@
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp">
       <Filter>CadBerry\Threading</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Utils\RNAFuncs.cpp">
+      <Filter>CadBerry\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Utils\SaveFunctions.cpp">
+      <Filter>CadBerry\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Utils\memory.cpp">
       <Filter>CadBerry\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
-    <ClCompile Include="src\CadBerry\Utils\SaveFunctions.cpp" />
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayDNA.cpp" />
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayColours.cpp" />
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayRegion.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
   </ItemGroup>
 </Project>

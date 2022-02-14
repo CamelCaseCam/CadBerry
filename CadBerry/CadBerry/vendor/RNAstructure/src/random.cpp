@@ -16,7 +16,16 @@
 #include <ctime>
 #include <limits>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 //Random number generator of Numerical recipes in C, "ran2," period of about 2e18
 
 randomnumber::randomnumber() {

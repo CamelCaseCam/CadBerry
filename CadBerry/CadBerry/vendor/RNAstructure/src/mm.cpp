@@ -26,7 +26,13 @@
 #include "structure.h"
 #include "algorithm.h"
 #include "rna_library.h"
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 #define maxdepth 50

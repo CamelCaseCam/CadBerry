@@ -169,7 +169,11 @@ void ProbabilityPlot::run() {
 		// Open the text file stream to read data.
 		// If the file was not opened correctly, set an error.
 		string line;
+<<<<<<< HEAD
 		ifstream inFile( inputFile.c_str() );
+=======
+		std::ifstream inFile( inputFile.c_str() );
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		if( !( inFile.is_open() ) ) { error = "Error opening input file."; }
 
 		// If no error occurred opening the text file, read data from it.
@@ -220,7 +224,11 @@ void ProbabilityPlot::run() {
 
 		// Attempt to open the dot plot file.
 		// If it couldn't be opened, return an error.
+<<<<<<< HEAD
 		ifstream in( inputFile.c_str() );
+=======
+		std::ifstream in( inputFile.c_str() );
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		if( !in.is_open() ) { error = "Error opening dot plot file."; }
 
 		// Read in the first line to get the length of the dot plot sequence, and initialize the dot plot handler.

@@ -4,7 +4,13 @@
 
 #include "primary_structure.hpp"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 efnmax::Base efnmax::CharToBase(char c) {
 	// Note that we don't toupper(c) as a lower case

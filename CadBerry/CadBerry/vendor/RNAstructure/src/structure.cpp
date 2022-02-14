@@ -16,7 +16,16 @@
 #include "defines.h"
 #include "pfunction_math.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #define DBN_BRACKET_SYMBOLS "()<>{}[]AaBbCcDd" // List of characters that represent basepairs in dot-bracket notation. The symbols are listed in pairs: <open1><close1><open2><close2>....
 #define DBN_UNPAIRED_SYMBOLS ".-," // List of characters accepted as unpaired bases in dot-bracket notation.
@@ -2078,9 +2087,15 @@ void structure::FillSHAPEssRegions() {
 short int structure::SHAPEss_give_value(int index) {
 	if (shaped) {
 		if (index > numofbases) return (short int)SHAPEss[index - numofbases];
+<<<<<<< HEAD
 		else return (short int)SHAPEss[index];
 	}
 	else return 0;
+=======
+		return (short int)SHAPEss[index];
+	}
+	return 0;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 }
 
 //this is the function that will return a pseudo energy term for hairpin loops based off of SHAPE data
@@ -2095,7 +2110,12 @@ int structure::SHAPEss_calc(int index_i, int index_j) {
 			index_j = temp_index;
 		}
 		return SHAPEss_region[index_j][index_i];
+<<<<<<< HEAD
 	} else return 0;  //if no shaped data is being used, return zero
+=======
+	}
+	return 0;  //if no shaped data is being used, return zero
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 }
 
 

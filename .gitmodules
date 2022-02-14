@@ -37,3 +37,9 @@
 [submodule "CadBerry/CadBerry/vendor/implot"]
 	path = CadBerry/CadBerry/vendor/implot
 	url = https://github.com/epezent/implot.git
+[submodule "CadBerry/vendor/ViennaRNA"]
+	path = CadBerry/vendor/ViennaRNA
+	url = https://github.com/ViennaRNA/ViennaRNA.git
+[submodule "CadBerry/CadBerry/vendor/ViennaRNA"]
+	path = CadBerry/CadBerry/vendor/ViennaRNA
+	url = https://github.com/ViennaRNA/ViennaRNA.git

@@ -309,7 +309,11 @@ bool DotPlotBackend::readData( string file, int strand ) {
 
 		// Open the text file stream to read data.
 		// If an error occurred, close the file and return false.
+<<<<<<< HEAD
 		ifstream inFile( file.c_str() );
+=======
+		std::ifstream inFile( file.c_str() );
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 		if( !( inFile.is_open() ) ) {
 			inFile.close();
 			return false;

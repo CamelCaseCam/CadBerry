@@ -6,18 +6,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Operations\MCS.h">
+      <Filter>Operations</Filter>
+    </ClInclude>
     <ClInclude Include="src\Operations\PrintWarning.h">
       <Filter>Operations</Filter>
     </ClInclude>
     <ClInclude Include="src\utilspch.h" />
-    <ClInclude Include="src\Operations\MCS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
+    <ClCompile Include="src\Operations\MCS.cpp">
+      <Filter>Operations</Filter>
+    </ClCompile>
     <ClCompile Include="src\Operations\PrintWarning.cpp">
       <Filter>Operations</Filter>
     </ClCompile>
     <ClCompile Include="src\utilspch.cpp" />
-    <ClCompile Include="src\Operations\MCS.cpp" />
   </ItemGroup>
 </Project>

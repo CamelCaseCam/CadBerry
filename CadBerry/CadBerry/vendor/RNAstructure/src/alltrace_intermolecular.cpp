@@ -19,7 +19,16 @@
 #include <cstdlib>
 #include <cstring>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 //perecentdelta is the maximum percent energy diff in suboptimal structures from optimal
@@ -48,7 +57,11 @@ void alltracetraceback(bool writect,int *ctenergy, structure *ct, atDynProgArray
 	int energy_size=MaxStructure; //these two will the be used to increase the size of ctenergy array
 	int *tempenergy;
 
+<<<<<<< HEAD
 	vector< vector<bool> > inc = data->pairing;
+=======
+	vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 	current = 1; //#of structure to be traced
 
@@ -1601,7 +1614,11 @@ register int number;
 register short rarray;
 short branch;
 
+<<<<<<< HEAD
 vector< vector<bool> > inc = data->pairing;
+=======
+vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 if (ct->GetThermodynamicDataTable()!=data) {
 	cerr << "In alltrace ("<<__FILE__<<"): The structure's datatable does not match the passed-in datatable. This can cause problems with IsNuc etc." << endl;

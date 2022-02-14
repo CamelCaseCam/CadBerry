@@ -1,6 +1,10 @@
 #include <cstdlib>
 #include <cstring>
 #include "thermodynamics.h"
+<<<<<<< HEAD
+=======
+#include "RNAContext.h"
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // Constructor:
 Thermodynamics::Thermodynamics(const bool isRNA, const char* const alphabetName, const double temperature) {
@@ -27,7 +31,11 @@ Thermodynamics::Thermodynamics(const Thermodynamics& copy) {
 //    so copying the datatable must also happen in the constructor to avoid reading a 
 //    (possibly different) datatable first.
 void Thermodynamics::CopyThermo(const Thermodynamics& copy) {
+<<<<<<< HEAD
 	ClearEnergies();
+=======
+	//ClearEnergies();
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	ClearEnthalpies();
 	isrna=copy.isrna; //store the backbone type (this is superceded by alphabetName, but some code may still use it.)
 	enthalpy=copy.enthalpy; //set the enthalpy parameters 
@@ -76,9 +84,16 @@ int Thermodynamics::ReloadDataTables(const double new_temperature) {
 
 // deletes the thermodynamic data tables.
 void Thermodynamics::ClearEnergies() {
+<<<<<<< HEAD
 	if (data!=NULL && !copied) delete data;
 	data = NULL;
 	copied = false;
+=======
+	//Data is shared now
+	/*if (data!=NULL && !copied) delete data;
+	data = NULL;
+	copied = false;*/
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 }
 void Thermodynamics::ClearEnthalpies() {
 	if (enthalpy!=NULL) delete enthalpy;
@@ -131,9 +146,17 @@ bool Thermodynamics::VerifyThermodynamic() {
 
 //read the thermodynamic parameters from disk at location $DATAPATH or pwd
 int Thermodynamics::ReadThermodynamic(const char *const directory, const char *alphabetName, const double set_temperature) {
+<<<<<<< HEAD
 	// Only allocate the datatable if energyread is false, meaning that no parameters are loaded
 	//	This is important because the user might alter the temperature with SetTemperature(), triggering a re-read of the parameters.
 	if (data==NULL) data = new datatable();
+=======
+	//Cameron: Change this so that only one datatable is used per RNAContext to preserve memory across threads
+	
+	// Only allocate the datatable if energyread is false, meaning that no parameters are loaded
+	//	This is important because the user might alter the temperature with SetTemperature(), triggering a re-read of the parameters.
+	if (data==NULL) data = RNAContext::GetDatatable();
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 	if (!is_blank(alphabetName)) nominal_alphabetName = alphabetName;
 
@@ -148,6 +171,7 @@ int Thermodynamics::ReadThermodynamic(const char *const directory, const char *a
 	//open the data files -- must reside in pwd or $DATAPATH. opendat will auto-detect the data-path if directory is NULL
 	//open the thermodynamic data tables
 	int error = 0;
+<<<<<<< HEAD
 	if (data->opendat(directory, nominal_alphabetName.c_str(), false, skipThermoTables)==0) { 
 		error=5; // 5=error reading thermo tables
 	} else {
@@ -159,6 +183,19 @@ int Thermodynamics::ReadThermodynamic(const char *const directory, const char *a
 		}
 	}
 	if (error!=0) ClearEnergies(); // delete energy tables because they were not loaded correctly (or at the desired temperature).
+=======
+
+	//Cameron: GetDataTable reads the thermo tables, so we don't need to worry about that here
+	//now check to see if the temperature is other than 310.15 K:
+	if (!equal_within_tolerance(nominal_temperature, TEMP_37C)) {
+		// causes the data table to read in the *.dh enthalpy tables 
+		// and rescale the thermodynamic parameters for the specified temperature
+		error = data->ScaleToTemperature(nominal_temperature); // returns an error code if the enthalpy tables can't be loaded. the code corresponds to RNA::GetErrorMessage, so we can return it directly
+	}
+
+	//Energy table is shared
+	//if (error!=0) ClearEnergies(); // delete energy tables because they were not loaded correctly (or at the desired temperature).
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	return error;
 }
 

@@ -11,7 +11,13 @@
 #include "../RNA_class/RNA.h"
 #include "geometry2D.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 namespace StructureTools {
 	class nuclayout {

@@ -8,7 +8,13 @@
 #include <cassert>
 #include <limits>
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 efnmax::energy_t NNModel::OneLoop(int i, int j) const {
 	assert(i < j);

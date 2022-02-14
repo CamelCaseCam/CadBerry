@@ -17,7 +17,16 @@
 
 #include <cstring>
 #include <iostream>
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 #define maxsort 90000 //Starting point for the maximum number of basepairs within %cntrl8
 							//of the minimum free energy.
@@ -657,9 +666,15 @@ void MaxExpectFill(structure *ct, DynProgArray<PFPRECISION> *v, PFPRECISION *w5,
 
 //This is actual fill routine for maximum expewcted accuracy structure prediction:
 //bool OnlyCanonical indicates whether only Canonical pairs should be allowed
+<<<<<<< HEAD
 void MEAFill(structure *ct, double **bpProbArray, double *bpSSProbArray, double **vwArray, double **vwPArray, double *w5Array, double *w3Array, vector<vector<bool> >* pairing, double gamma, double maxPercent, ProgressHandler *progress, bool OnlyCanonical) {
 
 	vector< vector<bool> >& inc = *pairing; //just an alias
+=======
+void MEAFill(structure *ct, double **bpProbArray, double *bpSSProbArray, double **vwArray, double **vwPArray, double *w5Array, double *w3Array, vector<vector<char> >* pairing, double gamma, double maxPercent, ProgressHandler *progress, bool OnlyCanonical) {
+
+	vector< vector<char> >& inc = *pairing; //just an alias
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //<<<<<<< MaxExpect.cpp
 

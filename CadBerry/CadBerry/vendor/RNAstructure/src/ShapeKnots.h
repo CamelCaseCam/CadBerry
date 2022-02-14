@@ -24,7 +24,13 @@
 #include "../RNA_class/RNA.h"
 #include "../src/ParseCommandLine.h"
 
+<<<<<<< HEAD
 //using namespace std;
+=======
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 void addtoAggregate(structure * folded, structure * psa, int r);
 	//Function that takes a folded structure (after call to dynamic) and adds it to the final list of folded structures

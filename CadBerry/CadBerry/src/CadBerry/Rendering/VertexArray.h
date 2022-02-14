@@ -5,6 +5,12 @@
 
 namespace CDB
 {
+	enum class DisplayType
+	{
+		TRIANGLES,
+		LINES
+	};
+
 	class CDBAPI VertexArray
 	{
 	public:
@@ -23,5 +29,7 @@ namespace CDB
 		virtual const IndexBuffer* BorrowIndexBuffer() const = 0; 
 
 		static VertexArray* Create();
+
+		DisplayType m_DisplayType = DisplayType::TRIANGLES;
 	};
 }

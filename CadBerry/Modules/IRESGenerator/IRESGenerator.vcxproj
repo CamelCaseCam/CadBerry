@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1F69548A-8B29-D0C0-5464-193EC0E3149D}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>IRESGenerator</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\..\bin\Debug-windows-x86_64\IRESGenerator\</OutDir>
+    <IntDir>..\..\bin\Debug-windows-x86_64\IRESGenerator\</IntDir>
+    <TargetName>IRESGenerator</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\..\bin\Release-windows-x86_64\IRESGenerator\</OutDir>
+    <IntDir>..\..\bin\Release-windows-x86_64\IRESGenerator\</IntDir>
+    <TargetName>IRESGenerator</TargetName>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\IRESGenerator\src;..\..\GILBuildEngine\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;..\..\CadBerry\vendor\implot;..\..\CadBerry\vendor\nfd\src\include;..\..\CadBerry\vendor\RNAstructure;..\..\CadBerry\vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Debug\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\..\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y ..\..\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.dll ..\..\bin\Debug-windows-x86_64\Berry\Modules
+copy /B /Y ..\..\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.pdb ..\..\bin\Debug-windows-x86_64\Berry\Modules</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\IRESGenerator\src;..\..\GILBuildEngine\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;..\..\CadBerry\vendor\implot;..\..\CadBerry\vendor\nfd\src\include;..\..\CadBerry\vendor\RNAstructure;..\..\CadBerry\vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Release\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImportLibrary>..\..\bin\Release-windows-x86_64\IRESGenerator\IRESGenerator.lib</ImportLibrary>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy /B /Y ..\..\bin\Release-windows-x86_64\IRESGenerator\IRESGenerator.dll ..\..\bin\Release-windows-x86_64\Berry\Modules
+copy /B /Y ..\..\bin\Release-windows-x86_64\IRESGenerator\IRESGenerator.pdb ..\..\bin\Release-windows-x86_64\Berry\Modules</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GenerateIRES.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\GenerateIRES.cpp" />
+    <ClCompile Include="src\Module.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CadBerry\CadBerry.vcxproj">
+      <Project>{918CE669-7D59-4175-A672-2F1D929E7603}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CadBerry\vendor\IMGUI\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CadBerry\vendor\GLFW\GLFW.vcxproj">
+      <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GILBuildEngine\GILBuildEngine.vcxproj">
+      <Project>{A719CF0D-93E7-C213-7C7B-333A68E89E78}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CadBerry\vendor\RNAstructure\CDBRNA\CDBRNA.vcxproj">
+      <Project>{4FC11CA9-3B63-477F-241E-5BD3105FCECF}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

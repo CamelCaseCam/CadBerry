@@ -55,7 +55,16 @@
 
 #define DATATABLE_ERRMSG "The thermodynamic parameters could not be read. Please make sure the DATAPATH environment variable is set (e.g. to the RNAstructure/data_tables directory)."
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 #ifdef COUNTING
@@ -150,6 +159,7 @@ struct datatable {
 	////! Get whether or the datatable is in permissive mode. See setPermissive.
 	//bool getAllowUnknownBases();
 	//! Get the name of the alphabet that is currently loaded. This will be "" if no alphabet is loaded or if the name is unknown.
+<<<<<<< HEAD
 	string GetAlphabetName();
 
     float RT;
@@ -158,6 +168,16 @@ struct datatable {
 	bool loadedAlphabet;      // whether the alphabet was loaded (by a call to opendat)
 	bool loadedTables;        // whether the thermodynamic parameters were loaded (by a call to opendat with the loadThermo parameter set to true)
     string data_directory;    // the directory from which the current parameters have been loaded. This is re-used in ScaleToTemperature etc.
+=======
+	std::string GetAlphabetName();
+
+    float RT;
+	std::string alphabetName; // the name of the currently loaded alphabet, e.g. "rna" or "dna" etc.
+	bool allowUnknownBases;   // whether or not to allow unknown nucleobases. If true, basetonum will return 0 instead of -1 for unknown bases.
+	bool loadedAlphabet;      // whether the alphabet was loaded (by a call to opendat)
+	bool loadedTables;        // whether the thermodynamic parameters were loaded (by a call to opendat with the loadThermo parameter set to true)
+    std::string data_directory;    // the directory from which the current parameters have been loaded. This is re-used in ScaleToTemperature etc.
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 	double temperature;       // the temperature corresponding to the currently loaded free energy parameters.
 
     // declare variables for specification.dat data. alphabet, paring, not_pairing.
@@ -167,11 +187,21 @@ struct datatable {
     std::vector<std::vector<char> > alphabet; //alphabets (all bases)
     //unordered_map<char, short int> alphabet_map;
     //std::vector<char> alphabet_lookup;
+<<<<<<< HEAD
     std::vector<std::vector<bool> > pairing;  //pairing information 
     std::vector<char> not_pairing; // Single bases
     std::vector<char> non_interacting; // non-interacting bases
     std::vector<char> linker; // linker
 	std::vector<bool> LinkerInts; //indicates where an int representation of a nuc is the linker
+=======
+
+    //Cameron: convert bool to char array to speed up processing
+    std::vector<std::vector<char> > pairing;  //pairing information 
+    std::vector<char> not_pairing; // Single bases
+    std::vector<char> non_interacting; // non-interacting bases
+    std::vector<char> linker; // linker
+	std::vector<char> LinkerInts; //indicates where an int representation of a nuc is the linker
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
     
     //variables were used in old tloop, triloop and hexaloop. New function does not need them.
     //short int numofhexaloops, numoftriloops, numoftloops;
@@ -389,7 +419,11 @@ struct datatable {
 
     public:
         // Writes the usage counts to a file on the disk.  Might not be needed (RNA::WriteDataCounters no longer calls it)
+<<<<<<< HEAD
         bool export_data_counts(string CountFile);
+=======
+        bool export_data_counts(std::string CountFile);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
         // Returns a vector with all the parameter usage counts
         std::vector<double> get_data_counts();
@@ -420,7 +454,11 @@ int ReadRestraints(vector<double> &valuesRead, const char* SHAPEFile, double max
 //! /param outfile A string specifying the path to the output file.
 //! /param append Whether to append data to a file if it exists (the default is to truncate existing files before writing).
 //! /return Returns ERR_BAD_RESTRAINT_FILE if the file cannot be opened for writing. Otherwise returns 0 on success.
+<<<<<<< HEAD
 int WriteRestraints(const vector<double> &values, const string& outfile, const bool append = false);
+=======
+int WriteRestraints(const vector<double> &values, const std::string& outfile, const bool append = false);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 //write is used to write data to a save file
 #ifdef COUNTING
@@ -433,7 +471,11 @@ void write(std::ofstream *out,short *i);
 void write(std::ofstream *out,bool *i);
 void write(std::ofstream *out,int *i);
 void write(std::ofstream *out,char *i);
+<<<<<<< HEAD
 void write(std::ofstream *out,string *i);
+=======
+void write(std::ofstream *out,std::string *i);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 void write(std::ofstream *out,float *i);
 void write(std::ofstream *out,double *i);
 void write(std::ofstream *out,log_double *i);
@@ -470,7 +512,11 @@ void read(std::ifstream *out,short *i);
 void read(std::ifstream *out,bool *i);
 void read(std::ifstream *out,int *i);
 void read(std::ifstream *out,char *i);
+<<<<<<< HEAD
 void read(std::ifstream *out,string *i);
+=======
+void read(std::ifstream *out,std::string *i);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 void read(std::ifstream *out,float *i);
 void read(std::ifstream *out,double *i);
 void read(std::ifstream *out,log_double *i);

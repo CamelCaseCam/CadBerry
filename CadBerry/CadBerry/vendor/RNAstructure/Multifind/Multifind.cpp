@@ -14,7 +14,11 @@ string Multifind_Interface::compact(string& sequence){
    
 
 void Multifind_Interface::read_fasta(){
+<<<<<<< HEAD
    ifstream in_fasta;
+=======
+    std::ifstream in_fasta;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
   in_fasta.open(fasta_file.c_str());
   string temp_buffer;
   //  string::size_type alignment_length;

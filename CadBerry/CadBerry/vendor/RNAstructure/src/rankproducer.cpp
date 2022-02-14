@@ -13,7 +13,13 @@
 #include "rank.h"
 #include "rankmanager.h"
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 int getNumInternalRanks(int n1, int n2) {
   return n1 + n2 - 5;

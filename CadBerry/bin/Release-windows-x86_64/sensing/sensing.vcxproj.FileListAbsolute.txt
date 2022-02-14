@@ -1,1 +1,2 @@
 D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\sensing\sensing.dll
+D:\Development\PersonalCadBerry\CadBerry\CadBerry\bin\Release-windows-x86_64\sensing\sensing.dll

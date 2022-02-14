@@ -2,10 +2,10 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry\CadBerry.dll</FullPath>
+      <FullPath>D:\Development\PersonalCadBerry\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry\CadBerry.dll</FullPath>
     </ProjectOutput>
     <ProjectOutput>
-      <FullPath>D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\Core\Core.dll</FullPath>
+      <FullPath>D:\Development\PersonalCadBerry\CadBerry\CadBerry\bin\Release-windows-x86_64\Core\Core.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

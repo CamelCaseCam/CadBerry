@@ -1099,7 +1099,13 @@ int TurboFold::allocate_phmm()
 #ifdef TURBOHOMOLOGY
 int TurboFold::calculate_aln_prob_from_ref(string ExistingAln)
 {
+<<<<<<< HEAD
     using namespace std;
+=======
+    //
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
     vector<string> ref_lines;
     string line;
     // string ref_filename = "ref.fasta";
@@ -1445,7 +1451,13 @@ int TurboFold::compute_multiple_aln_score(string ExistingAln)
     // Step One: get database alignment including seq1.
     // Readin
     // cout << "get database aln" << endl;
+<<<<<<< HEAD
     using namespace std;
+=======
+    //
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
     vector<string> ref_lines;
     string line;
@@ -1723,7 +1735,13 @@ int TurboFold::run_multiple_alignment(string ExistingAln)
 #endif
 
 #ifdef TURBOHOMOLOGY
+<<<<<<< HEAD
     using namespace std;
+=======
+    //
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
     vector<string> ref_lines;
     string line;

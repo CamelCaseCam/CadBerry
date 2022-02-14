@@ -10,7 +10,16 @@
 	#include "platform.h"
 #endif
 
+<<<<<<< HEAD
 using namespace std;
+=======
+//Cameron: remove //
+using namespace std;
+using namespace std;
+////
+using namespace std;
+//
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 
 #undef pfdebugmode  //flag to indicate debugging
@@ -412,7 +421,11 @@ void alltracetraceback(structure *ct, atDynProgArray *v, atDynProgArray *w, atDy
 	bool passed,found;
 	ofstream *out;
 
+<<<<<<< HEAD
 	vector< vector<bool> > inc = data->pairing;
+=======
+	vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 	if (ctname!=NULL) {
 
@@ -1950,7 +1963,11 @@ register int number;
 register short rarray;
 short branch;
 
+<<<<<<< HEAD
 vector< vector<bool> > inc = data->pairing;
+=======
+vector< vector<char> >& inc = data->pairing;
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 
 // DEBUG TIMING: DWORD startTime = GetTickCount();
 // DEBUG TIMING:  std::cerr << "alltrace started\t" << GetTickCount()-startTime << endl;

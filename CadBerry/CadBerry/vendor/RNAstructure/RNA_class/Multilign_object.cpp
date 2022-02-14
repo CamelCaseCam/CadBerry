@@ -4,6 +4,10 @@
 #include <cstdio>
 #include <iostream>
 #include <ctime> 
+<<<<<<< HEAD
+=======
+#include <random>
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 //Usually the number of sequences in one Multilign object is small; thus,
 //the pseudo-random number generated in random_shuffle function from STL::algorithm
 //is good enough.
@@ -853,10 +857,18 @@ double Multilign_object::GetSHAPEIntercept() const {
 //}
 
 
+<<<<<<< HEAD
 void Multilign_object::Randomize() {
 	// randomly shuffle the order except the first 1, i.e. the index seq.
 	std::srand(std::time(0));
 	random_shuffle( ++inputList.begin(), inputList.end());
+=======
+//Cameron: update to cpp20
+void Multilign_object::Randomize() {
+    std::mt19937 urng(std::time(0));
+	// randomly shuffle the order except the first 1, i.e. the index seq.
+	std::shuffle( ++inputList.begin(), inputList.end(), urng);
+>>>>>>> 361492b0f6e9a29bb88098eeab4d8ec72d2d1807
 }
 
 // Output the filenames to stdout in the order of progressive dynalign calculations.
