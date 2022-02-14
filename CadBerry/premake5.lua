@@ -19,6 +19,7 @@ IncludeDirs["BlockingCollection"] = "CadBerry/vendor/BlockingCollection"
 IncludeDirs["ImPlot"] = "CadBerry/vendor/implot"
 
 include "CadBerry/vendor/GLFW"
+include "CadBerry/vendor/RNAstructure/CDBRNA"
 include "CadBerry/vendor/Glad"
 include "CadBerry/vendor/IMGUI"
 include "CadBerry/vendor/WhereAmI"
