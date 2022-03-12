@@ -111,8 +111,10 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
   <ItemGroup>
     <ClInclude Include="src\CadBerry.h" />
     <ClInclude Include="src\CadBerry\Application.h" />
+    <ClInclude Include="src\CadBerry\Biology\Organism.h" />
     <ClInclude Include="src\CadBerry\BuildEngine\BuildDialog.h" />
     <ClInclude Include="src\CadBerry\BuildEngine\BuildEngine.h" />
+    <ClInclude Include="src\CadBerry\Chemistry\AtomGraph.h" />
     <ClInclude Include="src\CadBerry\Core.h" />
     <ClInclude Include="src\CadBerry\DNAVis\DisplayColours.h" />
     <ClInclude Include="src\CadBerry\DNAVis\DisplayDNA.h" />
@@ -149,13 +151,16 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Project\Project.h" />
     <ClInclude Include="src\CadBerry\ProteinStructure\PDBFile.h" />
     <ClInclude Include="src\CadBerry\Rendering\Buffer.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Camera.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
     <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h" />
     <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h" />
     <ClInclude Include="src\CadBerry\Rendering\Renderer.h" />
     <ClInclude Include="src\CadBerry\Rendering\RendererAPI.h" />
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Utils\Utils.h" />
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
     <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
     <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
@@ -171,7 +176,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp" />
+    <ClCompile Include="src\CadBerry\Biology\Organism.cpp" />
     <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp" />
+    <ClCompile Include="src\CadBerry\Chemistry\AtomGraph.cpp" />
     <ClCompile Include="src\CadBerry\DNAVis\DisplayColours.cpp" />
     <ClCompile Include="src\CadBerry\DNAVis\DisplayDNA.cpp" />
     <ClCompile Include="src\CadBerry\DNAVis\DisplayRegion.cpp" />
@@ -195,12 +202,15 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Project\CreateProject.cpp" />
     <ClCompile Include="src\CadBerry\Project\Project.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Buffer.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Camera.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RenderCommand.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Renderer.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RendererAPI.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Utils\Utils.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />
     <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
     <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp" />

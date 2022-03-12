@@ -22,6 +22,8 @@ namespace GIL
 
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile) = 0;
+
+		static Sequence* LoadSequence(std::ifstream& InputFile);
 	};
 
 	class StaticSequence : public Sequence    //So far we only have static sequences
@@ -40,5 +42,21 @@ namespace GIL
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile) override;
+	};
+
+	class SequenceForward : public Sequence
+	{
+	public:
+		SequenceForward() { DestinationSequence = nullptr; }
+		SequenceForward(Sequence* destination, std::string& destinationName) : DestinationSequence(destination), DestinationName(destinationName) {}
+
+		virtual std::vector<Parser::Region>* GetRegions(Parser::Project* Proj) override;
+		virtual std::string* GetCode(Parser::Project* Proj) override;
+
+		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Load(std::ifstream& InputFile) override;
+
+		Sequence* DestinationSequence;
+		std::string& DestinationName = Empty;
 	};
 }

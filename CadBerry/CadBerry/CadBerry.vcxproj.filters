@@ -210,6 +210,11 @@
     <ClInclude Include="src\CadBerry\DNAVis\DisplayRegion.h" />
     <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
     <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Utils\Utils.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Camera.h" />
+    <ClInclude Include="src\CadBerry\Biology\Organism.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
+    <ClInclude Include="src\CadBerry\Chemistry\AtomGraph.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -314,5 +319,10 @@
     <ClCompile Include="src\CadBerry\DNAVis\DisplayRegion.cpp" />
     <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
     <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Utils\Utils.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Camera.cpp" />
+    <ClCompile Include="src\CadBerry\Biology\Organism.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />
+    <ClCompile Include="src\CadBerry\Chemistry\AtomGraph.cpp" />
   </ItemGroup>
 </Project>

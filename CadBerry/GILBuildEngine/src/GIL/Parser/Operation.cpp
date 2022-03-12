@@ -3,12 +3,32 @@
 #include "GIL/Compiler/Compiler.h"
 #include "GIL/Lexer/LexerTokens.h"
 #include "GIL/Lexer/Token.h"
+#include "GIL/SaveFunctions.h"
 
 namespace GIL
 {
 	using namespace Lexer;
 	using namespace Parser;
 	using namespace Compiler;
+
+	enum class OperationType : char
+	{
+		DynamicOperation,
+		OperationForward,
+	};
+
+	Operation* CreateOp(OperationType OpType)
+	{
+		switch (OpType)
+		{
+		case OperationType::DynamicOperation:
+			return new DynamicOperation();
+		case OperationType::OperationForward:
+			return new OperationForward();
+		}
+	}
+
+	OperationType SavedOperation;
 
 	StaticOperation::~StaticOperation()
 	{
@@ -56,6 +76,9 @@ namespace GIL
 
 	void DynamicOperation::Save(std::ofstream& OutputFile)
 	{
+		SavedOperation = OperationType::DynamicOperation;
+		OutputFile.write((char*)&SavedOperation, sizeof(OperationType));
+
 		OutputFile.write((char*)&this->NumInnerCode, sizeof(int));
 		int NumTokens = this->tokens.size();
 		OutputFile.write((char*)&NumTokens, sizeof(int));
@@ -77,5 +100,34 @@ namespace GIL
 		{
 			this->tokens.push_back(Token::Load(InputFile));
 		}
+	}
+
+	std::pair<std::vector<Parser::Region>, std::string> OperationForward::Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj)
+	{
+		if (this->DestinationOperation == nullptr)
+		{
+			this->DestinationOperation = Proj->Operations[this->DestinationName];
+		}
+		return this->DestinationOperation->Get(InnerTokens, Proj);
+	}
+
+	void OperationForward::Save(std::ofstream& OutputFile)
+	{
+		SavedOperation = OperationType::OperationForward;
+		OutputFile.write((char*)&SavedOperation, sizeof(OperationType));
+		SaveString(this->DestinationName, OutputFile);
+	}
+
+	void OperationForward::Load(std::ifstream& InputFile)
+	{
+		LoadStringFromFile(this->DestinationName, InputFile);
+	}
+
+	Operation* Operation::LoadOperation(std::ifstream& InputFile)
+	{
+		InputFile.read((char*)&SavedOperation, sizeof(OperationType));    //Load the operation type so we know what kind of operation to make
+		Operation* NewOp = CreateOp(SavedOperation);
+		NewOp->Load(InputFile);
+		return NewOp;
 	}
 }

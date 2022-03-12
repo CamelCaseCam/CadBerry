@@ -295,7 +295,7 @@ namespace GIL
 		{
 			int WordLen = 0;
 			int WordStart = i;
-			for (i; i < Text.length() && Text[i] != '"'; ++i)
+			for (i; i < Text.length() && Text[i] != '"' && Text[i] != '¬'; ++i)    //We're disallowing ¬ in a string because CadBerry will use that internally to mark entry points
 				++WordLen;
 			Output.reserve(WordLen);    //Reserve the length of the string
 			for (WordStart; WordStart < i; ++WordStart)

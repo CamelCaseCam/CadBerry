@@ -1,10 +1,32 @@
 #include <gilpch.h>
 #include "Sequence.h"
 #include "GIL/Compiler/Compiler.h"
+#include "GIL/SaveFunctions.h"
 
 namespace GIL
 {
 	std::vector<Parser::Region> CopiedRegions;
+
+	enum class SequenceType : char
+	{
+		StaticSequence,
+		SequenceForward,
+	};
+
+	SequenceType SavedSequence;
+
+	Sequence* CreateSequence(SequenceType sequenceType)
+	{
+		switch (sequenceType)
+		{
+		case GIL::SequenceType::StaticSequence:
+			return new StaticSequence();
+		case GIL::SequenceType::SequenceForward:
+			return new SequenceForward();
+		default:
+			break;
+		}
+	}
 
 	std::vector<Parser::Region>* StaticSequence::GetRegions(Parser::Project* Proj)
 	{
@@ -39,6 +61,9 @@ namespace GIL
 
 	void StaticSequence::Save(std::ofstream& OutputFile)    //Save the number of tokens and the tokens to the file
 	{
+		SavedSequence = SequenceType::StaticSequence;
+		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+
 		int NumTokens = this->Tokens.size();
 		OutputFile.write((char*)&NumTokens, sizeof(int));
 
@@ -66,5 +91,45 @@ namespace GIL
 		{
 			GIL::Lexer::Token::SafeDelete(t);    //Only deletes unique tokens
 		}
+	}
+
+	Sequence* Sequence::LoadSequence(std::ifstream& InputFile)
+	{
+		InputFile.read((char*)&SavedSequence, sizeof(SequenceType));
+
+		Sequence* NewSequence = CreateSequence(SavedSequence);
+		NewSequence->Load(InputFile);
+		return NewSequence;
+	}
+
+	std::vector<Parser::Region>* SequenceForward::GetRegions(Parser::Project* Proj)
+	{
+		if (this->DestinationSequence == nullptr)
+		{
+			this->DestinationSequence = Proj->Sequences[this->DestinationName];
+		}
+		return this->DestinationSequence->GetRegions(Proj);
+	}
+
+	std::string* SequenceForward::GetCode(Parser::Project* Proj)
+	{
+		if (this->DestinationSequence == nullptr)
+		{
+			this->DestinationSequence = Proj->Sequences[this->DestinationName];
+		}
+		return this->DestinationSequence->GetCode(Proj);
+	}
+	
+	void SequenceForward::Save(std::ofstream& OutputFile)
+	{
+		SavedSequence = SequenceType::SequenceForward;
+		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+
+		SaveString(this->DestinationName, OutputFile);
+	}
+	
+	void SequenceForward::Load(std::ifstream& InputFile)
+	{
+		LoadStringFromFile(this->DestinationName, InputFile);
 	}
 }

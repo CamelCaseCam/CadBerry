@@ -35,6 +35,10 @@ namespace CDB
 
 		void AddViewport(Viewport* viewport);
 
+		void SettingsWindow();
+
 		std::vector<Viewport*> OpenViewports;
+
+		bool OpenSettings = false;
 	};
 }

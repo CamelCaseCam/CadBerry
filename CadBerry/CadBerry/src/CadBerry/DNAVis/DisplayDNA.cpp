@@ -27,12 +27,13 @@ namespace CDB
 
 	DNAVisualization::DNAVisualization(std::string code, std::vector<Region> regions) : Regions(regions)
 	{
+		NumBases = code.length();
 		InitLineShader();
 		this->numberLine = NumberLine(5, code.size(), 0.96f, -0.975f, 0.0f);
 
 		this->Code.reserve(code.size() + (Regions.size() * 2 * 8));
 
-		float BasesPerScreen = (code.size() < MaxBasesPerScreen ? code.size() - 1 : MaxBasesPerScreen) / 2;
+		BasesPerScreen = (code.size() < MaxBasesPerScreen ? code.size() - 1 : MaxBasesPerScreen) / 2;
 		RegionTarget = RenderTarget::Create();
 		this->DisplayRegions.reserve(regions.size());
 		float StartPos = -0.975f;
@@ -40,7 +41,7 @@ namespace CDB
 		for (Region& r : regions)    //Here we calculate positions
 		{
 			//Add to code
-			this->Code += code.substr(LastEnd, r.Start);
+			this->Code += code.substr(LastEnd, r.Start - 1);
 			int Colour = NextColour();
 			this->Code += RGB2Hex(Colours[Colour]);
 			this->Code += code.substr(r.Start - 1, r.End);
@@ -48,13 +49,15 @@ namespace CDB
 			//Just in case, push the default colour into the string
 			this->Code += DefaultTextColour;
 
-			StartPos += (((float)r.Start - 1) - LastEnd) * 0.95 / BasesPerScreen;
-			float width = ((float)r.End - (float)r.Start) * 0.95;
+			StartPos += (((float)r.Start - 1) - LastEnd) * 2 * 0.95 / BasesPerScreen;
+			float width = ((float)r.End - ((float)r.Start - 0.0625)) * 0.95;
 			this->DisplayRegions.push_back({width/BasesPerScreen, DisplayRegionHeight, StartPos, 0.0f, Colour, r.Name});
-			StartPos += width / BasesPerScreen;
+			StartPos += width * 2 / BasesPerScreen;
 			LastEnd = r.End;
-		}
 
+
+		}
+		this->Code += code.substr(LastEnd, code.length() - 1);
 
 
 		//Now create the shader
@@ -90,6 +93,7 @@ void main()
 
 	void DNAVisualization::DrawDiagram(int Width, int Height)
 	{
+		ImGui::BeginChild((int)this, ImVec2(Width, Height), true, ImGuiWindowFlags_HorizontalScrollbar);    //Use pointer to memory address to get unique id
 		this->RegionShader->Bind();
 
 		CDB::Renderer::BeginScene(RegionTarget.raw());
@@ -103,9 +107,9 @@ void main()
 		this->numberLine.Draw(false);
 
 		CDB::Renderer::EndScene();
-		RegionTarget->Draw(ImVec2(Width, Height), ImVec2(1.0, 1.0));
+		RegionTarget->Draw(ImVec2(this->NumBases * Width/BasesPerScreen, Height), ImVec2(1.0, 1.0));
 
 		LineShader->Unbind();    //We shouldn't leave LineShader bound
-		
+		ImGui::EndChild();
 	}
 }

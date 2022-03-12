@@ -12,6 +12,14 @@ namespace GIL
 		class Project;
 	}
 
+	std::string Empty = "";
+
+	enum class OperationType : char
+	{
+		DynamicOperation,
+		OperationForward,
+	};
+
 
 	class Operation
 	{
@@ -21,6 +29,8 @@ namespace GIL
 		virtual std::pair<std::vector<Parser::Region>, std::string> Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj) = 0;
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile) = 0;
+
+		static Operation* LoadOperation(std::ifstream& InputFile);
 	};
 
 	class StaticOperation : public Operation
@@ -44,5 +54,19 @@ namespace GIL
 		virtual std::pair<std::vector<Parser::Region>, std::string> Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj) override;
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile) override;
+	};
+
+	class OperationForward : public Operation
+	{
+	public:
+		OperationForward() { DestinationOperation = nullptr; }
+		OperationForward(Operation* destination, std::string& destinationName) : DestinationOperation(destination), DestinationName(destinationName) {}
+
+		virtual std::pair<std::vector<Parser::Region>, std::string> Get(std::vector<Lexer::Token*> InnerTokens, Parser::Project* Proj) override;
+		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Load(std::ifstream& InputFile) override;
+
+		Operation* DestinationOperation;
+		std::string& DestinationName = Empty;
 	};
 }

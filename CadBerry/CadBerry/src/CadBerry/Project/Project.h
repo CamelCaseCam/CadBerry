@@ -4,7 +4,7 @@
 #include "CadBerry/Core.h"
 
 //.berry defines
-#define BerryProjectVersion 1
+#define BerryProjectVersion 2
 
 namespace CDB
 {
@@ -20,6 +20,19 @@ namespace CDB
 		std::string Name;
 		std::string Path;
 		std::string PreBuildDir = "\\.GILCache\\";
+
+		bool PrecompileFiles = true;
+		float PrecompilationInterval = 30.0f;
+
+		bool MaintainEntryPoint = true;
+
+		//If entry point
+		std::string TargetOrganism = "";
+		std::vector<std::string> EntrySequences = { "main" };
+		
+		//If no entry point
+		std::string PathToEntryPoint = "";
+
 
 		Project() {}
 
@@ -39,5 +52,6 @@ namespace CDB
 	{
 		Project* ReadVersion0(std::ifstream &InputFile, std::string& path);
 		Project* ReadVersion1(std::ifstream& InputFile, std::string& path);
+		Project* ReadVersion2(std::ifstream& InputFile, std::string& path);
 	}
 }

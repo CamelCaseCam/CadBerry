@@ -239,12 +239,12 @@ namespace GIL
 						if (Target->Sequences.find(Tokens[i + 1]->Value) != Target->Sequences.end())
 						{
 							//If the forward's pointing to a valid sequence set the first part to the second part's pointer
-							Target->Sequences[Tokens[i - 1]->Value] = Target->Sequences[Tokens[i + 1]->Value];
+							Target->Sequences[Tokens[i - 1]->Value] = new SequenceForward(Target->Sequences[Tokens[i + 1]->Value], Tokens[i + 1]->Value);
 							break;
 						}
 						else if (Target->Operations.find(Tokens[i + 1]->Value) != Target->Operations.end())
 						{
-							Target->Operations[Tokens[i - 1]->Value] = Target->Operations[Tokens[i + 1]->Value];
+							Target->Operations[Tokens[i - 1]->Value] = new OperationForward(Target->Operations[Tokens[i + 1]->Value], Tokens[i + 1]->Value);
 							break;
 						}
 
@@ -894,8 +894,7 @@ namespace GIL
 			{
 				std::string Name;
 				LoadStringFromFile(Name, InputFile);
-				Proj->Operations[Name] = new DynamicOperation();
-				Proj->Operations[Name]->Load(InputFile);
+				Proj->Operations[Name] = Operation::LoadOperation(InputFile);
 			}
 
 			Len = -1;
@@ -904,8 +903,7 @@ namespace GIL
 			{
 				std::string Name;
 				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = new StaticSequence();
-				Proj->Sequences[Name]->Load(InputFile);
+				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile)
 			}
 
 			Len = 0;

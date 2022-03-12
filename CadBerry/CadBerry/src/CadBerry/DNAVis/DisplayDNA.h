@@ -28,6 +28,8 @@ namespace CDB
 		void DrawDiagram(int Width, int Height);
 
 	private:
+		int NumBases;
+		float BasesPerScreen;
 		std::string Code;
 		std::vector<Region> Regions;
 
