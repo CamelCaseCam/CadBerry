@@ -1,0 +1,29 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="500" height="500" fill="white"/>
+<path d="M246 209C268.452 131.783 293.938 110.852 358.963 109C314.848 148.052 323.222 186.556 246 209Z" fill="#82D173"/>
+<path d="M161 134C170.375 171.5 198.5 190.25 236 209C226.625 171.5 198.5 143.375 161 134Z" fill="#82D173"/>
+<mask id="mask0_1_2" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="141" y="205" width="100" height="100">
+<circle cx="191" cy="255" r="50" fill="#417ABE"/>
+</mask>
+<g mask="url(#mask0_1_2)">
+<circle cx="191" cy="255" r="50" fill="#417ABE"/>
+<ellipse cx="194" cy="254.5" rx="50" ry="47.5" fill="white"/>
+<path d="M239.761 266.616C233.071 295.795 207.356 314.797 182.324 309.058C157.292 303.318 142.423 275.012 149.113 245.833C155.803 216.654 181.519 197.653 206.551 203.392C231.582 209.131 246.451 237.438 239.761 266.616Z" fill="#417ABE"/>
+</g>
+<mask id="mask1_1_2" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="241" y="205" width="100" height="100">
+<circle cx="291" cy="255" r="50" fill="#417ABE"/>
+</mask>
+<g mask="url(#mask1_1_2)">
+<circle cx="291" cy="255" r="50" fill="#417ABE"/>
+<ellipse cx="294" cy="254.5" rx="50" ry="47.5" fill="white"/>
+<path d="M339.761 266.616C333.071 295.795 307.356 314.797 282.324 309.058C257.292 303.318 242.423 275.012 249.113 245.833C255.803 216.654 281.519 197.653 306.551 203.392C331.582 209.131 346.451 237.438 339.761 266.616Z" fill="#417ABE"/>
+</g>
+<mask id="mask2_1_2" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="191" y="291" width="100" height="100">
+<circle cx="241" cy="341" r="50" fill="#417ABE"/>
+</mask>
+<g mask="url(#mask2_1_2)">
+<circle cx="241" cy="341" r="50" fill="#417ABE"/>
+<ellipse cx="244" cy="340.5" rx="50" ry="47.5" fill="white"/>
+<path d="M289.761 352.616C283.071 381.795 257.356 400.797 232.324 395.058C207.292 389.318 192.423 361.012 199.113 331.833C205.803 302.654 231.519 283.653 256.551 289.392C281.582 295.131 296.451 323.438 289.761 352.616Z" fill="#417ABE"/>
+</g>
+</svg>

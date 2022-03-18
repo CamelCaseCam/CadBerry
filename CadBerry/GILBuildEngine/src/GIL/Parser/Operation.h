@@ -12,7 +12,7 @@ namespace GIL
 		class Project;
 	}
 
-	std::string Empty = "";
+	extern std::string Empty;
 
 	enum class OperationType : char
 	{

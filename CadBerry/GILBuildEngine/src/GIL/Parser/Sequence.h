@@ -2,6 +2,7 @@
 #include <cdbpch.h>
 #include "Region.h"
 #include "GIL/Lexer/Token.h"
+#include "Operation.h"
 
 
 namespace GIL

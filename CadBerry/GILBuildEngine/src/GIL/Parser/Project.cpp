@@ -903,7 +903,7 @@ namespace GIL
 			{
 				std::string Name;
 				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile)
+				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile);
 			}
 
 			Len = 0;

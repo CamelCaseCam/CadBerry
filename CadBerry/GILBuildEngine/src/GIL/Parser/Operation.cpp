@@ -11,11 +11,7 @@ namespace GIL
 	using namespace Parser;
 	using namespace Compiler;
 
-	enum class OperationType : char
-	{
-		DynamicOperation,
-		OperationForward,
-	};
+	std::string Empty = "";
 
 	Operation* CreateOp(OperationType OpType)
 	{
