@@ -1,4 +1,5 @@
 # CadBerry
+![](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate()/translate.png)
 CadBerry is like a cross between Benchling and Visual Studio for synthetic biology. At least, that's the goal. Parts of CadBerry's core editor are based on [Hazel](https://github.com/TheCherno/Hazel) by The Cherno. For the latest features, check out the developer branch
 
 ## Features
