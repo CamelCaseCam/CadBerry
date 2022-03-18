@@ -1,5 +1,7 @@
 #pragma once
 
+#define CDB_DEVELOPER_ENABLE
+
 //Includes
 #include "CadBerry/Application.h"
 #include "CadBerry/Core.h"

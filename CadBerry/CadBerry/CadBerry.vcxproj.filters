@@ -215,6 +215,10 @@
     <ClInclude Include="src\CadBerry\Biology\Organism.h" />
     <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
     <ClInclude Include="src\CadBerry\Chemistry\AtomGraph.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Image\stb_image.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Image\CDBImage.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Texture.h" />
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -324,5 +328,8 @@
     <ClCompile Include="src\CadBerry\Biology\Organism.cpp" />
     <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />
     <ClCompile Include="src\CadBerry\Chemistry\AtomGraph.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Image\CDBImage.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Texture.cpp" />
   </ItemGroup>
 </Project>

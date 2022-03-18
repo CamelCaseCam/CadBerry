@@ -144,6 +144,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\CadBerry\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\CadBerry\Platform\Windows\WindowsWindow.h" />
@@ -153,11 +154,14 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Rendering\Buffer.h" />
     <ClInclude Include="src\CadBerry\Rendering\Camera.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Image\CDBImage.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Image\stb_image.h" />
     <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h" />
     <ClInclude Include="src\CadBerry\Rendering\RenderTarget.h" />
     <ClInclude Include="src\CadBerry\Rendering\Renderer.h" />
     <ClInclude Include="src\CadBerry\Rendering\RendererAPI.h" />
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
+    <ClInclude Include="src\CadBerry\Rendering\Texture.h" />
     <ClInclude Include="src\CadBerry\Rendering\Utils\Utils.h" />
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h" />
     <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
@@ -196,6 +200,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRenderTarget.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\CadBerry\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\CadBerry\Platform\Windows\WindowsWindow.cpp" />
@@ -203,11 +208,13 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Project\Project.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Buffer.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Camera.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Image\CDBImage.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RenderCommand.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RenderTarget.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Renderer.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\RendererAPI.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
+    <ClCompile Include="src\CadBerry\Rendering\Texture.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Utils\Utils.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />

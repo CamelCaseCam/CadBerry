@@ -7,6 +7,7 @@
 #include "RenderTarget.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Texture.h"
 
 #include <glm/glm.hpp>
 
@@ -20,7 +21,7 @@ namespace CDB
 		static void EndScene();
 
 		static void Submit(const VertexArray* vertexArray);
-		static void Submit(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform);
+		static void Submit(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform = glm::mat4(1.0f));
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:

@@ -43,12 +43,12 @@ namespace CDB
 		RenderCommand::DrawIndexed(vertexArray);
 	}
 
-	void Renderer::Submit(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform = glm::mat4(1.0f))
+	void Renderer::Submit(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform)
 	{
 		vertexArray->Bind();
 		shader->Bind();
 		shader->UploadUniformMat4("u_PVMatrix", ProjectionViewMatrix);
-		shader->UploadUniformMat4("u_transform", transform);
+		shader->UploadUniformMat4("u_Transform", transform);
 
 		RenderCommand::DrawIndexed(vertexArray);
 	}
