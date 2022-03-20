@@ -151,6 +151,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Project\CreateProject.h" />
     <ClInclude Include="src\CadBerry\Project\Project.h" />
     <ClInclude Include="src\CadBerry\ProteinStructure\PDBFile.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
+    <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
     <ClInclude Include="src\CadBerry\Rendering\Buffer.h" />
     <ClInclude Include="src\CadBerry\Rendering\Camera.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
@@ -164,9 +167,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Rendering\Texture.h" />
     <ClInclude Include="src\CadBerry\Rendering\Utils\Utils.h" />
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h" />
-    <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
-    <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
-    <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h" />
     <ClInclude Include="src\CadBerry\Threading\ThreadPool.h" />
@@ -207,6 +207,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\CadBerry\Project\CreateProject.cpp" />
     <ClCompile Include="src\CadBerry\Project\Project.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
+    <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Buffer.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Camera.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Image\CDBImage.cpp" />
@@ -218,9 +221,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Rendering\Texture.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Utils\Utils.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp" />
-    <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />
-    <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
-    <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
     <ClCompile Include="src\CadBerry\Threading\ThreadPool.cpp" />
     <ClCompile Include="src\CadBerry\Utils\RNAFuncs.cpp" />
     <ClCompile Include="src\CadBerry\Utils\SaveFunctions.cpp" />

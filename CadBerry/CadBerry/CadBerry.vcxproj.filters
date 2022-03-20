@@ -4,8 +4,17 @@
     <Filter Include="CadBerry">
       <UniqueIdentifier>{918CE669-7D59-4175-A672-2F1D929E7603}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\Biology">
+      <UniqueIdentifier>{75B5CB2D-61AE-EA7F-8AE0-CF047638CA8B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CadBerry\BuildEngine">
       <UniqueIdentifier>{86C8DAC5-7257-648F-1B76-788A07E47435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Chemistry">
+      <UniqueIdentifier>{5847F257-442B-B3AD-AD8B-AD00998E9D2F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\DNAVis">
+      <UniqueIdentifier>{65291323-D1B4-80E7-DAC5-03DC46D0DCE7}</UniqueIdentifier>
     </Filter>
     <Filter Include="CadBerry\Events">
       <UniqueIdentifier>{554B5028-C1D6-BDEC-CAE7-40E136F219ED}</UniqueIdentifier>
@@ -37,8 +46,20 @@
     <Filter Include="CadBerry\Project">
       <UniqueIdentifier>{D7317878-C32A-97CA-EC5C-7C4FD8B476D6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\ProteinStructure">
+      <UniqueIdentifier>{F23A8B3D-5EFD-BEC7-A7AD-4D5413AF97A5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\RenderUtils">
+      <UniqueIdentifier>{B1B59173-9D44-1B3D-4663-2F3832D12BE3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CadBerry\Rendering">
       <UniqueIdentifier>{1EFFFB05-0AE3-BC5B-7343-B7AE5F46A7DD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Rendering\Image">
+      <UniqueIdentifier>{903F1B11-7C64-6A91-A5AF-4F21913369AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CadBerry\Rendering\Utils">
+      <UniqueIdentifier>{FE5EF811-EA83-4792-13CF-2C22FF5246B0}</UniqueIdentifier>
     </Filter>
     <Filter Include="CadBerry\Tests">
       <UniqueIdentifier>{13D027A5-FF9D-1BAB-E831-8CD1D49EF70F}</UniqueIdentifier>
@@ -55,14 +76,29 @@
     <ClInclude Include="src\CadBerry\Application.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Biology\Organism.h">
+      <Filter>CadBerry\Biology</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\BuildEngine\BuildDialog.h">
       <Filter>CadBerry\BuildEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\BuildEngine\BuildEngine.h">
       <Filter>CadBerry\BuildEngine</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Chemistry\AtomGraph.h">
+      <Filter>CadBerry\Chemistry</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Core.h">
       <Filter>CadBerry</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayColours.h">
+      <Filter>CadBerry\DNAVis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayDNA.h">
+      <Filter>CadBerry\DNAVis</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\DNAVis\DisplayRegion.h">
+      <Filter>CadBerry\DNAVis</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Events\ApplicationEvent.h">
       <Filter>CadBerry\Events</Filter>
@@ -139,6 +175,9 @@
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLShader.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClInclude>
@@ -154,11 +193,32 @@
     <ClInclude Include="src\CadBerry\Project\Project.h">
       <Filter>CadBerry\Project</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\ProteinStructure\PDBFile.h">
+      <Filter>CadBerry\ProteinStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h">
+      <Filter>CadBerry\RenderUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h">
+      <Filter>CadBerry\RenderUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\RenderUtils\RichText.h">
+      <Filter>CadBerry\RenderUtils</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\Buffer.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Camera.h">
       <Filter>CadBerry\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h">
       <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Image\CDBImage.h">
+      <Filter>CadBerry\Rendering\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Image\stb_image.h">
+      <Filter>CadBerry\Rendering\Image</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\RenderCommand.h">
       <Filter>CadBerry\Rendering</Filter>
@@ -174,6 +234,12 @@
     </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\Shader.h">
       <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Texture.h">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Rendering\Utils\Utils.h">
+      <Filter>CadBerry\Rendering\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h">
       <Filter>CadBerry\Rendering</Filter>
@@ -204,28 +270,31 @@
     </ClInclude>
     <ClInclude Include="src\ImPlot.h" />
     <ClInclude Include="src\cdbpch.h" />
-    <ClInclude Include="src\CadBerry\ProteinStructure\PDBFile.h" />
-    <ClInclude Include="src\CadBerry\DNAVis\DisplayDNA.h" />
-    <ClInclude Include="src\CadBerry\DNAVis\DisplayColours.h" />
-    <ClInclude Include="src\CadBerry\DNAVis\DisplayRegion.h" />
-    <ClInclude Include="src\CadBerry\RenderUtils\NumberLine.h" />
-    <ClInclude Include="src\CadBerry\RenderUtils\RichText.h" />
-    <ClInclude Include="src\CadBerry\Rendering\Utils\Utils.h" />
-    <ClInclude Include="src\CadBerry\Rendering\Camera.h" />
-    <ClInclude Include="src\CadBerry\Biology\Organism.h" />
-    <ClInclude Include="src\CadBerry\RenderUtils\InputVector.h" />
-    <ClInclude Include="src\CadBerry\Chemistry\AtomGraph.h" />
-    <ClInclude Include="src\CadBerry\Rendering\Image\stb_image.h" />
-    <ClInclude Include="src\CadBerry\Rendering\Image\CDBImage.h" />
-    <ClInclude Include="src\CadBerry\Rendering\Texture.h" />
-    <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
       <Filter>CadBerry</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Biology\Organism.cpp">
+      <Filter>CadBerry\Biology</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp">
       <Filter>CadBerry\BuildEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\BuildEngine\BuildEngine.cpp">
+      <Filter>CadBerry\BuildEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Chemistry\AtomGraph.cpp">
+      <Filter>CadBerry\Chemistry</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayColours.cpp">
+      <Filter>CadBerry\DNAVis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayDNA.cpp">
+      <Filter>CadBerry\DNAVis</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\DNAVis\DisplayRegion.cpp">
+      <Filter>CadBerry\DNAVis</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\ImGui\ImGuiBuild.cpp">
       <Filter>CadBerry\ImGui</Filter>
@@ -269,6 +338,9 @@
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLShader.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>CadBerry\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>
     </ClCompile>
@@ -284,8 +356,23 @@
     <ClCompile Include="src\CadBerry\Project\Project.cpp">
       <Filter>CadBerry\Project</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp">
+      <Filter>CadBerry\RenderUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp">
+      <Filter>CadBerry\RenderUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp">
+      <Filter>CadBerry\RenderUtils</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\Buffer.cpp">
       <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\Camera.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\Image\CDBImage.cpp">
+      <Filter>CadBerry\Rendering\Image</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\RenderCommand.cpp">
       <Filter>CadBerry\Rendering</Filter>
@@ -301,6 +388,12 @@
     </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp">
       <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\Texture.cpp">
+      <Filter>CadBerry\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Rendering\Utils\Utils.cpp">
+      <Filter>CadBerry\Rendering\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Rendering\VertexArray.cpp">
       <Filter>CadBerry\Rendering</Filter>
@@ -318,19 +411,5 @@
       <Filter>CadBerry\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
-    <ClCompile Include="src\CadBerry\DNAVis\DisplayDNA.cpp" />
-    <ClCompile Include="src\CadBerry\DNAVis\DisplayColours.cpp" />
-    <ClCompile Include="src\CadBerry\DNAVis\DisplayRegion.cpp" />
-    <ClCompile Include="src\CadBerry\RenderUtils\NumberLine.cpp" />
-    <ClCompile Include="src\CadBerry\RenderUtils\RichText.cpp" />
-    <ClCompile Include="src\CadBerry\Rendering\Utils\Utils.cpp" />
-    <ClCompile Include="src\CadBerry\Rendering\Camera.cpp" />
-    <ClCompile Include="src\CadBerry\Biology\Organism.cpp" />
-    <ClCompile Include="src\CadBerry\RenderUtils\InputVector.cpp" />
-    <ClCompile Include="src\CadBerry\Chemistry\AtomGraph.cpp" />
-    <ClCompile Include="src\CadBerry\Rendering\Image\CDBImage.cpp" />
-    <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.cpp" />
-    <ClCompile Include="src\CadBerry\Rendering\Texture.cpp" />
-    <ClCompile Include="src\CadBerry\BuildEngine\BuildEngine.cpp" />
   </ItemGroup>
 </Project>

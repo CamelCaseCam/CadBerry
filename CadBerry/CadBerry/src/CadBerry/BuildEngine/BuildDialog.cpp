@@ -32,7 +32,11 @@ namespace CDB
 		}
 
 		ImGui::ListBox("Project output type", &CurrentOutputType, OutputTypes.data(), OutputTypes.size());
-		ImGui::InputText("Project entry point", &EntryPoint);
+		if (!Application::Get().OpenProject->MaintainEntryPoint)
+		{
+			ImGui::InputText("Project entry point", &EntryPoint);
+		}
+
 		ImGui::InputText("Project output directory", &OutputDirectory);
 
 		if (ImGui::Button("Build Project!"))

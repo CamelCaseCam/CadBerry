@@ -442,6 +442,7 @@ project "utils"
 		"CadBerry/src",
 		"GILBuildEngine/src",
 		"utils/src",
+		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.ImPlot}",
