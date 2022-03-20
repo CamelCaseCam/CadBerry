@@ -4,6 +4,10 @@ Downloaded: 2022-01-06T17:36:46Z
 Source:
   Owner: CamelCaseCam
   Repo: CadBerry
-  Branch: developer-branch
+  Branch: beta
   Path: CadBerry/bin/Release-windows-x86_64/Berry/
-Files: [Berry.exe, CadBerry.dll, Modules/Core.dll, GILModules/utils.dll, Build/GILBuildEngine.dll]
+Files: [Berry.exe, CadBerry.cdbpkg, CadBerry.dll, CadBerry_updater.exe, CDBRNA.dll, cpr.dll, libcurl.dll, zlib.dll,
+Build\GILBuildEngine.dll, Build\Libs, Build\Organism, Data\data_tables, 
+GILModules\sensing.dll, GILModules\utils.dll, 
+Modules\Core.dll, Modules\IRESGenerator.dll, Modules\VSCodeIntegration.dll, 
+Tests\235227762_152116843723682_5504231419480605688_n.jpg, Tests\monkey.mtl, Tests\monkey.obj]
