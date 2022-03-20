@@ -15,12 +15,16 @@
 #include "GIL/Bools/BoolContext.h"
 #include "GIL/Utils/Utils.h"
 
+#include "GIL/Utils/Utils.h"
+
 #include "Core.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/fmt/ostr.h"
 
 std::string DataPath;
+
+//TODO: Find some way to prevent compilation if precompilation is happening, but still allow multiple precompilations at the same time (maybe using mutex)
 
 using GIL::OutputType;
 
@@ -45,6 +49,11 @@ public:
 
 		GIL::BoolContext::Print();
 		
+		CDB_BuildInfo(std::filesystem::path(PreBuildPath).parent_path().string());
+		if (!std::filesystem::exists(std::filesystem::path(PreBuildPath).parent_path()))
+		{
+			std::filesystem::create_directories(std::filesystem::path(PreBuildPath).parent_path());
+		}
 		Proj->Save(PreBuildPath);
 
 		delete Proj;
@@ -106,6 +115,28 @@ public:
 
 		//Cleanup
 		delete Project;
+	}
+
+	std::string CreateEntryPoint(std::string& TargetOrganism, std::vector<std::string>& EntrySequences) override
+	{
+		std::string Output = "#Target " + TargetOrganism + "\n";
+
+		//Get all entry sequences
+		for (std::string& sequence : EntrySequences)
+		{
+			auto SequenceLocation = GIL::utils::FindSequenceInIntermediates(sequence);
+			if (SequenceLocation.first != "")
+			{
+				Output += "import \"" + SequenceLocation.first + "\"\n";
+				Output += SequenceLocation.second + "::" + sequence;
+			}
+			else
+			{
+				CDB_BuildError("Couldn't find sequence \"{0}\" in precompiled files", sequence);
+			}
+		}
+		CDB_BuildInfo(Output);
+		return Output;
 	}
 };
 

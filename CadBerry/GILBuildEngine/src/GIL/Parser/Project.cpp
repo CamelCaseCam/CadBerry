@@ -951,8 +951,7 @@ namespace GIL
 			{
 				std::string Name;
 				LoadStringFromFile(Name, InputFile);
-				Proj->Operations[Name] = new DynamicOperation();
-				Proj->Operations[Name]->Load(InputFile);
+				Proj->Operations[Name] = Operation::LoadOperation(InputFile);
 			}
 
 			Len = -1;
@@ -961,8 +960,7 @@ namespace GIL
 			{
 				std::string Name;
 				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = new StaticSequence();
-				Proj->Sequences[Name]->Load(InputFile);
+				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile);
 			}
 
 			Len = 0;

@@ -16,6 +16,7 @@ namespace CDB
 
 	void GetPackages(std::string& DataPath)
 	{
+		Packages.clear();
 		std::vector<std::filesystem::path> PackagePaths;
 		for (auto const& dir_entry : std::filesystem::directory_iterator{ DataPath })    //Load packages
 		{

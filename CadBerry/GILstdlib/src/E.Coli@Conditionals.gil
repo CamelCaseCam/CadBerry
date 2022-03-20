@@ -1,0 +1,41 @@
+#Target E.Coli
+
+/*
+Okay, here's what I want bools to look like when I'm done. 
+
+bool b1 => SomeOperation
+bool b2 => AnotherOperation
+
+if (b1 & b2)
+{
+    Sequence
+}
+
+I want bools and bool operators to be extensible. My plan for how I'll do this is to make operators user-defined. So I'll define & using
+operation AND($LValue, $RValue)
+{
+    //AND logic goes here
+}
+
+operator_& => AND
+
+You will be able to create your own AND overloads using the following syntax:
+#var int NumAnds 0
+#var int MaxAnds 10
+operation My_AND($LValue, $RValue)
+{
+    #if NumAnds < MaxAnds
+    //And logic goes here
+    #else
+    $LValue & $RValue
+    #endif
+}
+
+Things that need to be implemented to do that:
+ - Operation and sequence variables
+ - #var
+ - #if
+ - Operator definition
+ - Defining bools
+ - if
+*/

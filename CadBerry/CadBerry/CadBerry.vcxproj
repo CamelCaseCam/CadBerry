@@ -182,6 +182,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Application.cpp" />
     <ClCompile Include="src\CadBerry\Biology\Organism.cpp" />
     <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp" />
+    <ClCompile Include="src\CadBerry\BuildEngine\BuildEngine.cpp" />
     <ClCompile Include="src\CadBerry\Chemistry\AtomGraph.cpp" />
     <ClCompile Include="src\CadBerry\DNAVis\DisplayColours.cpp" />
     <ClCompile Include="src\CadBerry\DNAVis\DisplayDNA.cpp" />

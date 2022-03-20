@@ -1,5 +1,7 @@
 #include <gilpch.h>
 #include "Utils.h"
+#include "CadBerry/Application.h"
+#include "GIL/Parser/Project.h"
 
 namespace GIL
 {
@@ -522,6 +524,46 @@ namespace GIL
 				CDB_BuildError("Unsupported character '{0}' in pattern", p);
 				return false;
 			}
+		}
+
+		std::pair<bool, std::string> FindSequenceInProject(std::string& SequenceName, Parser::Project* Proj, std::string Stem)
+		{
+			if (Proj->Sequences.contains(SequenceName))
+			{
+				return { true, Stem };
+			}
+
+			//Recursively search through namespaces for the sequence
+			for (auto Namespace : Proj->Namespaces)
+			{
+				auto Output = FindSequenceInProject(SequenceName, Namespace.second, Stem + "::" + Namespace.first);
+				if (Output.first)
+					return Output;
+			}
+
+			return { false, "" };
+		}
+
+		GILAPI std::pair<std::string, std::string> FindSequenceInIntermediates(std::string& SequenceName)
+		{
+			//First, loop through files in intermediate directory
+			CDB::Application& app = CDB::Application::Get();
+			std::filesystem::recursive_directory_iterator it(app.OpenProject->Path + app.OpenProject->PreBuildDir);
+			for (auto file : it)
+			{
+				if (file.path().extension() == ".cgil")
+				{
+					if (file.path().filename().string()[0] == '¬')
+						continue;
+					//Now, check if this file has the sequence
+					CDB::scoped_ptr<Parser::Project> Proj = Parser::Project::Load(file.path().string());
+					auto Output = FindSequenceInProject(SequenceName, Proj.raw(), file.path().stem().string());
+					if (Output.first)
+						return { std::filesystem::relative(file.path(), app.PathToEXE + "/" + app.OpenProject->PreBuildDir).stem().string(), Output.second};
+				}
+			}
+
+			return { "", "" };
 		}
 	}
 }

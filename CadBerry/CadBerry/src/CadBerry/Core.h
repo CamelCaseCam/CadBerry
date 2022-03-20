@@ -21,6 +21,7 @@
 #define BIT(x) (1 << x)
 
 //CadBerry version
+#define CDB_VersionString "0.0.0"
 #define CDB_MajorVersion 0
 #define CDB_MinorVersion 0
 #define CDB_Fix 0

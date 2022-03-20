@@ -20,5 +20,7 @@ namespace GIL
 
 		GILAPI std::string GetRestrictionSite(RestrictionSite rs);
 		GILAPI std::string GetRestrictionSite(std::string& rs);
+
+		GILAPI std::pair<std::string, std::string> FindSequenceInIntermediates(std::string& SequenceName);
 	}
 }

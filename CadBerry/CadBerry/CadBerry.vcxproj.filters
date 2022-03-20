@@ -331,5 +331,6 @@
     <ClCompile Include="src\CadBerry\Rendering\Image\CDBImage.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\CadBerry\Rendering\Texture.cpp" />
+    <ClCompile Include="src\CadBerry\BuildEngine\BuildEngine.cpp" />
   </ItemGroup>
 </Project>

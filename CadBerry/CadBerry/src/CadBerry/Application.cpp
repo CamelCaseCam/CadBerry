@@ -296,6 +296,7 @@ namespace CDB
 	{
 		if (ShouldExit)
 		{
+			OpenProject->WriteToFile();
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnDetach();
 			delete EditorWindow;

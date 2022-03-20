@@ -65,9 +65,10 @@ namespace CDB
 		{
 		case 0:
 			return ReadProject::ReadVersion0(InputFile, path);
-		case 2:
 		case 1:
 			return ReadProject::ReadVersion1(InputFile, path);
+		case 2:
+			return ReadProject::ReadVersion2(InputFile, path);
 		default:
 			CDB_EditorFatal("CadBerry project file at location \"{0}\" shows an unknown project version ({1}). Most likely this file was corrupted.", path, BerryVersion);
 			return nullptr;
@@ -106,6 +107,7 @@ namespace CDB
 		Project* ReadVersion2(std::ifstream& InputFile, std::string& path)
 		{
 			Project* NewProject = new Project();
+			NewProject->EntrySequences.clear();
 			NewProject->Path = std::filesystem::path(path).parent_path().string();
 			CDB_EditorInfo(NewProject->Path);
 
