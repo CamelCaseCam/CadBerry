@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 	{
 		std::string FilePath = argv[4 + i];
 		std::ofstream OutputFile(BinPath + FilePath, std::ios::binary);
-		cpr::Response r = cpr::Download(OutputFile, cpr::Url(GitHubPath + FilePath));
+		cpr::Response r = cpr::Download(OutputFile, cpr::Url(GitHubPath + FilePath), cpr::Timeout(999999999));
 		std::cout << "Updated 1 file with size " << r.downloaded_bytes / 1000 << "kb from source " << GitHubPath + FilePath << std::endl;
 	}
 	std::cout << "Done updating " << NumFiles << " files. Feel free to close this window";
