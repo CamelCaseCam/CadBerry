@@ -1,9 +1,0 @@
-CadBerry/Platform
-#################
-Platform-specific code
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Contents:
-
-   Windows/Windows

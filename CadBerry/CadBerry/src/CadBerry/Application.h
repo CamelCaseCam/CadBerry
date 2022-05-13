@@ -24,7 +24,7 @@ namespace CDB
 	class CDBAPI Application
 	{
 	public:
-		Application();
+		Application(bool headless = false);
 		~Application();
 
 		void GetProject();
@@ -61,7 +61,10 @@ namespace CDB
 		bool ShowBuildWindow = false;
 		bool ShowPackages = false;
 
-		//scoped_ptr<VertexArray> VertexArray;
+		//Is CadBerry being run in headless mode?
+		bool Headless;
+
+		scoped_ptr<VertexArray> VertexArray;
 	private:
 		void Main();
 		void CheckExit();

@@ -162,13 +162,18 @@ namespace CDB
 
 	typedef Module* (CDB_MODULE_FUNC* f_GetModule)();
 	typedef BuildEngine* (CDB_MODULE_FUNC* f_GetBuildEngine)();
-	Application::Application()
+	Application::Application(bool headless)
 	{
 		Log::Init();
 		CDB_EditorAssert(!s_Instance, "Application already exists")
 		s_Instance = this;
+		this->Headless = headless;
 		m_ThreadPool = ThreadPool::Get();
-		GuiLayer = new ImGuiLayer();
+
+		if (!headless)
+		{
+			GuiLayer = new ImGuiLayer();
+		}
 
 		//load modules
 		const std::filesystem::directory_iterator end{};
