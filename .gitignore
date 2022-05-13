@@ -2,3 +2,7 @@
 CadBerry/.vs/
 CadBerry/bin/Debug-windows-x86_64/*/*.pch
 CadBerry/bin/Release-windows-x86_64/*/*.pch
+CadBerry/bin/Debug-linux-x86_64/*/*.pch
+CadBerry/bin/Release-linux-x86_64/*/*.pch
+CadBerry/bin/Debug-linux-x86_64/*/*.gch
+CadBerry/bin/Release-linux-x86_64/*/*.gch
