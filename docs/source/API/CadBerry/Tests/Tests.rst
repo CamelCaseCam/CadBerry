@@ -1,8 +1,0 @@
-CadBerry/Tests
-##############
-Folder full of tests/examples. 
-
-Contents
-========
-* SimpleModule.h (simple module example, may not work)
-* SimpleViewport.h (simple viewport example, may not work)

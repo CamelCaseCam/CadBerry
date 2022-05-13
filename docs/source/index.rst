@@ -7,13 +7,18 @@
 Welcome to CadBerry's documentation!
 ====================================
 CadBerry is an open-source IDE for synthetic biology built around a C++ version of the GIL compiler. 
-CadBerry is still early in development, so built versions might be unstable
+CadBerry is still early in development, so built versions might be unstable. 
+
+If you're new here, check out :doc:`User/GettingStarted` for a quickstart guide. 
 
 Features
 --------
-* Allows user-created libraries to avoid rewriting code
-* Supports user-created modules to quickly add functionality
-* Multithreading and rendering support
+* Codon optimization
+* Auto-generated `TRAPzymes <https://pubmed.ncbi.nlm.nih.gov/12022862/>`_ to detect cellular RNAs
+* Support for reusing DNA using libraries
+* Add-on support using C++ and `Dear ImGui <https://github.com/ocornut/imgui>`_
+* Included math modelling system
+* Included thread pool
 
 Contribute
 ----------
@@ -35,26 +40,20 @@ CadBerry is licensed under the GNU GPL-3.0 license.
 
 Installation
 ============
-Option 1: bulding from source
+Option 1: Bulding from source
 -----------------------------
-Download the source code and use visual C++ 2020 to build.
+Download the source code and use visual C++ 2020 to build. You may have some trouble with downloading submodules (this will be fixed soon). 
 
 Option 2: Just download the compiled folder
 -------------------------------------------
-Download the bin folder if on windows. If you're on another platform, you'll have to compile the source code for your OS.
+Download the BasicInstall folder or the CadBerry\bin\Release-windows-x86_64\Berry folder and run Berry.exe (you may get some errors if you download the 
+Berry folder, if you do you should delete CDBLastProj.cfg and CDBProjectList.cfg)
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
-   GIL/GIL
-
-   Modules/Creating modules
-   Modules/Packages
-
-   API/CadBerry API
-
-   What I'm working on
+   User/TheBasics
 
 
 

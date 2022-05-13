@@ -1,3 +1,0 @@
-CadBerry/Math.h
-###############
-Deprecated vector library. Will be removed by the next release (0.2)

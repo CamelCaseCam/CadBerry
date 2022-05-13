@@ -24,7 +24,7 @@ namespace CDB
 	class CDBAPI Application
 	{
 	public:
-		Application();
+		Application(bool headless = false);
 		~Application();
 
 		void GetProject();
@@ -60,6 +60,9 @@ namespace CDB
 		bool NewProj = false;    //Should we check if the user already has a project?
 		bool ShowBuildWindow = false;
 		bool ShowPackages = false;
+
+		//Is CadBerry being run in headless mode?
+		bool Headless
 
 		scoped_ptr<VertexArray> VertexArray;
 	private:
