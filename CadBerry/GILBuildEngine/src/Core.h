@@ -3,10 +3,14 @@
 
 extern std::string DataPath;
 
-#ifdef GIL_BUILD_DLL
-	#define GILAPI __declspec(dllexport)
+#ifdef CDB_PLATFORM_WINDOWS
+	#ifdef GIL_BUILD_DLL
+		#define GILAPI __declspec(dllexport)
+	#else
+		#define GILAPI __declspec(dllimport)
+	#endif
 #else
-	#define GILAPI __declspec(dllimport)
+#define GILAPI 
 #endif
 
 #define GIL_MAJOR 0

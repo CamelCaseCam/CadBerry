@@ -11,7 +11,11 @@
 
 #include "CadBerry/Log.h"
 
+#ifdef CDB_PLATFORM_WINDOWS    //TODO: Update this once g++ supports format
 #include <format>
+#else
+#include <spdlog/fmt/fmt.h>
+#endif
 
 namespace CDB
 {
@@ -22,7 +26,11 @@ namespace CDB
 
 	std::string RGB2Hex(ImVec4 RGB)
 	{
-		return std::format("!#{:x}{:x}{:x}", (int)(255 * RGB.w), (int)(255 * RGB.x), (int)(255 * RGB.y));
+		#ifdef CDB_PLATFORM_WINDOWS    //TODO: Update this once g++ supports format
+			return std::format("!#{:x}{:x}{:x}", (int)(255 * RGB.w), (int)(255 * RGB.x), (int)(255 * RGB.y));
+		#else
+			return fmt::format("!#{:x}{:x}{:x}", (int)(255 * RGB.w), (int)(255 * RGB.x), (int)(255 * RGB.y));
+		#endif
 	}
 
 	DNAVisualization::DNAVisualization(std::string code, std::vector<Region> regions) : Regions(regions)
@@ -93,7 +101,7 @@ void main()
 
 	void DNAVisualization::DrawDiagram(int Width, int Height)
 	{
-		ImGui::BeginChild((int)this, ImVec2(Width, Height), true, ImGuiWindowFlags_HorizontalScrollbar);    //Use pointer to memory address to get unique id
+		ImGui::BeginChild((uint64_t)this, ImVec2(Width, Height), true, ImGuiWindowFlags_HorizontalScrollbar);    //Use pointer to memory address to get unique id
 		this->RegionShader->Bind();
 
 		CDB::Renderer::BeginScene(RegionTarget.raw());

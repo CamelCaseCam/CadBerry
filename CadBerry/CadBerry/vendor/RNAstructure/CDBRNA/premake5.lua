@@ -32,13 +32,16 @@ project "CDBRNA"
 
 		defines
 		{
-			"RNA_DLL"
+			"RNA_DLL",
+			"CDB_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"
-		buildoptions "/MDd"
+		filter "system:windows"
+			buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
-		buildoptions "/MD"
+		filter "system:windows"
+			buildoptions "/MD"
 		optimize "On"

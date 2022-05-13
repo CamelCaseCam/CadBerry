@@ -10,6 +10,7 @@
 #include "GIL/RestrictionSites.h"
 
 #include "CadBerry.h"
+#include "CadBerry/SharedLib.h"
 
 namespace GIL
 {
@@ -370,7 +371,11 @@ namespace GIL
 			}
 		}
 
+		#ifdef CDB_PLATFORM_WINDOWS
 		typedef GILModule* (__stdcall* f_GetModule)();
+		#else
+		typedef GILModule* (*f_GetModule)();
+		#endif
 		void LinkDLL(std::string& Path, Project* Proj)
 		{
 			std::filesystem::path LibPath = CDB::Application::Get().PathToEXE + "\\GILModules\\" + Path + ".dll";
@@ -381,23 +386,8 @@ namespace GIL
 			if (std::filesystem::exists(LibPath))
 			{
 				//Load the DLL
-				HINSTANCE DLLID = LoadLibrary(LibPath.c_str());
-
-				if (!DLLID)
-				{
-					CDB_BuildError("Could not load module dll \"{0}\"", Path);
-					return;
-				}
-
-				//Get the "GetModule" function
-				f_GetModule GetModule = (f_GetModule)GetProcAddress(DLLID, "GetModule");
-				if (!GetModule)
-				{
-					CDB_BuildError("Could not locate GetModule function in dll \"{0}\"", Path);
-					FreeLibrary(DLLID);
-					return;
-				}
-				Modules[LibPath.stem().string()] = GetModule();
+				auto func = CDB::GetSharedLibFunc<f_GetModule>(LibPath.string().c_str(), "GetModule");
+				Modules[LibPath.stem().string()] = func();
 			}
 		}
 

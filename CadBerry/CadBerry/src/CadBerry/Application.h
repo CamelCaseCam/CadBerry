@@ -61,7 +61,7 @@ namespace CDB
 		bool ShowBuildWindow = false;
 		bool ShowPackages = false;
 
-		scoped_ptr<VertexArray> VertexArray;
+		//scoped_ptr<VertexArray> VertexArray;
 	private:
 		void Main();
 		void CheckExit();
@@ -76,8 +76,8 @@ namespace CDB
 		Window* EditorWindow;
 
 		//Both of these are owned by VertexArray, but a copy is "borrowed" by Application.h
-		IndexBuffer* IndexBuffer;
-		VertexBuffer* VertexBuffer;
+		/*IndexBuffer* m_IndexBuffer;
+		VertexBuffer* m_VertexBuffer;*/
 
 		Shader* shader;
 	};

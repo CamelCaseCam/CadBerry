@@ -7,7 +7,7 @@
 		#define CDBAPI __declspec(dllimport)
 	#endif
 #else
-	#error CadBerry only supports Windows (for now)
+	#define CDBAPI 
 #endif
 
 #ifdef CDB_ENABLE_ASSERTS
@@ -16,6 +16,14 @@
 #else
 	#define CDB_EditorAssert(x, ...)
 	#define CDB_BuildAssert(x, ...)
+#endif
+
+#ifdef CDB_PLATFORM_WINDOWS
+	#define CDB_MODULE_FUNC __stdcall
+#endif
+#ifdef CDB_PLATFORM_LINUX
+	#define CDB_MODULE_FUNC 
+	#define Sleep(amount) sleep(amount)
 #endif
 
 #define BIT(x) (1 << x)

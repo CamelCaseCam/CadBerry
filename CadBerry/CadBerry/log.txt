@@ -1,0 +1,36 @@
+Makefile:185: warning: overriding recipe for target '../bin/Debug-linux-x86_64/CadBerry'
+Makefile:177: warning: ignoring old recipe for target '../bin/Debug-linux-x86_64/CadBerry'
+Update.cpp
+src/CadBerry/Packages/Update.cpp: In function ‘void CDB::ShowPackageManager()’:
+src/CadBerry/Packages/Update.cpp:25:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   25 |                                         ImGui::Text(("Name: " + pkg.Name).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:26:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   26 |                                         ImGui::Text(("Last updated: " + pkg.Downloaded).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:49:49: error: ‘LPCWSTR’ was not declared in this scope
+   49 |                                                 LPCWSTR params = tmp2.c_str();
+      |                                                 ^~~~~~~
+src/CadBerry/Packages/Update.cpp:53:56: error: expected ‘;’ before ‘ExeName’
+   53 |                                                 LPCWSTR ExeName = tmp4.c_str();
+      |                                                        ^~~~~~~~
+      |                                                        ;
+src/CadBerry/Packages/Update.cpp:54:77: error: ‘ExeName’ was not declared in this scope
+   54 |                                                 ShellExecute(nullptr, NULL, ExeName, params, 0, SW_SHOW);
+      |                                                                             ^~~~~~~
+src/CadBerry/Packages/Update.cpp:54:86: error: ‘params’ was not declared in this scope
+   54 |                                                 ShellExecute(nullptr, NULL, ExeName, params, 0, SW_SHOW);
+      |                                                                                      ^~~~~~
+src/CadBerry/Packages/Update.cpp:54:97: error: ‘SW_SHOW’ was not declared in this scope
+   54 |                                                 ShellExecute(nullptr, NULL, ExeName, params, 0, SW_SHOW);
+      |                                                                                                 ^~~~~~~
+src/CadBerry/Packages/Update.cpp:54:49: error: ‘ShellExecute’ was not declared in this scope
+   54 |                                                 ShellExecute(nullptr, NULL, ExeName, params, 0, SW_SHOW);
+      |                                                 ^~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:67:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   67 |                                         ImGui::Text(("Name: " + pkg.Name).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:68:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   68 |                                         ImGui::Text(("Last updated: " + pkg.Downloaded).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Makefile:276: ../bin/Debug-linux-x86_64/CadBerry/Update.o] Error 1

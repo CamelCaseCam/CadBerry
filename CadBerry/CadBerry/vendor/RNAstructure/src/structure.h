@@ -9,6 +9,7 @@
 #include "CTCommentProvider.h"
 #include "DotBracketFormat.h"
 #include "../src/phmm/utils/xmath/log/xlog_math.h"
+#include "Core.h"
 
 //
 using namespace std;

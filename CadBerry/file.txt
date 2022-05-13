@@ -1,0 +1,4 @@
+The current working directory is: /home/cameronk/CadBerry-linux/CadBerry/CadBerry
+You are logged in as cameronk
+The current working directory is: /home/cameronk/CadBerry-linux/CadBerry/CadBerry
+You are logged in as cameronk

@@ -1,0 +1,345 @@
++ echo ==== Building GLFW (debug) ====
+==== Building GLFW (debug) ====
++ make --no-print-directory -C CadBerry/vendor/GLFW -f Makefile config=debug
++ :
++ echo ==== Building CDBRNA (debug) ====
+==== Building CDBRNA (debug) ====
++ make --no-print-directory -C CadBerry/vendor/RNAstructure/CDBRNA -f Makefile config=debug
++ :
++ echo ==== Building Glad (debug) ====
+==== Building Glad (debug) ====
++ make --no-print-directory -C CadBerry/vendor/Glad -f Makefile config=debug
++ :
++ echo ==== Building ImGui (debug) ====
+==== Building ImGui (debug) ====
++ make --no-print-directory -C CadBerry/vendor/IMGUI -f Makefile config=debug
++ :
++ echo ==== Building WhereAmI (debug) ====
+==== Building WhereAmI (debug) ====
++ make --no-print-directory -C CadBerry/vendor/WhereAmI -f Makefile config=debug
++ :
++ echo ==== Building CadBerry (debug) ====
+==== Building CadBerry (debug) ====
++ make --no-print-directory -C CadBerry -f Makefile config=debug
+Makefile:185: warning: overriding recipe for target '../bin/Debug-linux-x86_64/CadBerry'
+Makefile:177: warning: ignoring old recipe for target '../bin/Debug-linux-x86_64/CadBerry'
++ echo Creating ../bin/Debug-linux-x86_64/CadBerry
+Creating ../bin/Debug-linux-x86_64/CadBerry
++ mkdir -p ../bin/Debug-linux-x86_64/CadBerry
++ echo cdbpch.h
+cdbpch.h
++ g++ -x c++-header -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h.gch -MF ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h.d -c src/cdbpch.h
+src/cdbpch.h:1:9: warning: #pragma once in main file
+    1 | #pragma once
+      |         ^~~~
++ touch ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h
++ echo Application.cpp
+Application.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Application.o -MF ../bin/Debug-linux-x86_64/CadBerry/Application.d -c src/CadBerry/Application.cpp
++ echo AtomGraph.cpp
+AtomGraph.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/AtomGraph.o -MF ../bin/Debug-linux-x86_64/CadBerry/AtomGraph.d -c src/CadBerry/Chemistry/AtomGraph.cpp
++ echo Buffer.cpp
+Buffer.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Buffer.o -MF ../bin/Debug-linux-x86_64/CadBerry/Buffer.d -c src/CadBerry/Rendering/Buffer.cpp
++ echo BuildDialog.cpp
+BuildDialog.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/BuildDialog.o -MF ../bin/Debug-linux-x86_64/CadBerry/BuildDialog.d -c src/CadBerry/BuildEngine/BuildDialog.cpp
++ echo BuildEngine.cpp
+BuildEngine.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/BuildEngine.o -MF ../bin/Debug-linux-x86_64/CadBerry/BuildEngine.d -c src/CadBerry/BuildEngine/BuildEngine.cpp
++ echo CDBImage.cpp
+CDBImage.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/CDBImage.o -MF ../bin/Debug-linux-x86_64/CadBerry/CDBImage.d -c src/CadBerry/Rendering/Image/CDBImage.cpp
++ echo Camera.cpp
+Camera.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Camera.o -MF ../bin/Debug-linux-x86_64/CadBerry/Camera.d -c src/CadBerry/Rendering/Camera.cpp
++ echo CreateProject.cpp
+CreateProject.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/CreateProject.o -MF ../bin/Debug-linux-x86_64/CadBerry/CreateProject.d -c src/CadBerry/Project/CreateProject.cpp
++ echo DisplayColours.cpp
+DisplayColours.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/DisplayColours.o -MF ../bin/Debug-linux-x86_64/CadBerry/DisplayColours.d -c src/CadBerry/DNAVis/DisplayColours.cpp
++ echo DisplayDNA.cpp
+DisplayDNA.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/DisplayDNA.o -MF ../bin/Debug-linux-x86_64/CadBerry/DisplayDNA.d -c src/CadBerry/DNAVis/DisplayDNA.cpp
++ echo DisplayRegion.cpp
+DisplayRegion.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/DisplayRegion.o -MF ../bin/Debug-linux-x86_64/CadBerry/DisplayRegion.d -c src/CadBerry/DNAVis/DisplayRegion.cpp
++ echo Equation.cpp
+Equation.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Equation.o -MF ../bin/Debug-linux-x86_64/CadBerry/Equation.d -c src/CadBerry/Math/Equation.cpp
+src/CadBerry/Math/Equation.cpp: In function ‘int CDB::Math::GetOperatorPrecendence(CDB::Math::Operation)’:
+src/CadBerry/Math/Equation.cpp:398:17: warning: control reaches end of non-void function [-Wreturn-type]
+  398 |                 }
+      |                 ^
+src/CadBerry/Math/Equation.cpp: In function ‘CDB::Math::Value* CDB::Math::Parse(std::vector<CDB::Math::Token>&, CDB::Math::Operation, int&)’:
+src/CadBerry/Math/Equation.cpp:470:17: warning: control reaches end of non-void function [-Wreturn-type]
+  470 |                 }
+      |                 ^
++ echo ImGuiBuild.cpp
+ImGuiBuild.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/ImGuiBuild.o -MF ../bin/Debug-linux-x86_64/CadBerry/ImGuiBuild.d -c src/CadBerry/ImGui/ImGuiBuild.cpp
++ echo ImGuiLayer.cpp
+ImGuiLayer.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/ImGuiLayer.o -MF ../bin/Debug-linux-x86_64/CadBerry/ImGuiLayer.d -c src/CadBerry/ImGui/ImGuiLayer.cpp
+src/CadBerry/ImGui/ImGuiLayer.cpp:5: warning: "IMGUI_IMPL_API" redefined
+    5 | #define IMGUI_IMPL_API
+      | 
+In file included from src/CadBerry/ImGui/ImGuiLayer.h:6,
+                 from src/CadBerry/ImGui/ImGuiLayer.cpp:2:
+vendor/IMGUI/imgui.h:82: note: this is the location of the previous definition
+   82 | #define IMGUI_IMPL_API              IMGUI_API
+      | 
++ echo InputVector.cpp
+InputVector.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/InputVector.o -MF ../bin/Debug-linux-x86_64/CadBerry/InputVector.d -c src/CadBerry/RenderUtils/InputVector.cpp
+src/CadBerry/RenderUtils/InputVector.cpp: In function ‘void CDB::InputStringVector(const string&, std::vector<std::__cxx11::basic_string<char> >&, const char*, const char*)’:
+src/CadBerry/RenderUtils/InputVector.cpp:16:28: warning: format not a string literal and no format arguments [-Wformat-security]
+   16 |                 ImGui::Text(name.c_str());
+      |                 ~~~~~~~~~~~^~~~~~~~~~~~~~
++ echo Layer.cpp
+Layer.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Layer.o -MF ../bin/Debug-linux-x86_64/CadBerry/Layer.d -c src/CadBerry/Layer.cpp
++ echo LayerStack.cpp
+LayerStack.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/LayerStack.o -MF ../bin/Debug-linux-x86_64/CadBerry/LayerStack.d -c src/CadBerry/LayerStack.cpp
++ echo LoadPackages.cpp
+LoadPackages.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/LoadPackages.o -MF ../bin/Debug-linux-x86_64/CadBerry/LoadPackages.d -c src/CadBerry/Packages/LoadPackages.cpp
++ echo Log.cpp
+Log.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Log.o -MF ../bin/Debug-linux-x86_64/CadBerry/Log.d -c src/CadBerry/Log.cpp
++ echo NumberLine.cpp
+NumberLine.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/NumberLine.o -MF ../bin/Debug-linux-x86_64/CadBerry/NumberLine.d -c src/CadBerry/RenderUtils/NumberLine.cpp
++ echo OpenGLBuffer.cpp
+OpenGLBuffer.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLBuffer.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLBuffer.d -c src/CadBerry/Platform/OpenGL/OpenGLBuffer.cpp
++ echo OpenGLContext.cpp
+OpenGLContext.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLContext.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLContext.d -c src/CadBerry/Platform/OpenGL/OpenGLContext.cpp
+In file included from vendor/spdlog/include/spdlog/fmt/bundled/format.h:48,
+                 from vendor/spdlog/include/spdlog/fmt/bundled/ostream.h:13,
+                 from vendor/spdlog/include/spdlog/fmt/ostr.h:18,
+                 from src/CadBerry/Events/Event.h:5,
+                 from src/CadBerry/Window.h:4,
+                 from src/CadBerry/Platform/OpenGL/OpenGLContext.h:3,
+                 from src/CadBerry/Platform/OpenGL/OpenGLContext.cpp:2:
+vendor/spdlog/include/spdlog/fmt/bundled/core.h: In instantiation of ‘constexpr decltype (ctx.begin()) fmt::v8::detail::parse_format_specs(ParseContext&) [with T = const unsigned char*; ParseContext = fmt::v8::detail::compile_parse_context<char, fmt::v8::detail::error_handler>; decltype (ctx.begin()) = const char*]’:
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2906:9:   required from ‘constexpr fmt::v8::detail::format_string_checker<Char, ErrorHandler, Args>::format_string_checker(fmt::v8::basic_string_view<Char>, ErrorHandler) [with Char = char; ErrorHandler = fmt::v8::detail::error_handler; Args = {const unsigned char*}]’
+src/CadBerry/Platform/OpenGL/OpenGLContext.cpp:20:3:   required from here
+src/CadBerry/Platform/OpenGL/OpenGLContext.cpp:20:3:   in ‘constexpr’ expansion of ‘fmt::v8::basic_format_string<char, const unsigned char*>("Detected {0} GPU")’
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2670:41: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 2670 |       mapped_type_constant<T, context>::value != type::custom_type,
+      |                                         ^~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2671:41: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 2671 |       decltype(arg_mapper<context>().map(std::declval<const T&>())), T>;
+      |                ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2670:41: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 2670 |       mapped_type_constant<T, context>::value != type::custom_type,
+      |                                         ^~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2671:41: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 2671 |       decltype(arg_mapper<context>().map(std::declval<const T&>())), T>;
+      |                ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2670:41: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 2670 |       mapped_type_constant<T, context>::value != type::custom_type,
+      |                                         ^~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:2671:41: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 2671 |       decltype(arg_mapper<context>().map(std::declval<const T&>())), T>;
+      |                ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h: In substitution of ‘template<class T, class Context> using mapped_type_constant = fmt::v8::detail::type_constant<decltype (fmt::v8::detail::arg_mapper<Context>().map(declval<const T&>())), typename Context::char_type> [with T = const unsigned char*; Context = fmt::v8::basic_format_context<fmt::v8::appender, char>]’:
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1688:68:   required from ‘constexpr long long unsigned int fmt::v8::detail::encode_types() [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; Arg = const unsigned char*; Args = {}]’
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1840:58:   required from ‘constexpr const long long unsigned int fmt::v8::format_arg_store<fmt::v8::basic_format_context<fmt::v8::appender, char>, const unsigned char*>::desc’
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1953:63:   required from ‘constexpr fmt::v8::basic_format_args<Context>::basic_format_args(const fmt::v8::format_arg_store<Context, Args ...>&) [with Args = {const unsigned char*}; Context = fmt::v8::basic_format_context<fmt::v8::appender, char>]’
+vendor/spdlog/include/spdlog/logger.h:367:32:   required from ‘void spdlog::logger::log_(spdlog::source_loc, spdlog::level::level_enum, spdlog::string_view_t, Args&& ...) [with Args = {const unsigned char*}; spdlog::string_view_t = fmt::v8::basic_string_view<char>]’
+vendor/spdlog/include/spdlog/logger.h:90:13:   required from ‘void spdlog::logger::log(spdlog::source_loc, spdlog::level::level_enum, fmt::v8::format_string<T ...>, Args&& ...) [with Args = {const unsigned char*}; fmt::v8::format_string<T ...> = fmt::v8::basic_format_string<char, const unsigned char*>]’
+vendor/spdlog/include/spdlog/logger.h:96:12:   required from ‘void spdlog::logger::log(spdlog::level::level_enum, fmt::v8::format_string<T ...>, Args&& ...) [with Args = {const unsigned char*}; fmt::v8::format_string<T ...> = fmt::v8::basic_format_string<char, const unsigned char*>]’
+vendor/spdlog/include/spdlog/logger.h:158:12:   required from ‘void spdlog::logger::info(fmt::v8::format_string<T ...>, Args&& ...) [with Args = {const unsigned char*}; fmt::v8::format_string<T ...> = fmt::v8::basic_format_string<char, const unsigned char*>]’
+src/CadBerry/Platform/OpenGL/OpenGLContext.cpp:20:3:   required from here
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1493:53: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 1493 |     type_constant<decltype(arg_mapper<Context>().map(std::declval<const T&>())),
+      |                            ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h: In instantiation of ‘constexpr fmt::v8::detail::value<Context> fmt::v8::detail::make_arg(T&&) [with bool IS_PACKED = true; Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::type <anonymous> = fmt::v8::detail::type::cstring_type; T = const unsigned char*; typename std::enable_if<IS_PACKED, int>::type <anonymous> = 0]’:
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1855:77:   required from ‘constexpr fmt::v8::format_arg_store<Context, Args>::format_arg_store(T&& ...) [with T = {const unsigned char*}; Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; Args = {const unsigned char*}]’
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1872:38:   required from ‘constexpr fmt::v8::format_arg_store<Context, typename std::remove_cv<typename std::remove_reference<Args>::type>::type ...> fmt::v8::make_format_args(Args&& ...) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; Args = {const unsigned char*}]’
+vendor/spdlog/include/spdlog/logger.h:367:88:   required from ‘void spdlog::logger::log_(spdlog::source_loc, spdlog::level::level_enum, spdlog::string_view_t, Args&& ...) [with Args = {const unsigned char*}; spdlog::string_view_t = fmt::v8::basic_string_view<char>]’
+vendor/spdlog/include/spdlog/logger.h:90:13:   required from ‘void spdlog::logger::log(spdlog::source_loc, spdlog::level::level_enum, fmt::v8::format_string<T ...>, Args&& ...) [with Args = {const unsigned char*}; fmt::v8::format_string<T ...> = fmt::v8::basic_format_string<char, const unsigned char*>]’
+vendor/spdlog/include/spdlog/logger.h:96:12:   required from ‘void spdlog::logger::log(spdlog::level::level_enum, fmt::v8::format_string<T ...>, Args&& ...) [with Args = {const unsigned char*}; fmt::v8::format_string<T ...> = fmt::v8::basic_format_string<char, const unsigned char*>]’
+vendor/spdlog/include/spdlog/logger.h:158:12:   required from ‘void spdlog::logger::info(fmt::v8::format_string<T ...>, Args&& ...) [with Args = {const unsigned char*}; fmt::v8::format_string<T ...> = fmt::v8::basic_format_string<char, const unsigned char*>]’
+src/CadBerry/Platform/OpenGL/OpenGLContext.cpp:20:3:   required from here
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1706:46: warning: ‘constexpr fmt::v8::detail::arg_mapper<Context>::cstring_result fmt::v8::detail::arg_mapper<Context>::map(const unsigned char*) [with Context = fmt::v8::basic_format_context<fmt::v8::appender, char>; fmt::v8::detail::arg_mapper<Context>::cstring_result = const char*]’ is deprecated [-Wdeprecated-declarations]
+ 1706 |   const auto& arg = arg_mapper<Context>().map(std::forward<T>(val));
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+vendor/spdlog/include/spdlog/fmt/bundled/core.h:1394:48: note: declared here
+ 1394 |   FMT_DEPRECATED FMT_CONSTEXPR FMT_INLINE auto map(const unsigned char* val)
+      |                                                ^~~
++ echo OpenGLRenderTarget.cpp
+OpenGLRenderTarget.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLRenderTarget.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLRenderTarget.d -c src/CadBerry/Platform/OpenGL/OpenGLRenderTarget.cpp
+src/CadBerry/Platform/OpenGL/OpenGLRenderTarget.cpp: In member function ‘virtual void CDB::OpenGLRenderTarget::Draw(ImVec2, ImVec2)’:
+src/CadBerry/Platform/OpenGL/OpenGLRenderTarget.cpp:51:30: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   51 |                 ImGui::Image((ImTextureID)TextureID, ImVec2(Location.x * Scale.x, Location.y * Scale.y), ImVec2(0, 1), ImVec2(1, 0));
+      |                              ^~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Platform/OpenGL/OpenGLRenderTarget.cpp: In member function ‘virtual void CDB::OpenGLRenderTarget::SetAsBackground(ImVec2, ImVec2)’:
+src/CadBerry/Platform/OpenGL/OpenGLRenderTarget.cpp:56:58: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   56 |                 ImGui::GetBackgroundDrawList()->AddImage((ImTextureID)TextureID, ImVec2(Location.x * Scale.x, Location.y * Scale.y), ImVec2(0, 1), ImVec2(1, 0));
+      |                                                          ^~~~~~~~~~~~~~~~~~~~~~
++ echo OpenGLRendererAPI.cpp
+OpenGLRendererAPI.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLRendererAPI.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLRendererAPI.d -c src/CadBerry/Platform/OpenGL/OpenGLRendererAPI.cpp
++ echo OpenGLShader.cpp
+OpenGLShader.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLShader.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLShader.d -c src/CadBerry/Platform/OpenGL/OpenGLShader.cpp
++ echo OpenGLTexture.cpp
+OpenGLTexture.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLTexture.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLTexture.d -c src/CadBerry/Platform/OpenGL/OpenGLTexture.cpp
++ echo OpenGLVertexArray.cpp
+OpenGLVertexArray.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/OpenGLVertexArray.o -MF ../bin/Debug-linux-x86_64/CadBerry/OpenGLVertexArray.d -c src/CadBerry/Platform/OpenGL/OpenGLVertexArray.cpp
+src/CadBerry/Platform/OpenGL/OpenGLVertexArray.cpp: In member function ‘virtual void CDB::OpenGLVertexArray::AddVertexBuffer(CDB::VertexBuffer*)’:
+src/CadBerry/Platform/OpenGL/OpenGLVertexArray.cpp:61:196: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+   61 |                         glVertexAttribPointer(Index, Elem.GetElementCount(), ShaderDataType2OpenGL(Elem.ElementType), Elem.Normalized ? GL_TRUE : GL_FALSE, vertexBuffer->GetLayout().GetStride(), (const void*)Elem.Offset);
+      |                                                                                                                                                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~
+In file included from src/CadBerry/Rendering/VertexArray.h:3,
+                 from src/CadBerry/Platform/OpenGL/OpenGLVertexArray.h:2,
+                 from src/CadBerry/Platform/OpenGL/OpenGLVertexArray.cpp:2:
+src/CadBerry/Rendering/Buffer.h: In member function ‘uint32_t CDB::BufferElement::GetElementCount() const’:
+src/CadBerry/Rendering/Buffer.h:66:17: warning: control reaches end of non-void function [-Wreturn-type]
+   66 |                 }
+      |                 ^
++ echo Organism.cpp
+Organism.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Organism.o -MF ../bin/Debug-linux-x86_64/CadBerry/Organism.d -c src/CadBerry/Biology/Organism.cpp
++ echo Project.cpp
+Project.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Project.o -MF ../bin/Debug-linux-x86_64/CadBerry/Project.d -c src/CadBerry/Project/Project.cpp
++ echo RNAFuncs.cpp
+RNAFuncs.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/RNAFuncs.o -MF ../bin/Debug-linux-x86_64/CadBerry/RNAFuncs.d -c src/CadBerry/Utils/RNAFuncs.cpp
++ echo RenderCommand.cpp
+RenderCommand.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/RenderCommand.o -MF ../bin/Debug-linux-x86_64/CadBerry/RenderCommand.d -c src/CadBerry/Rendering/RenderCommand.cpp
++ echo RenderTarget.cpp
+RenderTarget.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/RenderTarget.o -MF ../bin/Debug-linux-x86_64/CadBerry/RenderTarget.d -c src/CadBerry/Rendering/RenderTarget.cpp
++ echo Renderer.cpp
+Renderer.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Renderer.o -MF ../bin/Debug-linux-x86_64/CadBerry/Renderer.d -c src/CadBerry/Rendering/Renderer.cpp
++ echo RendererAPI.cpp
+RendererAPI.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/RendererAPI.o -MF ../bin/Debug-linux-x86_64/CadBerry/RendererAPI.d -c src/CadBerry/Rendering/RendererAPI.cpp
++ echo RichText.cpp
+RichText.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/RichText.o -MF ../bin/Debug-linux-x86_64/CadBerry/RichText.d -c src/CadBerry/RenderUtils/RichText.cpp
++ echo SaveFunctions.cpp
+SaveFunctions.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/SaveFunctions.o -MF ../bin/Debug-linux-x86_64/CadBerry/SaveFunctions.d -c src/CadBerry/Utils/SaveFunctions.cpp
+src/CadBerry/Utils/SaveFunctions.cpp:6:34: warning: converting to non-pointer type ‘char’ from NULL [-Wconversion-null]
+    6 |         const char Termination = NULL;
+      |                                  ^~~~
++ echo Shader.cpp
+Shader.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Shader.o -MF ../bin/Debug-linux-x86_64/CadBerry/Shader.d -c src/CadBerry/Rendering/Shader.cpp
++ echo Texture.cpp
+Texture.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Texture.o -MF ../bin/Debug-linux-x86_64/CadBerry/Texture.d -c src/CadBerry/Rendering/Texture.cpp
++ echo ThreadPool.cpp
+ThreadPool.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/ThreadPool.o -MF ../bin/Debug-linux-x86_64/CadBerry/ThreadPool.d -c src/CadBerry/Threading/ThreadPool.cpp
++ echo Update.cpp
+Update.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Update.o -MF ../bin/Debug-linux-x86_64/CadBerry/Update.d -c src/CadBerry/Packages/Update.cpp
+src/CadBerry/Packages/Update.cpp: In function ‘void CDB::ShowPackageManager()’:
+src/CadBerry/Packages/Update.cpp:26:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   26 |                                         ImGui::Text(("Name: " + pkg.Name).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:27:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   27 |                                         ImGui::Text(("Last updated: " + pkg.Downloaded).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:62:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   62 |                                         ImGui::Text(("Name: " + pkg.Name).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/CadBerry/Packages/Update.cpp:63:52: warning: format not a string literal and no format arguments [-Wformat-security]
+   63 |                                         ImGui::Text(("Last updated: " + pkg.Downloaded).c_str());
+      |                                         ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ echo Utils.cpp
+Utils.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Utils.o -MF ../bin/Debug-linux-x86_64/CadBerry/Utils.d -c src/CadBerry/Rendering/Utils/Utils.cpp
++ echo VertexArray.cpp
+VertexArray.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/VertexArray.o -MF ../bin/Debug-linux-x86_64/CadBerry/VertexArray.d -c src/CadBerry/Rendering/VertexArray.cpp
++ echo Viewport.cpp
+Viewport.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/Viewport.o -MF ../bin/Debug-linux-x86_64/CadBerry/Viewport.d -c src/CadBerry/Module/Viewport.cpp
++ echo WindowsInput.cpp
+WindowsInput.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/WindowsInput.o -MF ../bin/Debug-linux-x86_64/CadBerry/WindowsInput.d -c src/CadBerry/Platform/Windows/WindowsInput.cpp
++ echo WindowsWindow.cpp
+WindowsWindow.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/WindowsWindow.o -MF ../bin/Debug-linux-x86_64/CadBerry/WindowsWindow.d -c src/CadBerry/Platform/Windows/WindowsWindow.cpp
++ echo cdbpch.cpp
+cdbpch.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/cdbpch.o -MF ../bin/Debug-linux-x86_64/CadBerry/cdbpch.d -c src/cdbpch.cpp
++ echo memory.cpp
+memory.cpp
++ g++ -include ../bin/Debug-linux-x86_64/CadBerry/cdbpch.h -MMD -MP -DCDB_PLATFORM_LINUX -DGLFW_INCLUDE_NONE -DIMGUI_IMPL_OPENGL_LOADER_GLAD2 -DFMT_HEADER_ONLY -DCDB_DEBUG -Ivendor/spdlog/include -Ivendor/SFML/include -Isrc -Ivendor/GLFW/include -Ivendor/Glad/include -Ivendor/IMGUI -Ivendor/glm -Ivendor/nfd/src/include -Ivendor/WhereAmI/src -Ivendor/implot -Ivendor/BlockingCollection -Ivendor/cpr/include -Ivendor/cpr/cpr_generated_includes -Ivendor/cpr/_deps/curl-src/include -Ivendor/yaml-cpp/include -Ivendor/RNAstructure -Ivendor/RNAstructure/CDBRNA/include -m64 -fPIC -std=c++20 -o ../bin/Debug-linux-x86_64/CadBerry/memory.o -MF ../bin/Debug-linux-x86_64/CadBerry/memory.d -c src/CadBerry/Utils/memory.cpp
++ echo Linking CadBerry
+Linking CadBerry
++ g++ -o ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so ../bin/Debug-linux-x86_64/CadBerry/Application.o ../bin/Debug-linux-x86_64/CadBerry/AtomGraph.o ../bin/Debug-linux-x86_64/CadBerry/Buffer.o ../bin/Debug-linux-x86_64/CadBerry/BuildDialog.o ../bin/Debug-linux-x86_64/CadBerry/BuildEngine.o ../bin/Debug-linux-x86_64/CadBerry/CDBImage.o ../bin/Debug-linux-x86_64/CadBerry/Camera.o ../bin/Debug-linux-x86_64/CadBerry/CreateProject.o ../bin/Debug-linux-x86_64/CadBerry/DisplayColours.o ../bin/Debug-linux-x86_64/CadBerry/DisplayDNA.o ../bin/Debug-linux-x86_64/CadBerry/DisplayRegion.o ../bin/Debug-linux-x86_64/CadBerry/Equation.o ../bin/Debug-linux-x86_64/CadBerry/ImGuiBuild.o ../bin/Debug-linux-x86_64/CadBerry/ImGuiLayer.o ../bin/Debug-linux-x86_64/CadBerry/InputVector.o ../bin/Debug-linux-x86_64/CadBerry/Layer.o ../bin/Debug-linux-x86_64/CadBerry/LayerStack.o ../bin/Debug-linux-x86_64/CadBerry/LoadPackages.o ../bin/Debug-linux-x86_64/CadBerry/Log.o ../bin/Debug-linux-x86_64/CadBerry/NumberLine.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLBuffer.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLContext.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLRenderTarget.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLRendererAPI.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLShader.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLTexture.o ../bin/Debug-linux-x86_64/CadBerry/OpenGLVertexArray.o ../bin/Debug-linux-x86_64/CadBerry/Organism.o ../bin/Debug-linux-x86_64/CadBerry/Project.o ../bin/Debug-linux-x86_64/CadBerry/RNAFuncs.o ../bin/Debug-linux-x86_64/CadBerry/RenderCommand.o ../bin/Debug-linux-x86_64/CadBerry/RenderTarget.o ../bin/Debug-linux-x86_64/CadBerry/Renderer.o ../bin/Debug-linux-x86_64/CadBerry/RendererAPI.o ../bin/Debug-linux-x86_64/CadBerry/RichText.o ../bin/Debug-linux-x86_64/CadBerry/SaveFunctions.o ../bin/Debug-linux-x86_64/CadBerry/Shader.o ../bin/Debug-linux-x86_64/CadBerry/Texture.o ../bin/Debug-linux-x86_64/CadBerry/ThreadPool.o ../bin/Debug-linux-x86_64/CadBerry/Update.o ../bin/Debug-linux-x86_64/CadBerry/Utils.o ../bin/Debug-linux-x86_64/CadBerry/VertexArray.o ../bin/Debug-linux-x86_64/CadBerry/Viewport.o ../bin/Debug-linux-x86_64/CadBerry/WindowsInput.o ../bin/Debug-linux-x86_64/CadBerry/WindowsWindow.o ../bin/Debug-linux-x86_64/CadBerry/cdbpch.o ../bin/Debug-linux-x86_64/CadBerry/memory.o -Lvendor/SFML/lib -Lvendor/cpr/lib -Lvendor/yaml-cpp -Lvendor/GLFW/bin/Debug-linux-x86_64/GLFW -L/usr/lib64 -Wl,-rpath,$ORIGIN/../../../CadBerry/vendor/RNAstructure/CDBRNA/bin/Debug-linux-x86_64/CDBRNA -m64 -shared -Wl,-soname=libCadBerry.so -s vendor/GLFW/bin/Debug-linux-x86_64/GLFW/libGLFW.a vendor/Glad/bin/Debug-linux-x86_64/Glad/libGlad.a vendor/IMGUI/bin/Debug-linux-x86_64/ImGui/libImGui.a vendor/WhereAmI/bin/Debug-linux-x86_64/WhereAmI/libWhereAmI.a vendor/RNAstructure/CDBRNA/bin/Debug-linux-x86_64/CDBRNA/libCDBRNA.so -lGL -lcpr -lyaml-cpp
++ :
++ echo ==== Building Berry (debug) ====
+==== Building Berry (debug) ====
++ make --no-print-directory -C Berry -f Makefile config=debug
+Makefile:92: warning: overriding recipe for target '../bin/Debug-linux-x86_64/Berry'
+Makefile:84: warning: ignoring old recipe for target '../bin/Debug-linux-x86_64/Berry'
++ echo Creating ../bin/Debug-linux-x86_64/Berry
+Creating ../bin/Debug-linux-x86_64/Berry
++ mkdir -p ../bin/Debug-linux-x86_64/Berry
++ echo main.cpp
+main.cpp
++ g++ -MMD -MP -DCDB_DEBUG -I../CadBerry/vendor/spdlog/include -I../CadBerry/src -I../CadBerry/vendor/IMGUI -I../CadBerry/vendor/glm -I../CadBerry/vendor/BlockingCollection -I../CadBerry/vendor/implot -m64 -g -o ../bin/Debug-linux-x86_64/Berry/main.o -MF ../bin/Debug-linux-x86_64/Berry/main.d -c src/main.cpp
++ echo Linking Berry
+Linking Berry
++ g++ -o ../bin/Debug-linux-x86_64/Berry/Berry ../bin/Debug-linux-x86_64/Berry/main.o -L../CadBerry/vendor/SFML/lib -L/usr/lib64 -Wl,-rpath,$ORIGIN/../CadBerry -m64 ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so -lsfml-system-d -lsfml-window-d -lsfml-graphics-d -lsfml-network-d -lsfml-audio-d
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformFreeModule'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformGetTimerValue'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformGetTls'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformGetTimerFrequency'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwSelectPlatform'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `NFD_PickFolder'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformDestroyMutex'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformCreateMutex'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformCreateTls'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformLoadModule'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformUnlockMutex'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformSetTls'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `NFD_OpenDialog'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformGetModuleSymbol'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformInitTimer'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformLockMutex'
+/usr/bin/ld: ../bin/Debug-linux-x86_64/CadBerry/libCadBerry.so: undefined reference to `_glfwPlatformDestroyTls'
+collect2: error: ld returned 1 exit status
+make[1]: *** [Makefile:80: ../bin/Debug-linux-x86_64/Berry/Berry] Error 1
+make: *** [Makefile:92: Berry] Error 2

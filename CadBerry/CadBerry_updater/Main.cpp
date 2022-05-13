@@ -4,6 +4,11 @@
 
 #include <cpr/cpr.h>
 
+#ifdef CDB_PLATFORM_LINUX
+#include <unistd.h>
+#define Sleep(x) sleep(x/1000)
+#endif
+
 int main(int argc, char** argv)
 {
 	Sleep(3000);

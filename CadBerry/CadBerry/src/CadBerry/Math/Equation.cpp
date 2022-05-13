@@ -48,9 +48,9 @@ namespace CDB
 			case CDB::Math::Operation::Div:
 				return LValue->Get() / RValue->Get();
 			case CDB::Math::Operation::Exp:
-				return std::powf(LValue->Get(), RValue->Get());
+				return std::pow(LValue->Get(), RValue->Get());
 			case CDB::Math::Operation::Root:
-				return std::powf(LValue->Get(), 1.0/RValue->Get());
+				return std::pow(LValue->Get(), 1.0/RValue->Get());
 			case CDB::Math::Operation::GThan:
 				return (float)(LValue->Get() > RValue->Get());
 			case CDB::Math::Operation::LThan:

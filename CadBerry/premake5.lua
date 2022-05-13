@@ -82,11 +82,43 @@ project "CadBerry"
 		"GLFW",
 		"Glad",
 		"ImGui",
-		"opengl32.lib",
 		"WhereAmI",
-		"cpr",
 		"CDBRNA"
 	}
+
+	filter "system:linux"
+		cppdialect "C++20"
+		staticruntime "On"
+		pic "On"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_LINUX",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
+		libdirs
+		{
+			"CadBerry/vendor/cpr/lib",
+			"CadBerry/vendor/yaml-cpp",
+			"CadBerry/vendor/GLFW/bin/Debug-linux-x86_64/GLFW",
+			"CadBerry/vendor/nfd/build/lib/Release/x64/"
+		}
+
+		links
+		{
+			"GL",
+			"cpr",
+			"yaml-cpp",
+			"GLFW",
+			"nfd",
+			"gtk-3"
+		}
+	filter {"system:linux", "configurations:Debug"}
+		buildoptions "-g"
 
 	filter "system:windows"
 		cppdialect "C++20"
@@ -102,6 +134,12 @@ project "CadBerry"
 			"FMT_HEADER_ONLY"
 		}
 
+		links
+		{
+			"opengl32.lib",
+			"cpr",
+		}
+
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry"),
@@ -109,16 +147,13 @@ project "CadBerry"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+		filter "system:windows"
+			buildoptions "/MDd"
+
 		symbols "On"
 		defines
 		{
 			"CDB_ENABLE_ASSERTS"
-		}
-		links
-		{
-			"nfd_d",
-			"yaml-cppd"
 		}
 		libdirs
 		{
@@ -127,9 +162,19 @@ project "CadBerry"
 			"CadBerry/vendor/nfd/build/lib/Debug/x64",
 			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Debug-windows-x86_64/CDBRNA"
 		}
+
+	filter {"configurations:Debug", "system:windows"}
+		links
+		{
+			"yaml-cppd",
+			"nfd_d"
+		}
+
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+		filter "system:windows"
+			buildoptions "/MD"
+
 		optimize "On"
 		links
 		{
@@ -245,6 +290,12 @@ project "CadBerry_updater"
 		"cpr"
 	}
 
+	filter "system:linux"
+		defines
+		{
+			"CDB_PLATFORM_LINUX",
+		}
+
 	filter "system:windows"
 		cppdialect "C++20"
 
@@ -311,6 +362,12 @@ project "VSCodeIntegration"
 		"ImGui",
 	}
 
+	filter "system:linux"
+		defines
+		{
+			"CDB_PLATFORM_LINUX",
+		}
+
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "On"
@@ -331,7 +388,10 @@ project "VSCodeIntegration"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+
+		filter "system:windows"
+			buildoptions "/MDd"
+
 		symbols "On"
 		defines
 		{
@@ -339,7 +399,10 @@ project "VSCodeIntegration"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+
+		filter "system:windows"
+			buildoptions "/MD"
+
 		optimize "On"
 
 project "GILBuildEngine"
@@ -384,6 +447,20 @@ project "GILBuildEngine"
 		"GIL_BUILD_DLL",
 	}
 
+	filter "system:linux"
+		cppdialect "C++20"
+		staticruntime "On"
+		pic "On"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_LINUX",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
 	filter "system:windows"
 		cppdialect "C++20"
 		staticruntime "On"
@@ -404,7 +481,10 @@ project "GILBuildEngine"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+
+		filter "system:windows"
+			buildoptions "/MDd"
+
 		symbols "On"
 		defines
 		{
@@ -412,7 +492,9 @@ project "GILBuildEngine"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+
+		filter "system:windows"
+			buildoptions "/MD"
 		optimize "On"
 
 -- GIL Modules
@@ -475,7 +557,8 @@ project "utils"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+		filter "system:windows"
+			buildoptions "/MDd"
 		symbols "On"
 		defines
 		{
@@ -483,7 +566,8 @@ project "utils"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+		filter "system:windows"
+			buildoptions "/MD"
 		optimize "On"
 
 project "sensing"
@@ -541,7 +625,8 @@ project "sensing"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+		filter "system:windows"
+			buildoptions "/MDd"
 		symbols "On"
 		defines
 		{
@@ -549,7 +634,8 @@ project "sensing"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+		filter "system:windows"
+			buildoptions "/MD"
 		optimize "On"
 
 project "Core"
@@ -609,7 +695,8 @@ project "Core"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+		filter "system:windows"
+			buildoptions "/MDd"
 		symbols "On"
 		defines
 		{
@@ -625,7 +712,8 @@ project "Core"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+		filter "system:windows"
+			buildoptions "/MD"
 		optimize "On"
 		links
 		{
@@ -698,7 +786,8 @@ project "IRESGenerator"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		buildoptions "/MDd"
+		filter "system:windows"
+			buildoptions "/MDd"
 		symbols "On"
 		defines
 		{
@@ -715,7 +804,8 @@ project "IRESGenerator"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		buildoptions "/MD"
+		filter "system:windows"
+			buildoptions "/MD"
 		optimize "On"
 		links
 		{

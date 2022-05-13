@@ -143,9 +143,17 @@ public:
 //Expose the module to CadBerry
 extern "C"
 {
+#ifdef CDB_PLATFORM_WINDOWS
 	__declspec(dllexport) CDB::BuildEngine* __stdcall GetBuildEngine()
 	{
 		DataPath = CDB::Application::Get().PathToEXE + "\\Build\\";
 		return new GILBuildEngine();
 	}
+#else
+	CDB::BuildEngine* GetBuildEngine()
+	{
+		DataPath = CDB::Application::Get().PathToEXE + "\\Build\\";
+		return new GILBuildEngine();
+	}
+#endif
 }

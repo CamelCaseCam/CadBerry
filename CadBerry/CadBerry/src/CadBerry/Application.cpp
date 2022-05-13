@@ -14,6 +14,8 @@
 #include "CadBerry/Packages/Update.h"
 #include "Math/Equation.h"
 #include "DNAVis/DisplayDNA.h"
+#include "SharedLib.h"
+#include "Core.h"
 
 #include "Utils/RNAFuncs.h"
 
@@ -139,7 +141,7 @@ namespace CDB
 
 		std::ofstream OutputCurrentProject;
 		OutputCurrentProject.open(this->PathToEXE + "/CDBLastProj.cfg", std::ios::out);
-		std::string path = OpenProject->Path + "\\" + OpenProject->Name + ".berry";
+		std::string path = OpenProject->Path + "" + OpenProject->Name + ".berry";
 		OutputCurrentProject << path;
 		OutputCurrentProject.close();
 
@@ -152,8 +154,14 @@ namespace CDB
 		Main();
 	}
 
-	typedef Module* (__stdcall* f_GetModule)();
-	typedef BuildEngine* (__stdcall* f_GetBuildEngine)();
+#ifdef CDB_PLATFORM_WINDOWS
+	#define SharedLibLastChar 'l'
+#else 
+	#define SharedLibLastChar 'o'
+#endif
+
+	typedef Module* (CDB_MODULE_FUNC* f_GetModule)();
+	typedef BuildEngine* (CDB_MODULE_FUNC* f_GetBuildEngine)();
 	Application::Application()
 	{
 		Log::Init();
@@ -175,8 +183,10 @@ namespace CDB
 		}
 		RNAContext::InitRNAContext(PathToEXE + "\\Data\\data_tables\\");
 
-		SetDllDirectory(std::filesystem::path(PathToEXE).append("Build\\").c_str());
-		std::filesystem::directory_iterator ModuleFolder{ std::filesystem::path(PathToEXE).append("Modules\\")};
+		#ifdef CDB_PLATFORM_WINDOWS
+			SetDllDirectory(std::filesystem::path(PathToEXE).append("Build\\").c_str());
+		#endif
+		std::filesystem::directory_iterator ModuleFolder{ std::filesystem::path(PathToEXE).append("Modules")};
 		for (ModuleFolder; ModuleFolder != end; ++ModuleFolder)
 		{
 			if (std::filesystem::is_regular_file(*ModuleFolder))
@@ -184,34 +194,21 @@ namespace CDB
 				//check if it's a dll
 				auto CPath = ModuleFolder->path().c_str();
 				std::string Path = ModuleFolder->path().string();
-				if (CPath[Path.length() - 1] != 'l')    //If the last char is l, then we know it's probably a dll. Otherwise, we'll continue
-				{
-					continue;
-				}
 
-				//Load the dll
-				HINSTANCE DLLID = LoadLibrary(CPath);
-
-				if (!DLLID)
+				//TODO: Make this not scuffed
+				if (CPath[Path.length() - 1] != SharedLibLastChar)    //If the last char is l, then we know it's probably a dll. Otherwise, we'll continue
 				{
-					CDB_EditorError("Could not load dll \"{0}\" with error {1}", Path, GetLastError());
 					continue;
 				}
 
 				//Get the "GetModule" function
-				f_GetModule GetModule = (f_GetModule)GetProcAddress(DLLID, "GetModule");
-				if (!GetModule)
-				{
-					CDB_EditorError("Could not locate GetModule function in dll \"{0}\"", Path);
-					FreeLibrary(DLLID);
-					continue;
-				}
+				f_GetModule GetModule = GetSharedLibFunc<f_GetModule>(CPath, "GetModule");
 				Modules.push_back(GetModule());
 			}
 		}
 
 		//Load build engine
-		std::filesystem::directory_iterator BuildEngineFolder{ std::filesystem::path(PathToEXE).append("Build\\") };
+		std::filesystem::directory_iterator BuildEngineFolder{ std::filesystem::path(PathToEXE).append("Build") };
 		for (BuildEngineFolder; BuildEngineFolder != end; ++BuildEngineFolder)
 		{
 			if (std::filesystem::is_regular_file(*BuildEngineFolder))
@@ -219,27 +216,13 @@ namespace CDB
 				//check if it's a dll
 				auto CPath = BuildEngineFolder->path().c_str();
 				std::string Path = BuildEngineFolder->path().string();
-				if (CPath[Path.length() - 1] != 'l')    //If the last char is l, then we know it's probably a dll. Otherwise, we'll continue
+				if (CPath[Path.length() - 1] != SharedLibLastChar)    //If the last char is l, then we know it's probably a dll. Otherwise, we'll continue
 				{
-					continue;
-				}
-				//Load the dll
-				HINSTANCE DLLID = LoadLibrary(CPath);
-
-				if (!DLLID)
-				{
-					CDB_EditorError("Could not load dll \"{0}\"", Path);
 					continue;
 				}
 
-				//Get the "GetModule" function
-				f_GetBuildEngine GetBuildEngine = (f_GetBuildEngine)GetProcAddress(DLLID, "GetBuildEngine");
-				if (!GetBuildEngine)
-				{
-					CDB_EditorError("Could not locate GetModule function in dll \"{0}\"", Path);
-					FreeLibrary(DLLID);
-					continue;
-				}
+				//Get the "GetBuildEngine" function
+				f_GetBuildEngine GetBuildEngine = GetSharedLibFunc<f_GetBuildEngine>(CPath, "GetBuildEngine");
 				m_BuildEngine = GetBuildEngine();
 
 				break;

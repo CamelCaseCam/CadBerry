@@ -17,6 +17,9 @@ project "Glad"
         "include"
     }
 
+    filter "system:linux"
+        pic "On"
+
 	filter "system:windows"
         systemversion "latest"
         staticruntime "On"

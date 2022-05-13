@@ -2,6 +2,7 @@
 #include "CadBerry.h"
 #include "CadBerry/Project/Project.h"
 #include "CadBerry/Threading/ThreadPool.h"
+#include "CadBerry/ExecuteCommand.h"
 
 #include <filesystem>
 #include <stdlib.h>
@@ -12,6 +13,11 @@ void* PrecompileFilesTP(void* Params);
 void PrecompileFiles(std::string Subdir);
 bool IsChanged(std::string RelativePath);
 
+#define MODULE_API
+#ifdef CDB_PLATFORM_WINDOWS
+#define MODULE_API __declspec(dllexport)
+#endif
+
 
 
 //TODO: Make it so that this is editable via the project settings
@@ -20,7 +26,7 @@ std::string FullPrebuildPath;
 CDB::Application* CDBApp;
 
 
-class __declspec(dllexport) VSCodeWindow : public CDB::Viewport
+class MODULE_API VSCodeWindow : public CDB::Viewport
 {
 public:
 	VSCodeWindow() : CDB::Viewport("VSCode Window") {};
@@ -30,10 +36,12 @@ public:
 	{
 		CDBApp = &CDB::Application::Get();
 		CDB::Project* OpenProject = CDBApp->OpenProject.raw();    //If this returns nullptr, something is seriously broken with the core editor
-		std::string tmp1 = "/C code \"" + OpenProject->Path + "\"";
-		std::wstring tmp2 = std::wstring(tmp1.begin(), tmp1.end());
-		LPCWSTR params = tmp2.c_str();
-		ShellExecute(nullptr, NULL, L"cmd.exe", params, 0, SW_HIDE);
+		#ifdef CDB_PLATFORM_WINDOWS
+		CDB::ExecCommand("cmd.exe", "/C code \"" + OpenProject->Path + "\"")
+		#else
+		CDB::ExecCommand("code", "\"" + OpenProject->Path + "\"");
+		#endif
+
 		this->Background = true;
 
 		if (s_Instance != nullptr)
@@ -105,7 +113,7 @@ bool IsChanged(std::string RelativePath)
 	return true;
 }
 
-class __declspec(dllexport) VSCodeIntegrationModule : public CDB::Module
+class MODULE_API VSCodeIntegrationModule : public CDB::Module
 {
 public:
 	VSCodeIntegrationModule() : CDB::Module("VSCode integration module") {}
@@ -127,8 +135,15 @@ public:
 //Expose the module to CadBerry
 extern "C"
 {
+#ifdef CDB_PLATFORM_WINDOWS
 	__declspec(dllexport) CDB::Module* __stdcall GetModule()
 	{
 		return new VSCodeIntegrationModule();
 	}
+#else
+	CDB::Module* GetModule()
+	{
+		return new VSCodeIntegrationModule();
+	}
+#endif
 }

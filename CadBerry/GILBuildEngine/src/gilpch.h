@@ -16,4 +16,6 @@
 //Some CadBerry stuff in the pch
 #include "CadBerry/Log.h"
 
+#ifdef CDB_PLATFORM_WINDOWS
 #include <Windows.h>
+#endif

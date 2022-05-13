@@ -2,6 +2,7 @@
 #include "Update.h"
 #include "LoadPackages.h"
 #include "CadBerry/Application.h"
+#include "CadBerry/ExecuteCommand.h"
 
 #include "imgui.h"
 
@@ -44,14 +45,8 @@ namespace CDB
 						}
 						CDB_BuildInfo(tmp1);
 
-						std::wstring tmp2 = std::wstring(tmp1.begin(), tmp1.end());
-
-						LPCWSTR params = tmp2.c_str();
-
 						std::string tmp3 = Application::Get().PathToEXE + "/CadBerry_updater";
-						std::wstring tmp4 = std::wstring(tmp3.begin(), tmp3.end());
-						LPCWSTR ExeName = tmp4.c_str();
-						ShellExecute(nullptr, NULL, ExeName, params, 0, SW_SHOW);
+						ExecCommand(tmp3, tmp1);
 						exit(0);
 					}
 				}

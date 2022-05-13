@@ -12,7 +12,7 @@ namespace CDB
 	//Element name is what we should call the elements when adding them
 	void InputStringVector(const std::string& name, std::vector<std::string>& Vec, const char* ElementName, const char* StringName)
 	{
-		ImGui::BeginChild((int)&name);
+		ImGui::BeginChild((uint64_t)&name);
 		ImGui::Text(name.c_str());
 
 		int ToBeRemoved = -1;
@@ -41,7 +41,7 @@ namespace CDB
 	bool InputStringVectorElement(const char* name, std::string& str, const char* ElementName)
 	{
 		//ImGui::BeginChild((int)&str);
-		std::string End = "##" + std::to_string((int)&str);
+		std::string End = "##" + std::to_string((uint64_t)&str);
 		ImGui::InputText((std::string(name) + End).c_str(), &str);
 		ImGui::SameLine();
 		bool output = ImGui::Button((std::string("Delete ") + ElementName + End).c_str());
