@@ -21,6 +21,8 @@ namespace CDB
 		std::string Path;
 		std::string PreBuildDir = "\\.GILCache\\";
 
+		std::string PathToBerryFile;    //Allows you to change the name but keep the same file
+
 		bool PrecompileFiles = true;
 		float PrecompilationInterval = 30.0f;
 
@@ -40,6 +42,7 @@ namespace CDB
 		{
 			this->Name = Name;
 			this->Path = Path;
+			this->PathToBerryFile = Path + "/" + Name + ".berry";
 		}
 
 		~Project() {}

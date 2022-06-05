@@ -12,4 +12,9 @@ namespace CDB
 	{
 
 	}
+
+	void Layer::HeadlessInput()
+	{
+		std::cout << "Sorry, the layer \"" << m_Name << "\" does not support headless mode" << std::endl;
+	}
 }

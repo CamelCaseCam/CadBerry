@@ -12,6 +12,7 @@ namespace CDB
 		ProjectCreationLayer(std::vector<ProjInfo> projects) : Projects(projects) {}
 		virtual void OnImGuiRender() override;
 		virtual void OnAttach() override;
+		virtual void HeadlessInput() override;
 
 	private:
 		char ProjectName[64] = "New CadBerry Project";    //TODO: Change this to use std::string

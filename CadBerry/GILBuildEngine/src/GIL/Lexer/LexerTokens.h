@@ -18,6 +18,13 @@ namespace GIL
 			SETATTR,
 			PARAM,
 
+			CREATEVAR,
+			INC,
+			DEC,
+			PREPRO_IF,
+			PREPRO_ELSE,
+			PREPRO_ENDIF,
+
 			SETTARGET,
 			BEGINREGION,
 			ENDREGION,
@@ -66,6 +73,12 @@ namespace GIL
 
 			RPAREN,
 			LPAREN,
+			COMMA,
+
+			//Type stuff
+			ASSIGNTYPE,
+			TYPEDEF,
+			INHERITS,
 		};
 
 		GILAPI extern std::unordered_map<LexerToken, std::string> LexerToken2Str;

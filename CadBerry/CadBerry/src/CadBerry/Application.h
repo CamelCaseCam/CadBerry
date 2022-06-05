@@ -40,6 +40,7 @@ namespace CDB
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *EditorWindow; }
 		inline void AddViewport(Viewport* viewport) { Viewports->AddViewport(viewport); }
+		inline ViewportLayer* GetViewportLayer() { return this->Viewports; }
 
 		scoped_ptr<Project> OpenProject = nullptr;
 

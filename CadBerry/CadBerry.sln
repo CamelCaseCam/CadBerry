@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CDBRNA", "CadBerry\vendor\R
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry", "CadBerry\CadBerry.vcxproj", "{918CE669-7D59-4175-A672-2F1D929E7603}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry_test", "CadBerry_test\CadBerry_test.vcxproj", "{F07F1275-5C40-8EAB-257B-D72891FAD287}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry_updater", "CadBerry_updater\CadBerry_updater.vcxproj", "{C5D584DF-B1CE-A331-DA00-89B6C658833D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Modules\Core\Core.vcxproj", "{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}"
@@ -47,6 +49,10 @@ Global
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Debug|x64.Build.0 = Debug|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.ActiveCfg = Release|x64
 		{918CE669-7D59-4175-A672-2F1D929E7603}.Release|x64.Build.0 = Release|x64
+		{F07F1275-5C40-8EAB-257B-D72891FAD287}.Debug|x64.ActiveCfg = Debug|x64
+		{F07F1275-5C40-8EAB-257B-D72891FAD287}.Debug|x64.Build.0 = Debug|x64
+		{F07F1275-5C40-8EAB-257B-D72891FAD287}.Release|x64.ActiveCfg = Release|x64
+		{F07F1275-5C40-8EAB-257B-D72891FAD287}.Release|x64.Build.0 = Release|x64
 		{C5D584DF-B1CE-A331-DA00-89B6C658833D}.Debug|x64.ActiveCfg = Debug|x64
 		{C5D584DF-B1CE-A331-DA00-89B6C658833D}.Debug|x64.Build.0 = Debug|x64
 		{C5D584DF-B1CE-A331-DA00-89B6C658833D}.Release|x64.ActiveCfg = Release|x64

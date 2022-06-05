@@ -1,4 +1,5 @@
 #include <CadBerry.h>
+#include <iostream>
 
 int main(int argc, char** argv)
 {
@@ -6,13 +7,10 @@ int main(int argc, char** argv)
 
 	for (int i = 0; i < argc; ++i)
 	{
-		if (argv[i] == "--headless")
+		if (std::string(argv[i]) == "--headless")    //I know this is bad, but I don't care
 		{
 			headless = true;
-		}
-		else if (argv[i] == "--test")
-		{
-			//TODO: tests
+			break;
 		}
 	}
 

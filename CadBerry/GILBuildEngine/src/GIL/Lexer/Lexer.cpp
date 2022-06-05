@@ -13,10 +13,11 @@ namespace GIL
 		Token* StartsWithLetter(std::string& Text, int& i);
 		Token* GetIdent(std::string& Text, int& i);
 		Token* GetPrepro(std::string& Text, int& i);
+		Token* GetDNALiteral(std::string& Text, int& i);
 		Token* GetAminoSequence(std::string& Text, int& i);
 		Token* GetComment(std::string& Text, int& i);
 		Token* GetMultilineComment(std::string& Text, int& i);
-		Token* GetIfInnerCode(std::string& Text, int& i);
+		Token* GetParam(std::string& Text, int& i);
 		Token* GetOp(std::string& Text, int& i);
 
 		void GetMapToken(Token*& t, std::unordered_map<std::string, Token**>& Dict, std::string& TokenName, Token* Default);
@@ -42,6 +43,9 @@ namespace GIL
 				case '}':
 					OutputTokens->push_back(Token::End);
 					break;
+				case ',':
+					OutputTokens->push_back(Token::Comma);
+					break;
 				InAlphabet    //Simple macro to check if the char is in the alphabet
 					OutputTokens->push_back(StartsWithLetter(Text, i));
 					break;
@@ -49,7 +53,8 @@ namespace GIL
 					OutputTokens->push_back(GetPrepro(Text, i));
 					break;
 				case '$':
-					OutputTokens->push_back(GetIfInnerCode(Text, i));
+					++i;
+					OutputTokens->push_back(GetParam(Text, i));
 					break;
 				case '@':
 					OutputTokens->push_back(GetAminoSequence(Text, i));
@@ -122,11 +127,30 @@ namespace GIL
 					OutputTokens->push_back(NewToken);
 					break;
 				}
+				case '\'':
+					++i;
+					OutputTokens->push_back(GetDNALiteral(Text, i));
+					break;
 				case ':':
 				{
 					if (OutputTokens->operator[](OutputTokens->size() - 1)->TokenType != LexerToken::IDENT)
 					{
+						if ((*OutputTokens)[OutputTokens->size() - 1]->TokenType == LexerToken::RPAREN)
+						{
+							//TODO: fix this
+							OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
+							break;
+						}
 						CDB_BuildError("Expected namespace name");
+					}
+
+					//if it's a type assignment
+					if ((*OutputTokens)[OutputTokens->size() - 2]->TokenType == LexerToken::DEFINESEQUENCE
+						|| (*OutputTokens)[OutputTokens->size() - 2]->TokenType == LexerToken::DEFOP)
+					{
+						//TODO: fix this
+						OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
+						break;
 					}
 					CDB_BuildInfo("Get Namespace");
 					OutputTokens->operator[](OutputTokens->size() - 1)->TokenType = LexerToken::NAMESPACE;
@@ -184,19 +208,12 @@ namespace GIL
 			return T;
 		}
 
-		Token* GetIfInnerCode(std::string& Text, int& i)
+		Token* GetParam(std::string& Text, int& i)
 		{
-			Token* T;
 			std::string s;
 			GetWord(Text, s, i);
 
-			GetMapToken(T, OpRegions, s, nullptr);
-			if (T == nullptr)
-			{
-				CDB_BuildError("Error unknown token {0}", s);
-				return T;
-			}
-			return T;
+			return new Token(LexerToken::PARAM, s);
 		}
 
 		//One change between this version of gil and the c# version of gil is amino acid sequences. In GIL 1, you'd wrap them in AminoSequence {}
@@ -300,6 +317,19 @@ namespace GIL
 			Output.reserve(WordLen);    //Reserve the length of the string
 			for (WordStart; WordStart < i; ++WordStart)
 				Output += Text[WordStart];
+		}
+
+		Token* GetDNALiteral(std::string& Text, int& i)
+		{
+			Token* Output = new Token(LexerToken::DNA, "");
+			int WordLen = 0;
+			int WordStart = i;
+			for (i; i < Text.length() && Text[i] != '\''; ++i)
+				++WordLen;
+			Output->Value.reserve(WordLen);
+			for (WordStart; WordStart < i; ++WordStart)
+				Output->Value += Text[WordStart];
+			return Output;
 		}
 	}
 }

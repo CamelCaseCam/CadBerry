@@ -17,6 +17,8 @@ namespace GIL
 			{"bool", &Token::Bool},
 			{"true", &Token::True},
 			{"false", &Token::False},
+			{"typedef", &Token::Typedef},
+			{"inherits", &Token::Inherits},
 		});
 
 		std::unordered_map<std::string, LexerToken> PreprocessorDirectives = std::unordered_map<std::string, LexerToken>({
@@ -34,6 +36,25 @@ namespace GIL
 
 			{"#EndRegion", LexerToken::ENDREGION},
 			{"#endRegion", LexerToken::ENDREGION},
+
+			{"#var", LexerToken::CREATEVAR},
+			{"#Var", LexerToken::CREATEVAR},
+
+			{"#inc", LexerToken::INC},
+			{"#Inc", LexerToken::INC},
+
+			{"#dec", LexerToken::DEC},
+			{"#Dec", LexerToken::DEC},
+
+			{"#if", LexerToken::PREPRO_IF},
+			{"#If", LexerToken::PREPRO_IF},
+
+			{"#else", LexerToken::PREPRO_ELSE},
+			{"#Else", LexerToken::PREPRO_ELSE},
+
+			{"#endif", LexerToken::PREPRO_ENDIF},
+			{"#endIf", LexerToken::PREPRO_ENDIF},
+			{"#EndIf", LexerToken::PREPRO_ENDIF},
 		});
 
 		std::unordered_map<std::string, Token**> OpRegions = std::unordered_map<std::string, Token**>({    //Stuff like $InnerCode

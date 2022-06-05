@@ -6,3 +6,4 @@
 
 #include "RNA_class/RNA.h"
 #include "RNA_class/HybridRNA.h"
+#undef min

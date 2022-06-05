@@ -112,7 +112,7 @@ namespace GIL
 				case LexerToken::SETTARGET:
 				{
 					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT)
+					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
 					{
 						CDB_BuildError("Expected target organism name after #Target");
 						break;
@@ -138,6 +138,53 @@ namespace GIL
 					Target->Attributes[AttrName] = Tokens[i]->Value;
 					break;
 				}
+				case LexerToken::CREATEVAR:
+					if (i < Tokens.size() - 2)
+					{
+						//Get the type and variable name
+						if (Tokens[i + 1]->TokenType != LexerToken::IDENT && Tokens[i + 1]->TokenType != LexerToken::STRING)
+						{
+							CDB_BuildError("Could not find type name for #Var");
+							break;
+						}
+						if (Tokens[i + 2]->TokenType != LexerToken::IDENT && Tokens[i + 2]->TokenType != LexerToken::STRING)
+						{
+							CDB_BuildError("Could not find variable name for #Var");
+							break;
+						}
+						//Just because you can create a numerical variable with the type "tree" doesn't mean you should
+						bool IsStr = Tokens[i + 1]->Value == "str" || Tokens[i + 1]->Value == "Str";
+						std::string& VarName = Tokens[i + 2]->Value;
+						i += 2;
+						
+						//If there's a value specified, set the variable to the value
+						if (i < Tokens.size() - 1)
+						{
+							i += 1;
+							if (IsStr)
+							{
+								Target->StrVars[VarName] = Tokens[i]->Value;
+							}
+							else
+							{
+								Target->NumVars[VarName] = std::stod(Tokens[i]->Value);
+							}
+						}
+						else    //Otherwise, set it to a default value
+						{
+							if (IsStr)
+							{
+								Target->StrVars[VarName] = "";
+							}
+							else
+							{
+								Target->NumVars[VarName] = 0.0;
+							}
+						}
+						break;
+					}
+					CDB_BuildError("#Var requires a type name and variable name, file ends before these are found");
+					break;
 				case LexerToken::OPTIMIZE:    //Optimization settings
 				{
 					++i;
@@ -164,6 +211,33 @@ namespace GIL
 						break;
 					}
 				}
+				case LexerToken::TYPEDEF:
+					if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::IDENT)
+					{
+						CDB_BuildError("Typedef was called without a type to define");
+						break;
+					}
+					++i;
+					Target->AllocType(Tokens[i]->Value);
+					break;
+				case LexerToken::INHERITS:
+					if (Tokens[i - 1]->TokenType != LexerToken::IDENT)
+					{
+						CDB_BuildError("\"inherits\" keyword requires name of child type");
+						break;
+					}
+					if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::IDENT)
+					{
+						CDB_BuildError("\"inherits\" keyword requires name of parent type (child type was \"{0}\")", Tokens[i - 1]->Value);
+						break;
+					}
+					Target->AddInheritance(Target->GetTypeByName(Tokens[i - 1]->Value), Target->GetTypeByName(Tokens[i + 1]->Value));
+
+					//If there's an extra IDENT, remove it
+					if (Target->Main[Target->Main.size() - 1] == Tokens[i - 1])
+						Target->Main.erase(Target->Main.end() - 1);
+					++i;
+					break;
 				case LexerToken::IMPORT:    //Adds file name to imports, but the compiler imports the files
 					++i;
 					if (Tokens[i]->TokenType != LexerToken::STRING)
@@ -223,32 +297,33 @@ namespace GIL
 				GetOperation(it->first, it->second, CreatedSequences, CreatedOps, Sequences, Operations, Target);
 			}
 
-			for (int i = 0; i < Tokens.size(); ++i)    //Do forwards
+			for (int i = 0; i < Target->Main.size(); ++i)    //Do forwards
 			{
-				switch (Tokens[i]->TokenType)
+				switch (Target->Main[i]->TokenType)
 				{
 				case LexerToken::FORWARD:
-					if (!(i > 0 && Tokens[i - 1]->TokenType == LexerToken::IDENT))
+					if (!(i > 0 && Target->Main[i - 1]->TokenType == LexerToken::IDENT))
 					{
 						CDB_BuildError("Missing IDENT token before or after forward (=>)");
 						break;
 					}
 
-					if (Tokens[i + 1]->TokenType == LexerToken::IDENT)
+					if (Target->Main[i + 1]->TokenType == LexerToken::IDENT)
 					{
-						if (Target->Sequences.find(Tokens[i + 1]->Value) != Target->Sequences.end())
+						if (Target->Sequences.contains(Target->Main[i + 1]->Value))
 						{
 							//If the forward's pointing to a valid sequence set the first part to the second part's pointer
-							Target->Sequences[Tokens[i - 1]->Value] = new SequenceForward(Target->Sequences[Tokens[i + 1]->Value], Tokens[i + 1]->Value);
-							break;
-						}
-						else if (Target->Operations.find(Tokens[i + 1]->Value) != Target->Operations.end())
-						{
-							Target->Operations[Tokens[i - 1]->Value] = new OperationForward(Target->Operations[Tokens[i + 1]->Value], Tokens[i + 1]->Value);
+							Sequence* Seq = new SequenceForward(Target->Sequences[Target->Main[i + 1]->Value], Target->Main[i + 1]->Value);
+							Seq->ParamIdx2Name = Target->Sequences[Target->Main[i + 1]->Value]->ParamIdx2Name;
+							Target->Sequences[Target->Main[i - 1]->Value] = Seq;
+
+							//Make sure the forward doesn't get added
+							Target->Main.erase(Target->Main.begin() + i - 1, Target->Main.begin() + i + 2);
+							i -= 2;
 							break;
 						}
 
-						CDB_BuildError("Could not find sequence or operation {0}", Tokens[i + 1]->Value);
+						CDB_BuildError("Could not find sequence or operation {0}", Target->Main[i + 1]->Value);
 					}
 					break;
 				case LexerToken::BOOL:
@@ -480,12 +555,23 @@ namespace GIL
 				++NumTokens;
 				switch (Tokens[i]->TokenType)
 				{
+				case LexerToken::LPAREN:
 				case LexerToken::BEGIN:
 					++Depth;
 					break;
+				case LexerToken::RPAREN:
+					--Depth;
+					continue;
 				case LexerToken::END:
 					--Depth;
 					break;
+				case LexerToken::ASSIGNTYPE:
+					if (Tokens[i + 1]->TokenType == LexerToken::IDENT)
+					{
+						++NumTokens;
+						++i;
+					}
+					continue;
 				case LexerToken::NEWLINE:
 				case LexerToken::COMMENT:
 					continue;
@@ -507,6 +593,8 @@ namespace GIL
 			return OutputTokens;
 		}
 
+		void GetTypeInfo(Project* Proj, Sequence* Seq, int& i, std::vector<Token*>& Tokens);
+
 		void GetSequence(std::string Name, std::vector<Token*>& Tokens, std::vector<std::string>& CompletedSequences, std::vector<std::string>& CompletedOps, std::map<std::string,
 			std::vector<Token*>>& Sequences, std::map<std::string, std::vector<Token*>>& Operations, Project* Target)
 		{
@@ -520,22 +608,119 @@ namespace GIL
 			Target->Sequences[Name] = nullptr;
 
 			//We want to compile sequence dependencies first
-			for (Token* t : Tokens)
+			for (int i = 0; i < Tokens.size(); ++i)
 			{
-				switch (t->TokenType)
+				switch (Tokens[i]->TokenType)
 				{
 				case LexerToken::IDENT:
-					GetSequence(t->Value, Sequences[t->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
+					if (Tokens[i - 1]->TokenType == LexerToken::ASSIGNTYPE)
+						break;
+					//GetSequence(Tokens[i]->Value, Sequences[Tokens[i]->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
 					break;
 				case LexerToken::CALLOP:
-					GetOperation(t->Value, Operations[t->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
+					//GetOperation(Tokens[i]->Value, Operations[Tokens[i]->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
+					break;
+
+				//Skip parentheses
+				case LexerToken::LPAREN:
+					Compiler::GetTokensInBetween(Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
 					break;
 				default:
 					break;
 				}
 			}
 
-			Target->Sequences[Name] = new StaticSequence(Tokens);
+			//Get the parameters
+			int i = 0;
+			StaticSequence* Seq = new StaticSequence();
+			if (Tokens[0]->TokenType == LexerToken::LPAREN)
+			{
+				for (i = 1; i < Tokens.size(); ++i)
+				{
+					if (Tokens[i]->TokenType == LexerToken::PARAM && Tokens[i]->Value != "InnerCode")
+					{
+						Seq->ParamIdx2Name.push_back(Tokens[i]->Value);
+					}
+					else if (Tokens[i]->TokenType == LexerToken::RPAREN)
+					{
+						++i;
+						break;
+					}
+				}
+			}
+
+			//Now get types if they were provided (syntax "sequence s($Type1 $Type2) : (any, cds) : cds")
+			if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
+			{
+				GetTypeInfo(Target, Seq, i, Tokens);
+			}
+
+			Seq->SetTokens(std::vector<Token*>(Tokens.begin() + i, Tokens.end()));
+
+			Target->Sequences[Name] = Seq;
+		}
+
+		void GetTypeInfo(Project* Proj, Sequence* Seq, int& i, std::vector<Token*>& Tokens)
+		{
+			if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
+				++i;
+			//Get the parameter types
+			if (Tokens[i]->TokenType == LexerToken::LPAREN)
+			{
+				++i;
+				int ParamIdx = 0;
+				for (i; i < Tokens.size(); ++i)
+				{
+					if (Tokens[i]->TokenType == LexerToken::IDENT)
+					{
+						Seq->ParameterTypes[Seq->ParamIdx2Name[ParamIdx]] = Proj->GetTypeByName(Tokens[i]->Value);
+						++ParamIdx;
+					}
+					else if (Tokens[i]->TokenType == LexerToken::PARAM)
+					{
+						if (i >= Tokens.size() - 2)
+						{
+							CDB_BuildError("Parameter \"{0}\" was typed by name, but no type was given", Tokens[i]->Value);
+							return;
+						}
+
+						//Parameters can be assigned types by name using the syntax "sequence seq($Param) : ($Param : cds)"
+						if (Tokens[i + 1]->TokenType != LexerToken::ASSIGNTYPE)
+						{
+							CDB_BuildError("Parameter \"{0}\" was typed by name, but the type was not assigned (types are assigned using a colon)", Tokens[i]->Value);
+							return;
+						}
+
+						if (Tokens[i + 2]->TokenType != LexerToken::IDENT)
+						{
+							CDB_BuildError("Parameter \"{0}\" was typed by name, but no type was given", Tokens[i]->TokenType);
+							return;
+						}
+
+						//Set the type
+						Seq->ParameterTypes[Tokens[i]->Value] = Proj->GetTypeByName(Tokens[i + 2]->Value);
+						i += 2;
+					}
+					else if (Tokens[i]->TokenType == LexerToken::RPAREN)
+					{
+						++i;
+						break;
+					}
+				}
+			}
+
+			//Now get the sequence's type
+			if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
+			{
+				if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::IDENT)
+				{
+					CDB_BuildError("Sequence was assigned a type, but no type was given");
+					return;
+				}
+
+				Seq->SeqType = Proj->GetTypeByName(Tokens[i + 1]->Value);
+				i += 2;
+			}
 		}
 
 		void GetOperation(std::string Name, std::vector<Token*>& Tokens, std::vector<std::string>& CompletedSequences, std::vector<std::string>& CompletedOps, std::map<std::string,
@@ -548,13 +733,9 @@ namespace GIL
 			}
 
 			CompletedOps.push_back(Name);
-			DynamicOperation* NewOp = new DynamicOperation();
-			Target->Operations[Name] = NewOp;
-			NewOp->tokens.reserve(Tokens.size());
 
 			for (Token* t : Tokens)
 			{
-				NewOp->tokens.push_back(t);
 				switch (t->TokenType)
 				{
 				case LexerToken::IDENT:
@@ -566,6 +747,39 @@ namespace GIL
 				default:
 					break;
 				}
+			}
+
+			//Get the parameters
+			if (Tokens[0]->TokenType == LexerToken::LPAREN)
+			{
+				StaticSequence* NewOp = new StaticSequence();
+				int i = 1;
+				for (i = 1; i < Tokens.size(); ++i)
+				{
+					if (Tokens[i]->TokenType == LexerToken::PARAM && Tokens[i]->Value != "InnerCode")
+					{
+						NewOp->ParamIdx2Name.push_back(Tokens[i]->Value);
+					}
+					else if (Tokens[i]->TokenType == LexerToken::RPAREN)
+					{
+						++i;
+						break;
+					}
+				}
+
+				//Now get types if they were provided (syntax "sequence s($Type1 $Type2) : (any, cds) : cds")
+				if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
+				{
+					++i;
+					GetTypeInfo(Target, NewOp, i, Tokens);
+				}
+
+				NewOp->SetTokens(std::vector<Token*>(Tokens.begin() + i, Tokens.end()));
+				Target->Sequences[Name] = NewOp;
+			}
+			else
+			{
+				Target->Sequences[Name] = new StaticSequence(Tokens);
 			}
 		}
 
@@ -686,13 +900,38 @@ namespace GIL
 			{
 				SaveString(s, OutputFile);
 			}
+
+			//Write the variables to the file
+			Len = this->StrVars.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (auto& var : this->StrVars)
+			{
+				SaveString(var.first, OutputFile);
+				SaveString(var.second, OutputFile);
+			}
+
+			Len = this->NumVars.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (auto& var : this->NumVars)
+			{
+				SaveString(var.first, OutputFile);
+				OutputFile.write((char*)&var.second, sizeof(double));
+			}
+
+			//Write the types to the file
+			Len = this->Types.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (Type* type : this->Types)
+			{
+				if (type->IsUserType())
+				{
+					type->Save(OutputFile);
+				}
+			}
 		}
 
 		//CGIL function definitions:
-		Project* LoadCGIL0(std::ifstream& InputFile);
-		Project* LoadCGIL1(std::ifstream& InputFile);
-		Project* LoadCGIL2(std::ifstream& InputFile);
-		Project* LoadCGIL3(std::ifstream& InputFile);
+		Project* LoadCGIL4(std::ifstream& InputFile);
 
 		Project* Project::Load(std::string Path)
 		{
@@ -707,22 +946,23 @@ namespace GIL
 			switch (Version)
 			{
 			case 0:
-				return LoadCGIL0(InputFile);
 			case 1:
-				return LoadCGIL1(InputFile);
 			case 2:
-				return LoadCGIL2(InputFile);
 			case 3:
-				return LoadCGIL3(InputFile);
+				CDB_BuildFatal("CGIL version {0} is not supported by this version of GIL", Version);
+				return nullptr;    //Just in case
+			case 4:
+				return LoadCGIL4(InputFile);
 			default:
 				CDB_BuildFatal("Error reading CGIL version from path {0}", Path);
+				return nullptr;
 			}
 		}
 
 		//Some more func defs
 		void GetNamespace(std::vector<std::string*>& Namespaces, std::vector<Lexer::Token*>* Tokens, int i);
 
-		Sequence* Project::GetSeq(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
+		std::pair<Sequence*, Project*> Project::GetSeq(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
 		{
 			std::string& SeqName = (*Tokens)[i]->Value;    //Save the name of the sequence
 			if ((*Tokens)[i - 1]->TokenType == LexerToken::NAMESPACE)
@@ -731,11 +971,11 @@ namespace GIL
 				GetNamespace(Namespaces, Tokens, i - 1);    //Get the namespaces. For example, N1::N2::N3 becomes [N1, N2, N3]
 				if (Modules->contains(*Namespaces[0]))
 				{
-					return (*Modules)[*Namespaces[0]]->GetSequence(SeqName);
+					return { (*Modules)[*Namespaces[0]]->GetSequence(SeqName), nullptr };
 				}
-				return this->Namespaces[*Namespaces[0]]->GetSeqFromNamespace(SeqName, Namespaces, 1, Modules);
+				return { this->Namespaces[*Namespaces[0]]->GetSeqFromNamespace(SeqName, Namespaces, 1, Modules), this->Namespaces[*Namespaces[0]] };
 			}
-			return Sequences[SeqName];
+			return { Sequences[SeqName], this };
 		}
 
 		//Recursively traverse namespaces until you get to the one with the sequence
@@ -771,6 +1011,69 @@ namespace GIL
 			return Operations[OpName];
 		}
 
+
+
+		uint16_t Project::AllocType(std::string TypeName)
+		{
+			//If the type already exists, return a reference to it
+			if (TypeName2Idx.contains(TypeName))
+				return TypeName2Idx[TypeName];
+			
+			//Throw an error if the max number of types have been created
+			if (Types.size() == UINT16_MAX)
+			{
+				CDB_BuildError("Failed to allocate new type with name \"{0}\", too many types have been created (max {1})", TypeName, UINT16_MAX - 1);
+				return UINT16_MAX;
+			}
+
+			uint16_t ID = (uint16_t)Types.size();
+			TypeName2Idx[TypeName] = ID;
+			Types.push_back(new Type(TypeName, ID));
+			return ID;
+		}
+
+		Type* Project::GetTypeByID(uint16_t ID)
+		{
+			return Types[ID];
+		}
+
+		Type* Project::GetTypeByName(std::string& Name)
+		{
+			return Types[TypeName2Idx[Name]];
+		}
+
+		void Project::AddInheritance(Type* child, Type* parent)
+		{
+			child->AddInheritance(parent);
+		}
+
+		void Project::AddInheritance(Type* child, uint16_t parent)
+		{
+			AddInheritance(child, Types[parent]);
+		}
+
+		void Project::AddInheritance(uint16_t child, uint16_t parent)
+		{
+			AddInheritance(Types[child], Types[parent]);
+		}
+
+
+
+		void Project::RemoveInheritance(Type* child, Type* parent)
+		{
+			child->RemoveInheritance(parent);
+		}
+
+		void Project::RemoveInheritance(Type* child, uint16_t parent)
+		{
+			RemoveInheritance(child, Types[parent]);
+		}
+
+		void Project::RemoveInheritance(uint16_t child, uint16_t parent)
+		{
+			RemoveInheritance(Types[child], Types[parent]);
+		}
+
 		void GetNamespace(std::vector<std::string*>& Namespaces, std::vector<Lexer::Token*>* Tokens, int i)
 		{
 			int idx = i;
@@ -788,97 +1091,7 @@ namespace GIL
 			}
 		}
 
-		Project* LoadCGIL0(std::ifstream& InputFile)
-		{
-			int IntVal;    //GIL versions are only for debugging, so read them into a useless buffer
-			InputFile.read((char*)&IntVal, sizeof(int));
-			InputFile.read((char*)&IntVal, sizeof(int));
-			InputFile.read((char*)&IntVal, sizeof(int));
-
-			Project* Proj = new Project();
-			LoadStringFromFile(Proj->TargetOrganism, InputFile);    //Load the target organism
-
-			int Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the operations
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Operations[Name] = new DynamicOperation();
-				Proj->Operations[Name]->Load(InputFile);
-			}
-
-			Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the sequences
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = new StaticSequence();
-				Proj->Sequences[Name]->Load(InputFile);
-			}
-
-			Len = 0;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the entry point
-			Proj->Main.reserve(Len);
-			for (int i = 0; i < Len; ++i)
-			{
-				Proj->Main.push_back(Token::Load(InputFile));
-			}
-			return Proj;
-		}
-
-		Project* LoadCGIL1(std::ifstream& InputFile)
-		{
-			int IntVal;    //GIL versions are only for debugging, so read them into a useless buffer
-			InputFile.read((char*)&IntVal, sizeof(int));
-			InputFile.read((char*)&IntVal, sizeof(int));
-			InputFile.read((char*)&IntVal, sizeof(int));
-
-			Project* Proj = new Project();
-			LoadStringFromFile(Proj->TargetOrganism, InputFile);    //Load the target organism
-
-			int Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the operations
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Operations[Name] = new DynamicOperation();
-				Proj->Operations[Name]->Load(InputFile);
-			}
-
-			Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the sequences
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = new StaticSequence();
-				Proj->Sequences[Name]->Load(InputFile);
-			}
-
-			Len = 0;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the entry point
-			Proj->Main.reserve(Len);
-			for (int i = 0; i < Len; ++i)
-			{
-				Proj->Main.push_back(Token::Load(InputFile));
-			}
-
-			Len = 0;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the imports
-			Proj->Imports.reserve(Len);
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string buff;
-				LoadStringFromFile(buff, InputFile);
-				Proj->Imports.push_back(std::move(buff));
-			}
-			return Proj;
-		}
-
-		Project* LoadCGIL2(std::ifstream& InputFile)
+		Project* LoadCGIL4(std::ifstream& InputFile)
 		{
 			int IntVal;    //GIL versions are only for debugging, so read them into a useless buffer
 			InputFile.read((char*)&IntVal, sizeof(int));
@@ -903,64 +1116,7 @@ namespace GIL
 			{
 				std::string Name;
 				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile);
-			}
-
-			Len = 0;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the entry point
-			Proj->Main.reserve(Len);
-			for (int i = 0; i < Len; ++i)
-			{
-				Proj->Main.push_back(Token::Load(InputFile));
-			}
-
-			Len = 0;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the imports
-			Proj->Imports.reserve(Len);
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string buff;
-				LoadStringFromFile(buff, InputFile);
-				Proj->Imports.push_back(std::move(buff));
-			}
-
-			Len = 0;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the namespaces
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Namespaces[Name] = Project::Load(InputFile, Name);
-			}
-			return Proj;
-		}
-
-		Project* LoadCGIL3(std::ifstream& InputFile)
-		{
-			int IntVal;    //GIL versions are only for debugging, so read them into a useless buffer
-			InputFile.read((char*)&IntVal, sizeof(int));
-			InputFile.read((char*)&IntVal, sizeof(int));
-			InputFile.read((char*)&IntVal, sizeof(int));
-
-			Project* Proj = new Project();
-			LoadStringFromFile(Proj->TargetOrganism, InputFile);    //Load the target organism
-
-			int Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the operations
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Operations[Name] = Operation::LoadOperation(InputFile);
-			}
-
-			Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the sequences
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile);
+				Proj->Sequences[Name] = Sequence::LoadSequence(InputFile, Proj);
 			}
 
 			Len = 0;
@@ -999,7 +1155,38 @@ namespace GIL
 				LoadStringFromFile(buff, InputFile);
 				Proj->Usings.push_back(std::move(buff));
 			}
+
+			//Load the variables
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			for (int i = 0; i < Len; ++i)
+			{
+				std::string key;
+				std::string val;
+				LoadStringFromFile(key, InputFile);
+				LoadStringFromFile(val, InputFile);
+				Proj->StrVars[key] = val;
+			}
+
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			for (int i = 0; i < Len; ++i)
+			{
+				std::string key;
+				double val;
+				LoadStringFromFile(key, InputFile);
+				InputFile.read((char*)&val, sizeof(double));
+				Proj->StrVars[key] = val;
+			}
 			return Proj;
+
+			//Load the types
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			for (int i = 0; i < Len; ++i)
+			{
+				Type().Load(InputFile, Proj);
+			}
 		}
 	}
 }

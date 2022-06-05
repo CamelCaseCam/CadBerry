@@ -14,6 +14,8 @@ namespace CDB
 		virtual void PreBuild(std::string& path, std::string& PreBuildDir) = 0;
 		virtual void Build(std::string& path, std::string& EntryPoint, std::string& PreBuildDir, std::string& OutputDir, 
 			std::string& OutputType) = 0;
+		virtual void* BuildConsole(std::string& path, std::string& EntryPoint, std::string& PreBuildDir, std::string& OutputType) { return nullptr; }
+		virtual void* BuildConsole(std::string src, std::string OutputType) { return nullptr; }
 
 		/*For compatability, these are all optional but HIGHLY encouraged in order to support full CadBerry projects.
 		* Also, this is probably going to be an expensive operation. This will be called before project compilation and only then (since CGIL 

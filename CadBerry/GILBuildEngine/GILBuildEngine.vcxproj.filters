@@ -106,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="src\Todos.h" />
     <ClInclude Include="src\gilpch.h" />
+    <ClInclude Include="src\GIL\Parser\ArchiveCGIL.h" />
+    <ClInclude Include="src\GIL\GILException.h" />
+    <ClInclude Include="src\GIL\Types\Type.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
@@ -164,5 +167,7 @@
       <Filter>GIL\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\gilpch.cpp" />
+    <ClCompile Include="src\GIL\GILException.cpp" />
+    <ClCompile Include="src\GIL\Types\Type.cpp" />
   </ItemGroup>
 </Project>

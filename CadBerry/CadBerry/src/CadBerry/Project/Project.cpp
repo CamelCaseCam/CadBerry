@@ -10,7 +10,7 @@ namespace CDB
 	void Project::WriteToFile()
 	{
 		std::ofstream OutputFile;
-		OutputFile.open(this->Path + "/" + this->Name + ".berry", std::ios::out | std::ios::binary);
+		OutputFile.open(this->PathToBerryFile, std::ios::out | std::ios::binary);
 
 		int IntVal = BerryProjectVersion;
 		OutputFile.write((char*)&IntVal, sizeof(int));    //Write berry project version
@@ -61,18 +61,24 @@ namespace CDB
 			InputFile.read((char*)&uselessdata, sizeof(int));
 		}
 
+		Project* OutputProject = nullptr;
 		switch (BerryVersion)
 		{
 		case 0:
-			return ReadProject::ReadVersion0(InputFile, path);
+			OutputProject = ReadProject::ReadVersion0(InputFile, path);
+			break;
 		case 1:
-			return ReadProject::ReadVersion1(InputFile, path);
+			OutputProject = ReadProject::ReadVersion1(InputFile, path);
+			break;
 		case 2:
-			return ReadProject::ReadVersion2(InputFile, path);
+			OutputProject = ReadProject::ReadVersion2(InputFile, path);
+			break;
 		default:
 			CDB_EditorFatal("CadBerry project file at location \"{0}\" shows an unknown project version ({1}). Most likely this file was corrupted.", path, BerryVersion);
 			return nullptr;
 		}
+		OutputProject->PathToBerryFile = path;
+		return OutputProject;
 	}
 
 	namespace ReadProject

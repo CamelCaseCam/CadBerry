@@ -12,6 +12,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <array>
 #include <memory>
 
 #ifdef CDB_PLATFORM_WINDOWS

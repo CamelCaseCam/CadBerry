@@ -37,7 +37,7 @@ public:
 		CDBApp = &CDB::Application::Get();
 		CDB::Project* OpenProject = CDBApp->OpenProject.raw();    //If this returns nullptr, something is seriously broken with the core editor
 		#ifdef CDB_PLATFORM_WINDOWS
-		CDB::ExecCommand("cmd.exe", "/C code \"" + OpenProject->Path + "\"")
+		CDB::ExecCommand("cmd.exe", "/C code \"" + OpenProject->Path + "\"");
 		#else
 		CDB::ExecCommand("code", "\"" + OpenProject->Path + "\"");
 		#endif

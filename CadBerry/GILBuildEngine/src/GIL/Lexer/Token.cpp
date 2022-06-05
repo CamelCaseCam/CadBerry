@@ -2,6 +2,7 @@
 #include "Token.h"
 #include "GIL/SaveFunctions.h"
 
+
 namespace GIL
 {
 	namespace Lexer
@@ -36,9 +37,13 @@ namespace GIL
 
 		Token* Token::LParen = new Token(LexerToken::LPAREN, "");
 		Token* Token::RParen = new Token(LexerToken::RPAREN, "");
+		Token* Token::Comma = new Token(LexerToken::COMMA, "");
 
 		Token* Token::True = new Token(LexerToken::BOOL_TRUE, "");
 		Token* Token::False = new Token(LexerToken::BOOL_FALSE, "");
+
+		Token* Token::Typedef = new Token(LexerToken::TYPEDEF, "");
+		Token* Token::Inherits = new Token(LexerToken::INHERITS, "");
 
 		Token* Token::UnknownToken = new Token(LexerToken::UNKNOWN, "");
 
@@ -156,6 +161,9 @@ namespace GIL
 
 			case LexerToken::LPAREN:
 			case LexerToken::RPAREN:
+
+			case LexerToken::TYPEDEF:
+			case LexerToken::INHERITS:
 
 			case LexerToken::UNKNOWN:
 				break;

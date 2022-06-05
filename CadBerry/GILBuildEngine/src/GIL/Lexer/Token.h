@@ -55,9 +55,13 @@ namespace GIL
 
 			static Token* LParen;
 			static Token* RParen;
+			static Token* Comma;
 
 			static Token* True;
 			static Token* False;
+
+			static Token* Typedef;
+			static Token* Inherits;
 
 			//I could add a forward (=>) token, but it'll have to be changed anyways into a forwardop or faorwardseq token so I won't
 

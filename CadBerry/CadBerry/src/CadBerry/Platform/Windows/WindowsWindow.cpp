@@ -1,6 +1,7 @@
 #include "cdbpch.h"
 
 #include "WindowsWindow.h"
+#include "CadBerry/Platform/Headless/HeadlessWindow.h"
 #include "CadBerry/Log.h"
 #include "CadBerry/Application.h"
 #include "WindowsInput.h"
@@ -26,6 +27,11 @@ namespace CDB
 	Window* Window::Create(const WindowProps& props)
 	{
 		return new WindowsWindow(props);
+	}
+
+	Window* Window::CreateHeadless(const WindowProps& props)
+	{
+		return new HeadlessWindow(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)

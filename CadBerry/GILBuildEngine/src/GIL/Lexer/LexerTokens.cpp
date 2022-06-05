@@ -18,6 +18,13 @@ namespace GIL
 			{LexerToken::BEGINREGION, "begin region"},
 			{LexerToken::ENDREGION, "end region"},
 
+			{LexerToken::CREATEVAR, "create variable"},
+			{LexerToken::INC, "increment variable"},
+			{LexerToken::DEC, "decrement variable"},
+			{LexerToken::PREPRO_IF, "preprocessor if"},
+			{LexerToken::PREPRO_ELSE, "preprocessor else"},
+			{LexerToken::PREPRO_ENDIF, "preprocessor endif"},
+
 			{LexerToken::AMINOS, "aminos"},
 			{LexerToken::DNA, "dna"},
 
@@ -57,6 +64,12 @@ namespace GIL
 
 			{LexerToken::LPAREN, "left parentheses"},
 			{LexerToken::RPAREN, "right parentheses"},
+			{LexerToken::COMMA, "comma"},
+
+			//Type stuff
+			{LexerToken::ASSIGNTYPE, "assign type"},
+			{LexerToken::TYPEDEF, "define new type"},
+			{LexerToken::INHERITS, "set type inheritance"},
 		});
 	}
 }

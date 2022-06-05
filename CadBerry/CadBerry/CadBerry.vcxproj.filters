@@ -37,6 +37,9 @@
     <Filter Include="CadBerry\Platform">
       <UniqueIdentifier>{057CAE99-7192-AC2F-BA09-3851265F7DB7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CadBerry\Platform\Headless">
+      <UniqueIdentifier>{7D5598AD-6965-447E-D21E-A99CBE4D3317}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CadBerry\Platform\OpenGL">
       <UniqueIdentifier>{99CDB08C-85F2-FF0C-AE3D-E59C9AC1FE2A}</UniqueIdentifier>
     </Filter>
@@ -115,6 +118,9 @@
     <ClInclude Include="src\CadBerry\Events\MouseEvent.h">
       <Filter>CadBerry\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\ExecuteCommand.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\ImGui\ImGuiLayer.h">
       <Filter>CadBerry\ImGui</Filter>
     </ClInclude>
@@ -159,6 +165,12 @@
     </ClInclude>
     <ClInclude Include="src\CadBerry\Packages\Update.h">
       <Filter>CadBerry\Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\Headless\HeadlessInput.h">
+      <Filter>CadBerry\Platform\Headless</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CadBerry\Platform\Headless\HeadlessWindow.h">
+      <Filter>CadBerry\Platform\Headless</Filter>
     </ClInclude>
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>CadBerry\Platform\OpenGL</Filter>
@@ -244,6 +256,9 @@
     <ClInclude Include="src\CadBerry\Rendering\VertexArray.h">
       <Filter>CadBerry\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\SharedLib.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h">
       <Filter>CadBerry\Tests</Filter>
     </ClInclude>
@@ -322,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="src\CadBerry\Packages\Update.cpp">
       <Filter>CadBerry\Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\Headless\HeadlessInput.cpp">
+      <Filter>CadBerry\Platform\Headless</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CadBerry\Platform\Headless\HeadlessWindow.cpp">
+      <Filter>CadBerry\Platform\Headless</Filter>
     </ClCompile>
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>CadBerry\Platform\OpenGL</Filter>

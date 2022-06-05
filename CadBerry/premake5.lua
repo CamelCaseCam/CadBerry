@@ -88,7 +88,7 @@ project "CadBerry"
 
 	filter "system:linux"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		pic "On"
 		systemversion "latest"
 
@@ -122,7 +122,7 @@ project "CadBerry"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -143,7 +143,9 @@ project "CadBerry"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry"),
-			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry/CadBerry.pdb ../bin/" .. OutputDir .. "/Berry")
+			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry/CadBerry.pdb ../bin/" .. OutputDir .. "/Berry"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry/CadBerry.pdb ../bin/" .. OutputDir .. "/CadBerry_test"),
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
@@ -225,7 +227,7 @@ project "Berry"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -256,6 +258,102 @@ project "Berry"
 			"sfml-network",
 			"sfml-audio"
 		}
+	architecture "x64"
+	configurations
+	{
+		"Debug",
+		"Release"
+	}
+
+
+project "CadBerry_test"
+	location "CadBerry_test"
+	kind "ConsoleApp"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.glm}",
+		"CadBerry/vendor/BlockingCollection",
+		"%{IncludeDirs.ImPlot}",
+		"CadBerry_test/vendor/Catch2/src/catch2",
+		"CadBerry_test/vendor/Catch2/src",
+		"CadBerry_test/vendor/Catch2/build/generated-includes",
+		"GILBuildEngine/src",
+	}
+
+	libdirs
+	{
+		"CadBerry/vendor/SFML/lib"
+	}
+
+	links
+	{
+		"CadBerry",
+		"GILBuildEngine"
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "Off"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"FMT_HEADER_ONLY"
+		}
+
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		symbols "On"
+		links
+		{
+			"sfml-system-d",
+			"sfml-window-d",
+			"sfml-graphics-d",
+			"sfml-network-d",
+			"sfml-audio-d",
+			"Catch2d",
+			"Catch2Maind",
+		}
+
+		libdirs
+		{
+			"CadBerry_test/vendor/Catch2/build/src/Debug"
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		optimize "On"
+		links
+		{
+			"sfml-system",
+			"sfml-window",
+			"sfml-graphics",
+			"sfml-network",
+			"sfml-audio",
+			"Catch2",
+			"Catch2Main",
+		}
+
+		libdirs
+		{
+			"CadBerry_test/vendor/Catch2/build/src/Release"
+		}
+
 	architecture "x64"
 	configurations
 	{
@@ -302,7 +400,9 @@ project "CadBerry_updater"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry"),
-			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry_updater/CadBerry_updater.pdb ../bin/" .. OutputDir .. "/Berry")
+			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry_updater/CadBerry_updater.pdb ../bin/" .. OutputDir .. "/Berry"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/CadBerry_updater/CadBerry_updater.pdb ../bin/" .. OutputDir .. "/CadBerry_test"),
 		}
 
 	filter "configurations:Debug"
@@ -370,7 +470,7 @@ project "VSCodeIntegration"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -384,7 +484,9 @@ project "VSCodeIntegration"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/Berry/Modules"),
-			("{COPYFILE} ../../bin/" .. OutputDir .. "/VSCodeIntegration/VSCodeIntegration.pdb ../../bin/" .. OutputDir .. "/Berry/Modules")
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/VSCodeIntegration/VSCodeIntegration.pdb ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/CadBerry_test/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/VSCodeIntegration/VSCodeIntegration.pdb ../../bin/" .. OutputDir .. "/CadBerry_test/Modules")
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
@@ -449,7 +551,7 @@ project "GILBuildEngine"
 
 	filter "system:linux"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		pic "On"
 		systemversion "latest"
 
@@ -463,7 +565,7 @@ project "GILBuildEngine"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -477,13 +579,14 @@ project "GILBuildEngine"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/Build"),
-			("{COPYFILE} ../bin/" .. OutputDir .. "/GILBuildEngine/GILBuildEngine.pdb ../bin/" .. OutputDir .. "/Berry/Build")
+			("{COPYFILE} ../bin/" .. OutputDir .. "/GILBuildEngine/GILBuildEngine.pdb ../bin/" .. OutputDir .. "/Berry/Build"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test/Build"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/GILBuildEngine/GILBuildEngine.pdb ../bin/" .. OutputDir .. "/CadBerry_test/Build"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/GILBuildEngine/GILBuildEngine.pdb ../bin/" .. OutputDir .. "/CadBerry_test"),
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-
-		filter "system:windows"
-			buildoptions "/MDd"
 
 		symbols "On"
 		defines
@@ -493,8 +596,6 @@ project "GILBuildEngine"
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
 
-		filter "system:windows"
-			buildoptions "/MD"
 		optimize "On"
 
 -- GIL Modules
@@ -539,7 +640,7 @@ project "utils"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -553,7 +654,9 @@ project "utils"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/GILModules"),
-			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/Berry/GILModules")
+			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/Berry/GILModules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
@@ -607,7 +710,7 @@ project "sensing"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -621,7 +724,9 @@ project "sensing"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/GILModules"),
-			("{COPYFILE} ../bin/" .. OutputDir .. "/sensing/sensing.pdb ../bin/" .. OutputDir .. "/Berry/GILModules")
+			("{COPYFILE} ../bin/" .. OutputDir .. "/sensing/sensing.pdb ../bin/" .. OutputDir .. "/Berry/GILModules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/sensing/sensing.pdb ../bin/" .. OutputDir .. "/CadBerry_test/GILModules")
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
@@ -677,7 +782,7 @@ project "Core"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -691,7 +796,9 @@ project "Core"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/Berry/Modules"),
-			("{COPYFILE} ../../bin/" .. OutputDir .. "/Core/Core.pdb ../../bin/" .. OutputDir .. "/Berry/Modules")
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/Core/Core.pdb ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/CadBerry_test/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/Core/Core.pdb ../../bin/" .. OutputDir .. "/CadBerry_test/Modules")
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
@@ -768,7 +875,7 @@ project "IRESGenerator"
 
 	filter "system:windows"
 		cppdialect "C++20"
-		staticruntime "On"
+		staticruntime "Off"
 		systemversion "latest"
 
 		defines
@@ -782,7 +889,9 @@ project "IRESGenerator"
 		postbuildcommands
 		{
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/Berry/Modules"),
-			("{COPYFILE} ../../bin/" .. OutputDir .. "/IRESGenerator/IRESGenerator.pdb ../../bin/" .. OutputDir .. "/Berry/Modules")
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/IRESGenerator/IRESGenerator.pdb ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/CadBerry_test/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/IRESGenerator/IRESGenerator.pdb ../../bin/" .. OutputDir .. "/CadBerry_test/Modules")
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"

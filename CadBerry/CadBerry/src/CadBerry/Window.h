@@ -37,6 +37,7 @@ namespace CDB
 		virtual void* GetNativeWindow() const = 0;
 
 		static Window* Create(const WindowProps& props = WindowProps());
+		static Window* CreateHeadless(const WindowProps& props = WindowProps());
 		LayerStack m_LayerStack;
 	};
 }

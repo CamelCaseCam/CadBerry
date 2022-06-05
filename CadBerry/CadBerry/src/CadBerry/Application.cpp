@@ -30,6 +30,7 @@ namespace CDB
 	void* FetchPackages(void* NoParams) { GetPackages(Application::Get().PathToEXE); return nullptr; }
 
 	Application* Application::s_Instance = nullptr;
+
 	void Application::Main()
 	{
 
@@ -37,12 +38,20 @@ namespace CDB
 
 		this->m_ThreadPool->AddStandardTask(FetchPackages, nullptr);
 
-		EditorWindow = Window::Create(WindowProps("CadBerry Editor - " + OpenProject->Name));
+		if (Headless)
+		{
+			EditorWindow = Window::CreateHeadless(WindowProps("CadBerry Editor - " + OpenProject->Name));
+		}
+		else
+		{
+			EditorWindow = Window::Create(WindowProps("CadBerry Editor - " + OpenProject->Name));
 
-		GuiLayer = new ImGuiLayer();    //CheckEnd will delete EditorWindow which will delete GuiLayer, so we're initializing a new one
+			GuiLayer = new ImGuiLayer();    //CheckEnd will delete EditorWindow which will delete GuiLayer, so we're initializing a new one
+			EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
+		}
+
 		Viewports = new ViewportLayer();
 
-		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
 		EditorWindow->m_LayerStack.PushLayer(Viewports);
 
 		running = true;
@@ -55,23 +64,26 @@ namespace CDB
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnUpdate();
 
-			GuiLayer->Begin();
-			for (Layer* layer : EditorWindow->m_LayerStack)
-				layer->OnImGuiRender();
+			if (!this->Headless)
+			{
+				GuiLayer->Begin();
+				for (Layer* layer : EditorWindow->m_LayerStack)
+					layer->OnImGuiRender();
 
-			if (ShowBuildWindow)
-			{
-				ImGui::Begin("Build project", &ShowBuildWindow, ImGuiWindowFlags_NoDocking);
-				BuildDialog();
-				ImGui::End();
+				if (ShowBuildWindow)
+				{
+					ImGui::Begin("Build project", &ShowBuildWindow, ImGuiWindowFlags_NoDocking);
+					BuildDialog();
+					ImGui::End();
+				}
+				if (ShowPackages)
+				{
+					ImGui::Begin("Packages", &ShowPackages, ImGuiWindowFlags_NoDocking);
+					ShowPackageManager();
+					ImGui::End();
+				}
+				GuiLayer->End();
 			}
-			if (ShowPackages)
-			{
-				ImGui::Begin("Packages", &ShowPackages, ImGuiWindowFlags_NoDocking);
-				ShowPackageManager();
-				ImGui::End();
-			}
-			GuiLayer->End();
 
 			CheckExit();
 		}
@@ -112,9 +124,17 @@ namespace CDB
 		}
 		ProjIn.close();
 
-		EditorWindow = Window::Create(WindowProps("New Project", 480U, 720U));
+		if (Headless)
+			EditorWindow = Window::CreateHeadless(WindowProps("New Project", 480U, 720U));
+		else
+			EditorWindow = Window::Create(WindowProps("New Project", 480U, 720U));
+
+
 		EditorWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
-		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
+
+		if (!Headless)
+			EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
+
 		EditorWindow->m_LayerStack.PushLayer(new ProjectCreationLayer(Projects));
 		running = true;
 
@@ -124,25 +144,30 @@ namespace CDB
 			for (Layer* layer : EditorWindow->m_LayerStack)
 				layer->OnUpdate();
 
-			GuiLayer->Begin();
-			for (Layer* layer : EditorWindow->m_LayerStack)
-				layer->OnImGuiRender();
-			GuiLayer->End();
+			if (!Headless)
+			{
+				GuiLayer->Begin();
+				for (Layer* layer : EditorWindow->m_LayerStack)
+					layer->OnImGuiRender();
+				GuiLayer->End();
+			}
 
 			CheckExit();
 		}
 		if (OpenProject == nullptr)
 		{
 			CDB_EditorError("You must open or create a project");
-			GuiLayer = new ImGuiLayer();
+			if (!Headless)
+			{
+				GuiLayer = new ImGuiLayer();
+			}
 			GetProject();
 		}
 		this->OpenProject->WriteToFile();
 
 		std::ofstream OutputCurrentProject;
 		OutputCurrentProject.open(this->PathToEXE + "/CDBLastProj.cfg", std::ios::out);
-		std::string path = OpenProject->Path + "" + OpenProject->Name + ".berry";
-		OutputCurrentProject << path;
+		OutputCurrentProject << this->OpenProject->PathToBerryFile;
 		OutputCurrentProject.close();
 
 		return;
@@ -164,7 +189,9 @@ namespace CDB
 	typedef BuildEngine* (CDB_MODULE_FUNC* f_GetBuildEngine)();
 	Application::Application(bool headless)
 	{
+		ShouldExit = false;
 		Log::Init();
+		CDB_BuildInfo((void*)s_Instance);
 		CDB_EditorAssert(!s_Instance, "Application already exists")
 		s_Instance = this;
 		this->Headless = headless;
@@ -238,6 +265,10 @@ namespace CDB
 	Application::~Application()
 	{
 		//GuiLayer will have already been deleted
+
+		//Cleanup
+		s_Instance = NULL;
+		CDB_BuildInfo((void*)s_Instance);
 	}
 
 	void Application::OnEvent(Event& e)
@@ -292,9 +323,16 @@ namespace CDB
 			ShouldExit = false;
 			if (NewProj)
 			{
-				GuiLayer = new ImGuiLayer();
+				if (!Headless)
+				{
+					GuiLayer = new ImGuiLayer();
+				}
 				GetProject();
-				GuiLayer = new ImGuiLayer();
+
+				if (!Headless)
+				{
+					GuiLayer = new ImGuiLayer();
+				}
 				Main();
 			}
 		}

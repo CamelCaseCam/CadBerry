@@ -1,3 +1,3 @@
 #pragma once
 
-#define CGILVersion 3
+#define CGILVersion 4

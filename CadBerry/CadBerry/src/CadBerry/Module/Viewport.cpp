@@ -1,4 +1,4 @@
-#include <cdbpch.h>
+ï»¿#include <cdbpch.h>
 #include "Viewport.h"
 #include "CadBerry/Log.h"
 #include "CadBerry/Module/Module.h"
@@ -8,6 +8,7 @@
 #include "CadBerry/RenderUtils/RichText.h"
 #include "CadBerry/Rendering/Utils/Utils.h"
 #include "CadBerry/RenderUtils/InputVector.h"
+#include "CadBerry/Platform/Headless/HeadlessInput.h"
 
 #include <GLFW/glfw3.h>
 
@@ -19,7 +20,7 @@ namespace CDB
 	DNAVisualization Vis;
 	void ViewportLayer::OnAttach()
 	{
-		Vis = DNAVisualization("AAAAATTTAATATTTATTTATATATATATTTTATATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", { {1, 6, "Test region"}, {9, 15, "Test region 2"}, {16, 25, "Test region 2"} });
+		//Vis = DNAVisualization("AAAAATTTAATATTTATTTATATATATATTTTATATAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", { {1, 6, "Test region"}, {9, 15, "Test region 2"}, {16, 25, "Test region 2"} });
 	}
 
 	void ViewportLayer::OnImGuiRender()
@@ -101,18 +102,18 @@ namespace CDB
 		}
 
 		Viewport* ToBeDeleted = nullptr;
-		for (Viewport* viewport : OpenViewports)
+		for (Viewport* l_viewport : OpenViewports)
 		{
-			viewport->Update(io.DeltaTime);
-			if (viewport->Background) continue;
+			l_viewport->Update(io.DeltaTime);
+			if (l_viewport->Background) continue;
 
-			ImGui::Begin(viewport->Name.c_str(), &viewport->IsOpen);
-			viewport->GUIDraw();
+			ImGui::Begin(l_viewport->Name.c_str(), &l_viewport->IsOpen);
+			l_viewport->GUIDraw();
 			ImGui::End();
-			if (!viewport->IsOpen)    //If the user has closed the viewport, mark that viewport to be deleted. 
+			if (!l_viewport->IsOpen)    //If the user has closed the viewport, mark that viewport to be deleted. 
 			{
-				ToBeDeleted = viewport;    //Since this is called every frame, it's impossible for the user to close more than one viewport. 
-				viewport->OnClose();
+				ToBeDeleted = l_viewport;    //Since this is called every frame, it's impossible for the user to close more than one viewport. 
+				l_viewport->OnClose();
 			}
 		}
 
@@ -140,6 +141,281 @@ namespace CDB
 		}
 	}
 
+	//Forward declarations
+	void ProjectMenu();
+	void WindowMenu();
+	void SettingsMenu();
+	void BuildMenu();
+
+	extern const char* HelpString;
+
+	void ViewportLayer::HeadlessInput()
+	{
+		using std::cout, std::cin, std::endl;
+
+
+		std::string CurrentInput;
+		cout << "Enter a command: ";
+		CurrentInput = GetInput();
+
+		if (CurrentInput == "project")
+			ProjectMenu();
+		else if (CurrentInput == "windows")
+			WindowMenu();
+		else if (CurrentInput == "window list")
+		{
+			cout << "List of open windows:";
+			for (Viewport* viewport : this->OpenViewports)
+				cout << "\n" << viewport->Name;
+			cout << endl;
+		}
+		else if (CurrentInput == "help")
+			cout << HelpString << endl;
+		else if (CurrentInput == "exit")
+			CDB::Application::Get().ShouldExit = true;
+		else
+		{
+			Viewport* ToBeDeleted = nullptr;
+
+			//Search the open windows to see if CurrentInput matches
+			for (Viewport* viewport : this->OpenViewports)
+			{
+				if (viewport->Name == CurrentInput)
+				{
+					viewport->HeadlessInput();
+					if (!viewport->IsOpen)
+					{
+						ToBeDeleted = viewport;
+						viewport->OnClose();
+					}
+					break;
+				}
+			}
+
+			if (ToBeDeleted != nullptr)
+			{
+				OpenViewports.erase(std::remove(OpenViewports.begin(), OpenViewports.end(), ToBeDeleted), OpenViewports.end());
+				delete ToBeDeleted;
+			}
+		}
+	}
+
+	void ProjectMenu()
+	{
+		using std::cout, std::cin, std::endl;
+
+
+		std::string CurrentInput;
+		cout << 
+R"(----------------------------
+   CadBerry Project Menu
+----------------------------
+
+Type "new project" to open or create a new project
+Type "settings" to edit project settings
+Type "build" to build the project
+Type "exit" to exit this menu)" << endl;
+
+		CurrentInput = GetInput();
+		if (CurrentInput == "new project")
+		{
+			Application::Get().NewProj = true;
+			Application::Get().ShouldExit = true;    //this will make us exit the editor window and open a project creation window
+		}
+		else if (CurrentInput == "settings")
+			SettingsMenu();
+		else if (CurrentInput == "build")
+			BuildMenu();
+		else
+			cout << "Exiting CadBerry Project Menu" << endl;
+	}
+
+#define IsYes(Input) Input == "y" || Input == "Y"
+#define IsNo(Input) Input == "n" || Input == "N"
+	void SettingsMenu()
+	{
+		Project* proj = CDB::Application::Get().OpenProject.raw();
+		using std::cout, std::cin, std::endl;
+
+		cout << 
+R"(----------------------------
+     CadBerry Settings
+----------------------------
+)" << endl;
+
+		cout << "Change project name? [y/N] ";
+		std::string CurrentInput = GetInput();
+		if (IsYes(CurrentInput))
+		{
+			cout << "Enter new project name: ";
+			proj->Name = GetInput();
+		}
+
+		cout << "Precompile files? [Y/n] ";
+		CurrentInput = GetInput();
+		proj->PrecompileFiles = !(IsNo(CurrentInput));
+
+		if (proj->PrecompileFiles)
+		{
+			cout << "\nEnter precompilation interval in seconds: ";
+			proj->PrecompilationInterval = std::stof(GetInput());
+
+			cout << "Enter precompilation directory: ";
+			proj->PreBuildDir = GetInput();
+		}
+
+		cout << "Create entry point? [Y/n] ";
+		CurrentInput = GetInput();
+		proj->MaintainEntryPoint = !(IsNo(CurrentInput));
+
+		if (proj->MaintainEntryPoint)
+		{
+			cout << "\nEnter your target organism: ";
+			proj->TargetOrganism = GetInput();
+			cout << "\nHow many sequences should be compiled? ";
+			int NumSeqs = std::stoi(GetInput());
+
+			proj->EntrySequences.resize(0);
+			proj->EntrySequences.reserve(NumSeqs);
+
+			for (int i = 0; i < NumSeqs; ++i)
+			{
+				cout << "Enter the name of sequence " << i + 1 << ": ";
+				proj->EntrySequences.push_back(GetInput());
+			}
+		}
+		else
+		{
+			cout << "Enter the relative path to the project entry point: ";
+			proj->PathToEntryPoint = GetInput();
+		}
+	}
+
+	const char* convert(const std::string& s);
+
+	extern std::vector<const char*> OutputTypes;
+	void BuildMenu()
+	{
+		Project* proj = CDB::Application::Get().OpenProject.raw();
+		using std::cout, std::cin, std::endl;
+
+		if (CDB::Application::Get().m_BuildEngine == nullptr)
+		{
+			CDB_EditorError("No build engine loaded");
+			return;
+		}
+
+		//OutputTypes caches the build engine's output types, if it's size is 0 we need to load the output types
+		if (OutputTypes.size() == 0)
+		{
+			//Load valid build targets from the build engine
+			std::vector<std::string>* OT = CDB::Application::Get().m_BuildEngine->GetOutputTypes();
+			if (OT == nullptr)
+			{
+				CDB_EditorError("Failed to load build targets from build engine");
+				return;
+			}
+
+			//Cache the build targets (converting them to char*)
+			OutputTypes.reserve(OT->size());
+			std::transform(OT->begin(), OT->end(), std::back_inserter(OutputTypes), convert);
+			if (OutputTypes.size() == 0)
+			{
+				CDB_EditorFatal("The current build engine must provide at least one output type");
+			}
+		}
+
+		//Output the list of output types
+		cout << "List of valid build targets:";
+		for (int i = 0; i < OutputTypes.size(); ++i)
+		{
+			cout << "\n[" << i << "] " << OutputTypes[i];
+		}
+		cout << "\n\nEnter a build target index: ";
+		int Target = std::stoi(GetInput());
+
+		cout << "Enter output directory: ";
+		std::string OutputDir = GetInput();
+		
+		cout << "\nYou have selected the build target \"" << OutputTypes[Target] << "\". Project will be built to location \"" << OutputDir << "\"\n\nBuild project? [Y/n] ";
+
+		std::string tmp = GetInput();
+		if (!(IsNo(tmp)))
+		{
+			std::string OT = OutputTypes[Target];
+			if (Application::Get().OpenProject->MaintainEntryPoint)
+			{
+				//Generate entry point code
+				std::string EntryCode = CDB::Application::Get().m_BuildEngine->CreateEntryPoint(Application::Get().OpenProject->TargetOrganism,
+					Application::Get().OpenProject->EntrySequences);
+
+				//Open the file
+				std::ofstream OutputFile(CDB::Application::Get().OpenProject->Path + "\\ï¿½CadBerryAutogeneratedEntryPoint@" +
+					CDB::Application::Get().OpenProject->Name + "@" + CDB_VersionString + ".gil");
+				OutputFile << EntryCode;
+				OutputFile.close();
+
+				//Compile the project (entry point)
+				std::string Name = "ï¿½CadBerryAutogeneratedEntryPoint@" + proj->Name + "@" + CDB_VersionString;
+				CDB::Application::Get().m_BuildEngine->Build(proj->Path, Name,
+					proj->PreBuildDir, OutputDir, OT);
+			}
+			else
+			{
+				CDB::Application::Get().m_BuildEngine->Build(proj->Path, proj->PathToEntryPoint,
+					proj->PreBuildDir, OutputDir, OT);
+			}
+		}
+	}
+
+
+	void WindowMenu()
+	{
+		using std::cout, std::cin, std::endl;
+
+		cout <<
+R"(----------------------------
+     CadBerry Windows
+----------------------------
+
+List of windows:)";
+		int ModuleNum = 0;
+		for (Module* module : Application::Get().Modules)
+		{
+			std::string* s = module->GetViewportNames();
+			bool CreateWindow = false;
+			for (int i = 0; i < module->NumViewports; ++i)
+			{
+				cout << "\n[" << ModuleNum * Application::Get().Modules.size() + i << "] " << s[i];
+			}
+			++ModuleNum;
+		}
+
+		cout << "\n\nEnter the index of one of these windows to open that window or type \"exit\" to exit this menu" << endl;
+		std::string Input = GetInput();
+		if (Input == "exit")
+			return;
+		int InputNum = std::stoi(Input);
+
+		//Get the module and viewport number
+		for (int ModuleNum = 0; ModuleNum < Application::Get().Modules.size(); ++ModuleNum)
+		{
+			if (InputNum < Application::Get().Modules[ModuleNum]->NumViewports)
+			{
+				//Create the viewport
+				Viewport* NewViewport = Application::Get().Modules[ModuleNum]->CreateViewport(
+					Application::Get().Modules[ModuleNum]->GetViewportNames()[InputNum]);
+
+				Application::Get().AddViewport(NewViewport);
+				NewViewport->Start();
+				break;
+			}
+			InputNum -= Application::Get().Modules[ModuleNum]->NumViewports;
+		}
+	}
+
+
+
 	void ViewportLayer::AddViewport(Viewport* viewport)
 	{
 		OpenViewports.push_back(viewport);
@@ -148,6 +424,11 @@ namespace CDB
 	Viewport::~Viewport()
 	{
 
+	}
+
+	void Viewport::HeadlessInput()
+	{
+		std::cout << "The viewport \"" << this->Name << "\" doesn't support headless mode" << std::endl;
 	}
 
 
@@ -161,8 +442,8 @@ namespace CDB
 	 Build settings:
 	 - Should CadBerry maintain an entry point?
 	 A little bit on entry points:
-	 Instead of asking what file you want to use as an entry point, CadBerry will generate a gil file with the name "¬CadBerryAutogeneratedEntryPoint@ProjectName@CadBerryVersion". 
-	 Because of the ¬ character, it's impossible to import this file from inside a GIL file
+	 Instead of asking what file you want to use as an entry point, CadBerry will generate a gil file with the name "Â¬CadBerryAutogeneratedEntryPoint@ProjectName@CadBerryVersion". 
+	 Because of the Â¬ character, it's impossible to import this file from inside a GIL file
 
 	 If no entry point:
 	 - Path to entry point 
@@ -204,5 +485,6 @@ namespace CDB
 			ImGui::InputText("Relative path to project entry point", &proj->PathToEntryPoint);
 		}
 
+		proj->WriteToFile();
 	}
 }

@@ -1,4 +1,5 @@
-﻿cl : command line warning D9025: overriding '/MT' with '/MD'
+﻿cl : command line warning D9025: overriding '/MD' with '/MDd'
+cl : command line warning D9025: overriding '/MDd' with '/MD'
   RNAContext.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\phmm\utils\xmath\log\log_lookup.h(167,23): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\rna_library.h(459,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
@@ -6,11 +7,11 @@ D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\rna_library.h(
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\phmm\utils\xmath\log\log_lookup.h(167,23): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\rna_library.h(459,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\RNA_class\thermodynamics.h(175,10): warning C4251: 'Thermodynamics::nominal_alphabetName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'Thermodynamics'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\RNA_class\RNA.h(1067,10): warning C4251: 'RNA::lastErrorDetails': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'RNA'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\RNA_class\TwoRNA.h(181,10): warning C4251: 'TwoRNA::lastErrorDetails': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'TwoRNA'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\common_utils.cpp(102,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\common_utils.cpp(109,14): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\common_utils.cpp(148,6): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
@@ -62,7 +63,7 @@ D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(2009,6): warning C4101: 'i': unreferenced local variable
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(2278,48): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(2284,42): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(2445,50): warning C4244: '+=': conversion from 'double' to 'short', possible loss of data
+D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(2445,7): warning C4244: '+=': conversion from 'double' to 'short', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(3232,48): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(3232,48): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\structure.cpp(3618,48): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
@@ -252,8 +253,8 @@ D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(7
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(7661,11): warning C4101: 'j': unreferenced local variable
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8261,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8264,28): warning C4018: '<': signed/unsigned mismatch
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8283,33): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8287,31): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8283,25): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8287,23): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\dynalign.cpp(8294,29): warning C4244: '=': conversion from 'float' to 'short', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\intermolecular.cpp(228,5): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\intermolecular.cpp(230,5): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
@@ -347,7 +348,7 @@ D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\StructureImage
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\StructureImageHandler.cpp(1269,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\StructureImageHandler.cpp(1284,50): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\TProgressDialog.cpp(93,50): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\rna_library.h(450,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\rna_library.h(449,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\rna_library.cpp(1773): message : see reference to function template instantiation 'void write<std::vector<char,std::allocator<char>>>(std::ofstream *,std::vector<std::vector<char,std::allocator<char>>,std::allocator<std::vector<char,std::allocator<char>>>> *)' being compiled
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\DynProgArray.cpp(38,10): warning C4244: 'return': conversion from 'const double' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\src\DynProgArray.cpp(52): message : see reference to function template instantiation 'int get_infinity<T>(void)' being compiled

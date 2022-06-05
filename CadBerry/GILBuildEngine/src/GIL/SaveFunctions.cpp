@@ -5,7 +5,7 @@ namespace GIL
 {
 	const char Termination = NULL;
 
-	void SaveString(std::string& Text, std::ofstream& OutputFile)    //Writes length and chars to file
+	void SaveString(const std::string& Text, std::ofstream& OutputFile)    //Writes length and chars to file
 	{
 		int TLen = Text.length();
 		OutputFile.write((char*)&TLen, sizeof(int));

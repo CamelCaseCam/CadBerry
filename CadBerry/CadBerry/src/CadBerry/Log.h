@@ -18,6 +18,7 @@ namespace CDB
 
 	public:
 		static void Init();
+		static void DeInit();
 
 		static std::shared_ptr<spdlog::logger>& GetEditorLogger() { return EditorLogger; }
 		static std::shared_ptr<spdlog::logger>& GetBuildLogger() { return BuildLogger; }

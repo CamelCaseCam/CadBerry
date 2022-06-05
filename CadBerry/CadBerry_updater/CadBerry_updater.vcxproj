@@ -21,13 +21,13 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -71,7 +71,9 @@
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Debug-windows-x86_64\Berry
-copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\bin\Debug-windows-x86_64\Berry</Command>
+copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\bin\Debug-windows-x86_64\Berry
+copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Debug-windows-x86_64\CadBerry_test
+copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\bin\Debug-windows-x86_64\CadBerry_test</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -96,7 +98,9 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Release-windows-x86_64\Berry
-copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\bin\Release-windows-x86_64\Berry</Command>
+copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\bin\Release-windows-x86_64\Berry
+copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Release-windows-x86_64\CadBerry_test
+copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\bin\Release-windows-x86_64\CadBerry_test</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

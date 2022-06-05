@@ -16,6 +16,7 @@ namespace CDB
 		virtual void Start() {}
 		virtual void Draw() {}
 		virtual void GUIDraw() {}
+		virtual void HeadlessInput();
 		virtual void Update(float dt) {}
 		virtual void OnClose() {}
 
@@ -32,6 +33,8 @@ namespace CDB
 		virtual void OnImGuiRender() override;
 		virtual void Draw() override;
 		~ViewportLayer();
+
+		virtual void HeadlessInput() override;
 
 		void AddViewport(Viewport* viewport);
 

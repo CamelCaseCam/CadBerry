@@ -55,3 +55,6 @@
 [submodule "CadBerry/CadBerry/vendor/cpr"]
 	path = CadBerry/CadBerry/vendor/cpr
 	url = https://github.com/CamelCaseCam/cpr.git
+[submodule "CadBerry/vendor/Catch2"]
+	path = CadBerry/vendor/Catch2
+	url = https://github.com/CamelCaseCam/Catch2.git

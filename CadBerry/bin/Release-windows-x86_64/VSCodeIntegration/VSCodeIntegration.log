@@ -1,8 +1,9 @@
-﻿cl : command line warning D9025: overriding '/MT' with '/MD'
+﻿cl : command line warning D9025: overriding '/MD' with '/MDd'
+cl : command line warning D9025: overriding '/MDd' with '/MD'
   Module.cpp
 D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp(1,1): warning C4005: 'FMT_HEADER_ONLY': macro redefinition
 D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp : message : see previous definition of 'FMT_HEADER_ONLY'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(22,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(24,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(23,23): warning C4251: 'CDB::LayerStack::Layers': class 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>' needs to have dll-interface to be used by clients of class 'CDB::LayerStack'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(20): message : see declaration of 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>'
@@ -56,7 +57,7 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C42
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Viewport.h(22,15): warning C4251: 'CDB::Viewport::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Viewport'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Viewport.h(23,15): warning C4251: 'CDB::Viewport::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Viewport'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Module\Module.h(14,15): warning C4251: 'CDB::Module::ModuleName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Module'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -74,11 +75,13 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(52,15): war
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(54,15): warning C4251: 'CDB::Application::PreBuildDir': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Application'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(64,27): warning C4251: 'CDB::Application::VertexArray': class 'CDB::scoped_ptr<CDB::VertexArray>' needs to have dll-interface to be used by clients of class 'CDB::Application'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(64): message : see declaration of 'CDB::scoped_ptr<CDB::VertexArray>'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(67,27): warning C4251: 'CDB::Application::VertexArray': class 'CDB::scoped_ptr<CDB::VertexArray>' needs to have dll-interface to be used by clients of class 'CDB::Application'
+D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Application.h(67): message : see declaration of 'CDB::scoped_ptr<CDB::VertexArray>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Renderer.h(29,20): warning C4251: 'CDB::Renderer::ProjectionViewMatrix': struct 'glm::mat<4,4,glm::f32,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'CDB::Renderer'
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\glm\glm\fwd.hpp(520): message : see declaration of 'glm::mat<4,4,glm::f32,glm::packed_highp>'
-D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp(114,14): warning C4251: 'VSCodeIntegrationModule::Viewports': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'VSCodeIntegrationModule'
+D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp(18,1): warning C4005: 'MODULE_API': macro redefinition
+D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp(16): message : see previous definition of 'MODULE_API'
+D:\Development\CadBerry\CadBerry\Modules\VSCodeIntegration\src\Module.cpp(122,14): warning C4251: 'VSCodeIntegrationModule::Viewports': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'VSCodeIntegrationModule'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
      Creating library ..\..\bin\Release-windows-x86_64\VSCodeIntegration\VSCodeIntegration.lib and object ..\..\bin\Release-windows-x86_64\VSCodeIntegration\VSCodeIntegration.exp
   VSCodeIntegration.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\VSCodeIntegration\VSCodeIntegration.dll

@@ -14,12 +14,19 @@
 
 namespace GIL
 {
+	int CurrentSequenceCallDepth = 0;
+
 	namespace Compiler
 	{
 		using namespace GIL::Lexer;
 		using namespace GIL::Parser;
 
 		std::map<std::string, GILModule*> Modules;
+
+		bool Prepro_IsEq(Project* Proj, std::vector<Token*>* Tokens);
+		std::map<std::string, std::function<bool(Project*, std::vector<Token*>*)>> PreproConditions = {
+			{"IsEq", Prepro_IsEq},
+		};
 
 		//Function definitions
 		void AminosToDNA(std::string& DNA, std::string& aminos, Project* Proj, CodonEncoding& CurrentEncoding);
@@ -28,6 +35,61 @@ namespace GIL
 		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj);
 		void ImportFile(std::string& Path, Project* Proj);
 		void LinkDLL(std::string& Path, Project* Proj);
+
+		inline void AddRegionToVector(const Region& reg, std::vector<Region>& vec, int& last)
+		{
+			if (reg.Start != reg.End && reg.End != 0)
+			{
+				vec.push_back(reg);
+				--last;
+			}
+		}
+
+		inline void AddRegionToVector(const Region&& reg, std::vector<Region>& vec, int& last)
+		{
+			if (reg.Start != reg.End && reg.End != 0)
+			{
+				vec.push_back(reg);
+				--last;
+			}
+		}
+
+		inline void AddRegionToVector(const Region& reg, std::vector<Region>& vec)
+		{
+			if (reg.Start != reg.End && reg.End != 0)
+			{
+				vec.push_back(reg);
+			}
+		}
+
+		inline void AddRegionToVector(const Region&& reg, std::vector<Region>& vec)
+		{
+			if (reg.Start != reg.End && reg.End != 0)
+			{
+				vec.push_back(reg);
+			}
+		}
+
+		//Imports recursively
+		inline void ImportAllProjectImports(Project* Proj)
+		{
+			for (std::string& s : Proj->Imports)
+			{
+				if (!Proj->Namespaces.contains(s))
+				{
+					ImportFile(s, Proj);
+				}
+			}
+		}
+
+		//Links recursively
+		inline void LinkAllProjectDLLs(Project* Proj)
+		{
+			for (std::string& s : Proj->Usings)
+			{
+				LinkDLL(s, Proj);
+			}
+		}
 
 		std::pair<std::vector<Region>, std::string> Compile(Project* Proj, std::vector<Token*>* Tokens)
 		{
@@ -38,23 +100,19 @@ namespace GIL
 			std::vector<Region> Output;
 			CodonEncoding CurrentEncoding(Proj->TargetOrganism);
 
-			for (std::string& s : Proj->Imports)
-			{
-				if (!Proj->Namespaces.contains(s))
-				{
-					ImportFile(s, Proj);
-				}
-			}
+			//Import any imports
+			ImportAllProjectImports(Proj);
 
-			for (std::string& s : Proj->Usings)
-			{
-				LinkDLL(s, Proj);
-			}
+			LinkAllProjectDLLs(Proj);
 
-			Region CurrentRegion;
+			std::vector<Region> OpenRegions = { Region(), };
+			int LastRegion = 0;
+
 			std::string Code;
-			CurrentRegion.Name = "Main";
-			CurrentRegion.Start = 1;
+			OpenRegions[LastRegion].Name = "Main";
+			OpenRegions[LastRegion].Start = 1;
+			bool PreproIfValue = false;
+
 			for (int i = 0; i < (*Tokens).size(); ++i)
 			{
 				Token* t = (*Tokens)[i];
@@ -68,100 +126,244 @@ namespace GIL
 					break;
 				case LexerToken::BEGINREGION:
 					++i;
-					if ((*Tokens)[i]->TokenType == LexerToken::IDENT)
+					if ((*Tokens)[i]->TokenType == LexerToken::IDENT || (*Tokens)[i]->TokenType == LexerToken::STRING)
 					{
-						if (CurrentRegion.Start != Code.length() || CurrentRegion.Name != "Main")
+						//If the open region is the "Main" region
+						if (OpenRegions[LastRegion].Name == "Main")
 						{
-							CurrentRegion.End = Code.length();
-							Output.push_back(CurrentRegion);
+							OpenRegions[LastRegion].End = Code.length();
+							AddRegionToVector(OpenRegions[LastRegion], Output);
+							OpenRegions[LastRegion] = Region();
 						}
-						CurrentRegion = Region();
-						CurrentRegion.Name = (*Tokens)[i]->Value;
-						CurrentRegion.Start = Code.length();
+						else
+						{
+							OpenRegions.push_back(Region());
+							++LastRegion;
+						}
+
+						OpenRegions[LastRegion].Name = (*Tokens)[i]->Value;
+						OpenRegions[LastRegion].Start = Code.length();
 						break;
 					}
-					CDB_BuildError("#BeginRegion not followed by ident");
+					CDB_BuildError("#BeginRegion not followed by ident or string");
 					break;
 				case LexerToken::ENDREGION:
-					CurrentRegion.End = Code.length();
-					Output.push_back(CurrentRegion);
-					CurrentRegion = Region();
-					CurrentRegion.Name = "Main";
-					CurrentRegion.Start = Code.length();
-					break;
-				case LexerToken::IDENT:
-				{
-					//Check if main region has anything in it
-					if ((CurrentRegion.Start != Code.length() && Code.length() != 0) || CurrentRegion.Name != "Main")
+
+					if (i + 1 < (*Tokens).size() && (*Tokens)[i + 1]->TokenType == LexerToken::IDENT ||
+						(*Tokens)[i + 1]->TokenType == LexerToken::STRING)
 					{
-						CurrentRegion.End = Code.length();
-						Output.push_back(CurrentRegion);
-						CurrentRegion = Region();
-						CurrentRegion.Name = "Main";
+						//Check backwards until you reach a region with that name
+						for (int r = LastRegion; r > -1; --r)
+						{
+							if (OpenRegions[r].Name == (*Tokens)[i + 1]->Value)
+							{
+								//We want to for sure add a region defined by the user, even if it's empty
+								OpenRegions[r].End = Code.length();
+								Output.push_back(std::move(OpenRegions[r]));
+								OpenRegions.erase(OpenRegions.begin() + r);
+								--LastRegion;
+								goto exit;
+							}
+						}
+
+						CDB_BuildError("Region {0} is not open", (*Tokens)[i + 1]->Value);
+
+					exit:
+						++i;
+						break;
+					}
+					OpenRegions[LastRegion].End = Code.length();
+					AddRegionToVector(OpenRegions[LastRegion], Output);
+					OpenRegions[LastRegion] = Region();
+					OpenRegions[LastRegion].Name = "Main";
+					OpenRegions[LastRegion].Start = Code.length();
+					break;
+				case LexerToken::INC:
+					if (i >= Tokens->size() - 1 || ((*Tokens)[i + 1]->TokenType != LexerToken::IDENT && 
+						(*Tokens)[i + 1]->TokenType != LexerToken::STRING))
+					{
+						CDB_BuildError("#Inc expeceted name of variable to increment");
+						break;
+					}
+					++i;
+
+					//Check that the variable exists
+					if (!Proj->NumVars.contains((*Tokens)[i]->Value))
+					{
+						CDB_BuildError("Variable \"{0}\" referenced by #Inc does not exist or is not numerical", (*Tokens)[i]->Value);
+						break;
 					}
 
-					GIL::Sequence* Seq = Proj->GetSeq(Tokens, i, &Modules);
-					if (Seq == nullptr)    //Make sure sequence exists
+					//Increment the variable
+					++Proj->NumVars[(*Tokens)[i]->Value];
+					break;
+				case LexerToken::DEC:
+					if (i >= Tokens->size() - 1 || ((*Tokens)[i + 1]->TokenType != LexerToken::IDENT &&
+						(*Tokens)[i + 1]->TokenType != LexerToken::STRING))
+					{
+						CDB_BuildError("#Dec expeceted name of variable to increment");
+						break;
+					}
+					++i;
+
+					//Check that the variable exists
+					if (!Proj->NumVars.contains((*Tokens)[i]->Value))
+					{
+						CDB_BuildError("Variable \"{0}\" referenced by #Dec does not exist or is not numerical", (*Tokens)[i]->Value);
+						break;
+					}
+
+					//Increment the variable
+					--Proj->NumVars[(*Tokens)[i]->Value];
+					break;
+				case LexerToken::PREPRO_IF:
+				{
+					if (i >= Tokens->size() - 1)
+					{
+						CDB_BuildError("#If expected a condition, encountered end of file");
+						break;
+					}
+					++i;
+					if ((*Tokens)[i]->TokenType != LexerToken::IDENT)
+					{
+						CDB_BuildError("#If expected a name of condition to invoke");
+						break;
+					}
+					if (!PreproConditions.contains((*Tokens)[i]->Value))
+					{
+						CDB_BuildError("The preprocessor condition \"{0}\" does not exist", (*Tokens)[i]->Value);
+					}
+
+					std::string& ConditionName = (*Tokens)[i]->Value;
+					++i;
+					std::vector<Token*> Params = GetTokensInBetween(*Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
+					PreproIfValue = PreproConditions[ConditionName](Proj, &Params);
+
+					//If the condition was true
+					if (PreproIfValue)
+					{
+						int NumInBetween = 0;
+						for (i; i < (*Tokens).size(); ++i)
+						{
+							if ((*Tokens)[i]->TokenType == LexerToken::PREPRO_ELSE || (*Tokens)[i]->TokenType == LexerToken::PREPRO_ENDIF)
+								break;
+							++NumInBetween;
+						}
+
+						std::vector<Token*> ToBeCompiled;
+						ToBeCompiled.reserve(NumInBetween);
+						for (NumInBetween; NumInBetween != -1; --NumInBetween)
+							ToBeCompiled.push_back((*Tokens)[i + 1 - NumInBetween]);
+
+						Compile(Proj, &ToBeCompiled);
+
+						//Skip the else statement if there was one
+						GetTokensInBetween(*Tokens, i, (*Tokens)[i]->TokenType, LexerToken::PREPRO_ENDIF);
+					}
+					else    //Handle the else statement if there was one
+					{
+						//Skip to the else token
+						for (i; i < (*Tokens).size(); ++i)
+						{
+							//Skip evaluating this if you reach endif
+							if ((*Tokens)[i]->TokenType == LexerToken::PREPRO_ENDIF)
+								break;
+
+							if ((*Tokens)[i]->TokenType == LexerToken::PREPRO_ELSE)
+							{
+								int NumInBetween = 0;
+								for (i; i < (*Tokens).size(); ++i)
+								{
+									if ((*Tokens)[i]->TokenType == LexerToken::PREPRO_ENDIF)
+										break;
+									++NumInBetween;
+								}
+
+								std::vector<Token*> ToBeCompiled;
+								ToBeCompiled.reserve(NumInBetween);
+								for (NumInBetween; NumInBetween != -1; --NumInBetween)
+									ToBeCompiled.push_back((*Tokens)[i - NumInBetween]);
+
+								Compile(Proj, &ToBeCompiled);
+							}
+						}
+					}
+					break;
+				}
+				case LexerToken::IDENT:
+				{
+					auto Seq = Proj->GetSeq(Tokens, i, &Modules);
+					if (Seq.first == nullptr)    //Make sure sequence exists
 					{
 						CDB_BuildError("Sequence \"{0}\" does not exist", t->Value);
 						break;
 					}
 
-					//Sequence exists
-					std::vector<Region>* SeqRegions = Seq->GetRegions(Proj);
+					//If Seq's project is nullptr, it came from a module
+					if (Seq.second == nullptr)
+						Seq.second = Proj;
+
+					//Make sure the other project has the same compilation target as the current project
+					Seq.second->TargetOrganism = Proj->TargetOrganism;
+
+					//Sequence exists - get parameters
+					++i;
+					auto params = GetParams(Proj, *Tokens, i, Seq.first->ParamIdx2Name);
 					int Start = Code.length();
-					Code += *Proj->GetSeq(Tokens, i, &Modules)->GetCode(Proj);
-					for (Region r : *SeqRegions)
+
+					//Call sequence
+					int CurrentSequenceCallDepth = 0;
+					auto SequenceOutput = Seq.first->Get(Seq.second, params);
+
+					//Add output to compiler's output
+					Code += SequenceOutput.second;
+					int UselessInt;
+					for (Region& r : SequenceOutput.first)
 					{
 						if (r.Start == 0)
 						{
 							r.Start = 1;
 						}
 						r.Add(Start);
-						Output.push_back(std::move(r));
+						AddRegionToVector(std::move(r), Output, UselessInt);
 					}
-					CurrentRegion.Start = Code.length();
 					break;
 				}
 				case LexerToken::CALLOP:
 				{
-					//Check if main region has anything in it
-					if ((CurrentRegion.Start != Code.length() && Code.length() != 0) || CurrentRegion.Name != "Main")
-					{
-						CurrentRegion.End = Code.length();
-						Output.push_back(CurrentRegion);
-						CurrentRegion = Region();
-						CurrentRegion.Name = "Main";
-					}
-					int OldIdx = i;
-					++i;
-					std::vector<Token*> InsideTokens = GetInsideTokens(*Tokens, i);
-
-					auto Ptr = Proj->GetOp(Tokens, OldIdx, &Modules);
-					if (Ptr == nullptr)    //Make sure the operation exists
+					auto Op = Proj->GetSeq(Tokens, i, &Modules);
+					if (Op.first == nullptr)    //Make sure sequence exists
 					{
 						CDB_BuildError("Operation \"{0}\" does not exist", t->Value);
 						break;
 					}
 
-					//Operation exists
-					auto output = Ptr->Get(InsideTokens, Proj);
+					//Sequence exists - get parameters
+					++i;
+					auto params = GetParams(Proj, *Tokens, i, Op.first->ParamIdx2Name);
 					int Start = Code.length();
-					if (Start == 0)    //Make sure start isn't 0
-						Start = 1;
-					Code += output.second;
 
-					Output.push_back(Region(t->Value, Start, Code.length()));    //Create a region for the operation
-					for (Region r : output.first)
+					if ((*Tokens)[i]->TokenType == LexerToken::RPAREN)
+						++i;
+					std::vector<Token*> InsideTokens = GetInsideTokens(*Tokens, i);
+					InnerCode Inner = InnerCode(Compile(Proj, &InsideTokens));
+					params["InnerCode"] = &Inner;
+
+					//Operation exists
+					auto OperationOutput = Op.first->Get(Op.second, params);
+					
+					//Add output to compiler's output
+					Code += OperationOutput.second;
+					int UselessInt;
+					for (Region& r : OperationOutput.first)
 					{
-						if (r.Name == "Main")    //If it's a main region, we don't want to add it
+						if (r.Start == 0)
 						{
-							continue;
+							r.Start = 1;
 						}
 						r.Add(Start);
-						Output.push_back(r);
+						AddRegionToVector(std::move(r), Output, UselessInt);
 					}
-					CurrentRegion.Start = Code.length();
 					break;
 				}
 				case LexerToken::FROM:
@@ -206,37 +408,74 @@ namespace GIL
 						AminosIDXToDNA(output.second, Aminos, Idxs, Proj, CurrentEncoding);    //Convert amino acids to DNA optimized for target
 					}
 
-					//Check if main region has anything in it
-					if (CurrentRegion.Start != Code.length() || CurrentRegion.Name != "Main")
-					{
-						CurrentRegion.End = Code.length();
-						Output.push_back(CurrentRegion);
-						CurrentRegion = Region();
-						CurrentRegion.Name = "Main";
-					}
 					//Add the regions to the output
 					Output.reserve(Output.size() + output.first.size() + 1);    //Reserve enough space
 
 					//Region saying that the area was translated
 					Region TranslatedRegion("Translated protein from organism " + OrganismName, Code.length(), 
 						Code.length() + output.second.length());
-					Output.push_back(TranslatedRegion);
+					AddRegionToVector(TranslatedRegion, Output);
 
 					for (Region& r : output.first)
 					{
+						if (r.Name == "")
+							continue;
 						r.Add(Code.length());
-						Output.push_back(r);
+						AddRegionToVector(r, Output);
 					}
 					Code += output.second;
-					CurrentRegion.Start = Code.length();
+					break;
+				}
+				case LexerToken::FOR:
+				{
+					++i;
+					if ((*Tokens)[i]->TokenType != LexerToken::IDENT && (*Tokens)[i]->TokenType != LexerToken::STRING)    //Check if the next token is the organism's name
+					{
+						CDB_BuildError("Expected organism name after FOR token");
+						break;
+					}
+					std::string& OrganismName = (*Tokens)[i]->Value;
+					std::pair<std::vector<Region>, std::string> output;
+
+					
+					std::string OldTargetOrganism = Proj->TargetOrganism;
+					Proj->TargetOrganism = OrganismName;
+					++i;
+
+					std::vector<Token*> InBlockTokens = GetInsideTokens(*Tokens, i);    //Get the DNA to be translated
+					output = Compile(Proj, &InBlockTokens);
+					
+					Proj->TargetOrganism = OldTargetOrganism;
+
+					//Add the regions to the output
+					Output.reserve(Output.size() + output.first.size() + 1);    //Reserve enough space
+
+					//Region saying that the area was translated
+					Region TranslatedRegion("DNA optimized for organism " + OrganismName, Code.length(),
+						Code.length() + output.second.length());
+					AddRegionToVector(TranslatedRegion, Output);
+
+					for (Region& r : output.first)
+					{
+						if (r.Name == "")
+							continue;
+						r.Add(Code.length());
+						AddRegionToVector(r, Output);
+					}
+					Code += output.second;
 					break;
 				}
 				default:
 					break;
 				}
 			}
-			CurrentRegion.End = Code.length();
-			Output.push_back(CurrentRegion);
+
+			//Add any unclosed regions
+			for (int r = LastRegion; r > -1; --r)
+			{
+				OpenRegions[r].End = Code.length();
+				AddRegionToVector(std::move(OpenRegions[r]), Output);
+			}
 
 			return std::pair<std::vector<Region>, std::string>(Output, Code);
 		}
@@ -316,16 +555,21 @@ namespace GIL
 			if (std::filesystem::exists(CDB::Application::Get().PreBuildDir + "\\" + path.parent_path().string() + "\\"
 				+ path.stem().string() + ".cgil"))    //if cached/precompiled file exists
 			{
-				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PreBuildDir + "\\" 
+				Project* p = Project::Load(CDB::Application::Get().PreBuildDir + "\\" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
+				Proj->Namespaces[path.stem().string()] = p;
+				ImportAllProjectImports(p);
+				LinkAllProjectDLLs(p);
 				imported = true;
 			}
 			else if (std::filesystem::exists(CDB::Application::Get().PathToEXE + "/Build/Libs/" + path.parent_path().string() + "\\" 
 				+ path.stem().string() + ".cgil"))    //If a compiled file in the libs folder exists
 			{
-				CDB_BuildInfo("Worked");
-				Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/" 
+				Project* p = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
+				Proj->Namespaces[path.stem().string()] = p;
+				ImportAllProjectImports(p);
+				LinkAllProjectDLLs(p);
 				imported = true;
 			}
 			else if (std::filesystem::exists(CDB::Application::Get().OpenProject->Path + "\\" + path.parent_path().string() + "\\" + path.stem().string() + ".gil"))
@@ -343,6 +587,8 @@ namespace GIL
 					+ path.stem().string() + ".cgil");
 
 				Proj->Namespaces[path.stem().string()] = p;
+				ImportAllProjectImports(p);
+				LinkAllProjectDLLs(p);
 				imported = true;
 			}
 
@@ -351,16 +597,21 @@ namespace GIL
 				if (std::filesystem::exists(CDB::Application::Get().PreBuildDir + "\\" + path.parent_path().string() + "\\"
 					+ Proj->TargetOrganism + "@" + path.stem().string() + ".cgil"))    //if cached/precompiled file exists
 				{
-					Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PreBuildDir + "\\"
+					Project* p = Project::Load(CDB::Application::Get().PreBuildDir + "\\"
 						+ path.parent_path().string() + "\\" + Proj->TargetOrganism + "@" + path.stem().string() + ".cgil");
+					Proj->Namespaces[path.stem().string()] = p;
+					ImportAllProjectImports(p);
+					LinkAllProjectDLLs(p);
 					imported = true;
 				}
 				else if (std::filesystem::exists(CDB::Application::Get().PathToEXE + "/Build/Libs/" + path.parent_path().string() + "\\"
 					+ Proj->TargetOrganism + "@" + path.stem().string() + ".cgil"))    //If a compiled file in the libs folder exists
 				{
-					CDB_BuildInfo("Worked");
-					Proj->Namespaces[path.stem().string()] = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/"
+					Project* p = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/"
 						+ path.parent_path().string() + "\\" + Proj->TargetOrganism + "@" + path.stem().string() + ".cgil");
+					Proj->Namespaces[path.stem().string()] = p;
+					ImportAllProjectImports(p);
+					LinkAllProjectDLLs(p);
 					imported = true;
 				}
 			}
@@ -386,10 +637,115 @@ namespace GIL
 			if (std::filesystem::exists(LibPath))
 			{
 				//Load the DLL
-				auto func = CDB::GetSharedLibFunc<f_GetModule>(LibPath.string().c_str(), "GetModule");
+				auto func = CDB::GetSharedLibFunc<f_GetModule>(LibPath.c_str(), "GetModule");
 				Modules[LibPath.stem().string()] = func();
 			}
 		}
+
+		std::vector<Token*> GetTokensInBetween(std::vector<Token*>& Tokens, int& i, LexerToken Begin, LexerToken End)
+		{
+			for (i; i < Tokens.size(); ++i)
+			{
+				if (Tokens[i]->TokenType == Begin)
+					break;
+				if (Tokens[i]->TokenType == LexerToken::COMMENT || Tokens[i]->TokenType == LexerToken::NEWLINE)
+					continue;
+				--i;
+				return std::vector<Token*>();
+			}
+			++i;
+			int NumInBetween = 0;
+			for (i; i < Tokens.size(); ++i)
+			{
+				if (Tokens[i]->TokenType == End)
+					break;
+				++NumInBetween;
+			}
+
+			//Now put it into the output vector
+			std::vector<Token*> Output;
+			Output.reserve(NumInBetween);
+			for (NumInBetween; NumInBetween > 0; --NumInBetween)
+				Output.push_back(Tokens[i - NumInBetween]);
+
+			return Output;
+		}
+
+		std::map<std::string, Param> GetParams(Parser::Project* Proj, std::vector<Token*>& Tokens, int& i, 
+			std::vector<std::string>& ParamIdx2Name, std::map<std::string, Param>* Params)
+		{
+			std::vector<Token*> InsideTokens = GetTokensInBetween(Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
+			std::map<std::string, Param> Output;
+
+			int ParamIdx = 0;
+			for (int n = 0; n < InsideTokens.size(); ++n)
+			{
+				if (InsideTokens[n]->TokenType == LexerToken::IDENT)
+				{
+					//Check to make sure sequence exists
+					if (!Proj->Sequences.contains(InsideTokens[n]->Value))
+					{
+						CDB_BuildError("Sequence \"{0}\" passed as parameter does not exist", InsideTokens[n]->Value);
+						continue;
+					}
+					//Put the sequence into the output
+					Output[ParamIdx2Name[ParamIdx]] = Param(Proj->Sequences[InsideTokens[n]->Value], Proj->Sequences[InsideTokens[n]->Value]->SeqType);
+					++ParamIdx;
+				}
+				else if (InsideTokens[n]->TokenType == LexerToken::PARAM)
+				{
+					//Check to make sure there are enough tokens
+					if (n >= InsideTokens.size() - 2)
+					{
+						//See if this was one of the calling sequence's parameters
+						if (Params != nullptr && Params->contains(InsideTokens[n]->Value))
+						{
+							Output[ParamIdx2Name[ParamIdx]] = (*Params)[InsideTokens[n]->Value];
+							++ParamIdx;
+							continue;
+						}
+
+						CDB_BuildError("Parameter \"{0}\" was assigned by name, no value given (reached end of parameters)", InsideTokens[n]->Value);
+						return Output;
+					}
+
+					if (InsideTokens[n + 1]->TokenType != LexerToken::EQUALS)
+					{
+						CDB_BuildError("Parameter\"{0}\" was referenced by name but not assigned (assignment requires an equals sign)",
+							InsideTokens[n]->Value);
+						return Output;
+					}
+
+					if (InsideTokens[n + 2]->TokenType != LexerToken::IDENT)
+					{
+						//If it's a parameter, pass the parameter
+						if (Params != nullptr && InsideTokens[n + 2]->TokenType == LexerToken::PARAM
+							&& Params->contains(InsideTokens[n + 2]->Value))
+						{
+							Output[InsideTokens[n]->Value] = (*Params)[InsideTokens[n + 2]->Value];
+							n += 2;
+							continue;
+						}
+
+						CDB_BuildError("Parameter\"{0}\" was assigned to a token not of type IDENT", InsideTokens[n]->Value);
+						return Output;
+					}
+
+					//Make sure the sequence exists
+					if (!Proj->Sequences.contains(InsideTokens[n + 2]->Value))
+					{
+						CDB_BuildError("Sequence \"{0}\" passed as parameter does not exist", InsideTokens[n + 2]->Value);
+						continue;
+					}
+
+					Output[InsideTokens[n]->Value] = Param(Proj->Sequences[InsideTokens[n + 2]->Value], Proj->Sequences[InsideTokens[n + 2]->Value]->SeqType);
+					n += 2;
+				}
+			}
+			return Output;
+		}
+
+
 
 		bool HasRestrictionSites(std::string& DNA, std::string& Codon, Project* Proj)
 		{
@@ -401,6 +757,38 @@ namespace GIL
 					return true;
 			}
 			return false;
+		}
+
+
+
+
+		//Prepro conditions
+		bool Prepro_IsEq(Project* Proj, std::vector<Token*>* Tokens)
+		{
+			if (Tokens->size() != 2)
+			{
+				CDB_BuildError("#If IsEq expected two operands");
+				for (Token* t : *Tokens)
+				{
+					CDB_BuildInfo(*t);
+				}
+				return false;
+			}
+
+			if (Proj->StrVars.contains((*Tokens)[0]->Value) && Proj->StrVars.contains((*Tokens)[1]->Value))
+			{
+				return Proj->StrVars[(*Tokens)[0]->Value] == Proj->StrVars[(*Tokens)[1]->Value];
+			}
+			else if (Proj->NumVars.contains((*Tokens)[0]->Value) && Proj->NumVars.contains((*Tokens)[1]->Value))
+			{
+				return Proj->NumVars[(*Tokens)[0]->Value] == Proj->NumVars[(*Tokens)[1]->Value];
+			}
+			else
+			{
+				CDB_BuildError("Variables \"{0}\" and \"{1}\" either are not the same type or do not exist", (*Tokens)[0]->Value, 
+					(*Tokens)[1]->Value);
+				return false;
+			}
 		}
 	}
 }
