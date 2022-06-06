@@ -782,6 +782,27 @@ namespace GIL
 			}
 		}
 
+		void ConvertTokenToDNA(Token* t)
+		{
+			//Clean the string by shifting characters backwards
+			int NumRem = 0;
+			for (int i = 0; i < t->Value.length(); ++i)
+			{
+				switch (t->Value[i])
+				{
+				case '\r':
+				case ' ':
+				case '\n':
+					++NumRem;
+					break;
+				default:
+					//Shift the characters backwards
+					t->Value[i - NumRem] = t->Value[i];
+					break;
+				}
+			}
+			t->Value.resize(t->Value.length() - NumRem);
+		}
 
 		//This function changes all the idents that are actually DNA to DNA
 		void FixTokens(std::vector<Token*>& Tokens, std::map<std::string, std::vector<Token*>>& Sequences, std::map<std::string, std::vector<Token*>>& Operations)
@@ -798,6 +819,10 @@ namespace GIL
 							t->TokenType = LexerToken::DNA;
 						}
 					}
+				}
+				else if (t->TokenType == LexerToken::DNA)
+				{
+					ConvertTokenToDNA(t);
 				}
 			}
 		}
