@@ -133,6 +133,13 @@ namespace GIL
 					break;
 				case ':':
 				{
+					//If the last token was a namespace token, ignore this colon
+					if ((*OutputTokens)[OutputTokens->size() - 1]->TokenType == LexerToken::NAMESPACE)
+					{
+						break;
+					}
+					
+					//Check if the last token was an ident
 					if (OutputTokens->operator[](OutputTokens->size() - 1)->TokenType != LexerToken::IDENT)
 					{
 						if ((*OutputTokens)[OutputTokens->size() - 1]->TokenType == LexerToken::RPAREN)

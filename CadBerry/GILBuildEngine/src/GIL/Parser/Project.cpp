@@ -259,7 +259,7 @@ namespace GIL
 				case LexerToken::CREATENAMESPACE:
 				{
 					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT)
+					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
 					{
 						CDB_BuildError("Expected namespace name");
 						break;
