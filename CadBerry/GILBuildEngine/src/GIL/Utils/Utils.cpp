@@ -92,7 +92,6 @@ namespace GIL
 					if (!Matches(Code[i + p], pattern[p]))
 						goto ContinueLoop;
 				}
-				CDB_BuildInfo(Code);
 				return { Code.substr(i, pattern.size()), i };
 
 			ContinueLoop:

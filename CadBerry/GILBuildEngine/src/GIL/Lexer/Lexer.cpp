@@ -152,7 +152,6 @@ namespace GIL
 						OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
 						break;
 					}
-					CDB_BuildInfo("Get Namespace");
 					OutputTokens->operator[](OutputTokens->size() - 1)->TokenType = LexerToken::NAMESPACE;
 					break;
 				}

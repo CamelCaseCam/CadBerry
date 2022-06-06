@@ -49,10 +49,7 @@ public:
 		CheckFatal;
 		GIL::Parser::Project* Proj = GIL::Parser::Project::Parse(Tokens);
 		CheckFatal;
-
-		GIL::BoolContext::Print();
 		
-		CDB_BuildInfo(std::filesystem::path(PreBuildPath).parent_path().string());
 		if (!std::filesystem::exists(std::filesystem::path(PreBuildPath).parent_path()))
 		{
 			std::filesystem::create_directories(std::filesystem::path(PreBuildPath).parent_path());
