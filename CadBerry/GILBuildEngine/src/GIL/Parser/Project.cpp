@@ -294,7 +294,7 @@ namespace GIL
 
 			for (it = Operations.begin(); it != Operations.end(); ++it)    //Loop through operations and recursively compile their dependencies
 			{
-				GetOperation(it->first, it->second, CreatedSequences, CreatedOps, Sequences, Operations, Target);
+				GetSequence(it->first, it->second, CreatedSequences, CreatedOps, Sequences, Operations, Target);
 			}
 
 			for (int i = 0; i < Target->Main.size(); ++i)    //Do forwards
@@ -723,6 +723,8 @@ namespace GIL
 			}
 		}
 
+		
+		//This function is deprecated and was used back when the compiler differentiated between sequences and operations. It will be removed in the future.
 		void GetOperation(std::string Name, std::vector<Token*>& Tokens, std::vector<std::string>& CompletedSequences, std::vector<std::string>& CompletedOps, std::map<std::string,
 			std::vector<Token*>>& Sequences, std::map<std::string, std::vector<Token*>>& Operations, Project* Target)
 		{
@@ -734,15 +736,12 @@ namespace GIL
 
 			CompletedOps.push_back(Name);
 
-			for (Token* t : Tokens)
+			for (int i = 0; i < Tokens.size(); ++i)
 			{
-				switch (t->TokenType)
+				switch (Tokens[i]->TokenType)
 				{
-				case LexerToken::IDENT:
-					GetSequence(t->Value, Sequences[t->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
-					break;
-				case LexerToken::CALLOP:
-					GetOperation(t->Value, Operations[t->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
+				case LexerToken::LPAREN:
+					Compiler::GetTokensInBetween(Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
 					break;
 				default:
 					break;

@@ -302,6 +302,7 @@ namespace GIL
 					//If Seq's project is nullptr, it came from a module
 					if (Seq.second == nullptr)
 						Seq.second = Proj;
+					Seq.second->TargetOrganism = Proj->TargetOrganism;
 
 					//Make sure the other project has the same compilation target as the current project
 					Seq.second->TargetOrganism = Proj->TargetOrganism;
@@ -337,6 +338,11 @@ namespace GIL
 						CDB_BuildError("Operation \"{0}\" does not exist", t->Value);
 						break;
 					}
+					
+					//If Op's project is nullptr, it came from a module
+					if (Op.second == nullptr)
+						Op.second = Proj;
+					Op.second->TargetOrganism = Proj->TargetOrganism;
 
 					//Sequence exists - get parameters
 					++i;

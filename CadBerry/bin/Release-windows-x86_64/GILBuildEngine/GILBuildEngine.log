@@ -114,13 +114,13 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(14
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(161,43): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(175,49): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(179,51): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(312,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(344,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(416,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(423,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(455,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(462,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(476,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(313,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(350,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(422,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(429,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(461,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(468,26): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(482,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
      Creating library ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.lib and object ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.exp
   GILBuildEngine.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.dll
           1 file(s) copied.
