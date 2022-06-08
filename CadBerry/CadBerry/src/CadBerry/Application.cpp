@@ -17,6 +17,8 @@
 #include "SharedLib.h"
 #include "Core.h"
 
+#include "Rendering/Utils/Utils.h"
+
 #include "Utils/RNAFuncs.h"
 
 #include "RNA.h"
@@ -48,6 +50,9 @@ namespace CDB
 
 			GuiLayer = new ImGuiLayer();    //CheckEnd will delete EditorWindow which will delete GuiLayer, so we're initializing a new one
 			EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
+			
+			//Initialize the primitives
+			InitPrimitives();
 		}
 
 		Viewports = new ViewportLayer();

@@ -129,4 +129,12 @@ namespace CDB
 			return;
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 	}
+
+	void OpenGLShader::UploadUniformVec4(const std::string& name, const glm::vec4& vector) const
+	{
+		GLint location = glGetUniformLocation(this->RendererID, name.c_str());
+		if (location == -1)
+			return;
+		glUniform4fv(location, 1, glm::value_ptr(vector));
+	}
 }

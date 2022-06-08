@@ -86,7 +86,7 @@ project "CadBerry"
 		"CDBRNA"
 	}
 
-	filter "system:linux"
+	filter {"system:linux", "system:macosx"}
 		cppdialect "C++20"
 		staticruntime "Off"
 		pic "On"
@@ -388,7 +388,7 @@ project "CadBerry_updater"
 		"cpr"
 	}
 
-	filter "system:linux"
+	filter {"system:linux", "system:macosx"}
 		defines
 		{
 			"CDB_PLATFORM_LINUX",
@@ -462,7 +462,7 @@ project "VSCodeIntegration"
 		"ImGui",
 	}
 
-	filter "system:linux"
+	filter {"system:linux", "system:macosx"}
 		defines
 		{
 			"CDB_PLATFORM_LINUX",
@@ -549,7 +549,7 @@ project "GILBuildEngine"
 		"GIL_BUILD_DLL",
 	}
 
-	filter "system:linux"
+	filter {"system:linux", "system:macosx"}
 		cppdialect "C++20"
 		staticruntime "Off"
 		pic "On"

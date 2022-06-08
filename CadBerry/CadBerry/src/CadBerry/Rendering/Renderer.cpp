@@ -52,4 +52,12 @@ namespace CDB
 
 		RenderCommand::DrawIndexed(vertexArray);
 	}
+
+	void Renderer::SubmitNoBind(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform)
+	{
+		shader->UploadUniformMat4("u_PVMatrix", ProjectionViewMatrix);
+		shader->UploadUniformMat4("u_Transform", transform);
+
+		RenderCommand::DrawIndexed(vertexArray);
+	}
 }

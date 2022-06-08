@@ -14,6 +14,7 @@ namespace CDB
 		virtual void Unbind() const override;
 
 		virtual void UploadUniformMat4(const std::string& name, const glm::mat4& matrix) const override;
+		virtual void UploadUniformVec4(const std::string& name, const glm::vec4& vector) const override;
 	private:
 		uint32_t RendererID;
 	};

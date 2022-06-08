@@ -17,7 +17,7 @@ project "Glad"
         "include"
     }
 
-    filter "system:linux"
+    filter {"system:linux", "system:macosx"}
         pic "On"
 
 	filter "system:windows"

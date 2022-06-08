@@ -4,6 +4,10 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
+#include "CadBerry/Utils/memory.h"
+
+#include <glm/ext/matrix_transform.hpp>
+
 namespace CDB
 {
 	//Draw a polygon at these points with this colour
@@ -100,6 +104,107 @@ namespace CDB
 			ImGui::GetCurrentWindow()->DrawList->AddTriangleFilled(ImGui::GetCursorScreenPos() + Points[0], ImGui::GetCursorScreenPos() + Points[i - 1], ImGui::GetCursorScreenPos() + Points[i], PolygonColour);
 		}
 		ImGui::Dummy(ImVec2(MaxPt.x - MinPt.x, MaxPt.y - MinPt.y));
+	}
+	
+
+	struct SquarePrimitive
+	{
+		Point2D Position;
+		float Size;
+		float Rotation;
+		CDBColour Colour;
+	};
+	
+	
+	std::vector<SquarePrimitive> SquarePrimitives;
+	void DrawSquare(Point2D Position, float Size, CDBColour Colour, float Rotation)
+	{
+		SquarePrimitives.push_back({ Position, Size, Rotation, Colour });
+	}
+
+
+	CDB::scoped_ptr<CDB::VertexArray> SquareVerts;
+	CDB::scoped_ptr<CDB::Shader> SquareShader;
+	
+	void InitPrimitives()
+	{
+		SquareVerts = CDB::VertexArray::Create();
+
+		//Create the vertex array
+		float squareVerts[2 * 4] = {
+		-1.0f, 1.0f,		
+		1.0f, 1.0f,			
+		1.0f, -1.0f,		
+		-1.0f, -1.0f,		
+		};
+
+		VertexBuffer* SquareBuffer = VertexBuffer::Create(sizeof(squareVerts), squareVerts);
+
+		{
+			BufferLayout layout = {
+				{ShaderDataType::Float2, "pos"},
+			};
+			
+			SquareBuffer->SetLayout(layout);
+		}
+
+		unsigned int SquareIndices[6] = { 0, 1, 2, 0, 2, 3 };
+
+		IndexBuffer* SquareIndexBuffer = IndexBuffer::Create(sizeof(SquareIndices), SquareIndices);
+		SquareVerts->AddVertexBuffer(SquareBuffer);
+		SquareVerts->SetIndexBuffer(SquareIndexBuffer);
+
+
+		//Now create the shader
+		SquareShader = Shader::Create(
+			R"(#version 330 core
+layout(location = 0) in vec2 InPos;
+
+uniform mat4 u_PVMatrix;
+uniform mat4 u_Transform;
+
+void main()
+{
+	gl_Position = u_Transform * vec4(InPos, 0.0, 1.0);
+})",
+
+R"(#version 330 core
+layout(location = 0) out vec4 colour;
+
+uniform vec4 SquareColour;
+
+void main()
+{
+	colour = vec4(SquareColour);
+})");
+	}
+
+	void DrawPrimitives()
+	{
+		//Draw squares
+		SquareShader->Bind();
+		for (SquarePrimitive& sq : SquarePrimitives)
+		{
+			//Create the transform matrix
+			glm::mat4 Trans = glm::mat4(1.0f);
+			Trans = glm::scale(Trans, glm::vec3(sq.Size, sq.Size, 1.0));
+			Trans = glm::translate(Trans, glm::vec3(sq.Position.x, sq.Position.y, 0.0f));
+			Trans = glm::rotate(Trans, sq.Rotation * glm::radians(50.0f), glm::vec3(0.0, 0.0, 1.0));
+
+			glm::vec4 Colour = glm::vec4(sq.Colour.r, sq.Colour.g, sq.Colour.b, sq.Colour.a);
+			
+			//Upload the uniforms
+			SquareShader->UploadUniformVec4("SquareColour", Colour);
+
+			//Draw the square
+			CDB::Renderer::SubmitNoBind(SquareVerts.raw(), SquareShader.raw(), Trans);
+		}
+		SquarePrimitives.resize(0);
+	}
+
+	void ClearPrimitives()
+	{
+		SquarePrimitives.resize(0);
 	}
 
 	IndexBuffer* PointsToTriBuffer(int NumPoints)

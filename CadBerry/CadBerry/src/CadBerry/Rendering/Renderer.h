@@ -22,6 +22,9 @@ namespace CDB
 
 		static void Submit(const VertexArray* vertexArray);
 		static void Submit(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform = glm::mat4(1.0f));
+		
+		//Uploads uniforms but assumes the vertex array and shader is already bound
+		static void SubmitNoBind(const VertexArray* vertexArray, const Shader* shader, const glm::mat4& transform = glm::mat4(1.0f));
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 	private:

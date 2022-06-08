@@ -16,6 +16,8 @@
 
 #include <glm/ext/matrix_transform.hpp>
 
+#include "CadBerry/Rendering/Utils/Utils.h"
+
 #include <nfd.h>
 
 #include <filesystem>
@@ -63,13 +65,7 @@ public:
 	{
 		
 	}
-
-	/*
-	Suuuuuper not professional to be ranting in my comments, but not professional is my jam!
-	Today (2022-02-14) I found out that Youtube Vanced has been shut down. I hate google. I only downloaded vanced because of all the ways youtube 
-	destroyed their user experience (removing dislikes, 2x 15sec unskipable adds), and now this makes me want to use youtube even less. I hope 
-	Google gets broken up
-	*/
+	
 	virtual void GUIDraw() override
 	{
 		CDB::Renderer::BeginScene(Target.raw());
@@ -333,6 +329,38 @@ public:
 	virtual void OnClose() override {}
 };
 
+class __declspec(dllexport) DiffusionExample : public CDB::Viewport
+{
+public:
+	DiffusionExample() : CDB::Viewport("Diffusion Example") {};
+	~DiffusionExample() override {};
+
+	CDB::scoped_ptr<CDB::RenderTarget> Target;
+
+	virtual void GUIDraw() override
+	{
+		CDB::Renderer::BeginScene(Target.raw());
+		CDB::RenderCommand::SetClearColour({ 0.0, 0.0, 0.0, 1.0 });
+		CDB::RenderCommand::Clear();
+
+		CDB::DrawSquare({ 0, 0 }, 0.5, { 1, 1, 0 });
+		CDB::DrawSquare({ 0, 1 }, 0.5, { 1, 1, 0 });
+
+		CDB::DrawPrimitives();
+		
+		CDB::Renderer::EndScene();
+		
+		Target->Draw({ 400, 400 }, { 1.0, 1.0 });
+	}
+	
+	virtual void Start() override
+	{
+		Target = CDB::RenderTarget::Create();
+	}
+	virtual void OnClose() override {}
+};
+
+
 class __declspec(dllexport) DNAEditor : public CDB::Viewport
 {
 public:
@@ -343,7 +371,7 @@ public:
 	const std::vector<const char*> DNAOperations = {
 		"Reverse Complement",
 		"Complement",
-		"Reverse strand"
+		"Reverse strand",
 	};
 	std::string DNA;
 	std::string Output;
@@ -433,6 +461,7 @@ enum class ViewportType
 {
 	DNAEditor,
 	Modelling,
+	DiffusionExample,
 #ifdef CDB_DEVELOPER_ENABLE
 	RenderingTests,
 #endif // CDB_DEVELOPER_ENABLE
@@ -441,6 +470,7 @@ enum class ViewportType
 std::unordered_map<std::string, ViewportType> Name2Viewport({
 	{ "DNA Editor", ViewportType::DNAEditor },
 	{ "Modelling", ViewportType::Modelling },
+	{ "Diffusion Example", ViewportType::DiffusionExample },
 #ifdef CDB_DEVELOPER_ENABLE
 	{ "Rendering Tests", ViewportType::RenderingTests } ,
 #endif // CDB_DEVELOPER_ENABLE
@@ -455,16 +485,16 @@ public:
 	UseImGui
 	
 #ifdef CDB_DEVELOPER_ENABLE
-	std::string Viewports[3] = { "DNA Editor", "Modelling", "Rendering Tests" };
+	std::string Viewports[4] = { "DNA Editor", "Modelling", "Rendering Tests", "Diffusion Example" };
 #else
-	std::string Viewports[2] = { "DNA Editor", "Modelling" };
+	std::string Viewports[2] = { "DNA Editor", "Modelling", "Diffusion Example" };
 #endif // CDB_DEVELOPER_ENABLE
 	virtual std::string* GetViewportNames() override
 	{
 #ifdef CDB_DEVELOPER_ENABLE
-		NumViewports = 3;
+		NumViewports = 4;
 #else
-		NumViewports = 2;
+		NumViewports = 3;
 #endif // CDB_DEVELOPER_ENABLE
 		return Viewports;
 	}
@@ -477,6 +507,8 @@ public:
 			return new DNAEditor();
 		case ViewportType::Modelling:
 			return new Modelling();
+		case ViewportType::DiffusionExample:
+			return new DiffusionExample();
 #ifdef CDB_DEVELOPER_ENABLE
 		case ViewportType::RenderingTests:
 			return new RenderingTests();
