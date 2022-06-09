@@ -5,21 +5,21 @@ namespace utils
 {
 	namespace Operations
 	{
-		std::pair<std::vector<GIL::Parser::Region>, std::string> PrintWarning::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+		std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 		{
-			if (InnerTokens.size() == 0)
+			if (((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode.second.size() == 0)
 			{
 				CDB_BuildWarning("Warning called by utils module");
 			}
 			else
 			{
-				CDB_BuildWarning(InnerTokens[0]->Value);
+				CDB_BuildWarning(((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode.second);
 			}
 			return std::pair<std::vector<GIL::Parser::Region>, std::string>();
 		}
 
-		GIL::Operation* PrintWarning::self = nullptr;
-		GIL::Operation* PrintWarning::GetPtr()
+		GIL::Sequence* PrintWarning::self = nullptr;
+		GIL::Sequence* PrintWarning::GetPtr()
 		{
 			if (self == nullptr)
 			{

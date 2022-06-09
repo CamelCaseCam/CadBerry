@@ -80,9 +80,6 @@
     <ClInclude Include="src\GIL\OutputTypes.h">
       <Filter>GIL</Filter>
     </ClInclude>
-    <ClInclude Include="src\GIL\Parser\Operation.h">
-      <Filter>GIL\Parser</Filter>
-    </ClInclude>
     <ClInclude Include="src\GIL\Parser\Parser.h">
       <Filter>GIL\Parser</Filter>
     </ClInclude>
@@ -144,9 +141,6 @@
     </ClCompile>
     <ClCompile Include="src\GIL\OutputTypes.cpp">
       <Filter>GIL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GIL\Parser\Operation.cpp">
-      <Filter>GIL\Parser</Filter>
     </ClCompile>
     <ClCompile Include="src\GIL\Parser\Project.cpp">
       <Filter>GIL\Parser</Filter>

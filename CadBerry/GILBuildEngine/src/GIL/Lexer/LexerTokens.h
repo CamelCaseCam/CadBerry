@@ -79,6 +79,8 @@ namespace GIL
 			ASSIGNTYPE,
 			TYPEDEF,
 			INHERITS,
+
+			OPERATOR,
 		};
 
 		GILAPI extern std::unordered_map<LexerToken, std::string> LexerToken2Str;

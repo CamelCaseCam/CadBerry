@@ -2,7 +2,6 @@
 
 #include <gilpch.h>
 
-#include "Operation.h"
 #include "Sequence.h"
 #include "GIL/Modules/GILModule.h"
 
@@ -30,11 +29,11 @@ namespace GIL
 			static Project* Load(std::ifstream& InputFile, std::string& DataPath);    //Overload to load a project from within a file
 
 			std::pair<Sequence*, Parser::Project*> GetSeq(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns sequence based on namespaces
-			Operation* GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns operation based on namespaces
+			Sequence* GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns operation based on namespaces
 			
 			//This should probably be private
 			Sequence* GetSeqFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
-			Operation* GetOpFromNamespace(std::string& OpName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
+			Sequence* GetOpFromNamespace(std::string& OpName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
 
 			uint16_t AllocType(std::string TypeName);
 
@@ -54,11 +53,12 @@ namespace GIL
 			adding the string with the other elements's name and having the compiler treat forwards and normal elements differently. In the 
 			C++ version, the different strings can point to the same operation or sequence, so there's no difference to the compiler. 
 			*/
-			//TODO: Save if the op or sequence is a forward in the cgil file
-			std::map<std::string, Operation*> Operations;
 			std::map<std::string, Sequence*> Sequences;
 			std::vector<Lexer::Token*> Main;
 
+			//Map for operators
+			std::map<std::string, Sequence*> Operators;
+			
 			std::map<std::string, std::string> Attributes;
 			std::vector<std::string> AvoidRSites;
 

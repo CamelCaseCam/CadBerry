@@ -12,7 +12,7 @@ namespace utils
 	class utilsModule : public GIL::GILModule
 	{
 	public:
-		virtual GIL::Operation* GetOperation(std::string name) override
+		virtual GIL::Sequence* GetOperation(std::string name) override
 		{
 			if (name == "PrintWarning")
 			{

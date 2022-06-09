@@ -132,7 +132,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Modules\GILModule.h" />
     <ClInclude Include="src\GIL\OutputTypes.h" />
     <ClInclude Include="src\GIL\Parser\ArchiveCGIL.h" />
-    <ClInclude Include="src\GIL\Parser\Operation.h" />
     <ClInclude Include="src\GIL\Parser\Parser.h" />
     <ClInclude Include="src\GIL\Parser\Project.h" />
     <ClInclude Include="src\GIL\Parser\Region.h" />
@@ -158,7 +157,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClCompile Include="src\GIL\Lexer\LexerTokens.cpp" />
     <ClCompile Include="src\GIL\Lexer\Token.cpp" />
     <ClCompile Include="src\GIL\OutputTypes.cpp" />
-    <ClCompile Include="src\GIL\Parser\Operation.cpp" />
     <ClCompile Include="src\GIL\Parser\Project.cpp" />
     <ClCompile Include="src\GIL\Parser\Region.cpp" />
     <ClCompile Include="src\GIL\Parser\Sequence.cpp" />

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GIL/Parser/Operation.h"
 #include "GIL/Parser/Project.h"
 #include "GIL/Parser/Sequence.h"
 

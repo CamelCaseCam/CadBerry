@@ -1,7 +1,6 @@
 #include "gilpch.h"
 #include "Project.h"
 #include "GIL/Compiler/Compiler.h"
-#include "Operation.h"
 #include "Sequence.h"
 #include "GIL/SaveFunctions.h"
 
@@ -55,11 +54,6 @@ namespace GIL
 			for (auto s : Sequences)
 			{
 				delete s.second;
-			}
-
-			for (auto o : Operations)
-			{
-				delete o.second;
 			}
 
 			for (Token* t : Main)
@@ -302,10 +296,20 @@ namespace GIL
 				switch (Target->Main[i]->TokenType)
 				{
 				case LexerToken::FORWARD:
+				{
 					if (!(i > 0 && Target->Main[i - 1]->TokenType == LexerToken::IDENT))
 					{
 						CDB_BuildError("Missing IDENT token before or after forward (=>)");
 						break;
+					}
+
+					//Check if it's an operator definition
+					auto StartIdx = Target->Main.begin() + i - 1;
+					std::map<std::string, Sequence*>& ForwardLocation = Target->Sequences;
+					if (i - 1 > 0 && Target->Main[i - 2]->TokenType == LexerToken::OPERATOR)
+					{
+						StartIdx = Target->Main.begin() + i - 2;
+						ForwardLocation = Target->Operators;
 					}
 
 					if (Target->Main[i + 1]->TokenType == LexerToken::IDENT)
@@ -315,10 +319,10 @@ namespace GIL
 							//If the forward's pointing to a valid sequence set the first part to the second part's pointer
 							Sequence* Seq = new SequenceForward(Target->Sequences[Target->Main[i + 1]->Value], Target->Main[i + 1]->Value);
 							Seq->ParamIdx2Name = Target->Sequences[Target->Main[i + 1]->Value]->ParamIdx2Name;
-							Target->Sequences[Target->Main[i - 1]->Value] = Seq;
+							ForwardLocation[Target->Main[i - 1]->Value] = Seq;
 
 							//Make sure the forward doesn't get added
-							Target->Main.erase(Target->Main.begin() + i - 1, Target->Main.begin() + i + 2);
+							Target->Main.erase(StartIdx, Target->Main.begin() + i + 2);
 							i -= 2;
 							break;
 						}
@@ -326,6 +330,7 @@ namespace GIL
 						CDB_BuildError("Could not find sequence or operation {0}", Target->Main[i + 1]->Value);
 					}
 					break;
+				}
 				case LexerToken::BOOL:
 				{
 					if (!(i + 3 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::IDENT))
@@ -871,18 +876,8 @@ namespace GIL
 			//Write the target organism to the file
 			SaveString(this->TargetOrganism, OutputFile);
 
-			//Write operations to the file
-			int Len = this->Operations.size();
-			OutputFile.write((char*)&Len, sizeof(int));
-			for (auto op : this->Operations)
-			{
-				std::string Name = op.first;
-				SaveString(Name, OutputFile);
-				op.second->Save(OutputFile);
-			}
-
 			//Write sequences to the file
-			Len = this->Sequences.size();
+			int Len = this->Sequences.size();
 			OutputFile.write((char*)&Len, sizeof(int));
 			for (auto sequence : this->Sequences)
 			{
@@ -1011,7 +1006,7 @@ namespace GIL
 			return Sequences[SeqName];
 		}
 
-		Operation* Project::GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
+		Sequence* Project::GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
 		{
 			std::string& OpName = (*Tokens)[i]->Value;
 			if ((*Tokens)[i - 1]->TokenType == LexerToken::NAMESPACE)
@@ -1024,15 +1019,15 @@ namespace GIL
 				}
 				return this->Namespaces[*Namespaces[0]]->GetOpFromNamespace(OpName, Namespaces, 1, Modules);
 			}
-			return Operations[OpName];
+			return Sequences[OpName];
 		}
 
-		Operation* Project::GetOpFromNamespace(std::string& OpName, std::vector<std::string*>& Namespaces, int i,
+		Sequence* Project::GetOpFromNamespace(std::string& OpName, std::vector<std::string*>& Namespaces, int i,
 			std::map<std::string, GILModule*>* Modules)
 		{
 			if (i < Namespaces.size())
 				return this->Namespaces[*Namespaces[i]]->GetOpFromNamespace(OpName, Namespaces, i + 1, Modules);
-			return Operations[OpName];
+			return Sequences[OpName];
 		}
 
 
@@ -1126,15 +1121,6 @@ namespace GIL
 			LoadStringFromFile(Proj->TargetOrganism, InputFile);    //Load the target organism
 
 			int Len = -1;
-			InputFile.read((char*)&Len, sizeof(int));    //Load the operations
-			for (int i = 0; i < Len; ++i)
-			{
-				std::string Name;
-				LoadStringFromFile(Name, InputFile);
-				Proj->Operations[Name] = Operation::LoadOperation(InputFile);
-			}
-
-			Len = -1;
 			InputFile.read((char*)&Len, sizeof(int));    //Load the sequences
 			for (int i = 0; i < Len; ++i)
 			{

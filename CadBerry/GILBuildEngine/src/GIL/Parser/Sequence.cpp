@@ -10,6 +10,8 @@ namespace GIL
 	using namespace Lexer;
 	using namespace Parser;
 
+	std::string Empty = "";
+
 	enum class SequenceType : char
 	{
 		StaticSequence,
@@ -17,6 +19,8 @@ namespace GIL
 	};
 
 	SequenceType SavedSequence;
+
+	std::vector<GIL::Lexer::Token*> EmptyTokens = {};
 
 	Sequence* CreateSequence(SequenceType sequenceType)
 	{
@@ -239,6 +243,15 @@ namespace GIL
 		}
 		return this->DestinationSequence->Get(Proj, Params);
 	}
+
+	std::vector<GIL::Lexer::Token*>& SequenceForward::GetTokens()
+	{
+		if (this->DestinationSequence == nullptr)
+		{
+			return EmptyTokens;
+		}
+		return this->DestinationSequence->GetTokens();
+	}	
 
 	void SequenceForward::Save(std::ofstream& OutputFile)
 	{

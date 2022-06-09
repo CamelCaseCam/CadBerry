@@ -9,14 +9,14 @@ namespace sensing
 	//__________________________________________________________________________________________________________________________
 
 	std::string TargetText = "";
-	std::pair<std::vector<GIL::Parser::Region>, std::string> SetTRAPzymeTarget::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
-		TargetText = GIL::Compiler::Compile(Proj, &InnerTokens).second;    //Sets the Target to the compiles inner tokens
+		TargetText = GetInnerCode(Params).second;    //Sets the Target to the compiles inner tokens
 		return std::pair<std::vector<GIL::Parser::Region>, std::string>();
 	}
 
-	GIL::Operation* SetTRAPzymeTarget::self = nullptr;
-	GIL::Operation* SetTRAPzymeTarget::GetPtr()
+	GIL::Sequence* SetTRAPzymeTarget::self = nullptr;
+	GIL::Sequence* SetTRAPzymeTarget::GetPtr()
 	{
 		if (self == nullptr)
 		{
@@ -46,10 +46,10 @@ namespace sensing
 
 	int FindMatches(std::string& Strand1, std::string& Strand2, int MinChunkSize = 7);    //7 is our min chunk size, because that is one bigger than the binding region
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> GenTZFromAttenuator::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		//Compile the attenuator
-		std::string Attenuator = Compiler::Compile(Proj, &InnerTokens).second;
+		std::string Attenuator = GetInnerCode(Params).second;
 		//Find a valid Attenuator sequence (aa = "angarnnnnnnnnnnnnnnn")
 		auto Result = FindValidAttenuator(Attenuator);
 		if (Result.first == "")    //No attenuator found
@@ -257,8 +257,8 @@ namespace sensing
 
 
 
-	GIL::Operation* GenTZFromAttenuator::self = nullptr;
-	GIL::Operation* GenTZFromAttenuator::GetPtr()
+	GIL::Sequence* GenTZFromAttenuator::self = nullptr;
+	GIL::Sequence* GenTZFromAttenuator::GetPtr()
 	{
 		if (self == nullptr)
 		{
@@ -267,7 +267,7 @@ namespace sensing
 		return self;
 	}
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> CreateAttenuator::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		/*
 		Pattern is angarthvvvsvvvvvvvvvvvvvvvv
@@ -294,8 +294,8 @@ namespace sensing
 
 
 
-	GIL::Operation* CreateAttenuator::self = nullptr;
-	GIL::Operation* CreateAttenuator::GetPtr()
+	GIL::Sequence* CreateAttenuator::self = nullptr;
+	GIL::Sequence* CreateAttenuator::GetPtr()
 	{
 		if (self == nullptr)
 		{
@@ -306,10 +306,10 @@ namespace sensing
 
 
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> GenTZV2FromAttenuator::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		//Compile the attenuator
-		std::string Attenuator = Compiler::Compile(Proj, &InnerTokens).second;
+		std::string Attenuator = GetInnerCode(Params).second;
 		//Find a valid Attenuator sequence (aa = "angarnnnnnnnnnnnnnnn")
 		auto Result = FindValidV2Attenuator(Attenuator);
 		if (Result.first == "")    //No attenuator found
@@ -324,8 +324,8 @@ namespace sensing
 
 
 
-	GIL::Operation* GenTZV2FromAttenuator::self = nullptr;
-	GIL::Operation* GenTZV2FromAttenuator::GetPtr()
+	GIL::Sequence* GenTZV2FromAttenuator::self = nullptr;
+	GIL::Sequence* GenTZV2FromAttenuator::GetPtr()
 	{
 		if (self == nullptr)
 			self = new GenTZV2FromAttenuator();
@@ -512,15 +512,15 @@ namespace sensing
 		return GenTarget(Proj);
 	}
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> GenTZTarget::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		return { {}, GenTarget(Proj) };
 	}
 
 
 
-	GIL::Operation* GenTZTarget::self = nullptr;
-	GIL::Operation* GenTZTarget::GetPtr()
+	GIL::Sequence* GenTZTarget::self = nullptr;
+	GIL::Sequence* GenTZTarget::GetPtr()
 	{
 		if (self == nullptr)
 			self = new GenTZTarget();

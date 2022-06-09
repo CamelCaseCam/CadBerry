@@ -2,7 +2,6 @@
 #include <cdbpch.h>
 #include "Region.h"
 #include "GIL/Lexer/Token.h"
-#include "Operation.h"
 
 #include "GIL/Types/Type.h"
 
@@ -16,6 +15,11 @@ namespace GIL
 #ifdef GIL_BUILD_DLL
 	extern int CurrentSequenceCallDepth;
 #endif
+
+
+#define GetInnerCode(Params) ((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode
+
+	extern std::string Empty;
 
 	namespace Parser
 	{
@@ -41,7 +45,7 @@ namespace GIL
 	};
 
 
-
+	extern std::vector<GIL::Lexer::Token*> EmptyTokens;
 	class Sequence    //Base sequence class that is inherited by different sequence types
 	{
 	public:
@@ -50,6 +54,8 @@ namespace GIL
 
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) = 0;
+
+		virtual std::vector<GIL::Lexer::Token*>& GetTokens() { return EmptyTokens; }
 
 		static Sequence* LoadSequence(std::ifstream& InputFile, Parser::Project* Proj);
 
@@ -80,6 +86,9 @@ namespace GIL
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 		inline void SetTokens(std::vector<GIL::Lexer::Token*> tokens) { this->Tokens = tokens; IsCompiled = false; }
+
+		std::vector<GIL::Lexer::Token*>& GetTokens() override { return Tokens; }
+		
 	private:
 		std::vector<GIL::Lexer::Token*> Tokens;
 
@@ -99,6 +108,8 @@ namespace GIL
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
+
+		std::vector<GIL::Lexer::Token*>& GetTokens() override;
 
 		Sequence* DestinationSequence;
 		std::string& DestinationName = Empty;

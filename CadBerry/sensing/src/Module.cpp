@@ -23,7 +23,7 @@ namespace sensing
 	class sensingModule : public GIL::GILModule
 	{
 	public:
-		virtual GIL::Operation* GetOperation(std::string name) override
+		virtual GIL::Sequence* GetOperation(std::string name) override
 		{
 			switch (Str2OpName.at(name))
 			{

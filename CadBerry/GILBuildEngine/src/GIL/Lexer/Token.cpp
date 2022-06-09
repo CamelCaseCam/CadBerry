@@ -45,6 +45,8 @@ namespace GIL
 		Token* Token::Typedef = new Token(LexerToken::TYPEDEF, "");
 		Token* Token::Inherits = new Token(LexerToken::INHERITS, "");
 
+		Token* Token::Operator = new Token(LexerToken::OPERATOR, "");
+
 		Token* Token::UnknownToken = new Token(LexerToken::UNKNOWN, "");
 
 		void Token::Save(std::ofstream& OutputFile)
@@ -118,6 +120,9 @@ namespace GIL
 			case LexerToken::RPAREN:
 				return RParen;
 
+			case LexerToken::OPERATOR:
+				return Operator;
+
 			case LexerToken::UNKNOWN:
 				return UnknownToken;
 			default:
@@ -164,6 +169,8 @@ namespace GIL
 
 			case LexerToken::TYPEDEF:
 			case LexerToken::INHERITS:
+
+			case LexerToken::OPERATOR:
 
 			case LexerToken::UNKNOWN:
 				break;

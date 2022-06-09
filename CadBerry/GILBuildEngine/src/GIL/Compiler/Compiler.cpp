@@ -700,6 +700,13 @@ namespace GIL
 				}
 				else if (InsideTokens[n]->TokenType == LexerToken::PARAM)
 				{
+					//Check to make sure the parameter isn't $InnerCode
+					if (InsideTokens[n]->Value == "InnerCode")
+					{
+						CDB_BuildError("GIL forbids passing InnerCode as a parameter explicitly");
+						continue;
+					}
+					
 					//Check to make sure there are enough tokens
 					if (n >= InsideTokens.size() - 2)
 					{

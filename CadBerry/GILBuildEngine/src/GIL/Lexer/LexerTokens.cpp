@@ -70,6 +70,8 @@ namespace GIL
 			{LexerToken::ASSIGNTYPE, "assign type"},
 			{LexerToken::TYPEDEF, "define new type"},
 			{LexerToken::INHERITS, "set type inheritance"},
+
+			{LexerToken::OPERATOR, "operator keyword"}
 		});
 	}
 }
