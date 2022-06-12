@@ -16,6 +16,8 @@ namespace GIL
 	{
 		StaticSequence,
 		SequenceForward,
+		Operator,
+		EndOfOperators,
 	};
 
 	SequenceType SavedSequence;
@@ -30,6 +32,8 @@ namespace GIL
 			return new StaticSequence();
 		case GIL::SequenceType::SequenceForward:
 			return new SequenceForward();
+		case GIL::SequenceType::Operator:
+			return new Operator();
 		default:
 			break;
 		}
@@ -264,5 +268,88 @@ namespace GIL
 	void SequenceForward::Load(std::ifstream& InputFile, Parser::Project* Proj)
 	{
 		LoadStringFromFile(this->DestinationName, InputFile);
+	}
+
+
+	bool Sequence::TypesMatch(std::map<std::string, Param>& Params)
+	{
+		for (auto param : Params)
+		{
+			//Any untyped parameters should be given the "any" type
+			if (!this->ParameterTypes.contains(param.first))
+			{
+				this->ParameterTypes[param.first] = &Type::any;
+				continue;
+			}
+
+			if (!param.second.type->IsOfType(this->ParameterTypes[param.first], false))
+				return false;
+		}
+		return true;
+	}	
+
+	std::pair<std::vector<Parser::Region>, std::string> Operator::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
+	{
+		//First check if the parameters match
+		if (!this->TypesMatch(Params))
+		{
+			if (AlternateImplementation == nullptr)
+			{
+				CDB_BuildError("Operator forwarding to sequence {0} was called on incompatable types, no alternate implementation(s) found", this->DestinationName);
+				return { {}, "" };
+			}
+
+			return AlternateImplementation->Get(Proj, Params);
+		}
+		if (this->DestinationSequence == nullptr)
+		{
+			this->DestinationSequence = Proj->Sequences[this->DestinationName];
+		}
+		return this->DestinationSequence->Get(Proj, Params);
+	}
+
+	void Operator::Save(std::ofstream& OutputFile)
+	{
+		SavedSequence = SequenceType::Operator;
+		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+
+		SaveString(this->DestinationName, OutputFile);
+
+		//Now recursively save the operators
+		if (this->AlternateImplementation != nullptr)
+		{
+			AlternateImplementation->Save(OutputFile);
+		}
+		else
+		{
+			//Write the signal that there aren't any more operators
+			SavedSequence = SequenceType::EndOfOperators;
+			OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+		}
+	}
+
+	void Operator::Load(std::ifstream& InputFile, Parser::Project* Proj)
+	{
+		//Load the forward
+		LoadStringFromFile(this->DestinationName, InputFile);
+
+		//Recursively load the alternate implementations
+		InputFile.read((char*)&SavedSequence, sizeof(SequenceType));
+		if (SavedSequence == SequenceType::Operator)
+		{
+			this->AlternateImplementation = new Operator();
+			this->AlternateImplementation->Load(InputFile, Proj);
+		}
+		else
+		{
+			this->AlternateImplementation = nullptr;
+		}
+	}
+
+	Operator* Operator::GetLastImplementation()
+	{
+		if (this->AlternateImplementation == nullptr)
+			return this;
+		else return this->AlternateImplementation->GetLastImplementation();
 	}
 }

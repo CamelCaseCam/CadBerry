@@ -61,6 +61,7 @@
       <AdditionalIncludeDirectories>..\CadBerry\vendor\cpr\include;..\CadBerry\vendor\cpr\cpr_generated_includes;..\CadBerry\vendor\cpr\_deps\curl-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -87,6 +88,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>

@@ -297,20 +297,44 @@ namespace GIL
 				{
 				case LexerToken::FORWARD:
 				{
-					if (!(i > 0 && Target->Main[i - 1]->TokenType == LexerToken::IDENT))
+					//Check if it's an operator definition
+					auto StartIdx = Target->Main.begin() + i - 1;
+					if (i > 0 && Target->Main[i - 1]->TokenType == LexerToken::OPERATOR)
+					{
+						if (Target->Main[i + 1]->TokenType == LexerToken::IDENT)
+						{
+							if (Target->Sequences.contains(Target->Main[i + 1]->Value))
+							{
+								//Get the old implementation
+								Operator* Old_Impl = (Operator*)Target->Operators[Target->Main[i - 1]->Value];
+								
+								//If the forward's pointing to a valid sequence set the first part to the second part's pointer
+								Sequence* SequenceImplementation = Target->Sequences[Target->Main[i + 1]->Value];
+								Operator* newop = new Operator(SequenceImplementation, Target->Main[i + 1]->Value, Old_Impl);
+								
+								//Copy the sequence's parameters and types
+								newop->ParamIdx2Name = SequenceImplementation->ParamIdx2Name;
+								newop->ParameterTypes = SequenceImplementation->ParameterTypes;
+
+								//Keep a record of which namespace the operator is coming from
+								newop->Origin = Target;
+								Target->Operators[Target->Main[i - 1]->Value] = newop;
+
+								//Make sure the forward doesn't get added
+								Target->Main.erase(StartIdx, Target->Main.begin() + i + 2);
+								i -= 2;
+								break;
+							}
+
+							CDB_BuildError("Could not find sequence or operation {0}", Target->Main[i + 1]->Value);
+						}
+					}
+					else if (!(i > 0 && Target->Main[i - 1]->TokenType == LexerToken::IDENT))
 					{
 						CDB_BuildError("Missing IDENT token before or after forward (=>)");
 						break;
 					}
 
-					//Check if it's an operator definition
-					auto StartIdx = Target->Main.begin() + i - 1;
-					std::map<std::string, Sequence*>& ForwardLocation = Target->Sequences;
-					if (i - 1 > 0 && Target->Main[i - 2]->TokenType == LexerToken::OPERATOR)
-					{
-						StartIdx = Target->Main.begin() + i - 2;
-						ForwardLocation = Target->Operators;
-					}
 
 					if (Target->Main[i + 1]->TokenType == LexerToken::IDENT)
 					{
@@ -319,7 +343,7 @@ namespace GIL
 							//If the forward's pointing to a valid sequence set the first part to the second part's pointer
 							Sequence* Seq = new SequenceForward(Target->Sequences[Target->Main[i + 1]->Value], Target->Main[i + 1]->Value);
 							Seq->ParamIdx2Name = Target->Sequences[Target->Main[i + 1]->Value]->ParamIdx2Name;
-							ForwardLocation[Target->Main[i - 1]->Value] = Seq;
+							Target->Sequences[Target->Main[i - 1]->Value] = Seq;
 
 							//Make sure the forward doesn't get added
 							Target->Main.erase(StartIdx, Target->Main.begin() + i + 2);
@@ -997,6 +1021,14 @@ namespace GIL
 			return { Sequences[SeqName], this };
 		}
 
+		std::pair<Sequence*, Parser::Project*> Project::GetOperator(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
+		{
+			if (!Operators.contains((*Tokens)[i]->Value))
+				return { nullptr, this };
+			Operator* op = (Operator*)Operators[(*Tokens)[i]->Value];
+			return { op, op->Origin };
+		}
+
 		//Recursively traverse namespaces until you get to the one with the sequence
 		Sequence* Project::GetSeqFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, 
 			std::map<std::string, GILModule*>* Modules)
@@ -1004,6 +1036,13 @@ namespace GIL
 			if (i < Namespaces.size())
 				return this->Namespaces[*Namespaces[i]]->GetSeqFromNamespace(SeqName, Namespaces, i + 1, Modules);
 			return Sequences[SeqName];
+		}
+
+		Sequence* Project::GetOperatorFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules)
+		{
+			if (i < Namespaces.size())
+				return this->Namespaces[*Namespaces[i]]->GetOperatorFromNamespace(SeqName, Namespaces, i + 1, Modules);
+			return Operators[SeqName];
 		}
 
 		Sequence* Project::GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)

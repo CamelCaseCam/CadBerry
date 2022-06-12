@@ -25,13 +25,16 @@ namespace GIL
 		void GetWord(std::string& Text, std::string& Output, int& i);
 		void GetString(std::string& Text, std::string& Output, int& i);
 
+		bool ContainsIllegalOperatorChars(std::string& str);
+
 
 
 		std::vector<Token*>* Tokenize(std::string& Text)    //The main Tokenize method
 		{
+			
 			std::vector<Token*>* OutputTokens = new std::vector<Token*>();
 			for (int i = 0; i < Text.length(); i++)
-			{
+			{	
 				switch (tolower(Text[i]))
 				{
 				case '\n':
@@ -47,8 +50,23 @@ namespace GIL
 					OutputTokens->push_back(Token::Comma);
 					break;
 				InAlphabet    //Simple macro to check if the char is in the alphabet
-					OutputTokens->push_back(StartsWithLetter(Text, i));
+				{
+					Token * tok = StartsWithLetter(Text, i);
+					OutputTokens->push_back(tok);
+					
+					//Now check if the token is an operator definition
+					if (tok->TokenType == LexerToken::OPERATOR)
+					{
+						//Get the operator name
+						++i;
+
+						//Advance through whitespace
+						while (i < Text.length() && IsWhiteSpace(Text[i]))
+							++i;
+						GetWord(Text, tok->Value, i);
+					}
 					break;
+				}
 				case '#':
 					OutputTokens->push_back(GetPrepro(Text, i));
 					break;
@@ -70,6 +88,14 @@ namespace GIL
 						i += 2;
 						OutputTokens->push_back(GetMultilineComment(Text, i));
 					}
+					else
+					{
+						//May be an operator
+						Token* t = new Token();
+						GetWord(Text, t->Value, i);
+						t->TokenType = LexerToken::IDENT;
+						OutputTokens->push_back(t);
+					}
 					break;
 				case '.':
 					OutputTokens->push_back(GetOp(Text, i));
@@ -82,36 +108,24 @@ namespace GIL
 					}
 					else
 					{
-						OutputTokens->push_back(Token::Equals);
+						//May be an operator
+						Token* t = new Token();
+						GetWord(Text, t->Value, i);
+						t->TokenType = LexerToken::IDENT;
+						OutputTokens->push_back(t);
 					}
 					break;
 				case '&':
-					OutputTokens->push_back(Token::And);
-					break;
 				case '|':
-					OutputTokens->push_back(Token::Or);
-					break;
 				case '!':
-					if (Text.length() > i + 1)
-					{
-						if (Text[i + 1] == '&')    //!&
-						{
-							OutputTokens->push_back(Token::NAND);
-						}
-						else if (Text[i + 1] == '|')    //!|
-						{
-							OutputTokens->push_back(Token::NOR);
-						}
-						else
-						{
-							OutputTokens->push_back(Token::Not);
-						}
-					}
-					else
-					{
-						OutputTokens->push_back(Token::Not);
-					}
+				{
+					//Probably an operator
+					Token* t = new Token();
+					GetWord(Text, t->Value, i);
+					t->TokenType = LexerToken::IDENT;
+					OutputTokens->push_back(t);
 					break;
+				}
 				case '(':
 					OutputTokens->push_back(Token::LParen);
 					break;
@@ -162,12 +176,43 @@ namespace GIL
 					OutputTokens->operator[](OutputTokens->size() - 1)->TokenType = LexerToken::NAMESPACE;
 					break;
 				}
-				default:
+				case ' ':
+				case '\t':
+				case '\r':
 					break;
+				default:
+				{
+					//Probably an operator
+					Token* t = new Token();
+					GetWord(Text, t->Value, i);
+					
+					//Make sure it doesn't contain any illegal characters
+					if (ContainsIllegalOperatorChars(t->Value))
+					{
+						delete t;
+						break;
+					}
+					t->TokenType = LexerToken::IDENT;
+					OutputTokens->push_back(t);
+					break;
+				}
 				}
 			}
 
 			return OutputTokens;
+		}
+
+		bool ContainsIllegalOperatorChars(std::string& str)
+		{
+			for (char c : str)
+			{
+				//Operators can't contain '"()[]{},.:$@
+				if (c == '\'' || c == '"' || c == '(' || c == ')' || c == '[' || c == ']' || c == '{' || c == '}' || c == ',' || c == '.' || c == ':' ||  c == '$' || c == '@')
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		Token* StartsWithLetter(std::string& Text, int& i)
@@ -186,6 +231,10 @@ namespace GIL
 					{
 						return new Token(LexerToken::IDENT, s);
 					}
+
+					//To prevent us from altering the operator token
+					if (T->TokenType == LexerToken::OPERATOR)
+						return new Token(LexerToken::OPERATOR, "");
 					return T;
 				}
 			default:
@@ -208,8 +257,15 @@ namespace GIL
 			GetMapToken(T, PreprocessorDirectives, LexerToken::UNKNOWN);
 			if (T->TokenType == LexerToken::UNKNOWN)
 			{
-				CDB_BuildError("Unknown preprocessor command {0}", *T);
-				return T;
+				//It's possible that this is actually an operator. 
+				if (!ContainsIllegalOperatorChars(T->Value))
+				{
+					T->TokenType = LexerToken::IDENT;
+				}
+				else
+				{
+					CDB_BuildError("Unknown preprocessor directive \"{0}\"", T->Value);
+				}
 			}
 			return T;
 		}

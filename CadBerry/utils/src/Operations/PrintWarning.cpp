@@ -5,7 +5,7 @@ namespace utils
 {
 	namespace Operations
 	{
-		std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+		std::pair<std::vector<GIL::Parser::Region>, std::string> PrintWarning::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 		{
 			if (((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode.second.size() == 0)
 			{

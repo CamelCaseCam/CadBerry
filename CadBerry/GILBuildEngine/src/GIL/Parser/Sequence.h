@@ -5,6 +5,8 @@
 
 #include "GIL/Types/Type.h"
 
+#include "CadBerry/Utils/memory.h"
+
 
 namespace GIL
 {
@@ -45,7 +47,7 @@ namespace GIL
 	};
 
 
-	extern std::vector<GIL::Lexer::Token*> EmptyTokens;
+	extern CDBAPI std::vector<GIL::Lexer::Token*> EmptyTokens;
 	class Sequence    //Base sequence class that is inherited by different sequence types
 	{
 	public:
@@ -56,6 +58,9 @@ namespace GIL
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) = 0;
 
 		virtual std::vector<GIL::Lexer::Token*>& GetTokens() { return EmptyTokens; }
+
+		//Not making this virtual because I don't see the point
+		bool TypesMatch(std::map<std::string, Param>& Params);
 
 		static Sequence* LoadSequence(std::ifstream& InputFile, Parser::Project* Proj);
 
@@ -126,5 +131,27 @@ namespace GIL
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 
 		std::pair<std::vector<Parser::Region>, std::string> m_InnerCode;
+	};
+
+	class Operator;
+	class Operator : public SequenceForward
+	{
+	public:
+		Operator() {}
+		Operator(Sequence* destination, std::string& destinationName, Operator* alternateImplementation) : SequenceForward(destination, destinationName), 
+			AlternateImplementation(alternateImplementation) {}
+		
+		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override;
+
+		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
+
+		Operator* GetLastImplementation();
+
+		//For overrides, allows us to call the old implementation if the types don't match
+		CDB::scoped_ptr<Operator> AlternateImplementation;
+
+		//Operators are global, but need to remember where they came from
+		Parser::Project* Origin = nullptr;
 	};
 }

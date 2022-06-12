@@ -33,7 +33,7 @@ namespace GIL
 		void AminosIDXToDNA(std::string& DNA, std::string& aminos, std::vector<int>& Idxs, Project* Proj, CodonEncoding& CurrentEncoding);
 		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj, CodonEncoding& OriginEncoding);
 		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj);
-		void ImportFile(std::string& Path, Project* Proj);
+		void ImportFile(std::string& Path, Project* Proj, Project* global);
 		void LinkDLL(std::string& Path, Project* Proj);
 
 		inline void AddRegionToVector(const Region& reg, std::vector<Region>& vec, int& last)
@@ -71,13 +71,13 @@ namespace GIL
 		}
 
 		//Imports recursively
-		inline void ImportAllProjectImports(Project* Proj)
+		inline void ImportAllProjectImports(Project* Proj, Project* global)
 		{
 			for (std::string& s : Proj->Imports)
 			{
 				if (!Proj->Namespaces.contains(s))
 				{
-					ImportFile(s, Proj);
+					ImportFile(s, Proj, global);
 				}
 			}
 		}
@@ -101,7 +101,7 @@ namespace GIL
 			CodonEncoding CurrentEncoding(Proj->TargetOrganism);
 
 			//Import any imports
-			ImportAllProjectImports(Proj);
+			ImportAllProjectImports(Proj, Proj);
 
 			LinkAllProjectDLLs(Proj);
 
@@ -292,10 +292,181 @@ namespace GIL
 				}
 				case LexerToken::IDENT:
 				{
-					auto Seq = Proj->GetSeq(Tokens, i, &Modules);
+					std::string& SeqName = (*Tokens)[i]->Value;
+					auto Seq = Proj->GetOperator(Tokens, i, &Modules);
+					if (Seq.first != nullptr)
+					{
+						//Get the number of parameters
+						std::pair<Sequence*, Project*> LPARAM;
+						std::pair<Sequence*, Project*> RPARAM;
+						
+						//Make sure the operator takes parameters
+						if (Seq.first->ParamIdx2Name.size() == 0)
+						{
+							CDB_BuildError("Operator \"{0}\" takes no parameters (minimum is 1)", SeqName);
+							break;
+						}
+
+						//When an operator has parameters, the first parameter is LVALUE and the second parameter is RVALUE
+						//Operators don't support namespaces and are automatically loaded into the global namespace
+						int OldIndex = i;
+						--i;
+						LPARAM = Proj->GetSeq(Tokens, i, &Modules);
+						if (LPARAM.first == nullptr)
+						{
+							//Check if the operator only accepts one parameter, if so, see if there are parameters after the operator
+							if (Seq.first->ParamIdx2Name.size() == 1)
+							{
+								//Check if there's a parameter after the operator
+								i = OldIndex;
+								++i;
+								while (i < (*Tokens).size() && (*Tokens)[i]->TokenType == LexerToken::NAMESPACE)
+									++i;
+								if (i < (*Tokens).size())
+								{
+									LPARAM = Proj->GetSeq(Tokens, i, &Modules);
+									if (LPARAM.first != nullptr)
+									{
+										//Extract the parameters into a params dictionary
+										std::map<std::string, Param> Params = { 
+											{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) } 
+										};
+
+										int Start = Code.length();
+										//Call the operator
+										auto SequenceOutput = Seq.first->Get(Seq.second, Params);
+
+										//Add the operator's output to the compiler's output
+										Code += SequenceOutput.second;
+										int UselessInt;
+										for (Region& r : SequenceOutput.first)
+										{
+											if (r.Start == 0)
+											{
+												r.Start = 1;
+											}
+											r.Add(Start);
+											AddRegionToVector(std::move(r), Output, UselessInt);
+										}
+										break;
+									}
+								}
+							}
+							CDB_BuildError("Operator \"{0}\" expected at least one parameter, found none", SeqName);
+							i = OldIndex;
+							break;
+						}
+
+						if (Seq.first->ParamIdx2Name.size() > 1)
+						{
+							i = OldIndex + 1;
+							//Advance until the first sequence
+							while (i < (*Tokens).size() && (*Tokens)[i]->TokenType == LexerToken::NAMESPACE)
+								++i;
+							RPARAM = Proj->GetSeq(Tokens, i, &Modules);
+
+							if (RPARAM.first == nullptr)
+							{
+								CDB_BuildError("Operator \"{0}\" expected two parameters, found none", SeqName);
+								i = OldIndex;
+								break;
+							}
+
+							//Extract the parameters into a params dictionary
+							std::map<std::string, Param> Params = {
+								{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) },
+								{ Seq.first->ParamIdx2Name[1], Param(RPARAM.first, RPARAM.first->SeqType) }
+							};
+
+							int Start = Code.length();
+							//Call the operator
+							auto SequenceOutput = Seq.first->Get(Seq.second, Params);
+
+							//Add the operator's output to the compiler's output
+							Code += SequenceOutput.second;
+							int UselessInt;
+							for (Region& r : SequenceOutput.first)
+							{
+								if (r.Start == 0)
+								{
+									r.Start = 1;
+								}
+								r.Add(Start);
+								AddRegionToVector(std::move(r), Output, UselessInt);
+							}
+							break;
+						}
+						else
+						{
+							//Extract the parameters into a params dictionary
+							std::map<std::string, Param> Params = {
+								{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) }
+							};
+
+							int Start = Code.length();
+							//Call the operator
+							auto SequenceOutput = Seq.first->Get(Seq.second, Params);
+
+							//Add the operator's output to the compiler's output
+							Code += SequenceOutput.second;
+							int UselessInt;
+							for (Region& r : SequenceOutput.first)
+							{
+								if (r.Start == 0)
+								{
+									r.Start = 1;
+								}
+								r.Add(Start);
+								AddRegionToVector(std::move(r), Output, UselessInt);
+							}
+							i = OldIndex;
+							break;
+						}
+					}
+					//Check if the next token is an operator
+					if (i + 1 < (*Tokens).size() && (*Tokens)[i + 1]->TokenType == LexerToken::IDENT)
+					{
+						//Check if the operator exists
+						int OldIdx = i;
+						++i;
+						auto Op = Proj->GetOperator(Tokens, i, &Modules);
+						if (Op.first == nullptr)
+						{
+							i = OldIdx;
+							//Falls out to "Compile the sequence"
+						} else
+						{
+							//Check if the operator has a token after it
+							if (i + 1 < (*Tokens).size() && (*Tokens)[i + 1]->TokenType == LexerToken::IDENT)
+							{
+								//Check if the operator is a binary operator
+								if (Op.first->ParamIdx2Name.size() > 1)
+								{
+									//If it's a binary operator, don't compile this sequence
+									i = OldIdx;
+									continue;
+								}
+								//If it's a unary operator, compile this sequence
+								i = OldIdx;
+								
+								//Falls out to "Compile the sequence"
+							}
+							else    //If there isn't an IDENT token after the operator, don't compile this sequence
+							{
+								i = OldIdx;
+								continue;
+							}
+						}
+					}
+					
+					
+					//Compile the sequence
+					
+					
+					Seq = Proj->GetSeq(Tokens, i, &Modules);
 					if (Seq.first == nullptr)    //Make sure sequence exists
 					{
-						CDB_BuildError("Sequence \"{0}\" does not exist", t->Value);
+						CDB_BuildError("Sequence \"{0}\" does not exist", SeqName);
 						break;
 					}
 
@@ -483,7 +654,7 @@ namespace GIL
 				AddRegionToVector(std::move(OpenRegions[r]), Output);
 			}
 
-			return std::pair<std::vector<Region>, std::string>(Output, Code);
+			return { std::move(Output), std::move(Code) };
 		}
 
 		bool HasRestrictionSites(std::string& DNA, std::string& Codon, Project* Proj);
@@ -553,7 +724,25 @@ namespace GIL
 			}
 		}
 
-		void ImportFile(std::string& Path, Project* Proj)
+
+		inline void ImportAllProjectOperators(Project* Proj, Project* global)
+		{
+			//Copy all the operators from the local project to the global project
+			for (auto& op : Proj->Operators)
+			{
+				if (global->Operators.contains(op.first))
+				{
+					//Replace the operator, keeping the current implementation as an alternate
+					Operator* LastImplementation = ((Operator*)op.second)->GetLastImplementation();
+					LastImplementation->AlternateImplementation = (Operator*)global->Operators[op.first];
+
+					//Replace the operator in the global project
+					global->Operators[op.first] = op.second;
+				}
+			}
+		}
+
+		void ImportFile(std::string& Path, Project* Proj, Project* global)
 		{
 			std::filesystem::path path = std::filesystem::path(Path);
 			bool imported = false;
@@ -564,7 +753,10 @@ namespace GIL
 				Project* p = Project::Load(CDB::Application::Get().PreBuildDir + "\\" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
 				Proj->Namespaces[path.stem().string()] = p;
-				ImportAllProjectImports(p);
+
+				//All operators are global
+				ImportAllProjectOperators(p, global);
+				ImportAllProjectImports(p, global);
 				LinkAllProjectDLLs(p);
 				imported = true;
 			}
@@ -574,7 +766,10 @@ namespace GIL
 				Project* p = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/" 
 					+ path.parent_path().string() + "\\" + path.stem().string() + ".cgil");
 				Proj->Namespaces[path.stem().string()] = p;
-				ImportAllProjectImports(p);
+
+				//All operators are global
+				ImportAllProjectOperators(p, global);
+				ImportAllProjectImports(p, global);
 				LinkAllProjectDLLs(p);
 				imported = true;
 			}
@@ -593,7 +788,10 @@ namespace GIL
 					+ path.stem().string() + ".cgil");
 
 				Proj->Namespaces[path.stem().string()] = p;
-				ImportAllProjectImports(p);
+
+				//All operators are global
+				ImportAllProjectOperators(p, global);
+				ImportAllProjectImports(p, global);
 				LinkAllProjectDLLs(p);
 				imported = true;
 			}
@@ -606,7 +804,10 @@ namespace GIL
 					Project* p = Project::Load(CDB::Application::Get().PreBuildDir + "\\"
 						+ path.parent_path().string() + "\\" + Proj->TargetOrganism + "@" + path.stem().string() + ".cgil");
 					Proj->Namespaces[path.stem().string()] = p;
-					ImportAllProjectImports(p);
+
+					//All operators are global
+					ImportAllProjectOperators(p, global);
+					ImportAllProjectImports(p, global);
 					LinkAllProjectDLLs(p);
 					imported = true;
 				}
@@ -616,7 +817,10 @@ namespace GIL
 					Project* p = Project::Load(CDB::Application::Get().PathToEXE + "/Build/Libs/"
 						+ path.parent_path().string() + "\\" + Proj->TargetOrganism + "@" + path.stem().string() + ".cgil");
 					Proj->Namespaces[path.stem().string()] = p;
-					ImportAllProjectImports(p);
+
+					//All operators are global
+					ImportAllProjectOperators(p, global);
+					ImportAllProjectImports(p, global);
 					LinkAllProjectDLLs(p);
 					imported = true;
 				}

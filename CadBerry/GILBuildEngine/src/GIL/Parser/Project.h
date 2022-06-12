@@ -29,10 +29,12 @@ namespace GIL
 			static Project* Load(std::ifstream& InputFile, std::string& DataPath);    //Overload to load a project from within a file
 
 			std::pair<Sequence*, Parser::Project*> GetSeq(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns sequence based on namespaces
+			std::pair<Sequence*, Parser::Project*> GetOperator(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns sequence based on namespaces
 			Sequence* GetOp(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules);    //Returns operation based on namespaces
 			
 			//This should probably be private
 			Sequence* GetSeqFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
+			Sequence* GetOperatorFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
 			Sequence* GetOpFromNamespace(std::string& OpName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules);
 
 			uint16_t AllocType(std::string TypeName);

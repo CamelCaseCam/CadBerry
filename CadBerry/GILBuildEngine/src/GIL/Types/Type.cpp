@@ -66,5 +66,6 @@ namespace GIL
 			auto InheritanceID = Proj->AllocType(InheritanceName);
 			Proj->AddInheritance(TypeID, InheritanceID);
 		}
+		return Proj->GetTypeByID(TypeID);
 	}
 }

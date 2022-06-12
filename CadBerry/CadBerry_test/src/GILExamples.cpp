@@ -288,6 +288,28 @@ sequence Seq3 : cds
 }
 )";
 
+std::string SequenceWithMultipleParams = R"(
+#Target "Unoptimized"
+
+BigSequence(Seq1 Seq2)
+
+sequence Seq1
+{
+	'AAA'
+}
+
+sequence Seq2
+{
+	'TTT'
+}
+
+sequence BigSequence($S1 $S2)
+{
+	$S1
+	$S2
+}
+)";
+
 std::string CustomType = R"(
 #Target "Unoptimized"
 
@@ -428,5 +450,57 @@ for "Yeast"
 {
 	//Evaluates to GGT ATT TTG TAA GCT GTT ATG CCA TTT TGG TCT ACT AAT CAA TAT TGT AAA AGA CAT GAT GAA 
 	@GILxAVMPFWSTNQYCKRHDE@
+}
+)";
+
+
+//________________________________________________________________________________________
+// OPERATORS
+//________________________________________________________________________________________
+
+
+std::string UnaryOperatorExample = R"(
+#Target "Unoptimized"
+
+sequence TestData
+{
+	TTT
+}
+
+//Output should be TTTAAAAATTTAAAAA
+TestData *5a
+*5a TestData
+
+operator *5a => Seq
+
+sequence Seq($LVALUE)
+{
+	$LVALUE
+	AAAAA
+}
+)";
+
+std::string BinaryOperatorExample = R"(
+#Target "Unoptimized"
+
+sequence TestData1
+{
+	TTT
+}
+
+sequence TestData2
+{
+	AAA
+}
+
+//Output should be TTTAAA
+TestData1 & TestData2
+
+operator & => OperatorSequence
+
+sequence OperatorSequence($LVALUE $RVALUE)
+{
+	$LVALUE
+	$RVALUE
 }
 )";

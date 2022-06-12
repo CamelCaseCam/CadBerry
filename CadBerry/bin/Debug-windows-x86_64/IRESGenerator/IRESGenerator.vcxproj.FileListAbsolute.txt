@@ -1,1 +1,2 @@
 D:\Development\PersonalCadBerry\CadBerry\CadBerry\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.dll
+D:\Development\CadBerry\CadBerry\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.dll

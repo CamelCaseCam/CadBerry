@@ -28,12 +28,12 @@ namespace CDB
 
 	TEST_CASE("set up CadBerry editor", "[setup]")
 	{
-		Application* MainApp = new Application(true);
+		CDB::scoped_ptr<Application> MainApp = new Application(true);
 
 		DeleteProjectCache();
 		CurrentInputInVector = 0;
 
-		REQUIRE(MainApp != nullptr);
+		REQUIRE(MainApp.raw() != nullptr);
 
 		Inputs = { "new project", "Example", "", ""};
 
@@ -47,14 +47,13 @@ namespace CDB
 		//Cleanup code
 		DeleteProjectCache();
 		CurrentInputInVector = 0;
-		delete MainApp;
 	}
 
 	TEST_CASE("create CadBerry project", "[projects]")
 	{
-		Application* MainApp = new Application(true);
+		CDB::scoped_ptr<Application> MainApp = new Application(true);
 
-		REQUIRE(MainApp != nullptr);
+		REQUIRE(MainApp.raw() != nullptr);
 
 		Inputs = { "new project", "Example", CDB::Application::Get().PathToEXE + "/Tests/", ""};
 
@@ -67,14 +66,13 @@ namespace CDB
 
 		DeleteProjectCache();
 		CurrentInputInVector = 0;
-		delete MainApp;
 	}
 
 	TEST_CASE("load CadBerry project", "[projects]")
 	{
-		Application* MainApp = new Application(true);
+		CDB::scoped_ptr<Application> MainApp = new Application(true);
 
-		REQUIRE(MainApp != nullptr);
+		REQUIRE(MainApp.raw() != nullptr);
 
 		Inputs = { "load project", Application::Get().PathToEXE + "/Tests/Example.berry", "exit" };
 
@@ -87,14 +85,13 @@ namespace CDB
 
 		DeleteProjectCache();
 		CurrentInputInVector = 0;
-		delete MainApp;
 	}
 
 	TEST_CASE("edit CadBerry project", "[projects]")
 	{
-		Application* MainApp = new Application(true);
+		CDB::scoped_ptr<Application> MainApp = new Application(true);
 
-		REQUIRE(MainApp != nullptr);
+		REQUIRE(MainApp.raw() != nullptr);
 
 		Inputs = { "load project", Application::Get().PathToEXE + "/Tests/Example.berry", "project", "settings", 
 			"y", "Example1", 
@@ -115,8 +112,8 @@ namespace CDB
 		CHECK(MainApp->OpenProject->PreBuildDir == "");
 		CHECK(MainApp->OpenProject->TargetOrganism == "S.Cerevisiae");
 
-		delete MainApp;
-
+		//We have to delete the app, we can do this by setting it to nullptr
+		MainApp = nullptr;
 		MainApp = new Application(true);
 
 		//Load project
@@ -132,7 +129,6 @@ namespace CDB
 
 		DeleteProjectCache();
 		CurrentInputInVector = 0;
-		delete MainApp;
 	}
 
 	TEST_CASE("windows can be opened", "[modules]")
@@ -202,7 +198,7 @@ namespace CDB
 		SECTION("Setting target organism")
 		{
 			auto tokens = GIL::Lexer::Tokenize(TargetExample1);
-			GIL::Parser::Project* project = GIL::Parser::Project::Parse(*tokens);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
 			CHECK(project->TargetOrganism == "S.Cerevisiae");
 
 			tokens = GIL::Lexer::Tokenize(TargetExample2);
@@ -247,8 +243,8 @@ namespace CDB
 		{
 			//Regions
 			auto tokens = GIL::Lexer::Tokenize(RegionExample);
-			GIL::Parser::Project* project = GIL::Parser::Project::Parse(*tokens);
-			auto Output = GIL::Compiler::Compile(project);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.first.size() == 2);
 
 			CHECK(Output.first[0].Name == "Region2");
@@ -263,7 +259,7 @@ namespace CDB
 
 			tokens = GIL::Lexer::Tokenize(OverlappingRegionExample);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.first.size() == 2);
 
 			CHECK(Output.first[0].Name == "Region1");
@@ -278,7 +274,7 @@ namespace CDB
 			//SetAttr
 			tokens = GIL::Lexer::Tokenize(SetAttrExample);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 
 			REQUIRE(project->Attributes.size() > 0);
 
@@ -308,7 +304,7 @@ namespace CDB
 			//#Inc
 			tokens = GIL::Lexer::Tokenize(IncExample);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(project->StrVars.size() == 0);
 			CHECK(project->NumVars.size() == 1);
 
@@ -318,7 +314,7 @@ namespace CDB
 			//#Dec
 			tokens = GIL::Lexer::Tokenize(DecExample);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(project->StrVars.size() == 0);
 			CHECK(project->NumVars.size() == 1);
 
@@ -328,7 +324,7 @@ namespace CDB
 			//#If
 			tokens = GIL::Lexer::Tokenize(PreproIfExample);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(project->StrVars.size() == 0);
 			CHECK(project->NumVars.size() == 3);
 
@@ -338,7 +334,7 @@ namespace CDB
 			//#Else
 			tokens = GIL::Lexer::Tokenize(PreproElseExample);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(project->StrVars.size() == 0);
 			CHECK(project->NumVars.size() == 3);
 
@@ -348,30 +344,30 @@ namespace CDB
 		SECTION("DNA and amino acid literals")
 		{
 			auto tokens = GIL::Lexer::Tokenize(DNAExample1);
-			GIL::Parser::Project* project = GIL::Parser::Project::Parse(*tokens);
-			auto Output = GIL::Compiler::Compile(project);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.second == "AAATTTCCCGGG");
 
 			tokens = GIL::Lexer::Tokenize(DNAExample2);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.second == "DSSDGFSSEVREFEWADSFVTERSD");
 
 			tokens = GIL::Lexer::Tokenize(DNAExample3);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.second == "@#@#454356w5r23$#$@453425");
 
 
 			tokens = GIL::Lexer::Tokenize(AminoSequenceExample1);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			for (auto& c : Output.second) c = std::toupper(c);
 			REQUIRE(Output.second == "GGTATTCTTTAAGCTGTTATGCCTTTTTGGAGTACTAATCAATATTGTAAACGTCATGATGAA");
 
 			tokens = GIL::Lexer::Tokenize(AminoSequenceExample2);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			for (auto& c : Output.second) c = std::toupper(c);
 			REQUIRE(Output.second == "GGTATTTTGTAAGCTGTTATGCCATTTTGGTCTACTAATCAATATTGTAAAAGACATGATGAA");
 		}
@@ -379,35 +375,41 @@ namespace CDB
 		SECTION("Sequences and operations")
 		{
 			auto tokens = GIL::Lexer::Tokenize(SequenceNoParams);
-			GIL::Parser::Project* project = GIL::Parser::Project::Parse(*tokens);
-			auto Output = GIL::Compiler::Compile(project);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "CCCAAATTTGGG");
 
 			tokens = GIL::Lexer::Tokenize(MultiSequenceNoParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "AAATTTCCC");
 
 			tokens = GIL::Lexer::Tokenize(SequenceWithParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTAAACCC");
 
 			tokens = GIL::Lexer::Tokenize(SequenceWithParamsWithParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTAAAAAACCC");
 
 			//Typed params 
 			tokens = GIL::Lexer::Tokenize(SequenceWithTypedParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTAAACCC");
 
 			tokens = GIL::Lexer::Tokenize(SequenceWithTypedParamsWithParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTAAAAAACCC");
+
+			//Multiple params
+			tokens = GIL::Lexer::Tokenize(SequenceWithMultipleParams);
+			project = GIL::Parser::Project::Parse(*tokens);
+			Output = GIL::Compiler::Compile(project.raw());
+			REQUIRE(Output.second == "AAATTT");
 
 			tokens = GIL::Lexer::Tokenize(CustomType);
 			project = GIL::Parser::Project::Parse(*tokens);
@@ -421,40 +423,53 @@ namespace CDB
 			//Operations
 			tokens = GIL::Lexer::Tokenize(OpNoParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTCCCTTT");
 
 			tokens = GIL::Lexer::Tokenize(SequenceWithInnerCode);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTCCCTTT");
 
 			tokens = GIL::Lexer::Tokenize(OpSequenceParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "TTTCCCGGGTTT");
 		}
 
 		SECTION("Forwards")
 		{
 			auto tokens = GIL::Lexer::Tokenize(SequenceForward);
-			GIL::Parser::Project* project = GIL::Parser::Project::Parse(*tokens);
-			auto Output = GIL::Compiler::Compile(project);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "AAAAA");
 
 			tokens = GIL::Lexer::Tokenize(SequenceForwardWithParams);
 			project = GIL::Parser::Project::Parse(*tokens);
-			Output = GIL::Compiler::Compile(project);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(Output.second == "AAAAATTT");
 		}
 
 		SECTION("For and from")
 		{
 			auto tokens = GIL::Lexer::Tokenize(ForExample);
-			GIL::Parser::Project* project = GIL::Parser::Project::Parse(*tokens);
-			auto Output = GIL::Compiler::Compile(project);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
 			for (auto& c : Output.second) c = std::toupper(c);
 			REQUIRE(Output.second == "GGTATTTTGTAAGCTGTTATGCCATTTTGGTCTACTAATCAATATTGTAAAAGACATGATGAA");
+		}
+
+		SECTION("Operators")
+		{
+			auto tokens = GIL::Lexer::Tokenize(UnaryOperatorExample);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
+			REQUIRE(Output.second == "TTTAAAAATTTAAAAA");
+			
+			tokens = GIL::Lexer::Tokenize(BinaryOperatorExample);
+			project = GIL::Parser::Project::Parse(*tokens);
+			Output = GIL::Compiler::Compile(project.raw());
+			REQUIRE(Output.second == "TTTAAA");
 		}
 	}
 

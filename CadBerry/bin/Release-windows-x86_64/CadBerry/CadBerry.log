@@ -1,16 +1,4 @@
-﻿cl : command line warning D9025: overriding '/MD' with '/MDd'
-cl : command line warning D9025: overriding '/MDd' with '/MD'
-  Utils.cpp
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(16,42): warning C4251: 'CDB::Log::EditorLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Log.h(17,42): warning C4251: 'CDB::Log::BuildLogger': class 'std::shared_ptr<spdlog::logger>' needs to have dll-interface to be used by clients of class 'CDB::Log'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\spdlog\include\spdlog\details\registry.h(34): message : see declaration of 'std::shared_ptr<spdlog::logger>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Renderer.h(32,20): warning C4251: 'CDB::Renderer::ProjectionViewMatrix': struct 'glm::mat<4,4,glm::f32,glm::packed_highp>' needs to have dll-interface to be used by clients of class 'CDB::Renderer'
-D:\Development\CadBerry\CadBerry\CadBerry\vendor\glm\glm\fwd.hpp(520): message : see declaration of 'glm::mat<4,4,glm::f32,glm::packed_highp>'
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Utils\Utils.cpp(38,90): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Utils\Utils.cpp(50,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Utils\Utils.cpp(236,11): warning C4309: 'return': truncation of constant value
-     Creating library ..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib and object ..\bin\Release-windows-x86_64\CadBerry\CadBerry.exp
+﻿     Creating library ..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib and object ..\bin\Release-windows-x86_64\CadBerry\CadBerry.exp
 LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
   CadBerry.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry\CadBerry.dll
           1 file(s) copied.

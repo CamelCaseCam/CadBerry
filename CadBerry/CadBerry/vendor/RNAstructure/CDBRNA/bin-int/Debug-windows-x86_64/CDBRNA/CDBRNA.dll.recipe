@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>D:\Development\PersonalCadBerry\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA\CDBRNA.dll</FullPath>
+      <FullPath>D:\Development\CadBerry\CadBerry\CadBerry\vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA\CDBRNA.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

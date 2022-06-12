@@ -20,7 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
@@ -41,7 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\bin\Debug-windows-x86_64\CadBerry\</OutDir>
     <IntDir>..\bin\Debug-windows-x86_64\CadBerry\</IntDir>
     <TargetName>CadBerry</TargetName>
@@ -61,23 +61,16 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\implot;vendor\BlockingCollection;vendor\cpr\include;vendor\cpr\cpr_generated_includes;vendor\cpr\_deps\curl-src\include;vendor\yaml-cpp\include;vendor\RNAstructure;vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalOptions>/MDd /MD %(AdditionalOptions)</AdditionalOptions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;cpr.lib;yaml-cppd.lib;nfd_d.lib;nfd.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\Debug;vendor\cpr\lib\Debug;vendor\nfd\build\lib\Debug\x64;vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\lib\RelWithDebInfo;vendor\nfd\build\lib\Release\x64;vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;cpr.lib;yaml-cppd.lib;nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\Debug;vendor\cpr\lib\Debug;vendor\nfd\build\lib\Debug\x64;vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Debug-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -92,25 +85,22 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Debug-window
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>cdbpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_ENABLE_ASSERTS;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CDB_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>vendor\spdlog\include;vendor\SFML\include;src;vendor\GLFW\include;vendor\Glad\include;vendor\IMGUI;vendor\glm;vendor\nfd\src\include;vendor\WhereAmI\src;vendor\implot;vendor\BlockingCollection;vendor\cpr\include;vendor\cpr\cpr_generated_includes;vendor\cpr\_deps\curl-src\include;vendor\yaml-cpp\include;vendor\RNAstructure;vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalOptions>/MDd /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;cpr.lib;nfd.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\Debug;vendor\cpr\lib\Debug;vendor\nfd\build\lib\Debug\x64;vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\lib\RelWithDebInfo;vendor\nfd\build\lib\Release\x64;vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\lib\RelWithDebInfo;vendor\nfd\build\lib\Release\x64;vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>

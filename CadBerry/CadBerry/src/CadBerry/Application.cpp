@@ -272,7 +272,7 @@ namespace CDB
 		//GuiLayer will have already been deleted
 
 		//Cleanup
-		s_Instance = NULL;
+		s_Instance = nullptr;
 		CDB_BuildInfo((void*)s_Instance);
 	}
 

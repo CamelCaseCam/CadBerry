@@ -29,7 +29,7 @@ namespace CDB
 
 		void operator=(T* ptr)
 		{
-			if (this->ptr == nullptr)
+			if (this->ptr != nullptr)
 				delete this->ptr;
 
 			this->ptr = ptr;

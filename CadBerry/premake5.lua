@@ -149,8 +149,7 @@ project "CadBerry"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		filter "system:windows"
-			buildoptions "/MDd"
+		runtime "Debug"
 
 		symbols "On"
 		defines
@@ -174,8 +173,7 @@ project "CadBerry"
 
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		filter "system:windows"
-			buildoptions "/MD"
+		runtime "Release"
 
 		optimize "On"
 		links
@@ -238,6 +236,7 @@ project "Berry"
 
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
+		runtime "Debug"
 		symbols "On"
 		links
 		{
@@ -249,6 +248,7 @@ project "Berry"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
+		runtime "Release"
 		optimize "On"
 		links
 		{
@@ -319,6 +319,7 @@ project "CadBerry_test"
 
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
+		runtime "Debug"
 		symbols "On"
 		links
 		{
@@ -337,6 +338,7 @@ project "CadBerry_test"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
+		runtime "Release"
 		optimize "On"
 		links
 		{
@@ -407,6 +409,7 @@ project "CadBerry_updater"
 
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
+		runtime "Debug"
 		symbols "On"
 
 		libdirs
@@ -415,6 +418,7 @@ project "CadBerry_updater"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
+		runtime "Release"
 		optimize "On"
 
 		libdirs
@@ -490,9 +494,7 @@ project "VSCodeIntegration"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-
-		filter "system:windows"
-			buildoptions "/MDd"
+		runtime "Debug"
 
 		symbols "On"
 		defines
@@ -501,9 +503,7 @@ project "VSCodeIntegration"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-
-		filter "system:windows"
-			buildoptions "/MD"
+		runtime "Release"
 
 		optimize "On"
 
@@ -587,6 +587,7 @@ project "GILBuildEngine"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
+		runtime "Debug"
 
 		symbols "On"
 		defines
@@ -595,6 +596,7 @@ project "GILBuildEngine"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
+		runtime "Release"
 
 		optimize "On"
 
@@ -660,8 +662,7 @@ project "utils"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		filter "system:windows"
-			buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 		defines
 		{
@@ -669,8 +670,7 @@ project "utils"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		filter "system:windows"
-			buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "sensing"
@@ -730,8 +730,7 @@ project "sensing"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		filter "system:windows"
-			buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 		defines
 		{
@@ -739,8 +738,7 @@ project "sensing"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		filter "system:windows"
-			buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 
 project "Core"
@@ -802,8 +800,7 @@ project "Core"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		filter "system:windows"
-			buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 		defines
 		{
@@ -819,8 +816,7 @@ project "Core"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		filter "system:windows"
-			buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 		links
 		{
@@ -895,8 +891,7 @@ project "IRESGenerator"
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"
-		filter "system:windows"
-			buildoptions "/MDd"
+		runtime "Debug"
 		symbols "On"
 		defines
 		{
@@ -913,8 +908,7 @@ project "IRESGenerator"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
-		filter "system:windows"
-			buildoptions "/MD"
+		runtime "Release"
 		optimize "On"
 		links
 		{

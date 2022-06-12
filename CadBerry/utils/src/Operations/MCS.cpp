@@ -6,24 +6,25 @@ namespace utils
 {
 	namespace Operations
 	{
-		std::pair<std::vector<GIL::Parser::Region>, std::string> MCS::Get(std::vector<GIL::Lexer::Token*> InnerTokens, GIL::Parser::Project* Proj)
+		std::pair<std::vector<GIL::Parser::Region>, std::string> MCS::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 		{
 			using namespace GIL::Lexer;
 			std::string Output;
 
-			for (Token* t : InnerTokens)
+			CDB_BuildWarning("MCS operation in utils module is not functional");
+			/*for (Token* t : InnerTokens)
 			{
 				if (t->TokenType == LexerToken::IDENT || t->TokenType == LexerToken::STRING)
 				{
 					std::string Pattern = GIL::utils::GetRestrictionSite(t->Value);
 					Output += GIL::utils::GenWithPattern(Pattern);
 				}
-			}
+			}*/
 			return { {}, Output };
 		}
 
-		GIL::Operation* MCS::self = nullptr;
-		GIL::Operation* MCS::GetPtr()
+		GIL::Sequence* MCS::self = nullptr;
+		GIL::Sequence* MCS::GetPtr()
 		{
 			if (self == nullptr)
 				self = new MCS();

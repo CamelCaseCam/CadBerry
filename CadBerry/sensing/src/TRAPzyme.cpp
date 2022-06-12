@@ -9,7 +9,7 @@ namespace sensing
 	//__________________________________________________________________________________________________________________________
 
 	std::string TargetText = "";
-	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> SetTRAPzymeTarget::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		TargetText = GetInnerCode(Params).second;    //Sets the Target to the compiles inner tokens
 		return std::pair<std::vector<GIL::Parser::Region>, std::string>();
@@ -46,7 +46,7 @@ namespace sensing
 
 	int FindMatches(std::string& Strand1, std::string& Strand2, int MinChunkSize = 7);    //7 is our min chunk size, because that is one bigger than the binding region
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> GenTZFromAttenuator::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		//Compile the attenuator
 		std::string Attenuator = GetInnerCode(Params).second;
@@ -267,7 +267,7 @@ namespace sensing
 		return self;
 	}
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> GenTZTarget::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		/*
 		Pattern is angarthvvvsvvvvvvvvvvvvvvvv
@@ -306,7 +306,7 @@ namespace sensing
 
 
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> GenTZV2FromAttenuator::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		//Compile the attenuator
 		std::string Attenuator = GetInnerCode(Params).second;
@@ -512,7 +512,7 @@ namespace sensing
 		return GenTarget(Proj);
 	}
 
-	std::pair<std::vector<GIL::Parser::Region>, std::string> Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+	std::pair<std::vector<GIL::Parser::Region>, std::string> CreateAttenuator::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
 	{
 		return { {}, GenTarget(Proj) };
 	}

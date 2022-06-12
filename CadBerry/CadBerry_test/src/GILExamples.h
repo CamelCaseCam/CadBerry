@@ -50,6 +50,7 @@ extern std::string SequenceWithParamsWithParams;
 //Typed stuff
 extern std::string SequenceWithTypedParams;
 extern std::string SequenceWithTypedParamsWithParams;
+extern std::string SequenceWithMultipleParams;
 extern std::string CustomType;
 extern std::string CustomTypeInheritance;
 
@@ -66,3 +67,9 @@ extern std::string OperationForward;
 
 //Translating to and from a target organism
 extern std::string ForExample;
+extern std::string FromExample;    //TODO
+
+
+//Operators
+extern std::string UnaryOperatorExample;
+extern std::string BinaryOperatorExample;

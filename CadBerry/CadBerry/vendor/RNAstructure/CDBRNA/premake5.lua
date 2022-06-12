@@ -37,11 +37,11 @@ project "CDBRNA"
 		}
 
 	filter "configurations:Debug"
-		filter "system:windows"
-			buildoptions "/MDd"
+		defines "CDB_DEBUG"
+		runtime "Debug"
 		symbols "On"
 
 	filter "configurations:Release"
-		filter "system:windows"
-			buildoptions "/MD"
+		defines "CDB_RELEASE"
+		runtime "Release"
 		optimize "On"

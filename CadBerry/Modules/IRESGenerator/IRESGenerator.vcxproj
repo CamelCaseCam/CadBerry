@@ -20,7 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
@@ -41,7 +41,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>false</LinkIncremental>
+    <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\bin\Debug-windows-x86_64\IRESGenerator\</OutDir>
     <IntDir>..\..\bin\Debug-windows-x86_64\IRESGenerator\</IntDir>
     <TargetName>IRESGenerator</TargetName>
@@ -60,23 +60,16 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\IRESGenerator\src;..\..\GILBuildEngine\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;..\..\CadBerry\vendor\implot;..\..\CadBerry\vendor\nfd\src\include;..\..\CadBerry\vendor\RNAstructure;..\..\CadBerry\vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <Optimization>Full</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <MinimalRebuild>false</MinimalRebuild>
-      <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalOptions>/MDd /MD %(AdditionalOptions)</AdditionalOptions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>nfd_d.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Debug\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;..\..\CadBerry\vendor\nfd\build\lib\Release\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>nfd_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Debug\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -90,25 +83,22 @@ copy /B /Y ..\..\bin\Debug-windows-x86_64\IRESGenerator\IRESGenerator.pdb ..\..\
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_ENABLE_ASSERTS;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\CadBerry\vendor\spdlog\include;..\..\CadBerry\src;..\..\IRESGenerator\src;..\..\GILBuildEngine\src;..\..\CadBerry\vendor\IMGUI;..\..\CadBerry\vendor\GLFW\include;..\..\CadBerry\vendor\glm;..\..\CadBerry\vendor\BlockingCollection;..\..\CadBerry\vendor\implot;..\..\CadBerry\vendor\nfd\src\include;..\..\CadBerry\vendor\RNAstructure;..\..\CadBerry\vendor\RNAstructure\CDBRNA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalOptions>/MDd /MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>nfd_d.lib;nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Debug\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Debug-windows-x86_64\CDBRNA;..\..\CadBerry\vendor\nfd\build\lib\Release\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>nfd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\CadBerry\vendor\nfd\build\lib\Release\x64;..\..\CadBerry\vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\..\bin\Release-windows-x86_64\IRESGenerator\IRESGenerator.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
