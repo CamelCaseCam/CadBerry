@@ -11,6 +11,7 @@
 
 #include "GIL/CGIL/CGIL_info.h"
 #include "Core.h"
+#include "GIL/GILException.h"
 
 using namespace GIL::Lexer;
 
@@ -974,7 +975,7 @@ namespace GIL
 		}
 
 		//CGIL function definitions:
-		Project* LoadCGIL4(std::ifstream& InputFile);
+		Project* LoadCGIL5(std::ifstream& InputFile);
 
 		Project* Project::Load(std::string Path)
 		{
@@ -992,13 +993,14 @@ namespace GIL
 			case 1:
 			case 2:
 			case 3:
-				CDB_BuildFatal("CGIL version {0} is not supported by this version of GIL", Version);
-				return nullptr;    //Just in case
 			case 4:
-				return LoadCGIL4(InputFile);
+				CDB_BuildError("CGIL version {0} is not supported by this version of GIL", Version);
+				throw GIL::GILException();
+			case 5:
+				return LoadCGIL5(InputFile);
 			default:
-				CDB_BuildFatal("Error reading CGIL version from path {0}", Path);
-				return nullptr;
+				CDB_BuildError("Error reading CGIL version from path {0}", Path);
+				throw GIL::GILException();
 			}
 		}
 
@@ -1149,7 +1151,7 @@ namespace GIL
 			}
 		}
 
-		Project* LoadCGIL4(std::ifstream& InputFile)
+		Project* LoadCGIL5(std::ifstream& InputFile)
 		{
 			int IntVal;    //GIL versions are only for debugging, so read them into a useless buffer
 			InputFile.read((char*)&IntVal, sizeof(int));

@@ -3,6 +3,8 @@
 #include "CadBerry/Application.h"
 #include "GIL/Parser/Project.h"
 
+#include <random>
+
 namespace GIL
 {
 	namespace utils
@@ -376,6 +378,35 @@ namespace GIL
 					Output += pattern[i];
 					break;
 				default:
+					break;
+				}
+			}
+			return Output;
+		}
+
+		std::string GenRandomBases(int length)
+		{
+			auto rnd = std::mt19937(std::random_device{}());
+			auto dist = std::uniform_int_distribution<int>(0, 3);
+
+			std::string Output;
+			Output.reserve(length);
+			for (int i = 0; i < length; ++i)
+			{
+				int val = dist(rnd);
+				switch (val)
+				{
+				case 0:
+					Output += 'a';
+					break;
+				case 1:
+					Output += 't';
+					break;
+				case 2:
+					Output += 'c';
+					break;
+				case 3:
+					Output += 'g';
 					break;
 				}
 			}

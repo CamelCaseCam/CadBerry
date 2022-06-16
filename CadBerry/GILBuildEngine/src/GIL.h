@@ -10,3 +10,5 @@
 
 #include "GIL/Modules/GILModule.h"
 #include "GIL/Utils/Utils.h"
+
+#include "GIL/GILException.h"

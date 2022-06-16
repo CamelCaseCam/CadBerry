@@ -27,6 +27,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VSCodeIntegration", "Module
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WhereAmI", "CadBerry\vendor\WhereAmI\WhereAmI.vcxproj", "{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "regulation", "regulation\regulation.vcxproj", "{3F565F37-2B0E-A184-9415-7AE080EC3B75}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensing", "sensing\sensing.vcxproj", "{DC53C98B-4833-4827-514B-D3FDBDA9AE88}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{169C8510-82B0-ADC1-4B32-5121B705AAF2}"
@@ -89,6 +91,10 @@ Global
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Debug|x64.Build.0 = Debug|x64
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.ActiveCfg = Release|x64
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.Build.0 = Release|x64
+		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Debug|x64.ActiveCfg = Debug|x64
+		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Debug|x64.Build.0 = Debug|x64
+		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Release|x64.ActiveCfg = Release|x64
+		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Release|x64.Build.0 = Release|x64
 		{DC53C98B-4833-4827-514B-D3FDBDA9AE88}.Debug|x64.ActiveCfg = Debug|x64
 		{DC53C98B-4833-4827-514B-D3FDBDA9AE88}.Debug|x64.Build.0 = Debug|x64
 		{DC53C98B-4833-4827-514B-D3FDBDA9AE88}.Release|x64.ActiveCfg = Release|x64

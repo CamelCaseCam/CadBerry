@@ -15,6 +15,7 @@ namespace GIL
 		GILAPI float GetAGRatio(const std::string& Code);
 		
 		GILAPI std::string GenWithPattern(std::string& pattern);
+		GILAPI std::string GenRandomBases(int length);
 
 		GILAPI bool FindNearby(std::string& Code1, std::string& Code2, std::string& Pattern);
 
