@@ -4,6 +4,7 @@
 
 #include "Sequence.h"
 #include "GIL/Modules/GILModule.h"
+#include "GIL/AbstractSyntaxTree/AST.h"
 
 #include "GIL/Lexer/Token.h"
 #include "GIL/Types/Type.h"
@@ -56,7 +57,7 @@ namespace GIL
 			C++ version, the different strings can point to the same operation or sequence, so there's no difference to the compiler. 
 			*/
 			std::map<std::string, Sequence*> Sequences;
-			std::vector<Lexer::Token*> Main;
+			std::vector<AST_Node*> Main;
 
 			//Map for operators
 			std::map<std::string, Sequence*> Operators;

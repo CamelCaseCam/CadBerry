@@ -19,6 +19,7 @@ IncludeDirs["BlockingCollection"] = "CadBerry/vendor/BlockingCollection"
 IncludeDirs["ImPlot"] = "CadBerry/vendor/implot"
 IncludeDirs["CDBRNA_inc"] = "CadBerry/vendor/RNAstructure/CDBRNA/include"
 IncludeDirs["CDBRNA"] = "CadBerry/vendor/RNAstructure"
+IncludeDirs["lug"] = "CadBerry/vendor/lug"
 
 include "CadBerry/vendor/GLFW"
 include "CadBerry/vendor/RNAstructure/CDBRNA"
@@ -536,6 +537,7 @@ project "GILBuildEngine"
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.lug}",
 	}
 
 	links

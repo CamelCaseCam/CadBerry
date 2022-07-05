@@ -115,9 +115,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\sensing\sensing.pdb ..\bin\Release-wind
       <Project>{A719CF0D-93E7-C213-7C7B-333A68E89E78}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="module.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

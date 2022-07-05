@@ -7,6 +7,8 @@
 
 #include "CadBerry/Utils/memory.h"
 
+#include "GIL/SharedParserAndLexer/AST_Node.h"
+
 
 namespace GIL
 {
@@ -78,6 +80,7 @@ namespace GIL
 		Type* SeqType = &Type::any;
 	};
 
+	//Deprecated, DO NOT USE
 	class StaticSequence : public Sequence    //So far we only have static sequences
 	{
 	public:
@@ -99,6 +102,21 @@ namespace GIL
 
 		bool IsCompiled = false;
 		std::vector<CachedSequenceChunk> SequenceCache;
+	};
+
+	class DynamicSequence : public Sequence    //So far we only have static sequences
+	{
+	public:
+		DynamicSequence() {}
+		DynamicSequence(std::vector<AST_Node*> Nodes) { this->Nodes = Nodes; }
+		virtual ~DynamicSequence() override;
+
+		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override;
+
+		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
+
+		std::vector<AST_Node*> Nodes;
 	};
 
 	class SequenceForward : public Sequence

@@ -125,6 +125,61 @@ namespace GIL
 		}
 	}
 
+
+	//Dynamic sequence stuff
+	DynamicSequence::~DynamicSequence()
+	{
+		//Delete all the AST nodes
+		for (AST_Node* n : this->Nodes)
+		{
+			delete n;
+		}
+	}
+
+#define SequenceReturn(val) --CurrentSequenceCallDepth; return val
+	std::pair<std::vector<Parser::Region>, std::string> DynamicSequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
+	{
+		if (CurrentSequenceCallDepth > MAX_SEQUENCE_CALL_DEPTH)
+		{
+			CDB_BuildError("Fatal error: sequence reached max call depth. You probably passed a sequence itself as one of its parameters");
+			throw GILException();
+		}
+		++CurrentSequenceCallDepth;
+		
+		//Create the return objects
+		std::vector<Parser::Region> ReturnRegions;
+		std::string ReturnCode;
+		
+		//Loop through the nodes. If a node is a parameter, replace it with the parameter's value.
+		for (AST_Node* n : this->Nodes)
+		{
+			if (n->GetName() == "Param")
+			{
+				ParamNode* p = (ParamNode*)n;
+				if (!Params.contains(p->Name))
+				{
+					CDB_BuildError("Fatal error: parameter " + p->Name + " not found in parameter list");
+					throw GILException();
+				}
+				else
+				{
+					
+				}
+			}
+			
+			//Get the regions and code from the node
+			std::pair<std::vector<Parser::Region>, std::string> NodeReturn = n->Get(Proj, Params);
+			ReturnRegions.insert(ReturnRegions.end(), NodeReturn.first.begin(), NodeReturn.first.end());
+			ReturnCode += NodeReturn.second;
+		}
+	}
+
+
+
+	
+
+
+
 	std::pair<std::vector<Parser::Region>, std::string> StaticSequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
 	{
 		if (CurrentSequenceCallDepth > MAX_SEQUENCE_CALL_DEPTH)

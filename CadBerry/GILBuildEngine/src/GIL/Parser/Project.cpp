@@ -13,6 +13,10 @@
 #include "Core.h"
 #include "GIL/GILException.h"
 
+
+#include "GIL/AbstractSyntaxTree/AST.h"
+#include "GIL/AbstractSyntaxTree/AST_Sequence.h"
+
 using namespace GIL::Lexer;
 
 namespace GIL
@@ -72,7 +76,7 @@ namespace GIL
 		{
 			std::map<std::string, std::vector<Token*>> Sequences;
 			std::map<std::string, std::vector<Token*>> Operations;
-			Target->Main = std::vector<Token*>();    //The file entry point
+			Target->Main = std::vector<AST_Node*>();    //The file entry point
 
 			for (int i = 0; i < Tokens.size(); ++i)
 			{
@@ -228,11 +232,15 @@ namespace GIL
 					}
 					Target->AddInheritance(Target->GetTypeByName(Tokens[i - 1]->Value), Target->GetTypeByName(Tokens[i + 1]->Value));
 
-					//If there's an extra IDENT, remove it
-					if (Target->Main[Target->Main.size() - 1] == Tokens[i - 1])
-						Target->Main.erase(Target->Main.end() - 1);
 					++i;
 					break;
+				case LexerToken::IDENT:
+					if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::EQUALS)
+					{
+						CDB_BuildError("Expected \"=\" after variable name");
+						break;
+					}
+					break
 				case LexerToken::IMPORT:    //Adds file name to imports, but the compiler imports the files
 					++i;
 					if (Tokens[i]->TokenType != LexerToken::STRING)

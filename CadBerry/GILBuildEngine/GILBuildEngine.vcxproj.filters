@@ -22,6 +22,9 @@
     <Filter Include="GIL\Parser">
       <UniqueIdentifier>{FD274D93-E9DF-8EE0-52E7-673C3EBE29D1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GIL\SharedParserAndLexer">
+      <UniqueIdentifier>{67FC59C2-5321-A942-7C6C-8ED268F0A760}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GIL\Types">
       <UniqueIdentifier>{056386ED-71CD-3A64-BA0B-EC0926B518B9}</UniqueIdentifier>
     </Filter>
@@ -107,6 +110,15 @@
     <ClInclude Include="src\GIL\SaveFunctions.h">
       <Filter>GIL</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\SharedParserAndLexer\AST_Node.h">
+      <Filter>GIL\SharedParserAndLexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\SharedParserAndLexer\ParseAndLex.h">
+      <Filter>GIL\SharedParserAndLexer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\SharedParserAndLexer\Pattern.h">
+      <Filter>GIL\SharedParserAndLexer</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\Types\Type.h">
       <Filter>GIL\Types</Filter>
     </ClInclude>
@@ -169,6 +181,9 @@
     <ClCompile Include="src\GIL\SaveFunctions.cpp">
       <Filter>GIL</Filter>
     </ClCompile>
+    <ClCompile Include="src\GIL\SharedParserAndLexer\ParseAndLex.cpp">
+      <Filter>GIL\SharedParserAndLexer</Filter>
+    </ClCompile>
     <ClCompile Include="src\GIL\Types\Type.cpp">
       <Filter>GIL\Types</Filter>
     </ClCompile>
@@ -176,5 +191,6 @@
       <Filter>GIL\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\gilpch.cpp" />
+    <ClCompile Include="src\GIL\SharedParserAndLexer\AST_Node.cpp" />
   </ItemGroup>
 </Project>
