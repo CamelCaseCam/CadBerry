@@ -194,7 +194,7 @@ namespace GIL
 				if (SeqParams.size() == 0)
 					i = OldIndex;
 
-				output = parameter.Seq->Get(Proj, SeqParams);
+				output = parameter.Seq->Get(parameter.SourceProj, SeqParams);
 				OutputRegions.insert(OutputRegions.end(), output.first.begin(), output.first.end());
 				OutputCode += output.second;
 			}

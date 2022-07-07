@@ -178,6 +178,36 @@ namespace GIL
 					OpenRegions[LastRegion].Name = "Main";
 					OpenRegions[LastRegion].Start = Code.length();
 					break;
+					
+				//This is all bad but temporary code
+				case LexerToken::PARAM:
+				{
+					//Check if the project evaluation contains the param
+					if (!(*Proj->Params).contains(t->Value))
+					{
+						CDB_BuildError("Param {0} is not defined", t->Value);
+					}
+					Param& param = (*Proj->Params)[t->Value];
+					//Check if the param has params
+					++i;
+					auto Params = GetParams(Proj, *Tokens, i, param.Seq->ParamIdx2Name, Proj->Params);
+
+					int Start = Code.length();
+					auto ParamOutput = param.Seq->Get(param.SourceProj, Params);
+
+					Code += ParamOutput.second;
+					int UselessInt;
+					for (Region& r : ParamOutput.first)
+					{
+						if (r.Start == 0)
+						{
+							r.Start = 1;
+						}
+						r.Add(Start);
+						AddRegionToVector(std::move(r), Output, UselessInt);
+					}
+					break;
+				}
 				case LexerToken::INC:
 					if (i >= Tokens->size() - 1 || ((*Tokens)[i + 1]->TokenType != LexerToken::IDENT && 
 						(*Tokens)[i + 1]->TokenType != LexerToken::STRING))
@@ -329,7 +359,7 @@ namespace GIL
 									{
 										//Extract the parameters into a params dictionary
 										std::map<std::string, Param> Params = { 
-											{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) } 
+											{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, Proj, LPARAM.first->SeqType) } 
 										};
 
 										int Start = Code.length();
@@ -374,8 +404,8 @@ namespace GIL
 
 							//Extract the parameters into a params dictionary
 							std::map<std::string, Param> Params = {
-								{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) },
-								{ Seq.first->ParamIdx2Name[1], Param(RPARAM.first, RPARAM.first->SeqType) }
+								{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, Proj, LPARAM.first->SeqType) },
+								{ Seq.first->ParamIdx2Name[1], Param(RPARAM.first, Proj, RPARAM.first->SeqType) }
 							};
 
 							int Start = Code.length();
@@ -400,7 +430,7 @@ namespace GIL
 						{
 							//Extract the parameters into a params dictionary
 							std::map<std::string, Param> Params = {
-								{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) }
+								{ Seq.first->ParamIdx2Name[0], Param(LPARAM.first, Proj, LPARAM.first->SeqType) }
 							};
 
 							int Start = Code.length();
@@ -524,7 +554,7 @@ namespace GIL
 						++i;
 					std::vector<Token*> InsideTokens = GetInsideTokens(*Tokens, i);
 					InnerCode Inner = InnerCode(Compile(Proj, &InsideTokens));
-					params["InnerCode"] = &Inner;
+					params["InnerCode"] = { &Inner, Proj };
 
 					//Operation exists
 					auto OperationOutput = Op.first->Get(Op.second, params);
@@ -899,7 +929,7 @@ namespace GIL
 						continue;
 					}
 					//Put the sequence into the output
-					Output[ParamIdx2Name[ParamIdx]] = Param(Proj->Sequences[InsideTokens[n]->Value], Proj->Sequences[InsideTokens[n]->Value]->SeqType);
+					Output[ParamIdx2Name[ParamIdx]] = Param(Proj->Sequences[InsideTokens[n]->Value], Proj, Proj->Sequences[InsideTokens[n]->Value]->SeqType);
 					++ParamIdx;
 				}
 				else if (InsideTokens[n]->TokenType == LexerToken::PARAM)
@@ -955,7 +985,7 @@ namespace GIL
 						continue;
 					}
 
-					Output[InsideTokens[n]->Value] = Param(Proj->Sequences[InsideTokens[n + 2]->Value], Proj->Sequences[InsideTokens[n + 2]->Value]->SeqType);
+					Output[InsideTokens[n]->Value] = Param(Proj->Sequences[InsideTokens[n + 2]->Value], Proj, Proj->Sequences[InsideTokens[n + 2]->Value]->SeqType);
 					n += 2;
 				}
 			}

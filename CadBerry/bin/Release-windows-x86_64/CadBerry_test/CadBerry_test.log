@@ -1,5 +1,4 @@
-﻿  GILExamples.cpp
-  main.cpp
+﻿  main.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(24,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\LayerStack.h(23,23): warning C4251: 'CDB::LayerStack::Layers': class 'std::vector<CDB::Layer *,std::allocator<CDB::Layer *>>' needs to have dll-interface to be used by clients of class 'CDB::LayerStack'
@@ -112,5 +111,7 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.h(78,46):
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.h(78): message : see declaration of 'std::unordered_map<std::string,uint16_t,std::hash<std::string>,std::equal_to<std::string>,std::allocator<std::pair<const std::string,uint16_t>>>'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.h(87,23): warning C4251: 'GIL::Parser::Project::Types': class 'std::vector<GIL::Type *,std::allocator<GIL::Type *>>' needs to have dll-interface to be used by clients of class 'GIL::Parser::Project'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Types\Type.h(16): message : see declaration of 'std::vector<GIL::Type *,std::allocator<GIL::Type *>>'
-  Generating Code...
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\GILException.h(9,2): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'GIL::GILException'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\vcruntime_exception.h(48): message : see declaration of 'std::exception'
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\GILException.h(8): message : see declaration of 'GIL::GILException'
   CadBerry_test.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry_test\CadBerry_test.exe

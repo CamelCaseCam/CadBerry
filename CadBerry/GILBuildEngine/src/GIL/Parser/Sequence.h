@@ -38,11 +38,12 @@ namespace GIL
 	class Sequence;
 	struct Param
 	{
-		Param() : Seq(nullptr) {}
-		Param(Sequence* seq) : Seq(seq) {}
-		Param(Sequence* seq, Type* seqType) : Seq(seq), type(seqType) {}
+		Param() : Seq(nullptr), SourceProj(nullptr) {}
+		Param(Sequence* seq, Parser::Project* sourceProj) : Seq(seq), SourceProj(sourceProj) {}
+		Param(Sequence* seq, Parser::Project* sourceProj, Type* seqType) : Seq(seq), SourceProj(sourceProj), type(seqType) {}
 
 		Sequence* Seq;
+		Parser::Project* SourceProj;
 		Type* type = &Type::any;
 	};
 
