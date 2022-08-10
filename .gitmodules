@@ -58,9 +58,3 @@
 [submodule "CadBerry/vendor/Catch2"]
 	path = CadBerry/vendor/Catch2
 	url = https://github.com/CamelCaseCam/Catch2.git
-[submodule "CadBerry/CadBerry/vendor/ctpg"]
-	path = CadBerry/CadBerry/vendor/ctpg
-	url = https://github.com/peter-winter/ctpg.git
-[submodule "CadBerry/CadBerry/vendor/lug"]
-	path = CadBerry/CadBerry/vendor/lug
-	url = https://github.com/jwtowner/lug.git

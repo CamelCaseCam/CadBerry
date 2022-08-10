@@ -3,12 +3,14 @@
 #include "GIL/Compiler/Compiler.h"
 #include "GIL/SaveFunctions.h"
 #include "GIL/GILException.h"
+#include "GIL/Errors.h"
 
 namespace GIL
 {
 	std::vector<Parser::Region> CopiedRegions;
 	using namespace Lexer;
 	using namespace Parser;
+	using namespace Compiler;
 
 	std::string Empty = "";
 
@@ -16,6 +18,7 @@ namespace GIL
 	{
 		StaticSequence,
 		SequenceForward,
+		DynamicSequence,
 		Operator,
 		EndOfOperators,
 	};
@@ -29,99 +32,16 @@ namespace GIL
 		switch (sequenceType)
 		{
 		case GIL::SequenceType::StaticSequence:
-			return new StaticSequence();
+			CDB_BuildError("Static sequences aren't currently supported. Terminating compilation");
+			throw GILException();
 		case GIL::SequenceType::SequenceForward:
 			return new SequenceForward();
+		case GIL::SequenceType::DynamicSequence:
+			return new DynamicSequence();
 		case GIL::SequenceType::Operator:
 			return new Operator();
 		default:
 			break;
-		}
-	}
-
-	void StaticSequence::Save(std::ofstream& OutputFile)    //Save the number of tokens and the tokens to the file
-	{
-		SavedSequence = SequenceType::StaticSequence;
-		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
-
-		//Save the sequence typename
-		SaveString(this->SeqType->TypeName, OutputFile);
-		
-		//Save the parameter index mapping
-		int len = this->ParamIdx2Name.size();
-		OutputFile.write((char*)&len, sizeof(int));
-		for (int i = 0; i < len; i++)
-		{
-			SaveString(this->ParamIdx2Name[i], OutputFile);
-		}
-
-		//Save the parameter types
-		len = this->ParameterTypes.size();
-		OutputFile.write((char*)&len, sizeof(int));
-		for (auto paramtype : this->ParameterTypes)
-		{
-			SaveString(paramtype.first, OutputFile);
-			SaveString(paramtype.second->TypeName, OutputFile);
-		}
-		
-
-		//Save the Tokens
-		int NumTokens = this->Tokens.size();
-		OutputFile.write((char*)&NumTokens, sizeof(int));
-
-		for (GIL::Lexer::Token* t : this->Tokens)
-		{
-			t->Save(OutputFile);
-		}
-	}
-
-	void StaticSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
-	{
-		//Load the sequence typename
-		std::string SeqTypeName;
-		LoadStringFromFile(SeqTypeName, InputFile);
-		this->SeqType = Proj->Types[Proj->AllocType(SeqTypeName)];
-		
-		//Load the parameter index mapping
-		int len;
-		InputFile.read((char*)&len, sizeof(int));
-		this->ParamIdx2Name.reserve(len);
-		
-		for (int i = 0; i < len; i++)
-		{
-			std::string ParamName;
-			LoadStringFromFile(ParamName, InputFile);
-			this->ParamIdx2Name.push_back(ParamName);
-		}
-
-		//Load the parameter types
-		InputFile.read((char*)&len, sizeof(int));
-		for (int i = 0; i < len; ++i)
-		{
-			std::string ParamName;
-			LoadStringFromFile(ParamName, InputFile);
-			std::string ParamTypeName;
-			LoadStringFromFile(ParamTypeName, InputFile);
-			this->ParameterTypes[ParamName] = Proj->Types[Proj->AllocType(ParamTypeName)];
-		}
-		
-		
-		
-		int NumTokens;
-		InputFile.read((char*)&NumTokens, sizeof(int));
-		this->Tokens.reserve(NumTokens);
-
-		for (int i = 0; i < NumTokens; ++i)
-		{
-			this->Tokens.push_back(GIL::Lexer::Token::Load(InputFile));
-		}
-	}
-
-	StaticSequence::~StaticSequence()
-	{
-		for (GIL::Lexer::Token* t : this->Tokens)
-		{
-			GIL::Lexer::Token::SafeDelete(t);    //Only deletes unique tokens
 		}
 	}
 
@@ -136,51 +56,57 @@ namespace GIL
 		}
 	}
 
-#define SequenceReturn(val) --CurrentSequenceCallDepth; return val
-	std::pair<std::vector<Parser::Region>, std::string> DynamicSequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
+	
+	//This can definitely be optimized, but it works
+	void ConvertParamNodes(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context, std::vector<AST_Node*>& Nodes)
 	{
-		if (CurrentSequenceCallDepth > MAX_SEQUENCE_CALL_DEPTH)
+		for (AST_Node* n : Nodes)
 		{
-			CDB_BuildError("Fatal error: sequence reached max call depth. You probably passed a sequence itself as one of its parameters");
-			throw GILException();
-		}
-		++CurrentSequenceCallDepth;
-		
-		//Create the return objects
-		std::vector<Parser::Region> ReturnRegions;
-		std::string ReturnCode;
-		
-		//Loop through the nodes. If a node is a parameter, replace it with the parameter's value.
-		for (AST_Node* n : this->Nodes)
-		{
-			if (n->GetName() == "Param")
+			std::string NodeName = n->GetName();
+			if (NodeName == "UseParam")
 			{
-				ParamNode* p = (ParamNode*)n;
-				if (!Params.contains(p->Name))
+				UseParam* p = (UseParam*)n;
+				if (!Params.contains(p->ParamName))
 				{
-					CDB_BuildError("Fatal error: parameter " + p->Name + " not found in parameter list");
+					CDB_BuildError("Fatal error: parameter " + p->ParamName + " not found in parameter list");
 					throw GILException();
 				}
 				else
 				{
-					
+					//Set the parameter's contents. This should let us use parameters in InnerCode
+					p->m_Param = &Params[p->ParamName];
 				}
 			}
-			
-			//Get the regions and code from the node
-			std::pair<std::vector<Parser::Region>, std::string> NodeReturn = n->Get(Proj, Params);
-			ReturnRegions.insert(ReturnRegions.end(), NodeReturn.first.begin(), NodeReturn.first.end());
-			ReturnCode += NodeReturn.second;
+			else if (NodeName == "From")
+				ConvertParamNodes(Proj, Params, Context, ((From*)n)->Body);
+			else if (NodeName == "For")
+				ConvertParamNodes(Proj, Params, Context, ((For*)n)->Body);
+			else if (NodeName == "CallOperation")
+				ConvertParamNodes(Proj, Params, Context, ((CallOperation*)n)->InnerNodes);
+			else if (NodeName == "Prepro_If")
+				ConvertParamNodes(Proj, Params, Context, ((Prepro_If*)n)->Body);
+			else if (NodeName == "Prepro_Else")
+				ConvertParamNodes(Proj, Params, Context, ((Prepro_Else*)n)->Body);
 		}
 	}
 
-
-
+	void SequenceForward::CompileTimeInit(Parser::Project* Proj)
+	{
+		if (Proj->Sequences.contains(this->DestinationName))
+		{
+			this->DestinationSequence = Proj->Sequences[this->DestinationName];
+			this->ParameterTypes = this->DestinationSequence->ParameterTypes;
+			this->ParamIdx2Name = this->DestinationSequence->ParamIdx2Name;
+			this->SeqType = this->DestinationSequence->SeqType;
+		}
+		else
+		{
+			CDB_BuildError(ERROR_034, this->DestinationName);
+		}
+	}
 	
-
-
-
-	std::pair<std::vector<Parser::Region>, std::string> StaticSequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
+#define SequenceReturn(val) --CurrentSequenceCallDepth; return val
+	void DynamicSequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context)
 	{
 		if (CurrentSequenceCallDepth > MAX_SEQUENCE_CALL_DEPTH)
 		{
@@ -188,102 +114,47 @@ namespace GIL
 			throw GILException();
 		}
 		++CurrentSequenceCallDepth;
+		
+		//Make the parameters point to the right sequences
+		ConvertParamNodes(Proj, Params, Context, this->Nodes);
 
-		std::vector<Region> OutputRegions;
-		std::string OutputCode;
-
-		//Compile the sequence and cache the results
-		if (!this->IsCompiled)
+		//Create the new compiler context
+		CompilerContext SequenceContext = Context;
+		SequenceContext.Nodes = &this->Nodes;
+		SequenceContext.NodeIdx = 0;
+		
+		//Loop through the nodes. If a node is a parameter, replace it with the parameter's value.
+		for (SequenceContext; SequenceContext.NodeIdx < SequenceContext.Nodes->size(); ++SequenceContext.NodeIdx)
 		{
-
-			for (int i = 0; i < Tokens.size(); ++i)
-			{
-				int NumTokens = 0;
-				//Count until a parameter is reached
-				for (i; i < Tokens.size(); ++i)
-				{
-					if (Tokens[i]->TokenType == LexerToken::PARAM)
-						break;
-					++NumTokens;
-				}
-
-				//Extract the tokens into a vector
-				std::vector<Token*> ToBeCompiled;
-				ToBeCompiled.reserve(NumTokens);
-				for (NumTokens; NumTokens > 0; --NumTokens)
-					ToBeCompiled.push_back(this->Tokens[i - NumTokens]);
-
-				CachedSequenceChunk Chunk;
-				Chunk.SeqIdx = i;
-				//Now compile the chunk
-				auto output = Compiler::Compile(Proj, &ToBeCompiled);
-				Chunk.Regions = output.first;
-				Chunk.Code = output.second;
-				this->SequenceCache.push_back(Chunk);
-
-				OutputRegions.insert(OutputRegions.end(), output.first.begin(), output.first.end());
-				OutputCode += output.second; 
-
-				if (i == Tokens.size())
-					return { OutputRegions, OutputCode };
-
-				//Now compile the sequence
-				if (!Params.contains(this->Tokens[i]->Value))
-				{
-					CDB_BuildError("Parameter \"{0}\" was not passed", this->Tokens[i]->Value);
-					continue;
-				}
-				std::string& ParamName = this->Tokens[i]->Value;
-				Param parameter = Params[ParamName];
-
-				//Something important to note, type1->IsOfType(type2) may not be equal to type2->IsOfType(type1) because of inheritance
-				if (!this->GetParameterType(ParamName)->IsOfType(parameter.type, false))
-				{
-					CDB_BuildError("Type mismatch: type \"{0}\" cannot be passed as parameter of type \"{1}\"", parameter.type->TypeName, this->ParameterTypes[ParamName]->TypeName);
-					continue;
-				}
-
-				int OldIndex = i;
-				++i;
-				auto SeqParams = Compiler::GetParams(Proj, this->Tokens, i, parameter.Seq->ParamIdx2Name, &Params);
-				if (SeqParams.size() == 0)
-					i = OldIndex;
-
-				output = parameter.Seq->Get(Proj, SeqParams);
-				OutputRegions.insert(OutputRegions.end(), output.first.begin(), output.first.end());
-				OutputCode += output.second;
-			}
-			return { OutputRegions, OutputCode };
+			(*SequenceContext.Nodes)[SequenceContext.NodeIdx]->Compile(SequenceContext, Proj);
 		}
-
-		//Load the cached results
-		for (CachedSequenceChunk& chunk : this->SequenceCache)
-		{
-			//Add the unchanging results
-			OutputRegions.insert(OutputRegions.end(), chunk.Regions.begin(), chunk.Regions.end());
-			OutputCode += chunk.Code;
-
-			if (chunk.SeqIdx == this->Tokens.size() || chunk.SeqIdx == -1)
-				return { OutputRegions, OutputCode };
-
-			//Compile the parameter
-			if (!Params.contains(this->Tokens[chunk.SeqIdx]->Value))
-			{
-				CDB_BuildError("Parameter \"{0}\" was not passed", this->Tokens[chunk.SeqIdx]->Value);
-				continue;
-			}
-			std::string& ParamName = this->Tokens[chunk.SeqIdx]->Value;
-			Param parameter = Params[ParamName];
-
-			int uselessInt = chunk.SeqIdx + 1;
-			auto SeqParams = Compiler::GetParams(Proj, this->Tokens, uselessInt, parameter.Seq->ParamIdx2Name, &Params);
-
-			auto output = parameter.Seq->Get(Proj, SeqParams);
-			OutputRegions.insert(OutputRegions.end(), output.first.begin(), output.first.end());
-			OutputCode += output.second;
-		}
-		return { OutputRegions, OutputCode };
+		--CurrentSequenceCallDepth;
 	}
+
+	void DynamicSequence::Save(std::ofstream& OutputFile)
+	{
+		SavedSequence = SequenceType::DynamicSequence;
+		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+		
+		SaveSize(this->Nodes.size(), OutputFile);
+		for (AST_Node* n : this->Nodes)
+		{
+			AST_Node::SaveNode(n, OutputFile);
+		}
+	}
+
+	void DynamicSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
+	{
+		size_t Size = LoadSizeFromFile(InputFile);
+		this->Nodes.reserve(Size);
+		for (size_t i = 0; i < Size; ++i)
+		{
+			this->Nodes.push_back(AST_Node::LoadNode(InputFile, Proj));
+		}
+	}
+	
+	
+	
 
 	Sequence* Sequence::LoadSequence(std::ifstream& InputFile, Parser::Project* Proj)
 	{
@@ -294,13 +165,13 @@ namespace GIL
 		return NewSequence;
 	}
 	
-	std::pair<std::vector<Parser::Region>, std::string> SequenceForward::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
+	void SequenceForward::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context)
 	{
 		if (this->DestinationSequence == nullptr)
 		{
 			this->DestinationSequence = Proj->Sequences[this->DestinationName];
 		}
-		return this->DestinationSequence->Get(Proj, Params);
+		this->DestinationSequence->Get(Proj, Params, Context);
 	}
 
 	std::vector<GIL::Lexer::Token*>& SequenceForward::GetTokens()
@@ -343,7 +214,7 @@ namespace GIL
 		return true;
 	}	
 
-	std::pair<std::vector<Parser::Region>, std::string> Operator::Get(Parser::Project* Proj, std::map<std::string, Param>& Params)
+	void Operator::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context)
 	{
 		//First check if the parameters match
 		if (!this->TypesMatch(Params))
@@ -351,16 +222,16 @@ namespace GIL
 			if (AlternateImplementation == nullptr)
 			{
 				CDB_BuildError("Operator forwarding to sequence {0} was called on incompatable types, no alternate implementation(s) found", this->DestinationName);
-				return { {}, "" };
+				return;
 			}
 
-			return AlternateImplementation->Get(Proj, Params);
+			AlternateImplementation->Get(Proj, Params, Context);
 		}
 		if (this->DestinationSequence == nullptr)
 		{
 			this->DestinationSequence = Proj->Sequences[this->DestinationName];
 		}
-		return this->DestinationSequence->Get(Proj, Params);
+		this->DestinationSequence->Get(Proj, Params, Context);
 	}
 
 	void Operator::Save(std::ofstream& OutputFile)
@@ -406,5 +277,19 @@ namespace GIL
 		if (this->AlternateImplementation == nullptr)
 			return this;
 		else return this->AlternateImplementation->GetLastImplementation();
+	}
+
+	void InnerCode::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context)
+	{
+		//Add the regions to the context
+		context.OutputRegions->reserve(context.OutputRegions->size() + this->m_InnerCode.first.size());
+		
+		for (auto region : this->m_InnerCode.first)
+		{
+			region.Add(context.OutputString->length());
+			context.OutputRegions->push_back(std::move(region));
+		}
+		
+		*context.OutputString += this->m_InnerCode.second;
 	}
 }

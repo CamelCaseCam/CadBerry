@@ -7,7 +7,7 @@
 
 #include "CadBerry/Utils/memory.h"
 
-#include "GIL/SharedParserAndLexer/AST_Node.h"
+#include "GIL/Parser/AST_Node.h"
 
 
 namespace GIL
@@ -54,12 +54,15 @@ namespace GIL
 	{
 	public:
 		virtual ~Sequence() {}
-		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) = 0;
+		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) = 0;
 
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) = 0;
 
 		virtual std::vector<GIL::Lexer::Token*>& GetTokens() { return EmptyTokens; }
+
+		//For stuff like forwards
+		virtual void CompileTimeInit(Parser::Project* Proj) {}
 
 		//Not making this virtual because I don't see the point
 		bool TypesMatch(std::map<std::string, Param>& Params);
@@ -80,43 +83,43 @@ namespace GIL
 		Type* SeqType = &Type::any;
 	};
 
-	//Deprecated, DO NOT USE
-	class StaticSequence : public Sequence    //So far we only have static sequences
-	{
-	public:
-		StaticSequence() {}
-		StaticSequence(std::vector<GIL::Lexer::Token*> tokens) { this->Tokens = tokens; }
-		virtual ~StaticSequence() override;
+	////Deprecated, DO NOT USE
+	//class StaticSequence : public Sequence    //So far we only have static sequences
+	//{
+	//public:
+	//	StaticSequence() {}
+	//	StaticSequence(std::vector<GIL::Lexer::Token*> tokens) { this->Tokens = tokens; }
+	//	virtual ~StaticSequence() override;
 
-		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override;
+	//	virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
-		virtual void Save(std::ofstream& OutputFile) override;
-		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
+	//	virtual void Save(std::ofstream& OutputFile) override;
+	//	virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
-		inline void SetTokens(std::vector<GIL::Lexer::Token*> tokens) { this->Tokens = tokens; IsCompiled = false; }
+	//	inline void SetTokens(std::vector<GIL::Lexer::Token*> tokens) { this->Tokens = tokens; IsCompiled = false; }
 
-		std::vector<GIL::Lexer::Token*>& GetTokens() override { return Tokens; }
-		
-	private:
-		std::vector<GIL::Lexer::Token*> Tokens;
+	//	std::vector<GIL::Lexer::Token*>& GetTokens() override { return Tokens; }
+	//	
+	//private:
+	//	std::vector<GIL::Lexer::Token*> Tokens;
 
-		bool IsCompiled = false;
-		std::vector<CachedSequenceChunk> SequenceCache;
-	};
+	//	bool IsCompiled = false;
+	//	std::vector<CachedSequenceChunk> SequenceCache;
+	//};
 
 	class DynamicSequence : public Sequence    //So far we only have static sequences
 	{
 	public:
 		DynamicSequence() {}
-		DynamicSequence(std::vector<AST_Node*> Nodes) { this->Nodes = Nodes; }
+		DynamicSequence(std::vector<Parser::AST_Node*> Nodes) { this->Nodes = Nodes; }
 		virtual ~DynamicSequence() override;
 
-		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override;
+		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
-		std::vector<AST_Node*> Nodes;
+		std::vector<Parser::AST_Node*> Nodes;
 	};
 
 	class SequenceForward : public Sequence
@@ -127,7 +130,9 @@ namespace GIL
 			this->SeqType = destination->SeqType;
 		}
 
-		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override;
+		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
+		
+		virtual void CompileTimeInit(Parser::Project* Proj) override;
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
@@ -138,12 +143,13 @@ namespace GIL
 		std::string& DestinationName = Empty;
 	};
 
+	//TODO: maybe rewrite this so it keeps a list of nodes
 	class InnerCode : public Sequence
 	{
 	public:
 		InnerCode(std::pair<std::vector<Parser::Region>, std::string> inner) { this->m_InnerCode = inner; }
 
-		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override { return this->m_InnerCode; }
+		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
@@ -159,7 +165,7 @@ namespace GIL
 		Operator(Sequence* destination, std::string& destinationName, Operator* alternateImplementation) : SequenceForward(destination, destinationName), 
 			AlternateImplementation(alternateImplementation) {}
 		
-		virtual std::pair<std::vector<Parser::Region>, std::string> Get(Parser::Project* Proj, std::map<std::string, Param>& Params) override;
+		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;

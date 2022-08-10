@@ -83,17 +83,24 @@ void Simulation::GetVar(std::string Line)
 
 void Simulation::Draw()
 {
-	ImPlot::BeginPlot("TestPlot");
-	ImPlot::SetupAxes("Time", "Value");
-	for (VarInfo& vi : this->Variables)
+	if (ImPlot::BeginPlot("TestPlot"))
 	{
-		if (vi.Display)
+		ImPlot::SetupAxes("Time", "Value");
+		for (VarInfo& vi : this->Variables)
 		{
-			ImPlot::PlotLine<float>(vi.Name.c_str(), this->times.data(), vi.vals.data(), this->times.size());
+			if (vi.Display)
+			{
+				ImPlot::PlotLine<float>(vi.Name.c_str(), this->times.data(), vi.vals.data(), this->times.size());
+			}
 		}
-	}
 
-	ImPlot::EndPlot();
+		ImPlot::EndPlot();
+	}
+	else
+	{
+		CDB_EditorError("Failed to create plot for simulation");
+	}
+	
 }
 
 void Simulation::RunToCSV(float TotalTime, std::string Path)

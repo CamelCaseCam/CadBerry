@@ -1,0 +1,232 @@
+#!language "C++";
+#default action [* @@ = std::move(@1); *];
+
+#whitespaces 			@white ;
+
+@white					' \t\v\r\n\f'+
+						| "/*" .* "*/"
+						;
+
+#prologue
+[*
+#include <gilpch.h>
+#include "AST_Node.h"
+using namespace GIL::Parser;
+
+#define mv(x) std::move(x)
+#define vec(x) std::vector< x >
+*];
+
+#lexeme IDENT PARAM L_CALLOP;
+
+//Lexer stuff
+IDENT<std::string> : 'a-zA-Z0-9!@#%^&*_+=;|<>?~-'				[* @@ = std::string(@1); *]
+					| IDENT:id 'a-zA-Z0-9!@#%^&*_+=;|<>?~-'		[* @id += @2; @@ = std::move(@id); *];
+
+OPEN_STRING_LITERAL<std::string> : '"' !'"':chr					[* @@ = std::string(@chr); *]
+					| OPEN_STRING_LITERAL:str !'"':chr			[* @str += @chr; @@ = std::move(@str); *];
+
+STRING_LITERAL<std::string> : OPEN_STRING_LITERAL:str '"'		[* @@ = std::move(@str); *];
+					
+PARAM<std::string> : '$' 'a-zA-Z0-9!@#%^&*_+=;|<>?~-' 			[* @@ = std::string(@1); *]
+		| PARAM:id 'a-zA-Z0-9!@#%^&*_+=;|<>?~-'					[* @id += @2; @@ = std::move(@id); *];
+		
+FROM_TOK : "from" | 'From';
+FOR_TOK : "for" | 'For';
+
+L_CALLOP : "." 'a-zA-Z0-9!@#%^&*_+=;|<>?~-'						[* @@ = std::string(@2); *]
+		| L_CALLOP:id 'a-zA-Z0-9!@#%^&*_+=;|<>?~-'				[* @id += @2; @@ = std::move(@id); *];
+
+
+
+//Parser stuff
+
+SETTARGET<SetTarget*> :  "#Target" IDENT:str												[* @@ = new GIL::Parser::SetTarget(mv(@str)); *]
+			| "#target" IDENT:str															[* @@ = new GIL::Parser::SetTarget(mv(@str)); *];
+			
+SETATTR<SetAttr*> : "#SetAttr" STRING_LITERAL:str1 STRING_LITERAL:str2						[* @@ = new GIL::Parser::SetAttr(mv(@str1), mv(@str2)); *]
+			| "#setAttr" STRING_LITERAL:str1 STRING_LITERAL:str2							[* @@ = new GIL::Parser::SetAttr(mv(@str1), mv(@str2)); *];
+
+SETVAR<SetVar*> : "#Var" IDENT:name IDENT:type	IDENT:value									[* @@ = new GIL::Parser::SetVar(mv(@name), mv(@type), mv(@value)); *]
+			| "#Var" IDENT:name IDENT:type STRING_LITERAL:value								[* @@ = new GIL::Parser::SetVar(mv(@name), mv(@type), mv(@value)); *]
+			| "#var" IDENT:name IDENT:type IDENT:value										[* @@ = new GIL::Parser::SetVar(mv(@name), mv(@type), mv(@value)); *]
+			| "#var" IDENT:name IDENT:type STRING_LITERAL:value								[* @@ = new GIL::Parser::SetVar(mv(@name), mv(@type), mv(@value)); *];
+
+BEGINREGION<BeginRegion*> : "#Region" IDENT:name											[* @@ = new GIL::Parser::BeginRegion(mv(@name)); *]
+			| "#Region" STRING_LITERAL:name													[* @@ = new GIL::Parser::BeginRegion(mv(@name)); *]
+			| "#region" IDENT:name															[* @@ = new GIL::Parser::BeginRegion(mv(@name)); *]
+			| "#region" STRING_LITERAL:name													[* @@ = new GIL::Parser::BeginRegion(mv(@name)); *];
+
+ENDREGION<EndRegion*> : "#EndRegion" IDENT:name												[* @@ = new GIL::Parser::EndRegion(mv(@name)); *]
+			| "#EndRegion" STRING_LITERAL:name												[* @@ = new GIL::Parser::EndRegion(mv(@name)); *]
+			| "#endRegion" IDENT:name														[* @@ = new GIL::Parser::EndRegion(mv(@name)); *]
+			| "#endRegion" STRING_LITERAL:name												[* @@ = new GIL::Parser::EndRegion(mv(@name)); *]
+			| "#EndRegion"																	[* @@ = new GIL::Parser::EndRegion(); *]
+			| "#endRegion"																	[* @@ = new GIL::Parser::EndRegion(); *];
+
+INCVAR<IncVar*> : "#Inc" IDENT:name															[* @@ = new GIL::Parser::IncVar(mv(@name)); *]
+			| "#inc" IDENT:name																[* @@ = new GIL::Parser::IncVar(mv(@name)); *];
+
+DECVAR<DecVar*> : "#Dec" IDENT:name															[* @@ = new GIL::Parser::DecVar(mv(@name)); *]
+			| "#dec" IDENT:name																[* @@ = new GIL::Parser::DecVar(mv(@name)); *];
+
+
+OPEN_PREPRO_EXPRESSION<vec(AST_Node*)> : '(' STATEMENT:elem									[* @@ = std::vector<AST_Node*>({ @elem }); *]
+			| OPEN_PREPRO_EXPRESSION:expr STATEMENT:elem									[* @expr.push_back(mv(@elem)); @@ = mv(@expr); *];
+
+PREPRO_EXPRESSION<vec(AST_Node*)> : OPEN_PREPRO_EXPRESSION:expr ')'							[* @@ = mv(@expr); *];
+
+PREPRO_IF_HEAD<Prepro_If*> : "#If" IDENT:func PREPRO_EXPRESSION:expr						[* @@ = new GIL::Parser::Prepro_If(mv(@func), mv(@expr), {}); *]
+			| "#if" IDENT:func PREPRO_EXPRESSION:expr										[* @@ = new GIL::Parser::Prepro_If(mv(@func), mv(@expr), {}); *]
+			| PREPRO_IF_HEAD:head STATEMENT:stmt											[* @head->Body.push_back(mv(@stmt)); @@ = mv(@head->Body); *];
+
+PREPRO_IF<Prepro_If*> : PREPRO_IF_HEAD "#EndIf"
+			| PREPRO_IF_HEAD "#endif";
+			
+PREPRO_IF_ELSE_HEAD : PREPRO_IF_HEAD:If "#Else"												[* @@ = std::pair<Prepro_If*, Prepro_Else*>(mv(@If), Prepro_Else({})); *]
+			| PREPRO_IF_HEAD:If "#else"														[* @@ = std::pair<Prepro_If*, Prepro_Else*>(mv(@If), Prepro_Else({})); *]
+			| PREPRO_IF_ELSE_HEAD:head STATEMENT:stmt										[* @head.second->Body.push_back(mv(@stmt)); @@ = mv(@head); *];
+			
+PREPRO_IF_ELSE : PREPRO_IF_ELSE_HEAD:head "#EndIf"											[* @@ = mv(@head); *]
+			| PREPRO_IF_ELSE_HEAD:head "#endif"												[* @@ = mv(@head); *];
+
+
+//Param stuff
+PARAM<ParamNode*> : PARAM:param ':' IDENT:type ','?											[* @@ = new ParamNode(mv(@param), mv(@type)); *]
+			| PARAM:param ','?																[* @@ = new ParamNode(mv(@param)); *];
+
+
+OPEN_PARAM_DEFINITION_GROUP<vec(ParamNode*)> : '(' PARAM:param								[* @@ = std::vector<ParamNode*>({ @param }); *]
+			| OPEN_PARAM_DEFINITION_GROUP:params PARAM:param								[* @params.push_back(mv(@param)); @@ = std::move(@params); *];
+
+PARAM_DEFINITION_GROUP<Params*> : OPEN_PARAM_DEFINITION_GROUP:params ')'					[* @@ = new Params(mv(@params)); *];
+
+IMPORT<Import*> : "import" IDENT:name														[* @@ = new Import(mv(@name)); *]
+		| "import" STRING_LITERAL:name														[* @@ = new Import(mv(@name)); *];
+		
+USING<Using*> : "using" IDENT:name															[* @@ = new Using(mv(@name)); *]
+		| "using" STRING_LITERAL:name														[* @@ = new Using(mv(@name)); *];
+
+		
+
+//Statement block
+OPEN_STATEMENT_BLOCK<vec(AST_Node*)> : '{' STATEMENT:stmt									[* @@ = std::vector<AST_Node*>({ @stmt }); *]
+			| OPEN_STATEMENT_BLOCK:stmts STATEMENT:stmt										[* @stmts.push_back(mv(@stmt)); @@ = mv(@stmts); *];
+			
+STATEMENT_BLOCK<vec(AST_Node*)> : OPEN_STATEMENT_BLOCK:stmts '}'							[* @@ = mv(@stmts); *];
+
+
+
+//From and For
+FROM<From*> : FROM_TOK IDENT:name STATEMENT_BLOCK:stmt										[* @@ = new From(mv(@name), mv(@stmt)); *]
+		| FROM_TOK STRING_LITERAL:name STATEMENT_BLOCK:stmt									[* @@ = new From(mv(@name), mv(@stmt)); *];
+		
+FOR<For*> : FOR_TOK IDENT:name STATEMENT_BLOCK:stmt											[* @@ = new For(mv(@name), mv(@stmt)); *]
+		| FOR_TOK STRING_LITERAL:name STATEMENT_BLOCK:stmt									[* @@ = new For(mv(@name), mv(@stmt)); *];
+
+
+		
+//Defining sequences and operations
+
+//Sequences can be defined in four ways:
+// sequence name(params) : type {...}
+// sequence name(params) {...}
+// sequence name : type {...}
+// sequence name {...}
+DEFINE_SEQUENCE<DefineSequence*> : "sequence" IDENT:name PARAM_DEFINITION_GROUP:params 
+				':' IDENT:SeqType STATEMENT_BLOCK:stmt										[* @@ = new DefineSequence(mv(@name), mv(@params), mv(@SeqType), mv(@stmt)); *]
+		| "sequence" IDENT:name PARAM_DEFINITION_GROUP:params STATEMENT_BLOCK:stmt			[* @@ = new DefineSequence(mv(@name), mv(@params), "", mv(@stmt)); *]
+		| "sequence" IDENT:name ':' IDENT:SeqType STATEMENT_BLOCK:stmt						[* @@ = new DefineSequence(mv(@name), {}, mv(@SeqType), mv(@stmt)); *]
+		| "sequence" IDENT:name STATEMENT_BLOCK:stmt										[* @@ = new DefineSequence(mv(@name), {}, "", mv(@stmt)); *];
+
+//Operations can be defined in four ways:
+//operation name(params) : type {...}
+//operation name(params) {...}
+//operation name : type {...}
+//operation name {...}
+DEFINE_OPERATION<DefineOperation*>  : "operation" IDENT:name PARAM_DEFINITION_GROUP:params 
+				':' IDENT:OpType STATEMENT_BLOCK:stmt										[* @@ = new DefineOperation(mv(@name), mv(@params), mv(@OpType), mv(@stmt)); *]
+		| "operation" IDENT:name PARAM_DEFINITION_GROUP:params STATEMENT_BLOCK:stmt			[* @@ = new DefineOperation(mv(@name), mv(@params), "", mv(@stmt)); *]
+		| "operation" IDENT:name ':' IDENT:OpType STATEMENT_BLOCK:stmt						[* @@ = new DefineOperation(mv(@name), {}, mv(@OpType), mv(@stmt)); *]
+		| "operation" IDENT:name STATEMENT_BLOCK:stmt										[* @@ = new DefineOperation(mv(@name), {}, "", mv(@stmt)); *];
+		
+		
+//Forwards
+OPERATOR<DefineOperator*> : "operator" IDENT:destination "=>" IDENT:origin					[* @@ = new DefineOperator(mv(@destination), mv(@origin)); *];
+
+FORWARD<Forward*> : IDENT:destination "=>" IDENT:origin										[* @@ = new Forward(mv(@destination), mv(@origin)); *];
+
+
+//Calling sequences and operations
+CALL_PARAM<std::string> : IDENT:param ','													[* @@ = mv(@param); *];
+
+OPEN_CALL_PARAMS<vec(std::string)> : '(' CALL_PARAM:param									[* @@ = std::vector<std::string>({ mv(@param) }); *]
+			| OPEN_CALL_PARAMS:params CALL_PARAM:param										[* @params.push_back(mv(@param)); @@ = mv(@params) *];
+			
+CALL_PARAMS<Call_Params*> : OPEN_CALL_PARAMS:params ')'										[* @@ = new Call_Params(mv(@params)); *]
+			| '(' IDENT:param ')'															[* @@ = new Call_Params({ mv(@param) }); *];
+
+			
+NAMESPACE_ACCESSION<AccessNamespace*> : IDENT:name '::'										[* @@ = new AccessNamespace({ mv(@name) }); *]
+			| NAMESPACE_ACCESSION:ns IDENT:name '::'										[* @ns->Namespaces.push_back(mv(@name)); @@ = @ns; *];
+			
+
+			
+CALL_SEQUENCE<CallSequence*> : NAMESPACE_ACCESSION:ns IDENT:name CALL_PARAMS:params			[* @@ = new CallSequence(mv(@name), mv(*@params), mv(*@ns)); *]
+			| NAMESPACE_ACCESSION:ns IDENT:name												[* @@ = new CallSequence(mv(@name), {}, mv(@ns)); *]
+			
+			| IDENT:name CALL_PARAMS:params													[* @@ = new CallSequence(mv(@name), mv(*@params), {}); *]
+			| IDENT:name																	[* @@ = new CallSequence(mv(@name), {}, {}); *];
+
+			
+CALLOP<CallOperation*> : NAMESPACE_ACCESSION:ns L_CALLOP:name CALL_PARAMS:params			[* @@ = new CallOperation(mv(@name), mv(*@params), mv(*@ns)); *]
+			| NAMESPACE_ACCESSION:ns L_CALLOP:name											[* @@ = new CallOperation(mv(@name), {}, mv(*@ns)); *]
+			
+			| L_CALLOP:name CALL_PARAMS:params												[* @@ = new CallOperation(mv(@name), mv(*@params), {}); *]
+			| L_CALLOP:name																	[* @@ = new CallOperation(mv(@name), {}, {}); *];
+			
+			
+			
+//DNA and amino acid literals
+OPEN_DNA_LITERAL<std::string> : '\'' !'\''													[* @@ = std::string(@2); *]
+			| OPEN_DNA_LITERAL:literal !'\''												[* @literal += @2; @@ = mv(@literal); *];
+			
+DNA_LITERAL<DNALiteral*> : OPEN_DNA_LITERAL:literal '\''									[* @@ = new DNALiteral(mv(@literal)); *];
+
+
+OPEN_AMINO_LITERAL<std::string> : '@' !'@'													[* @@ = std::string(@2); *]
+			| OPEN_AMINO_LITERAL:literal !'@'												[* @literal += @2; @@ = mv(@literal); *];
+			
+AMINO_ACID_LITERAL<AminoAcidLiteral*> : OPEN_AMINO_LITERAL:literal '@'						[* @@ = new AminoAcidLiteral(mv(@literal)); *];
+
+
+//Typedefs
+TYPEDEF<TypedefNode*> : "typedef" IDENT:name "inherits" IDENT:parent						[* @@ = new TypedefNode(mv(@name), mv(@parent)); *]
+			| "typedef" IDENT:name															[* @@ = new TypedefNode(mv(@name), ""); *];	
+			
+INHERITS<InheritTypedef*> : IDENT:name "inherits" IDENT:parent								[* @@ = new InheritTypedef(mv(@name), mv(@parent)); *];
+
+COMMENT<Comment*> : "//" !'\n'*																[* @@ = new Comment(); *];
+
+USE_PARAM<UseParam*> : PARAM:param CALL_PARAMS:params										[* @@ = new UseParam(mv(*@param), mv(*@params)); *];
+			
+
+
+//________________________________________________________________________________________________________________
+// Target nodes
+//________________________________________________________________________________________________________________
+
+STATEMENT<AST_Node*> : ENDREGION | SETTARGET | SETATTR | SETVAR | INCVAR | DECVAR | BEGINREGION | ENDREGION | PREPRO_IF | IMPORT | USING
+	| DEFINE_SEQUENCE | DEFINE_OPERATION | OPERATOR | FORWARD | CALL_SEQUENCE | CALLOP | DNA_LITERAL | AMINO_ACID_LITERAL | TYPEDEF | INHERITS
+	| COMMENT;
+
+
+STATEMENTS<vec(AST_Node*)> : STATEMENT:elem													[* @@ = std::vector<AST_Node*>({@elem}); *]
+			| STATEMENTS:expr STATEMENT:elem												[* @expr.push_back(@elem); @@ = std::move(@expr); *]
+			
+			| STATEMENTS:expr PREPRO_IF_ELSE:ifelse											[* @expr.push_back(@ifelse.first); 
+																							   @expr.push_back(@ifelse.second);
+																							   @@ = std::move(@expr);
+																							 *];
+																							
+TREE$ : STATEMENTS '\0'																		[* @@ = mv(@1); *];

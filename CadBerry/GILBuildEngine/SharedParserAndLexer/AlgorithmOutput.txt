@@ -1,0 +1,61 @@
+Using gram.gpar
+
+Rules (using bytecode):
+SET_TARGET -> SETTARGET IDENT:BIND:name
+SET_TARGET -> SETTARGET STRING:BIND:name
+...etc (done for all rules)
+
+
+Generations:
+	Generation 0 (tokens):
+		IMPORT, STRING, USING, IDENT, NEWLINE, COMMENT, SETATTR, PARAM,	CREATEVAR, INC, DEC, PREPRO_IF, PREPRO_ELSE, PREPRO_ENDIF,
+		SETTARGET, BEGINREGION, ENDREGION, OPTIMIZE, AMINOS, DNA, BEGIN, END, FROM, FOR, DEFINESEQUENCE, FORWARD, FORWARDSEQ, 
+		DEFOP, STATOP, FORWARDOP, INNERCODE, CALLOP, DEFPROMOTER, CALLPROMOTER, DEFGENE, UNKNOWN, NAMESPACE, CREATENAMESPACE, IF, 
+		BOOL, EQUALS, AND, OR, NOT, NAND, NOR, BOOL_TRUE, BOOL_FALSE, RPAREN, LPAREN, COMMA, ASSIGNTYPE, TYPEDEF, INHERITS,	
+		OPERATOR
+
+	Generation 1 (only uses tokens or itself):
+		SET_TARGET,
+		SET_ATTR,
+		SET_VAR,
+		BEGIN_REGION,
+		END_REGION,
+		INC_VAR,
+		DEC_VAR,
+		P_PARAM,
+		P_IMPORT,
+		P_USING,
+		P_OPERATOR,
+		P_FORWARD,
+		CALL_PARAM,
+		NAMESPACE_ACCESSION,
+		DNA_LITERAL,
+		AMINO_ACID_LITERAL,
+		P_TYPEDEF,
+		P_INHERITS,
+		COMMENT,
+		
+	Generation 2 (only uses lower generations or itself):
+		PARAM_DEFINITION_GROUP,
+		CALL_PARAMS,
+		
+	Generation 3 (only uses lower generations or itself):
+		CALL_SEQUENCE,
+		P_CALLOP,
+		
+	Generation -1 (Allows for recursive rules, everything else):
+		STATEMENT,
+		P_PREPRO_IF,
+		P_PREPRO_ELSE,
+		P_FROM,
+		P_FOR,
+		DEFINE_SEQUENCE,
+		DEFINE_OPERATION,
+		CREATE_NAMESPACE,
+
+
+Parser precedance rules:
+1. If rule A is executed and rule B can be executed on the output of rule A, execute rule B regardless of rule B's precedance.
+2. Execute lower generations first. Only move on to subsequent generations when the current generation can no longer be executed
+3. Execute rules in order of their definition.
+

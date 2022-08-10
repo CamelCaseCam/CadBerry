@@ -1,0 +1,235 @@
+#default action [* @@ = std::move(@1); *];
+
+#prologue
+[*
+#include <gilpch.h>
+using namespace GIL::Parser;
+
+#define mv(x) std::move(x)
+#define vec(x) std::vector< x >
+*]
+
+#header_prologue
+[*
+#include <gilpch.h>
+#include "AST_Node.h"
+#include "GIL/Lexer/Token.h"
+*];
+
+#UseTokenValue 1
+
+#TokenType GIL::Lexer::LexerToken;
+#TokenValue std::string;
+
+#Tokens 
+	IMPORT,
+	STRING,
+	USING,
+	IDENT,
+	NEWLINE,
+	COMMENT,
+	SETATTR,
+	PARAM,
+
+	CREATEVAR,
+	INC,
+	DEC,
+	PREPRO_IF,
+	PREPRO_ELSE,
+	PREPRO_ENDIF,
+
+	SETTARGET,
+	BEGINREGION,
+	ENDREGION,
+
+	OPTIMIZE,
+
+	AMINOS,
+	DNA,
+
+	BEGIN,
+	END,
+
+	FROM,
+	FOR,
+
+	DEFINESEQUENCE,
+	FORWARD,
+	FORWARDSEQ,
+	DEFOP,
+	STATOP,
+	FORWARDOP,
+	INNERCODE,
+	CALLOP,
+
+	DEFPROMOTER,
+	CALLPROMOTER,
+	DEFGENE,
+
+	UNKNOWN,
+
+	NAMESPACE,
+	CREATENAMESPACE,
+
+	//Bool stuff
+	IF,
+	BOOL,
+	EQUALS,
+	AND,
+	OR,
+	NOT,
+	NAND,
+	NOR,
+
+	BOOL_TRUE,
+	BOOL_FALSE,
+
+	RPAREN,
+	LPAREN,
+	COMMA,
+
+	//Type stuff
+	ASSIGNTYPE,
+	TYPEDEF,
+	INHERITS,
+
+	OPERATOR;
+	
+//Parser stuff
+SET_TARGET<SetTarget*> : SETTARGET IDENT:str							[* @@ = new SetTarget(mv(@str)); *];
+		| SETTARGET STRING:str											[* @@ = new SetTarget(mv(@str)); *];
+
+SET_ATTR<SetAttr*> : SETATTR STRING:attr STRING:val						[* @@ = new GIL::Parser::SetAttr(mv(@str1), mv(@str2)); *];
+
+SET_VAR<SetVar*> : CREATEVAR IDENT:name IDENT:type IDENT:value			[* @@ = new GIL::Parser::SetVar(mv(@name), mv(@type), mv(@value)); *]
+		| CREATEVAR IDENT:name IDENT:type STRING:value					[* @@ = new GIL::Parser::SetVar(mv(@name), mv(@type), mv(@value)); *];
+		
+BEGIN_REGION<BeginRegion*> : BEGINREGION STRING:name					[* @@ = new GIL::Parser::BeginRegion(mv(@str)); *];
+
+END_REGION<EndRegion*> : ENDREGION STRING:name							[* @@ = new GIL::Parser::EndRegion(mv(@str)); *]
+		| ENDREGION														[* @@ = new GIL::Parser::EndRegion(); *];
+		
+INC_VAR<IncVar*> : INC IDENT:name										[* @@ = new GIL::Parser::IncVar(mv(@name)); *];
+
+DEC_VAR<DecVar*> : DEC IDENT:name										[* @@ = new GIL::Parser::DecVar(mv(@name)); *];
+
+P_PREPRO_IF<Prepro_If*> : PREPRO_IF IDENT:func RPAREN *IDENT:args LPAREN
+			*STATEMENT:statements PREPRO_ENDIF							[* @@ = new GIL::Parser::Prepro_If(mv(@func), mv(@args), mv(@statements)); *]
+		| PREPRO_IF IDENT:func RPAREN *IDENT:args LPAREN 
+			*STATEMENT:statements > PREPRO_ELSE							[* @@ = new GIL::Parser::Prepro_If(mv(@func), mv(@args), mv(@statements)); *];
+			
+P_PREPRO_ELSE<Prepro_Else*> P_PREPRO_IF < PREPRO_ELSE 
+			*STATEMENT:statements PREPRO_ENDIF							[* @@ = new GIL::Parser::Prepro_Else(mv(@statements)); *];
+			
+
+			
+//Param stuff
+P_PARAM<ParamNode*> : PARAM:param ASSIGNTYPE IDENT:type ?COMMA			[* @@ = new ParamNode(mv(@param), mv(@type)); *]
+		| PARAM:param ?COMMA											[* @@ = new ParamNode(mv(@param), mv(@type)); *];
+		
+PARAM_DEFINITION_GROUP<Params*> : LPAREN *P_PARAM:params RPAREN			[* @@ = new Params(mv(@params)); *];
+
+P_IMPORT<Import*> : IMPORT IDENT:name									[* @@ = new Import(mv(@name)); *]
+		| IMPORT STRING:name											[* @@ = new Import(mv(@name)); *];
+
+P_USING<Using*> : USING IDENT:name										[* @@ = new Using(mv(@name)); *]
+		| USING STRING:name												[* @@ = new Using(mv(@name)); *];
+
+
+
+//From and For
+P_FROM<From*> : FROM IDENT:name BEGIN *STATEMENT:stmt END				[* @@ = new From(mv(@name), mv(@stmt)); *]
+		| FROM STRING:name BEGIN *STATEMENT:stmt END					[* @@ = new From(mv(@name), mv(@stmt)); *];
+
+P_FOR<For*> : FOR IDENT:name BEGIN *STATEMENT:stmt END					[* @@ = new For(mv(@name), mv(@stmt)); *]
+		| FOR STRING:name BEGIN *STATEMENT:stmt END						[* @@ = new For(mv(@name), mv(@stmt)); *];
+
+
+
+//Defining sequences and operations
+
+//Sequences can be defined in four ways:
+// sequence name(params) : type {...}
+// sequence name(params) {...}
+// sequence name : type {...}
+// sequence name {...}
+DEFINE_SEQUENCE<DefineSequence*> : DEFINESEQUENCE IDENT:name 
+			PARAM_DEFINITION_GROUP:params ASSIGNTYPE IDENT:SeqType 
+			BEGIN *STATEMENT:stmt END									[* @@ = new DefineSequence(mv(@name), mv(@params), mv(@SeqType), mv(@stmt)); *]
+		| DEFINESEQUENCE IDENT:name PARAM_DEFINITION_GROUP:params
+			BEGIN *STATEMENT:stmt END									[* @@ = new DefineSequence(mv(@name), mv(@params), "", mv(@stmt)); *]
+		| DEFINESEQUENCE IDENT:name ASSIGNTYPE IDENT:SeqType BEGIN 
+			*STATEMENT:stmt END											[* @@ = new DefineSequence(mv(@name), {}, mv(@SeqType), mv(@stmt)); *]
+		| DEFINESEQUENCE IDENT:name BEGIN *STATEMENT:stmt END			[* @@ = new DefineSequence(mv(@name), {}, "", mv(@stmt)); *];
+
+//Operations can be defined in four ways:
+//operation name(params) : type {...}
+//operation name(params) {...}
+//operation name : type {...}
+//operation name {...}
+DEFINE_OPERATION<DefineOperation*> : DEFOP IDENT:name 
+			PARAM_DEFINITION_GROUP:params ASSIGNTYPE IDENT:SeqType 
+			BEGIN *STATEMENT:stmt END									[* @@ = new DefineOperation(mv(@name), mv(@params), mv(@SeqType), mv(@stmt)); *]
+		| DEFOP IDENT:name PARAM_DEFINITION_GROUP:params
+			BEGIN *STATEMENT:stmt END									[* @@ = new DefineOperation(mv(@name), mv(@params), "", mv(@stmt)); *]
+		| DEFOP IDENT:name ASSIGNTYPE IDENT:SeqType BEGIN 
+			*STATEMENT:stmt END											[* @@ = new DefineOperation(mv(@name), {}, mv(@SeqType), mv(@stmt)); *]
+		| DEFOP IDENT:name BEGIN *STATEMENT:stmt END					[* @@ = new DefineOperation(mv(@name), {}, "", mv(@stmt)); *];
+
+
+//Forwards
+P_OPERATOR<DefineOperator*> : OPERATOR IDENT:destination FORWARD 
+			IDENT:origin												[* @@ = new DefineOperator(mv(@destination), mv(@origin)); *];
+
+P_FORWARD<Forward*> : IDENT:destination FORWARD IDENT:origin			[* @@ = new Forward(mv(@destination), mv(@origin)); *];
+
+
+//Calling sequences and operations
+CALL_PARAM<std::string> : IDENT:param COMMA								[* @@ = mv(@param); *];
+
+CALL_PARAMS<Call_Params*> : LPAREN *CALL_PARAM:params RPAREN			[* @@ = new Call_Params(mv(@params)); *]
+		| LPAREN IDENT:param RPAREN										[* @@ = new Call_Params({ mv(@param) }); *];
+
+NAMESPACE_ACCESSION<AccessNamespace*> : IDENT:name NAMESPACE			[* @@ = new AccessNamespace({ mv(@name) }); *]
+		| NAMESPACE_ACCESSION:ns IDENT:name NAMESPACE					[* @ns->Namespaces.push_back(mv(@name)); @@ = @ns; *];
+
+CALL_SEQUENCE<CallSequence*> : NAMESPACE_ACCESSION:ns IDENT:name CALL_PARAMS:params			[* @@ = new CallSequence(mv(@name), mv(*@params), mv(*@ns)); *]
+		| NAMESPACE_ACCESSION:ns IDENT:name													[* @@ = new CallSequence(mv(@name), {}, mv(@ns)); *]
+		
+		| IDENT:name CALL_PARAMS:params														[* @@ = new CallSequence(mv(@name), mv(*@params), {}); *]
+		| IDENT:name																		[* @@ = new CallSequence(mv(@name), {}, {}); *];
+
+
+P_CALLOP<CallOperation*> : NAMESPACE_ACCESSION:ns CALLOP:name CALL_PARAMS:params			[* @@ = new CallOperation(mv(@name), mv(*@params), mv(*@ns)); *]
+		| NAMESPACE_ACCESSION:ns CALLOP:name												[* @@ = new CallOperation(mv(@name), {}, mv(*@ns)); *]
+
+		| CALLOP:name CALL_PARAMS:params													[* @@ = new CallOperation(mv(@name), mv(*@params), {}); *]
+		| CALLOP:name																		[* @@ = new CallOperation(mv(@name), {}, {}); *];
+
+
+DNA_LITERAL<DNALiteral*> : DNA:literal														[* @@ = new DNALiteral(mv(@literal)); *];
+
+AMINO_ACID_LITERAL<AminoAcidLiteral*> : AMINOS:literal										[* @@ = new AminoAcidLiteral(mv(@literal)); *];
+
+P_TYPEDEF<TypedefNode*> : TYPEDEF IDENT:name INHERITS IDENT:parent							[* @@ = new TypedefNode(mv(@name), mv(@parent)); *]
+		| TYPEDEF IDENT:name																[* @@ = new TypedefNode(mv(@name), ""); *];	
+
+P_INHERITS<InheritTypedef*> : IDENT:name INHERITS IDENT:parent								[* @@ = new InheritTypedef(mv(@name), mv(@parent)); *];
+
+COMMENT<Comment*> : COMMENT																	[* @@ = new Comment(); *];
+
+USE_PARAM<UseParam*> : PARAM:param CALL_PARAMS:params										[* @@ = new UseParam(mv(*@param), mv(*@params)); *];
+
+
+//Namespaces
+CREATE_NAMESPACE<Namespace*> : CREATENAMESPACE IDENT:name BEGIN *STATEMENT:stmt END			[* @@ = new Namespace(mv(@name), mv(@stmt)); *];
+
+
+//________________________________________________________________________________________________________________
+// Target nodes
+//________________________________________________________________________________________________________________
+
+STATEMENT<AST_Node*> : END_REGION | BEGIN_REGION | SET_VAR | SET_ATTR | SET_TARGET | P_PREPRO_ELSE | P_PREPRO_IF | DEC_VAR 
+		| INC_VAR | P_FOR | P_FROM | P_USING | P_IMPORT | P_FORWARD | P_OPERATOR | DEFINE_OPERATION | DEFINE_SEQUENCE 
+		| AMINO_ACID_LITERAL | DNA_LITERAL | P_CALLOP | CALL_SEQUENCE | P_TYPEDEF | P_INHERITS | USE_PARAM 
+		| CREATE_NAMESPACE;

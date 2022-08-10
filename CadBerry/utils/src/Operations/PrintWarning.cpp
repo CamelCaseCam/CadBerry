@@ -5,7 +5,7 @@ namespace utils
 {
 	namespace Operations
 	{
-		std::pair<std::vector<GIL::Parser::Region>, std::string> PrintWarning::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+		void PrintWarning::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 		{
 			if (((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode.second.size() == 0)
 			{
@@ -15,7 +15,6 @@ namespace utils
 			{
 				CDB_BuildWarning(((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode.second);
 			}
-			return std::pair<std::vector<GIL::Parser::Region>, std::string>();
 		}
 
 		GIL::Sequence* PrintWarning::self = nullptr;

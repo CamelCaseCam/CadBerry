@@ -1,4 +1,7 @@
 ﻿  Main.cpp
+D:\Development\CadBerry\CadBerry\CadBerry\vendor\cpr\include\cpr\body.h(34,24): warning C4244: 'initializing': conversion from 'std::streamoff' to 'int', possible loss of data
   CadBerry_updater.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.exe
+          1 file(s) copied.
+          1 file(s) copied.
           1 file(s) copied.
           1 file(s) copied.
