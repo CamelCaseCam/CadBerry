@@ -126,69 +126,7 @@ namespace GIL
 		//Loop through the nodes. If a node is a parameter, replace it with the parameter's value.
 		for (SequenceContext; SequenceContext.NodeIdx < SequenceContext.Nodes->size(); ++SequenceContext.NodeIdx)
 		{
-<<<<<<< HEAD
-
-			for (int i = 0; i < Tokens.size(); ++i)
-			{
-				int NumTokens = 0;
-				//Count until a parameter is reached
-				for (i; i < Tokens.size(); ++i)
-				{
-					if (Tokens[i]->TokenType == LexerToken::PARAM)
-						break;
-					++NumTokens;
-				}
-
-				//Extract the tokens into a vector
-				std::vector<Token*> ToBeCompiled;
-				ToBeCompiled.reserve(NumTokens);
-				for (NumTokens; NumTokens > 0; --NumTokens)
-					ToBeCompiled.push_back(this->Tokens[i - NumTokens]);
-
-				CachedSequenceChunk Chunk;
-				Chunk.SeqIdx = i;
-				//Now compile the chunk
-				auto output = Compiler::Compile(Proj, &ToBeCompiled);
-				Chunk.Regions = output.first;
-				Chunk.Code = output.second;
-				this->SequenceCache.push_back(Chunk);
-
-				OutputRegions.insert(OutputRegions.end(), output.first.begin(), output.first.end());
-				OutputCode += output.second; 
-
-				if (i == Tokens.size())
-					return { OutputRegions, OutputCode };
-
-				//Now compile the sequence
-				if (!Params.contains(this->Tokens[i]->Value))
-				{
-					CDB_BuildError("Parameter \"{0}\" was not passed", this->Tokens[i]->Value);
-					continue;
-				}
-				std::string& ParamName = this->Tokens[i]->Value;
-				Param parameter = Params[ParamName];
-
-				//Something important to note, type1->IsOfType(type2) may not be equal to type2->IsOfType(type1) because of inheritance
-				if (!this->GetParameterType(ParamName)->IsOfType(parameter.type, false))
-				{
-					CDB_BuildError("Type mismatch: type \"{0}\" cannot be passed as parameter of type \"{1}\"", parameter.type->TypeName, this->ParameterTypes[ParamName]->TypeName);
-					continue;
-				}
-
-				int OldIndex = i;
-				++i;
-				auto SeqParams = Compiler::GetParams(Proj, this->Tokens, i, parameter.Seq->ParamIdx2Name, &Params);
-				if (SeqParams.size() == 0)
-					i = OldIndex;
-
-				output = parameter.Seq->Get(parameter.SourceProj, SeqParams);
-				OutputRegions.insert(OutputRegions.end(), output.first.begin(), output.first.end());
-				OutputCode += output.second;
-			}
-			return { OutputRegions, OutputCode };
-=======
 			(*SequenceContext.Nodes)[SequenceContext.NodeIdx]->Compile(SequenceContext, Proj);
->>>>>>> parser-ast
 		}
 		--CurrentSequenceCallDepth;
 	}

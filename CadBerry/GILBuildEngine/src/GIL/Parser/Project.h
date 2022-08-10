@@ -61,9 +61,6 @@ namespace GIL
 			std::map<std::string, Sequence*> Sequences;
 			std::vector<AST_Node*> Main;
 
-			//HACK: Temp, allows us to pass a parameter as part of an operation
-			std::map<std::string, Param>* Params;
-
 			//Map for operators
 			std::map<std::string, Sequence*> Operators;
 			
