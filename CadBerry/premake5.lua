@@ -19,12 +19,14 @@ IncludeDirs["BlockingCollection"] = "CadBerry/vendor/BlockingCollection"
 IncludeDirs["ImPlot"] = "CadBerry/vendor/implot"
 IncludeDirs["CDBRNA_inc"] = "CadBerry/vendor/RNAstructure/CDBRNA/include"
 IncludeDirs["CDBRNA"] = "CadBerry/vendor/RNAstructure"
+IncludeDirs["lug"] = "CadBerry/vendor/lug"
 
 include "CadBerry/vendor/GLFW"
 include "CadBerry/vendor/RNAstructure/CDBRNA"
 include "CadBerry/vendor/Glad"
 include "CadBerry/vendor/IMGUI"
 include "CadBerry/vendor/WhereAmI"
+include "CadBerry/vendor/lug"
 --include "CadBerry/vendor/nfd/build"
 
 project "CadBerry"
@@ -265,6 +267,19 @@ project "Berry"
 		"Release"
 	}
 
+project "lemon"
+	location "vendor/lemon"
+	kind "ConsoleApp"
+	language "C"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	files
+	{
+		"lemon.c"
+	}
+
 
 project "CadBerry_test"
 	location "CadBerry_test"
@@ -286,6 +301,7 @@ project "CadBerry_test"
 		"CadBerry/vendor/spdlog/include",
 		"CadBerry/src",
 		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.lug}",
 		"%{IncludeDirs.glm}",
 		"CadBerry/vendor/BlockingCollection",
 		"%{IncludeDirs.ImPlot}",
@@ -536,6 +552,7 @@ project "GILBuildEngine"
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.glm}",
 		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.lug}",
 	}
 
 	links
@@ -699,6 +716,7 @@ project "sensing"
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.glm}",
 	}
 
 	links
@@ -768,6 +786,7 @@ project "regulation"
 		"%{IncludeDirs.ImGui}",
 		"%{IncludeDirs.BlockingCollection}",
 		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.glm}",
 	}
 
 	links

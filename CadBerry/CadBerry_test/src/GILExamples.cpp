@@ -15,9 +15,9 @@ std::string TargetExample7         = R"(#Target "Saccharomyces cerevisiae")";
 std::string TargetExample8         = R"(#Target "Unoptimized")";
 std::string TargetExample9         = R"(#Target "Yeast")";
 
-//This one throws an error because targets must be idents or strings and can't be seperated by newlines
+//This one throws an error because targets can't be DNA
 std::string TargetExampleError         = R"(#Target 
-ShouldThrowError)";
+'ShouldThrowError')";
 
 
 //________________________________________________________________________________________
@@ -31,9 +31,9 @@ std::string RegionExample               = R"(
 
 #Target Unoptimized
 #Region Region1
-	AAATTT
+	'AAATTT'
 	#region Region2
-		CCCGGG
+		'CCCGGG'
 	#EndRegion
 #endRegion
 )";
@@ -43,11 +43,11 @@ std::string OverlappingRegionExample    = R"(
 
 #Target Unoptimized
 #Region Region1
-	AAATTT
+	'AAATTT'
 	#region Region2
-		CCCGGG
+		'CCCGGG'
 	#EndRegion Region1
-	TTTAAA
+	'TTTAAA'
 #endRegion Region2
 )";
 
@@ -64,29 +64,29 @@ std::string SetAttrExample = R"(
 //This one's a normal example
 std::string CreateVarExample1 = R"(
 #Target Unoptimized
-#Var str "Var1" SomeString
-#var num Var2 "10.0"
+#Var Var1 str "SomeString"
+#var Var2 num "10.0"
 )";
 
 
 //This one's a stress-test
 std::string CreateVarExample2 = R"(
 #Target Unoptimized
-#Var str "SSDGSFDV  SDFSEFDCSR##@23or3fnreiuh34" TestValue
-#Var num "THIS IS A NUMBER23" "3892302332.6"
+#Var "SSDGSFDV  SDFSEFDCSR##@23or3fnreiuh34" str TestValue
+#Var "THIS IS A NUMBER23" num "3892302332.6"
 )";
 
 
 //#Inc
 std::string IncExample = R"(
 #Target Unoptimized
-#Var num "TestVar" "22233.0"
+#Var "TestVar" num "22233.0"
 #Inc "TestVar"
 )";
 
 std::string DecExample = R"(
 #Target Unoptimized
-#Var num "TestVar" "22233.0"
+#Var "TestVar" num "22233.0"
 #Dec "TestVar"
 )";
 
@@ -95,9 +95,9 @@ std::string DecExample = R"(
 std::string PreproIfExample = R"(
 #Target "Unoptimized"
 
-#Var num Var1 "10.0"
-#Var num Var2 "10.0"
-#Var num Counter "0.0"
+#Var Var1 num "10.0"
+#Var Var2 num "10.0"
+#Var Counter num "0.0"
 
 #If IsEq(Var1 Var2)
 	#Inc Counter
@@ -109,9 +109,9 @@ std::string PreproIfExample = R"(
 std::string PreproElseExample = R"(
 #Target "Unoptimized"
 
-#Var num Var1 "10.0"
-#Var num Var2 "282373.0"
-#Var num Counter "0.0"
+#Var Var1 num "10.0"
+#Var Var2 num "282373.0"
+#Var Counter num "0.0"
 
 #If IsEq(Var1 Var2)
 	#Dec Counter
@@ -174,13 +174,13 @@ std::string AminoSequenceExample2 = R"(
 std::string SequenceNoParams = R"(
 #Target "Unoptimized"
 
-CCC
+'CCC'
 ExampleSequence
-GGG
+'GGG'
 
 sequence ExampleSequence
 {
-	AAATTT
+	'AAATTT'
 }
 )";
 
@@ -188,17 +188,17 @@ std::string MultiSequenceNoParams = R"(
 #Target "Unoptimized"
 
 Seq2
-CCC
+'CCC'
 
 sequence Seq2
 {
-	AAA
+	'AAA'
 	Seq1
 }
 
 sequence Seq1
 {
-	TTT
+	'TTT'
 }
 )";
 
@@ -206,16 +206,16 @@ std::string SequenceWithParams = R"(
 #Target "Unoptimized"
 
 Seq1(Seq2)
-CCC
+'CCC'
 
 sequence Seq2
 {
-	AAA
+	'AAA'
 }
 
 sequence Seq1($Param1)
 {
-	TTT
+	'TTT'
 	$Param1
 }
 )";
@@ -224,23 +224,23 @@ std::string SequenceWithParamsWithParams = R"(
 #Target "Unoptimized"
 
 Seq1(Seq2)
-CCC
+'CCC'
 
 sequence Seq2($Seq)
 {
 	$Seq
-	AAA
+	'AAA'
 }
 
 sequence Seq1($Param1)
 {
-	TTT
+	'TTT'
 	$Param1(Seq3)
 }
 
 sequence Seq3
 {
-	AAA
+	'AAA'
 }
 )";
 
@@ -250,16 +250,16 @@ std::string SequenceWithTypedParams = R"(
 #Target "Unoptimized"
 
 Seq1(Seq2)
-CCC
+'CCC'
 
 sequence Seq2 : cds
 {
-	AAA
+	'AAA'
 }
 
-sequence Seq1($Param1) : (cds) : cds
+sequence Seq1($Param1 : cds) : cds
 {
-	TTT
+	'TTT'
 	$Param1
 }
 )";
@@ -268,23 +268,23 @@ std::string SequenceWithTypedParamsWithParams = R"(
 #Target "Unoptimized"
 
 Seq1(Seq2)
-CCC
+'CCC'
 
-sequence Seq2($Seq) : (cds)
+sequence Seq2($Seq : cds)
 {
 	$Seq
-	AAA
+	'AAA'
 }
 
 sequence Seq1($Param1)
 {
-	TTT
+	'TTT'
 	$Param1(Seq3)
 }
 
 sequence Seq3 : cds
 {
-	AAA
+	'AAA'
 }
 )";
 
@@ -329,14 +329,14 @@ std::string OpNoParams = R"(
 
 .Op1
 {
-	CCC
+	'CCC'
 }
 
 operation Op1
 {
-	TTT
+	'TTT'
 	$InnerCode
-	TTT
+	'TTT'
 }
 )";
 
@@ -346,14 +346,14 @@ std::string SequenceWithInnerCode = R"(
 //This is equivalent to the last example
 .Op1
 {
-	CCC
+	'CCC'
 }
 
 sequence Op1($InnerCode)
 {
-	TTT
+	'TTT'
 	$InnerCode
-	TTT
+	'TTT'
 }
 )";
 
@@ -362,20 +362,20 @@ std::string OpSequenceParams = R"(
 
 .Op1(Seq1)
 {
-	CCC
+	'CCC'
 }
 
 operation Op1($Seq)
 {
-	TTT
+	'TTT'
 	$InnerCode
 	$Seq
-	TTT
+	'TTT'
 }
 
 sequence Seq1
 {
-	GGG
+	'GGG'
 }
 )";
 
@@ -397,7 +397,7 @@ ShorterAlias
 
 sequence SuperLongGeneName
 {
-	AAAAA
+	'AAAAA'
 }
 )";
 
@@ -411,13 +411,13 @@ ShorterAlias(Seq)
 
 sequence SuperLongGeneName($Param1)
 {
-	AAAAA
+	'AAAAA'
 	$Param1
 }
 
 sequence Seq
 {
-	TTT
+	'TTT'
 }
 )";
 
@@ -430,9 +430,9 @@ SimplerName => ThisIsAPromoterWithAVeryLongName
 
 operation ThisIsAPromoterWithAVeryLongName
 {
-	TTT
+	'TTT'
 	$InnerCode
-	TTT
+	'TTT'
 }
 
 )";
@@ -464,7 +464,7 @@ std::string UnaryOperatorExample = R"(
 
 sequence TestData
 {
-	TTT
+	'TTT'
 }
 
 //Output should be TTTAAAAATTTAAAAA
@@ -476,7 +476,7 @@ operator *5a => Seq
 sequence Seq($LVALUE)
 {
 	$LVALUE
-	AAAAA
+	'AAAAA'
 }
 )";
 
@@ -485,12 +485,12 @@ std::string BinaryOperatorExample = R"(
 
 sequence TestData1
 {
-	TTT
+	'TTT'
 }
 
 sequence TestData2
 {
-	AAA
+	'AAA'
 }
 
 //Output should be TTTAAA

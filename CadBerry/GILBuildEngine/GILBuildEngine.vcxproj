@@ -60,7 +60,7 @@
       <PrecompiledHeaderFile>gilpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GIL_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\glm;..\CadBerry\vendor\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\glm;..\CadBerry\vendor\implot;..\CadBerry\vendor\lug;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -86,7 +86,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bin\
       <PrecompiledHeaderFile>gilpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>GIL_BUILD_DLL;CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\glm;..\CadBerry\vendor\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\glm;..\CadBerry\vendor\implot;..\CadBerry\vendor\lug;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -120,6 +120,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\CGIL\CGIL_info.h" />
     <ClInclude Include="src\GIL\Compiler\CodonEncoding.h" />
     <ClInclude Include="src\GIL\Compiler\Compiler.h" />
+    <ClInclude Include="src\GIL\Compiler\CompilerFunctions.h" />
     <ClInclude Include="src\GIL\Compiler\CompilerMacros.h" />
     <ClInclude Include="src\GIL\Compiler\GBSequence.h" />
     <ClInclude Include="src\GIL\Errors.h" />
@@ -131,6 +132,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Lexer\Token.h" />
     <ClInclude Include="src\GIL\Modules\GILModule.h" />
     <ClInclude Include="src\GIL\OutputTypes.h" />
+    <ClInclude Include="src\GIL\Parser\AST_Node.h" />
     <ClInclude Include="src\GIL\Parser\ArchiveCGIL.h" />
     <ClInclude Include="src\GIL\Parser\Parser.h" />
     <ClInclude Include="src\GIL\Parser\Project.h" />
@@ -149,6 +151,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClCompile Include="src\GIL\Bools\BoolContext.cpp" />
     <ClCompile Include="src\GIL\Compiler\CodonEncoding.cpp" />
     <ClCompile Include="src\GIL\Compiler\Compiler.cpp" />
+    <ClCompile Include="src\GIL\Compiler\CompilerFunctions.cpp" />
     <ClCompile Include="src\GIL\Compiler\GBSequence.cpp" />
     <ClCompile Include="src\GIL\Errors.cpp" />
     <ClCompile Include="src\GIL\GILException.cpp" />
@@ -157,6 +160,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClCompile Include="src\GIL\Lexer\LexerTokens.cpp" />
     <ClCompile Include="src\GIL\Lexer\Token.cpp" />
     <ClCompile Include="src\GIL\OutputTypes.cpp" />
+    <ClCompile Include="src\GIL\Parser\AST_Node.cpp" />
     <ClCompile Include="src\GIL\Parser\Project.cpp" />
     <ClCompile Include="src\GIL\Parser\Region.cpp" />
     <ClCompile Include="src\GIL\Parser\Sequence.cpp" />

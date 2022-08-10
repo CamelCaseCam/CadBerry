@@ -6,7 +6,7 @@ namespace utils
 {
 	namespace Operations
 	{
-		std::pair<std::vector<GIL::Parser::Region>, std::string> MCS::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params)
+		void MCS::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 		{
 			using namespace GIL::Lexer;
 			std::string Output;
@@ -20,7 +20,7 @@ namespace utils
 					Output += GIL::utils::GenWithPattern(Pattern);
 				}
 			}*/
-			return { {}, Output };
+			Context.OutputString->append(Output);
 		}
 
 		GIL::Sequence* MCS::self = nullptr;

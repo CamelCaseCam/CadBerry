@@ -12,6 +12,8 @@
 #include "CadBerry.h"
 #include "CadBerry/SharedLib.h"
 
+#include "CompilerFunctions.h"
+
 namespace GIL
 {
 	int CurrentSequenceCallDepth = 0;
@@ -21,100 +23,34 @@ namespace GIL
 		using namespace GIL::Lexer;
 		using namespace GIL::Parser;
 
-		std::map<std::string, GILModule*> Modules;
-
-		bool Prepro_IsEq(Project* Proj, std::vector<Token*>* Tokens);
-		std::map<std::string, std::function<bool(Project*, std::vector<Token*>*)>> PreproConditions = {
-			{"IsEq", Prepro_IsEq},
-		};
-
-		//Function definitions
-		void AminosToDNA(std::string& DNA, std::string& aminos, Project* Proj, CodonEncoding& CurrentEncoding);
-		void AminosIDXToDNA(std::string& DNA, std::string& aminos, std::vector<int>& Idxs, Project* Proj, CodonEncoding& CurrentEncoding);
-		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj, CodonEncoding& OriginEncoding);
-		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj);
-		void ImportFile(std::string& Path, Project* Proj, Project* global);
-		void LinkDLL(std::string& Path, Project* Proj);
-
-		inline void AddRegionToVector(const Region& reg, std::vector<Region>& vec, int& last)
+		std::pair<std::vector<Region>, std::string> Compile(Project* Proj, std::vector<AST_Node*>* Nodes)
 		{
-			if (reg.Start != reg.End && reg.End != 0)
+			if (Nodes == nullptr)
 			{
-				vec.push_back(reg);
-				--last;
-			}
-		}
-
-		inline void AddRegionToVector(const Region&& reg, std::vector<Region>& vec, int& last)
-		{
-			if (reg.Start != reg.End && reg.End != 0)
-			{
-				vec.push_back(reg);
-				--last;
-			}
-		}
-
-		inline void AddRegionToVector(const Region& reg, std::vector<Region>& vec)
-		{
-			if (reg.Start != reg.End && reg.End != 0)
-			{
-				vec.push_back(reg);
-			}
-		}
-
-		inline void AddRegionToVector(const Region&& reg, std::vector<Region>& vec)
-		{
-			if (reg.Start != reg.End && reg.End != 0)
-			{
-				vec.push_back(reg);
-			}
-		}
-
-		//Imports recursively
-		inline void ImportAllProjectImports(Project* Proj, Project* global)
-		{
-			for (std::string& s : Proj->Imports)
-			{
-				if (!Proj->Namespaces.contains(s))
-				{
-					ImportFile(s, Proj, global);
-				}
-			}
-		}
-
-		//Links recursively
-		inline void LinkAllProjectDLLs(Project* Proj)
-		{
-			for (std::string& s : Proj->Usings)
-			{
-				LinkDLL(s, Proj);
-			}
-		}
-
-		std::pair<std::vector<Region>, std::string> Compile(Project* Proj, std::vector<Token*>* Tokens)
-		{
-			if (Tokens == nullptr)
-			{
-				Tokens = &Proj->Main;
+				Nodes = &Proj->Main;
 			}
 			std::vector<Region> Output;
+			std::string Code;
 			CodonEncoding CurrentEncoding(Proj->TargetOrganism);
+			std::vector<Region> OpenRegions = {
+				Region("Main", 1, -1)
+			};
+
+			CompilerContext Context = { Nodes, &Output, &Code, &CurrentEncoding, nullptr, 0, &OpenRegions };
 
 			//Import any imports
 			ImportAllProjectImports(Proj, Proj);
 
 			LinkAllProjectDLLs(Proj);
 
-			std::vector<Region> OpenRegions = { Region(), };
-			int LastRegion = 0;
+			//Initialize all operators and forwards
+			InitForwardsAndOperators(Proj);
+			
 
-			std::string Code;
-			OpenRegions[LastRegion].Name = "Main";
-			OpenRegions[LastRegion].Start = 1;
-			bool PreproIfValue = false;
-
-			for (int i = 0; i < (*Tokens).size(); ++i)
+			//Compile the nodes
+			for (Context; Context.NodeIdx < Context.Nodes->size(); ++Context.NodeIdx)
 			{
+<<<<<<< HEAD
 				Token* t = (*Tokens)[i];
 				switch (t->TokenType)
 				{
@@ -682,81 +618,18 @@ namespace GIL
 			{
 				OpenRegions[r].End = Code.length();
 				AddRegionToVector(std::move(OpenRegions[r]), Output);
+=======
+				(*Context.Nodes)[Context.NodeIdx]->Compile(Context, Proj);
+>>>>>>> parser-ast
 			}
 
 			return { std::move(Output), std::move(Code) };
 		}
 
-		bool HasRestrictionSites(std::string& DNA, std::string& Codon, Project* Proj);
-
-		void AminosToDNA(std::string& DNA, std::string& aminos, Project* Proj, CodonEncoding& CurrentEncoding)
-		{
-			DNA.reserve(DNA.length() + (aminos.length() * 3));
-
-			for (char a : aminos)
-			{
-				if (IsWhiteSpace(a))
-					continue;
-				auto Codons = CurrentEncoding.GetCodons(std::tolower(a));
-				for (std::string* codon : *Codons)
-				{
-					if (!HasRestrictionSites(DNA, *codon, Proj))
-					{
-						DNA += *codon;
-						goto continueLoop;
-					}
-				}
-				CDB_BuildWarning("Added avoided restriction site");
-				DNA += *(*Codons)[0];
-
-			continueLoop:
-				continue;
-			}
-		}
-
-		//Converts amino acids with idx to the codon that matches those indeces
-		void AminosIDXToDNA(std::string& DNA, std::string& aminos, std::vector<int>& Idxs, Project* Proj, CodonEncoding& CurrentEncoding)
-		{
-			DNA.reserve(DNA.length() + (aminos.length() * 3));
-
-			for (int a = 0; a < aminos.length(); ++a)
-			{
-				DNA += *CurrentEncoding.GetFromLetter(aminos[a], Idxs[a]);
-			}
-		}
-
-		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj, CodonEncoding& OriginEncoding)
-		{
-			Aminos.reserve(DNA.size() / 3);
-			AminoIdxs.reserve(DNA.size() / 3);
-
-			for (int i = 0; i < DNA.length() - 2; i += 3)    // AttGccGt
-			{
-				auto LetterAndIDX = OriginEncoding.CodonToLetter(std::move(DNA.substr(i, 3)));
-				Aminos += LetterAndIDX.first;
-				AminoIdxs.push_back(LetterAndIDX.second);
-			}
-		}
-
-		void DNA2Aminos(std::string& Aminos, std::vector<int>& AminoIdxs, std::string& DNA, Project* Proj)
-		{
-			Aminos.reserve(DNA.size() / 3);
-			AminoIdxs.reserve(DNA.size() / 3);
-
-			for (int i = 0; i < DNA.length() - 2; i += 3)    // AttGccGt
-			{
-				std::string Codon = DNA.substr(i, 3);
-				for (char& c : Codon)
-				{
-					c = std::tolower(c);
-				}
-				Aminos += CodonEncoding::CodonToLetterOnly(std::move(Codon));
-			}
-		}
-
 
 		inline void ImportAllProjectOperators(Project* Proj, Project* global)
 		{
+			InitForwardsAndOperators(Proj);
 			//Copy all the operators from the local project to the global project
 			for (auto& op : Proj->Operators)
 			{
@@ -785,6 +658,7 @@ namespace GIL
 				Proj->Namespaces[path.stem().string()] = p;
 
 				//All operators are global
+				InitForwardsAndOperators(Proj);
 				ImportAllProjectOperators(p, global);
 				ImportAllProjectImports(p, global);
 				LinkAllProjectDLLs(p);
@@ -798,6 +672,7 @@ namespace GIL
 				Proj->Namespaces[path.stem().string()] = p;
 
 				//All operators are global
+				InitForwardsAndOperators(Proj);
 				ImportAllProjectOperators(p, global);
 				ImportAllProjectImports(p, global);
 				LinkAllProjectDLLs(p);
@@ -820,6 +695,7 @@ namespace GIL
 				Proj->Namespaces[path.stem().string()] = p;
 
 				//All operators are global
+				InitForwardsAndOperators(Proj);
 				ImportAllProjectOperators(p, global);
 				ImportAllProjectImports(p, global);
 				LinkAllProjectDLLs(p);
@@ -836,6 +712,7 @@ namespace GIL
 					Proj->Namespaces[path.stem().string()] = p;
 
 					//All operators are global
+					InitForwardsAndOperators(Proj);
 					ImportAllProjectOperators(p, global);
 					ImportAllProjectImports(p, global);
 					LinkAllProjectDLLs(p);
@@ -849,6 +726,7 @@ namespace GIL
 					Proj->Namespaces[path.stem().string()] = p;
 
 					//All operators are global
+					InitForwardsAndOperators(Proj);
 					ImportAllProjectOperators(p, global);
 					ImportAllProjectImports(p, global);
 					LinkAllProjectDLLs(p);
@@ -862,6 +740,7 @@ namespace GIL
 			}
 		}
 
+<<<<<<< HEAD
 		#ifdef CDB_PLATFORM_WINDOWS
 		typedef GILModule* (__stdcall* f_GetModule)();
 		#else
@@ -1009,6 +888,8 @@ namespace GIL
 
 
 
+=======
+>>>>>>> parser-ast
 		//Prepro conditions
 		bool Prepro_IsEq(Project* Proj, std::vector<Token*>* Tokens)
 		{

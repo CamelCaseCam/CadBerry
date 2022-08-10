@@ -46,9 +46,7 @@ public:
 		std::string FileText = InputText.str();
 
 		auto Tokens = *GIL::Lexer::Tokenize(FileText);
-		CheckFatal;
 		GIL::Parser::Project* Proj = GIL::Parser::Project::Parse(Tokens);
-		CheckFatal;
 		
 		if (!std::filesystem::exists(std::filesystem::path(PreBuildPath).parent_path()))
 		{

@@ -59,7 +59,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_DEBUG;CDB_ENABLE_ASSERTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\GILBuildEngine\src;..\utils\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\GILBuildEngine\src;..\utils\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\implot;..\CadBerry\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -82,7 +82,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\sensing\sensing.pdb ..\bin\Debug-windows-
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;IMGUI_IMPL_OPENGL_LOADER_GLAD2;FMT_HEADER_ONLY;CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\GILBuildEngine\src;..\utils\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\implot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\spdlog\include;..\CadBerry\src;..\GILBuildEngine\src;..\utils\src;..\CadBerry\vendor\IMGUI;..\CadBerry\vendor\BlockingCollection;..\CadBerry\vendor\implot;..\CadBerry\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -105,6 +105,9 @@ copy /B /Y ..\bin\Release-windows-x86_64\sensing\sensing.pdb ..\bin\Release-wind
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\module.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CadBerry\CadBerry.vcxproj">
       <Project>{918CE669-7D59-4175-A672-2F1D929E7603}</Project>
     </ProjectReference>
@@ -114,9 +117,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\sensing\sensing.pdb ..\bin\Release-wind
     <ProjectReference Include="..\GILBuildEngine\GILBuildEngine.vcxproj">
       <Project>{A719CF0D-93E7-C213-7C7B-333A68E89E78}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="module.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

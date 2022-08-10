@@ -13,6 +13,11 @@
 #include "Core.h"
 #include "GIL/GILException.h"
 
+#include "GIL/Parser/AST_Node.h"
+
+#include "GIL/Compiler/Compiler.h"
+
+
 using namespace GIL::Lexer;
 
 namespace GIL
@@ -32,13 +37,30 @@ namespace GIL
 		void GetOperation(std::string Name, std::vector<Token*>& Tokens, std::vector<std::string>& CompletedSequences, std::vector<std::string>& CompletedOps, std::map<std::string,
 			std::vector<Token*>>&Sequences, std::map<std::string, std::vector<Token*>>& Operations, Project* Target);
 
-		void CreateBool(std::string& BoolName, std::vector<Token*>& Tokens, int& i);
+		void CreateBool(std::string& BoolName, std::vector<Token*>& Tokens, int& i, bool& SyntaxError);
+
+		ParamNode* GetParam(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError);
+
+		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t i, bool& SyntaxError);
+
+
+		std::vector<Token*> GetTokensUntil(std::vector<Token*> Tokens, size_t& i, LexerToken End)
+		{
+			int StartIdx;
+			for (i; i < Tokens.size(); ++i)
+				if (Tokens[i]->TokenType == End)
+					goto FoundEnd;
+			return {};
+		FoundEnd:
+			//Now return the sub-vector
+			return std::vector<Token*>(Tokens.begin() + StartIdx, Tokens.begin() + i);
+		}
 		
 
 		//Checks if IDENT could be DNA
 		bool IsDNA(std::string& s);
 		//Gets tokens in between { and }
-		std::vector<Token*> GetInsideTokens(std::vector<Token*>& Tokens, int& i);
+		std::vector<Token*> GetInsideTokens(std::vector<Token*>& Tokens, size_t& i);
 
 
 		Project* Project::Parse(std::vector<Token*>& Tokens)
@@ -57,9 +79,9 @@ namespace GIL
 				delete s.second;
 			}
 
-			for (Token* t : Main)
+			for (AST_Node* node : this->Main)
 			{
-				Token::SafeDelete(t);
+				delete node;
 			}
 
 			for (auto p : Namespaces)
@@ -68,513 +90,619 @@ namespace GIL
 			}
 		}
 
-		void GetReusableElements(std::vector<Token*>& Tokens, Project* Target)    //Does all the actual parsing
-		{
-			std::map<std::string, std::vector<Token*>> Sequences;
-			std::map<std::string, std::vector<Token*>> Operations;
-			Target->Main = std::vector<Token*>();    //The file entry point
 
-			for (int i = 0; i < Tokens.size(); ++i)
+#define Require(cond, token, msg) if (!(cond)) { SyntaxError = true; Error(msg, token); break; }
+#define mv(x) std::move(x)
+
+//Assumes that you've already checked for length
+#define GetIdent(Name, FirstToken, ErrorCode) Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ErrorCode);\
+std::string& Name = Tokens[i + 1]->Value; i += 2
+
+		std::vector<AST_Node*> ParseNodes(std::vector<Token*>& Tokens, Project* Target)
+		{
+			bool SyntaxError = false;
+			std::vector<AST_Node*> OutputNodes;
+			for (size_t i = 0; i < Tokens.size(); ++i)
 			{
 				switch (Tokens[i]->TokenType)
 				{
-				case LexerToken::DEFINESEQUENCE:
+				case LexerToken::IMPORT:
 				{
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_001);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING,
+						Tokens[i], ERROR_001);
+					auto Node = new Import(mv(Tokens[i + 1]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
 					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT)    //Get name of sequence
-					{
-						CDB_BuildError("Expected IDENT token after sequence definition");
-						break;
-					}
-					std::string Name = Tokens[i]->Value;
-					++i;
-					Sequences[Name] = GetInsideTokens(Tokens, i);    //Adds sequence to be compiled after
 					break;
 				}
-				case LexerToken::DEFOP:
+				case LexerToken::USING:
 				{
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_002);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING,
+						Tokens[i], ERROR_002);
+					auto Node = new Using(mv(Tokens[i + 1]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
 					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT)
-					{
-						CDB_BuildError("Expected IDENT token after operation definition");
-						break;
-					}
-					std::string Name = Tokens[i]->Value;
-					++i;
-					Operations[Name] = GetInsideTokens(Tokens, i);
 					break;
 				}
+#pragma region SimplePrepros
 				case LexerToken::SETTARGET:
 				{
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_003);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING,
+						Tokens[i], ERROR_003);
+					auto Node = new SetTarget(mv(Tokens[i + 1]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
 					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
-					{
-						CDB_BuildError("Expected target organism name after #Target");
-						break;
-					}
-					Target->TargetOrganism = Tokens[i]->Value;
 					break;
 				}
 				case LexerToken::SETATTR:
 				{
-					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
-					{
-						CDB_BuildError("Expected attribute name after #SetAttr");
-						break;
-					}
-					std::string AttrName = Tokens[i]->Value;
-					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
-					{
-						CDB_BuildError("Expected value after attribute name \"{0}\"", AttrName);
-						break;
-					}
-					Target->Attributes[AttrName] = Tokens[i]->Value;
+					Require(i + 2 < Tokens.size(), Tokens[i], ERROR_004);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING,
+						Tokens[i], ERROR_004);
+					Require(Tokens[i + 2]->TokenType == LexerToken::IDENT || Tokens[i + 2]->TokenType == LexerToken::STRING,
+						Tokens[i], ERROR_004);
+					auto Node = new SetAttr(mv(Tokens[i + 1]->Value), mv(Tokens[i + 2]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					i += 2;
 					break;
 				}
+				//#var name type value
 				case LexerToken::CREATEVAR:
-					if (i < Tokens.size() - 2)
-					{
-						//Get the type and variable name
-						if (Tokens[i + 1]->TokenType != LexerToken::IDENT && Tokens[i + 1]->TokenType != LexerToken::STRING)
-						{
-							CDB_BuildError("Could not find type name for #Var");
-							break;
-						}
-						if (Tokens[i + 2]->TokenType != LexerToken::IDENT && Tokens[i + 2]->TokenType != LexerToken::STRING)
-						{
-							CDB_BuildError("Could not find variable name for #Var");
-							break;
-						}
-						//Just because you can create a numerical variable with the type "tree" doesn't mean you should
-						bool IsStr = Tokens[i + 1]->Value == "str" || Tokens[i + 1]->Value == "Str";
-						std::string& VarName = Tokens[i + 2]->Value;
-						i += 2;
-						
-						//If there's a value specified, set the variable to the value
-						if (i < Tokens.size() - 1)
-						{
-							i += 1;
-							if (IsStr)
-							{
-								Target->StrVars[VarName] = Tokens[i]->Value;
-							}
-							else
-							{
-								Target->NumVars[VarName] = std::stod(Tokens[i]->Value);
-							}
-						}
-						else    //Otherwise, set it to a default value
-						{
-							if (IsStr)
-							{
-								Target->StrVars[VarName] = "";
-							}
-							else
-							{
-								Target->NumVars[VarName] = 0.0;
-							}
-						}
-						break;
-					}
-					CDB_BuildError("#Var requires a type name and variable name, file ends before these are found");
-					break;
-				case LexerToken::OPTIMIZE:    //Optimization settings
 				{
+					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_005);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING, Tokens[i], ERROR_005);
+					Require(Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_005);
+					Require(Tokens[i + 3]->TokenType == LexerToken::IDENT || Tokens[i + 3]->TokenType == LexerToken::STRING, Tokens[i], ERROR_005);
+					auto Node = new SetVar(Tokens[i + 2]->Value, mv(Tokens[i + 1]->Value), mv(Tokens[i + 3]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					i += 3;
+					break;
+				}
+				case LexerToken::BEGINREGION:
+				{
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_006);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING,
+						Tokens[i], ERROR_006);
+					auto Node = new BeginRegion(mv(Tokens[i + 1]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
 					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
+					break;
+				}
+				case LexerToken::ENDREGION:
+				{
+					//If the next token is a string or IDENT
+					if (i + 1 < Tokens.size() && (Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING))
 					{
-						CDB_BuildError("Expected optimization name after #Optimize");
-						break;
-					}
-					//TODO: If the number of optimizations get big enough, I should rewrite this to use a switch statement
-					if (Tokens[i]->Value == "AVOID_RS")
-					{
+						auto Node = new EndRegion(mv(Tokens[i + 1]->Value));
+						Node->pos.Line = Tokens[i]->line;
+						OutputNodes.push_back(Node);
 						++i;
-						if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
-						{
-							CDB_BuildError("Expected restriction site name after #Optimize AVOID_RS");
-							break;
-						}
-						Target->AvoidRSites.push_back(Tokens[i]->Value);
 						break;
 					}
-					else
-					{
-						CDB_BuildError("Unknown optimization name \"{0}\"", Tokens[i]->Value);
-						break;
-					}
-				}
-				case LexerToken::TYPEDEF:
-					if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::IDENT)
-					{
-						CDB_BuildError("Typedef was called without a type to define");
-						break;
-					}
-					++i;
-					Target->AllocType(Tokens[i]->Value);
-					break;
-				case LexerToken::INHERITS:
-					if (Tokens[i - 1]->TokenType != LexerToken::IDENT)
-					{
-						CDB_BuildError("\"inherits\" keyword requires name of child type");
-						break;
-					}
-					if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::IDENT)
-					{
-						CDB_BuildError("\"inherits\" keyword requires name of parent type (child type was \"{0}\")", Tokens[i - 1]->Value);
-						break;
-					}
-					Target->AddInheritance(Target->GetTypeByName(Tokens[i - 1]->Value), Target->GetTypeByName(Tokens[i + 1]->Value));
-
-					//If there's an extra IDENT, remove it
-					if (Target->Main[Target->Main.size() - 1] == Tokens[i - 1])
-						Target->Main.erase(Target->Main.end() - 1);
-					++i;
-					break;
-				case LexerToken::IMPORT:    //Adds file name to imports, but the compiler imports the files
-					++i;
-					if (Tokens[i]->TokenType != LexerToken::STRING)
-					{
-						CDB_BuildError("Expected file name after import token, found token of type {0}", LexerToken2Str[Tokens[i]->TokenType]);
-						break;
-					}
-					Target->Imports.push_back(Tokens[i]->Value);
-					break;
-				case LexerToken::USING:
-					++i;
-					if (Tokens[i]->TokenType != LexerToken::STRING)
-					{
-						CDB_BuildError("Expected file name after using token, found token of type {0}", LexerToken2Str[Tokens[i]->TokenType]);
-						break;
-					}
-					Target->Usings.push_back(Tokens[i]->Value);
-					break;
-				case LexerToken::CREATENAMESPACE:
-				{
-					++i;
-					if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::STRING)
-					{
-						CDB_BuildError("Expected namespace name");
-						break;
-					}
-					std::string Name = Tokens[i]->Value;
-					++i;
-					//TODO: allow the user to define things inside namespaces that use stuff outside the namespaces
-					std::vector<Token*> InsideTokens = GetInsideTokens(Tokens, i);
-					Target->Namespaces[Name] = Project::Parse(InsideTokens);    //Parse the tokens inside the namespace into a seperate Project
+					auto Node = new EndRegion();
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
 					break;
 				}
-				default:
-					Target->Main.push_back(Tokens[i]);
-					break;
-				}
-			}
-
-			FixTokens(Tokens, Sequences, Operations);    //Converts IDENT tokens to DNA where needed
-
-			std::map<std::string, std::vector<Token*>>::iterator it;
-
-			//Vectors so that we don't compile stuff multiple times or recursively
-			std::vector<std::string> CreatedSequences;
-			std::vector<std::string> CreatedOps;
-			CreatedSequences.reserve(Sequences.size());
-			CreatedOps.reserve(Operations.size());
-
-			for (it = Sequences.begin(); it != Sequences.end(); ++it)    //Loop through sequences and recursively compile their dependencies
-			{
-				GetSequence(it->first, it->second, CreatedSequences, CreatedOps, Sequences, Operations, Target);
-			}
-
-			for (it = Operations.begin(); it != Operations.end(); ++it)    //Loop through operations and recursively compile their dependencies
-			{
-				GetSequence(it->first, it->second, CreatedSequences, CreatedOps, Sequences, Operations, Target);
-			}
-
-			for (int i = 0; i < Target->Main.size(); ++i)    //Do forwards
-			{
-				switch (Target->Main[i]->TokenType)
+				case LexerToken::INC:
 				{
-				case LexerToken::FORWARD:
-				{
-					//Check if it's an operator definition
-					auto StartIdx = Target->Main.begin() + i - 1;
-					if (i > 0 && Target->Main[i - 1]->TokenType == LexerToken::OPERATOR)
-					{
-						if (Target->Main[i + 1]->TokenType == LexerToken::IDENT)
-						{
-							if (Target->Sequences.contains(Target->Main[i + 1]->Value))
-							{
-								//Get the old implementation
-								Operator* Old_Impl = (Operator*)Target->Operators[Target->Main[i - 1]->Value];
-								
-								//If the forward's pointing to a valid sequence set the first part to the second part's pointer
-								Sequence* SequenceImplementation = Target->Sequences[Target->Main[i + 1]->Value];
-								Operator* newop = new Operator(SequenceImplementation, Target->Main[i + 1]->Value, Old_Impl);
-								
-								//Copy the sequence's parameters and types
-								newop->ParamIdx2Name = SequenceImplementation->ParamIdx2Name;
-								newop->ParameterTypes = SequenceImplementation->ParameterTypes;
-
-								//Keep a record of which namespace the operator is coming from
-								newop->Origin = Target;
-								Target->Operators[Target->Main[i - 1]->Value] = newop;
-
-								//Make sure the forward doesn't get added
-								Target->Main.erase(StartIdx, Target->Main.begin() + i + 2);
-								i -= 2;
-								break;
-							}
-
-							CDB_BuildError("Could not find sequence or operation {0}", Target->Main[i + 1]->Value);
-						}
-					}
-					else if (!(i > 0 && Target->Main[i - 1]->TokenType == LexerToken::IDENT))
-					{
-						CDB_BuildError("Missing IDENT token before or after forward (=>)");
-						break;
-					}
-
-
-					if (Target->Main[i + 1]->TokenType == LexerToken::IDENT)
-					{
-						if (Target->Sequences.contains(Target->Main[i + 1]->Value))
-						{
-							//If the forward's pointing to a valid sequence set the first part to the second part's pointer
-							Sequence* Seq = new SequenceForward(Target->Sequences[Target->Main[i + 1]->Value], Target->Main[i + 1]->Value);
-							Seq->ParamIdx2Name = Target->Sequences[Target->Main[i + 1]->Value]->ParamIdx2Name;
-							Target->Sequences[Target->Main[i - 1]->Value] = Seq;
-
-							//Make sure the forward doesn't get added
-							Target->Main.erase(StartIdx, Target->Main.begin() + i + 2);
-							i -= 2;
-							break;
-						}
-
-						CDB_BuildError("Could not find sequence or operation {0}", Target->Main[i + 1]->Value);
-					}
-					break;
-				}
-				case LexerToken::BOOL:
-				{
-					if (!(i + 3 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::IDENT))
-					{
-						CDB_BuildError("Missing IDENT token after bool declaration");
-						break;
-					}
-
-					++i;
-					std::string& BoolName = Tokens[i]->Value;
-					++i;
-					if (Tokens[i]->TokenType != LexerToken::EQUALS)
-					{
-						FatalError("Unbound boolean error: bool \"{0}\" has no value", BoolName);
-						return;
-					}
-					++i;
-
-					CreateBool(BoolName, Tokens, i);
-					break;
-				}
-				case LexerToken::IF:
-				{
-					IfStatement* CurrentStatement = new IfStatement();
-					switch (Tokens[i + 1]->TokenType)
-					{
-					case LexerToken::IDENT:    // if BoolName
-					{
-						CurrentStatement->BoolName = Tokens[i + 1]->Value;
-						BoolContext::IfStatements.push_back(CurrentStatement);
-						break;
-					}
-					case LexerToken::LPAREN:    // if (Some expression)
-					{
-						BoolContext::Value* IntBool = BoolContext::AllocIntermediateBool(nullptr);
-						i += 2;
-						CreateBool(IntBool->BoolName, Tokens, i);
-
-						if (BoolContext::Bools[IntBool->BoolName] == nullptr)
-						{
-							CheckFatal;
-							CDB_BuildError("Failed to parse bool from parentheses");
-							delete CurrentStatement;
-							continue;
-						}
-						BoolContext::IfStatements.push_back(CurrentStatement);
-						break;
-					}
-					case LexerToken::BOOL_TRUE:    // if true
-					{
-						CurrentStatement->BoolName = "$True";
-						BoolContext::IfStatements.push_back(CurrentStatement);
-						break;
-					}
-					case LexerToken::BOOL_FALSE:    //if false
-					{
-						CurrentStatement->BoolName = "$False";
-						BoolContext::IfStatements.push_back(CurrentStatement);
-						break;
-					}
-					default:
-						FatalError("Invalid token {0} after IF token", *Tokens[i + 1]);
-						continue;
-					}
-					break;
-
-					/*
-					At this point, we've got the condition that the if statment is asking about (CurrentStatement->BoolName). Now, we need
-					to collect all the genes in the if statement's body. If the if statement only contains sequences, each sequence will be 
-					considered a seperate gene. However, if any operations, DNA, or amino sequences are found in the body, the entire body 
-					will be treated as a single gene. 
-					*/
-
-					//Get body
-					std::vector<Token*> Tokens = GetInsideTokens(Tokens, i);
-				}
-				default:
-					break;
-				}
-			}
-		}
-
-
-		/*
-		Converts "bool b = b1 & b2 & !b3 | b4"
-		To:
-		$Auto0 = b1 & b2
-		$Auto1 = !b3
-		$Auto2 = $Auto0 & $Auto1
-		b = $Auto2 | b4
-		*/
-		void CreateBool(std::string& BoolName, std::vector<Token*>& Tokens, int& i)
-		{
-			BoolContext::Value* LValue;
-			BinOpType OpType;
-			BoolContext::Value* RValue;
-
-			if (Tokens[i]->TokenType == LexerToken::BOOL_TRUE)
-			{
-				LValue = new BoolContext::Value("$True");
-			}
-			else if (Tokens[i]->TokenType == LexerToken::BOOL_FALSE)
-			{
-				LValue = new BoolContext::Value("$False");
-			}
-			else if (Tokens[i]->TokenType == LexerToken::IDENT)
-			{
-				LValue = new BoolContext::Value(Tokens[i]->Value);
-			}
-			else if (Tokens[i]->TokenType == LexerToken::NOT && Tokens[i + 1]->TokenType == LexerToken::IDENT)
-			{
-				LValue = new BoolContext::Value(Tokens[i + 1]->Value);
-				BoolContext::BinOp* NotOp = new BoolContext::BinOp(LValue, BinOpType::NOT, nullptr);
-				LValue = BoolContext::AllocIntermediateBool(NotOp);
-			}
-			else if (Tokens[i]->TokenType == LexerToken::LPAREN)
-			{
-				LValue = BoolContext::AllocIntermediateBool(nullptr);
-				++i;
-				CreateBool(LValue->BoolName, Tokens, i);
-
-				if (BoolContext::Bools[LValue->BoolName] == nullptr)
-				{
-					CheckFatal;
-					CDB_BuildError("Failed to parse bool expression in parentheses");
-					return;
-				}
-			}
-			else
-			{
-				CDB_BuildError("Expected IDENT after bool \"{0}\", found {1}", BoolName, LexerToken2Str[Tokens[i]->TokenType]);
-				return;
-			}
-			++i;
-
-			for (i; i + 2 < Tokens.size() && Tokens[i]->TokenType != LexerToken::NEWLINE && Tokens[i]->TokenType != LexerToken::RPAREN; i += 2)
-			{
-				switch (Tokens[i]->TokenType)    //Get BinOpType
-				{
-				case LexerToken::AND:
-					OpType = BinOpType::AND;
-					break;
-				case LexerToken::OR:
-					OpType = BinOpType::OR;
-					break;
-				case LexerToken::NAND:
-					OpType = BinOpType::NAND;
-					break;
-				case LexerToken::NOR:
-					OpType = BinOpType::NOR;
-					break;
-				default:
-					CDB_BuildError("Unexpected token type {0} in boolean \"{1}\" declaration", LexerToken2Str[Tokens[i]->TokenType], BoolName);
-					return;
-				}
-
-				switch (Tokens[i + 1]->TokenType)
-				{
-				case LexerToken::NOT:
-				{
-					if (Tokens[i + 2]->TokenType != LexerToken::IDENT)
-					{
-						CDB_BuildError("Expected IDENT token after NOT operator");
-						return;
-					}
-					BoolContext::BinOp* Op = new BoolContext::BinOp(new BoolContext::Value(Tokens[i + 2]->Value), BinOpType::NOT, nullptr);
-					RValue = BoolContext::AllocIntermediateBool(Op);
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_007);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING, Tokens[i], ERROR_007);
+					auto Node = new IncVar(mv(Tokens[i + 1]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
 					++i;
 					break;
 				}
-				case LexerToken::LPAREN:
+				case LexerToken::DEC:
 				{
-					RValue = BoolContext::AllocIntermediateBool(nullptr);
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_008);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING, Tokens[i], ERROR_008);
+					auto Node = new DecVar(mv(Tokens[i + 1]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					++i;
+					break;
+				}
+#pragma endregion
+#pragma region PreproConditions
+				case LexerToken::PREPRO_IF:
+				{
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_009);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_009);
+					std::string& Condition = Tokens[i + 1]->Value;
+					Token* FirstToken = Tokens[i];
 					i += 2;
 
-					CreateBool(RValue->BoolName, Tokens, i);
-					if (BoolContext::Bools[RValue->BoolName] == nullptr)
+					//Get the parameters for the condition
+					auto ParamTokens = Compiler::GetTokensInBetween(Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
+
+					//Get the body (can end with either a #EndIf or a #Else
+					++i;
+					size_t Start = i;
+					std::vector<Token*> InsideTokens;
+					for (i; i < Tokens.size(); ++i)
 					{
-						CheckFatal;
-						CDB_BuildError("Failed to parse bool expression in parentheses");
-						return;
+						if (Tokens[i]->TokenType == LexerToken::PREPRO_ENDIF)
+						{
+							InsideTokens = std::vector<Token*>(Tokens.begin() + Start, Tokens.begin() + i);
+
+							goto PREPRO_IF_FoundEnd;
+						}
+						if (Tokens[i]->TokenType == LexerToken::PREPRO_ELSE)
+						{
+							InsideTokens = std::vector<Token*>(Tokens.begin() + Start, Tokens.begin() + i);
+							--i;
+
+							goto PREPRO_IF_FoundEnd;
+						}
 					}
+					Error(ERROR_010, FirstToken);
+					break;
+				PREPRO_IF_FoundEnd:
+					//Now parse the inner tokens
+					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto Node = new Prepro_If(mv(Condition), mv(ParamTokens), mv(InsideNodes));
+					Node->pos.Line = FirstToken->line;
+					OutputNodes.push_back(Node);
 					break;
 				}
-				case LexerToken::IDENT:
-					RValue = new BoolContext::Value(Tokens[i + 1]->Value);
+				case LexerToken::PREPRO_ELSE:
+				{
+					Token* FirstToken = Tokens[i];
+					
+					++i;
+					size_t Start = i;
+					//Get tokens
+					for (i; i < Tokens.size(); ++i)
+					{
+						if (Tokens[i]->TokenType == LexerToken::PREPRO_ENDIF)
+						{
+							auto InsideTokens = std::vector<Token*>(Tokens.begin() + Start, Tokens.begin() + i);
+							auto InsideNodes = ParseNodes(InsideTokens, Target);
+							auto Node = new Prepro_Else(mv(InsideNodes));
+							Node->pos.Line = FirstToken->line;							
+							OutputNodes.push_back(Node);
+							goto EndSwitch;
+						}
+					}
+					Error(ERROR_012, FirstToken);
+					
+					EndSwitch:
 					break;
-				case LexerToken::BOOL_TRUE:
-					RValue = new BoolContext::Value("$True");
+				}
+#pragma endregion
+				case LexerToken::FOR:
+				{
+					Token* FirstToken = Tokens[i];
+					//Get the target organism
+					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_015);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING, Tokens[i],
+						ERROR_015);
+					std::string& NewTarget = Tokens[i + 1]->Value;
+					i += 2;
+					Require(Tokens[i]->TokenType == LexerToken::BEGIN, FirstToken, ERROR_016);
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto Node = new For(mv(NewTarget), mv(InsideNodes));
+					Node->pos.Line = FirstToken->line;
+					OutputNodes.push_back(Node);
 					break;
-				case LexerToken::BOOL_FALSE:
-					RValue = new BoolContext::Value("$False");
+				}
+				case LexerToken::FROM:
+				{
+					Token* FirstToken = Tokens[i];
+					//Get the target organism
+					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_017);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT || Tokens[i + 1]->TokenType == LexerToken::STRING, Tokens[i],
+						ERROR_017);
+					std::string& NewTarget = Tokens[i + 1]->Value;
+					i += 2;
+					Require(Tokens[i]->TokenType == LexerToken::BEGIN, FirstToken, ERROR_018);
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto Node = new For(mv(NewTarget), mv(InsideNodes));
+					Node->pos.Line = FirstToken->line;					
+					OutputNodes.push_back(Node);
 					break;
-				default:
-					CDB_BuildError("Expected NOT or IDENT token after binary operation in declaration of bool \"{0}\" (found {1})", BoolName, LexerToken2Str[Tokens[i]->TokenType]);
-					return;
+				}
+				case LexerToken::DEFINESEQUENCE:
+				{
+					Token* FirstToken = Tokens[i];
+					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_019);
+					GetIdent(SeqName, FirstToken, ERROR_019);
+
+					//Defines for later
+					Params SeqParams;
+					std::string* Type = nullptr;
+					if (Tokens[i]->TokenType == LexerToken::LPAREN)
+					{
+						//This sequence takes parameters
+						++i;
+						for (i; i < Tokens.size(); ++i)
+						{
+							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+								break;
+							if (Tokens[i]->TokenType == LexerToken::PARAM)
+								SeqParams.m_Params.push_back(mv(GetParam(Tokens, i, SyntaxError)));
+							else
+							{
+								Error(ERROR_013, Tokens[i]);
+							}
+						}
+						++i;
+					}
+					Require(i + 2 < Tokens.size(), FirstToken, ERROR_020);
+					if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
+					{
+						//This sequence has a type
+						Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i + 1], ERROR_021);
+						Type = &Tokens[i + 1]->Value;
+						i += 2;
+					}
+					//Get the body of the sequence
+					Require(Tokens[i]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_020);
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto Nodes = ParseNodes(InsideTokens, Target);
+
+					if (Type == nullptr)
+					{
+						auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), "any", mv(Nodes));
+						Node->pos.Line = FirstToken->line;
+						OutputNodes.push_back(Node);
+						break;
+					}
+					auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes));
+					Node->pos.Line = FirstToken->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::DEFOP:
+				{
+					Token* FirstToken = Tokens[i];
+					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_019);
+					GetIdent(SeqName, FirstToken, ERROR_019);
+
+					//Defines for later
+					Params SeqParams;
+					std::string* Type = nullptr;
+					if (Tokens[i]->TokenType == LexerToken::LPAREN)
+					{
+						//This sequence takes parameters
+						++i;
+						for (i; i < Tokens.size(); ++i)
+						{
+							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+								break;
+							if (Tokens[i]->TokenType == LexerToken::PARAM)
+								SeqParams.m_Params.push_back(mv(GetParam(Tokens, i, SyntaxError)));
+							else
+							{
+								Error(ERROR_013, Tokens[i]);
+							}
+						}
+						++i;
+					}
+					Require(i + 2 < Tokens.size(), FirstToken, ERROR_020);
+					if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
+					{
+						//This sequence has a type
+						Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i + 1], ERROR_021);
+						Type = &Tokens[i + 1]->Value;
+						i += 2;
+					}
+					//Get the body of the sequence
+					Require(Tokens[i]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_020);
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto Nodes = ParseNodes(InsideTokens, Target);
+
+					if (Type == nullptr)
+					{
+						auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), "any", mv(Nodes));
+						Node->pos.Line = FirstToken->line;
+						OutputNodes.push_back(Node);
+						break;
+					}
+					auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes));
+					Node->pos.Line = FirstToken->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::OPERATOR:
+				{
+					Require(i + 2 < Tokens.size(), Tokens[i], ERROR_022);
+					Require(Tokens[i + 1]->TokenType == LexerToken::FORWARD && Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_024);
+					auto Node = new DefineOperator(mv(Tokens[i]->Value), mv(Tokens[i + 2]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					i += 2;
+					break;
 				}
 
-				if (i + 2 < Tokens.size())
+					//This is going to be a big one
+				case LexerToken::IDENT:
 				{
-					switch (Tokens[i + 2]->TokenType)
+					//Is this a forward?
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::FORWARD)
 					{
-					case LexerToken::AND:
-					case LexerToken::OR:
-					case LexerToken::NAND:
-					case LexerToken::NOR:
-						//We need to allocate an intermediate bool
-						LValue = BoolContext::AllocIntermediateBool(new BoolContext::BinOp(LValue, OpType, RValue));
-						break;
-					default:
+						//This is a forward
+						Require(i + 2 < Tokens.size(), Tokens[i], ERROR_025);
+						Require(Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_025);
+						auto Node = new Forward(mv(Tokens[i]->Value), mv(Tokens[i + 2]->Value));
+						Node->pos.Line = Tokens[i]->line;
+						OutputNodes.push_back(Node);
+						i += 2;
 						break;
 					}
+					
+					//Is this a type inheritance?
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::INHERITS)
+					{
+						Require(i + 2 < Tokens.size(), Tokens[i], ERROR_028);
+						Require(Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_028);
+						auto Node = new InheritTypedef(mv(Tokens[i]->Value), mv(Tokens[i + 2]->Value));
+						Node->pos.Line = Tokens[i]->line;
+						OutputNodes.push_back(Node);
+						i += 2;
+						break;
+					}
+					
+					
+					//This is a sequence being "called"
+					//Check if it has namespaces
+					AccessNamespace Namespaces = CheckNamespace(Tokens, i - 1, SyntaxError);
+
+					
+					//Check if it has params
+					Token* FirstToken = Tokens[i];
+					std::string& SeqName = Tokens[i]->Value;
+					std::vector<Token*> params;
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
+					{
+						i += 2;
+						for (i; i < Tokens.size(); ++i)
+						{
+							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+								break;
+							if (Tokens[i]->TokenType == LexerToken::COMMA)
+								continue;
+							params.push_back(Tokens[i]);
+						}
+					}
+					Call_Params SeqParams(mv(params));
+
+
+					auto Node = new CallSequence(mv(SeqName), mv(SeqParams), mv(Namespaces));
+					Node->pos.Line = FirstToken->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::CALLOP:
+				{
+					//This is an operation being "called"
+					//Check if it has namespaces
+					AccessNamespace Namespaces = CheckNamespace(Tokens, i - 1, SyntaxError);
+
+
+					//Check if it has params
+					std::string& OpName = Tokens[i]->Value;
+					std::vector<Token*> params;
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
+					{
+						i += 2;
+						for (i; i < Tokens.size(); ++i)
+						{
+							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+								break;
+							if (Tokens[i]->TokenType == LexerToken::COMMA)
+								continue;
+							params.push_back(Tokens[i]);
+						}
+					}
+					Call_Params OpParams(mv(params));
+					//Now make sure it has a body
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_029);
+					Require(Tokens[i + 1]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_029);
+					i += 1;
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto Nodes = ParseNodes(InsideTokens, Target);
+
+
+					auto Node = new CallOperation(mv(OpName), mv(OpParams), mv(Nodes), mv(Namespaces));
+					Node->pos.Line = Tokens[i]->line;					
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::DNA:
+				{
+					auto Node = new DNALiteral(mv(Tokens[i]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::AMINOS:
+				{
+					auto Node = new AminoAcidLiteral(mv(Tokens[i]->Value));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::TYPEDEF:
+				{
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_027);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_027);
+					
+					std::string& Name = Tokens[i + 1]->Value;
+					std::string Inherits;
+					++i;
+					//If it includes an inheritance
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::INHERITS)
+					{
+						//Make sure it has a type to inherit from
+						Require(i + 2 < Tokens.size(), Tokens[i], ERROR_028);
+						Require(Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_028);
+						Inherits = mv(Tokens[i + 2]->Value);
+						i += 2;
+					}
+
+					auto Node = new TypedefNode(mv(Name), mv(Inherits));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::PARAM:
+				{
+					//This is a sequence passed as a parameter being "called"
+
+
+					//Check if it has params
+					std::string& SeqName = Tokens[i]->Value;
+					std::vector<Token*> params;
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
+					{
+						i += 2;
+						for (i; i < Tokens.size(); ++i)
+						{
+							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+								break;
+							if (Tokens[i]->TokenType == LexerToken::COMMA)
+								continue;
+							params.push_back(Tokens[i]);
+						}
+					}
+					Call_Params SeqParams(mv(params));
+
+
+					auto Node = new UseParam(mv(SeqName), mv(SeqParams));
+					Node->pos.Line = Tokens[i]->line;
+					OutputNodes.push_back(Node);
+					break;
+				}
+				case LexerToken::CREATENAMESPACE:
+				{
+					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_030);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_031);
+					Require(Tokens[i + 2]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_032);
+					i += 2;
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto Nodes = ParseNodes(InsideTokens, Target);
+					auto Node = new Namespace(mv(Tokens[i]->Value), mv(Nodes));
+					Node->pos.Line = Tokens[i]->line;					
+					OutputNodes.push_back(Node);
+					break;
+				}
 				}
 			}
 
-			BoolContext::Bools[BoolName] = new BoolContext::BinOp(LValue, OpType, RValue);
+			//If there was/were syntax error(s), throw an exception
+			if (SyntaxError)
+			{
+				CDB_BuildError("Syntax errors detected during parsing, terminating compilation");
+				throw GILException();
+			}
+			return OutputNodes;
 		}
 
-		std::vector<Token*> GetInsideTokens(std::vector<Token*>& Tokens, int& i)    //Gets all tokens enclosed by a pair of curly brackets
+#undef Require
+#define Require(cond, token, msg) if (!(cond)) { SyntaxError = true; Error(msg, token); return nullptr; }
+		ParamNode* GetParam(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError)
+		{
+			Require(Tokens[i]->TokenType == LexerToken::PARAM, Tokens[i], ERROR_013);
+			if (i + 2 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::ASSIGNTYPE)
+			{
+				//Make sure the type is present
+				Require(Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_014);
+
+
+				//Now construc the node
+				i += 2;
+				ParamNode* node = new ParamNode(mv(Tokens[i - 2]->Value), mv(Tokens[i]->Value));
+				if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::COMMA)
+					++i;
+				return node;
+			}
+			//Return an untyped parameter
+			ParamNode* node = new ParamNode(mv(Tokens[i]->Value));
+			if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::COMMA)
+				++i;
+			return node;
+		}
+
+
+#undef Require
+#define Require(cond, token, msg) if (!(cond)) { SyntaxError = true; Error(msg, token); return {}; }
+		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t i, bool& SyntaxError)
+		{
+			//Check if this is a namespace
+			if (Tokens[i]->TokenType != LexerToken::NAMESPACE)
+				return AccessNamespace(std::vector<Token*>());
+			
+			//Now move backwards to find the first namespace
+			size_t End = i;
+			--i;
+			for (i; i >= 0; --i)
+			{
+				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				{
+					Error(ERROR_026, Tokens[i]);
+					return {};
+				}
+				//If NAMESPACE is the first token, that's an error
+				if (i - 1 > 0 && Tokens[i - 1]->TokenType == LexerToken::NAMESPACE)
+				{
+					--i;
+					continue;
+				}
+				break;
+			}
+			//Now we have the start of the namespace
+			std::vector<Token*> Namespace;
+			for (i; i < End; i += 2)
+			{
+				Namespace.push_back(Tokens[i]);
+			}
+			return AccessNamespace(mv(Namespace));
+		}
+
+
+
+
+
+		
+		void GetReusableElements(std::vector<Token*>& Tokens, Project* Target)    //Does all the actual parsing
+		{
+			auto nodes = ParseNodes(Tokens, Target); 
+			Target->Main = mv(nodes);
+			for (AST_Node* node : Target->Main)
+			{
+				//The node has an AddToProject function
+				if (node->CanAddToProject())
+				{
+					ProjectNode* pnode = (ProjectNode*)node;
+					pnode->AddToProject(Target);
+				}
+			}
+		}
+
+
+		
+
+		std::vector<Token*> GetInsideTokens(std::vector<Token*>& Tokens, int& i)
+		{
+			size_t s = i;
+			return GetInsideTokens(Tokens, s);
+		}
+
+		std::vector<Token*> GetInsideTokens(std::vector<Token*>& Tokens, size_t& i)    //Gets all tokens enclosed by a pair of curly brackets
 		{
 			int TokensStart = i;
 			int NumTokens = 0;
@@ -628,129 +756,12 @@ namespace GIL
 		void GetSequence(std::string Name, std::vector<Token*>& Tokens, std::vector<std::string>& CompletedSequences, std::vector<std::string>& CompletedOps, std::map<std::string,
 			std::vector<Token*>>& Sequences, std::map<std::string, std::vector<Token*>>& Operations, Project* Target)
 		{
-			//If this sequence has already been compiled, return
-			if (std::find(CompletedSequences.begin(), CompletedSequences.end(), Name) != CompletedSequences.end())
-			{
-				return;
-			}
-
-			CompletedSequences.push_back(Name);    //Add this sequence to the compiled sequences list
-			Target->Sequences[Name] = nullptr;
-
-			//We want to compile sequence dependencies first
-			for (int i = 0; i < Tokens.size(); ++i)
-			{
-				switch (Tokens[i]->TokenType)
-				{
-				case LexerToken::IDENT:
-					if (Tokens[i - 1]->TokenType == LexerToken::ASSIGNTYPE)
-						break;
-					//GetSequence(Tokens[i]->Value, Sequences[Tokens[i]->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
-					break;
-				case LexerToken::CALLOP:
-					//GetOperation(Tokens[i]->Value, Operations[Tokens[i]->Value], CompletedSequences, CompletedOps, Sequences, Operations, Target);
-					break;
-
-				//Skip parentheses
-				case LexerToken::LPAREN:
-					Compiler::GetTokensInBetween(Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
-					break;
-				default:
-					break;
-				}
-			}
-
-			//Get the parameters
-			int i = 0;
-			StaticSequence* Seq = new StaticSequence();
-			if (Tokens[0]->TokenType == LexerToken::LPAREN)
-			{
-				for (i = 1; i < Tokens.size(); ++i)
-				{
-					if (Tokens[i]->TokenType == LexerToken::PARAM && Tokens[i]->Value != "InnerCode")
-					{
-						Seq->ParamIdx2Name.push_back(Tokens[i]->Value);
-					}
-					else if (Tokens[i]->TokenType == LexerToken::RPAREN)
-					{
-						++i;
-						break;
-					}
-				}
-			}
-
-			//Now get types if they were provided (syntax "sequence s($Type1 $Type2) : (any, cds) : cds")
-			if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
-			{
-				GetTypeInfo(Target, Seq, i, Tokens);
-			}
-
-			Seq->SetTokens(std::vector<Token*>(Tokens.begin() + i, Tokens.end()));
-
-			Target->Sequences[Name] = Seq;
+			
 		}
 
 		void GetTypeInfo(Project* Proj, Sequence* Seq, int& i, std::vector<Token*>& Tokens)
 		{
-			if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
-				++i;
-			//Get the parameter types
-			if (Tokens[i]->TokenType == LexerToken::LPAREN)
-			{
-				++i;
-				int ParamIdx = 0;
-				for (i; i < Tokens.size(); ++i)
-				{
-					if (Tokens[i]->TokenType == LexerToken::IDENT)
-					{
-						Seq->ParameterTypes[Seq->ParamIdx2Name[ParamIdx]] = Proj->GetTypeByName(Tokens[i]->Value);
-						++ParamIdx;
-					}
-					else if (Tokens[i]->TokenType == LexerToken::PARAM)
-					{
-						if (i >= Tokens.size() - 2)
-						{
-							CDB_BuildError("Parameter \"{0}\" was typed by name, but no type was given", Tokens[i]->Value);
-							return;
-						}
-
-						//Parameters can be assigned types by name using the syntax "sequence seq($Param) : ($Param : cds)"
-						if (Tokens[i + 1]->TokenType != LexerToken::ASSIGNTYPE)
-						{
-							CDB_BuildError("Parameter \"{0}\" was typed by name, but the type was not assigned (types are assigned using a colon)", Tokens[i]->Value);
-							return;
-						}
-
-						if (Tokens[i + 2]->TokenType != LexerToken::IDENT)
-						{
-							CDB_BuildError("Parameter \"{0}\" was typed by name, but no type was given", Tokens[i]->TokenType);
-							return;
-						}
-
-						//Set the type
-						Seq->ParameterTypes[Tokens[i]->Value] = Proj->GetTypeByName(Tokens[i + 2]->Value);
-						i += 2;
-					}
-					else if (Tokens[i]->TokenType == LexerToken::RPAREN)
-					{
-						++i;
-						break;
-					}
-				}
-			}
-
-			//Now get the sequence's type
-			if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
-			{
-				if (i >= Tokens.size() - 1 || Tokens[i + 1]->TokenType != LexerToken::IDENT)
-				{
-					CDB_BuildError("Sequence was assigned a type, but no type was given");
-					return;
-				}
-
-				Seq->SeqType = Proj->GetTypeByName(Tokens[i + 1]->Value);
-				i += 2;
-			}
+			
 		}
 
 		
@@ -758,58 +769,7 @@ namespace GIL
 		void GetOperation(std::string Name, std::vector<Token*>& Tokens, std::vector<std::string>& CompletedSequences, std::vector<std::string>& CompletedOps, std::map<std::string,
 			std::vector<Token*>>& Sequences, std::map<std::string, std::vector<Token*>>& Operations, Project* Target)
 		{
-			//If this operation has already been compiled, return
-			if (std::find(CompletedOps.begin(), CompletedOps.end(), Name) != CompletedOps.end())
-			{
-				return;
-			}
-
-			CompletedOps.push_back(Name);
-
-			for (int i = 0; i < Tokens.size(); ++i)
-			{
-				switch (Tokens[i]->TokenType)
-				{
-				case LexerToken::LPAREN:
-					Compiler::GetTokensInBetween(Tokens, i, LexerToken::LPAREN, LexerToken::RPAREN);
-					break;
-				default:
-					break;
-				}
-			}
-
-			//Get the parameters
-			if (Tokens[0]->TokenType == LexerToken::LPAREN)
-			{
-				StaticSequence* NewOp = new StaticSequence();
-				int i = 1;
-				for (i = 1; i < Tokens.size(); ++i)
-				{
-					if (Tokens[i]->TokenType == LexerToken::PARAM && Tokens[i]->Value != "InnerCode")
-					{
-						NewOp->ParamIdx2Name.push_back(Tokens[i]->Value);
-					}
-					else if (Tokens[i]->TokenType == LexerToken::RPAREN)
-					{
-						++i;
-						break;
-					}
-				}
-
-				//Now get types if they were provided (syntax "sequence s($Type1 $Type2) : (any, cds) : cds")
-				if (Tokens[i]->TokenType == LexerToken::ASSIGNTYPE)
-				{
-					++i;
-					GetTypeInfo(Target, NewOp, i, Tokens);
-				}
-
-				NewOp->SetTokens(std::vector<Token*>(Tokens.begin() + i, Tokens.end()));
-				Target->Sequences[Name] = NewOp;
-			}
-			else
-			{
-				Target->Sequences[Name] = new StaticSequence(Tokens);
-			}
+			
 		}
 
 		void ConvertTokenToDNA(Token* t)
@@ -914,9 +874,9 @@ namespace GIL
 			//Write entry point to file
 			Len = this->Main.size();
 			OutputFile.write((char*)&Len, sizeof(int));
-			for (GIL::Lexer::Token* t : this->Main)
+			for (AST_Node* node : this->Main)
 			{
-				t->Save(OutputFile);
+				AST_Node::SaveNode(node, OutputFile);
 			}
 
 			//Write imports to the file for dynamic linking (WIP)
@@ -1007,37 +967,49 @@ namespace GIL
 		//Some more func defs
 		void GetNamespace(std::vector<std::string*>& Namespaces, std::vector<Lexer::Token*>* Tokens, int i);
 
-		std::pair<Sequence*, Project*> Project::GetSeq(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
+		std::pair<Sequence*, Project*> Project::GetSeq(CallSequence* Seq, std::map<std::string, GILModule*>* Modules)
 		{
-			std::string& SeqName = (*Tokens)[i]->Value;    //Save the name of the sequence
-			if ((*Tokens)[i - 1]->TokenType == LexerToken::NAMESPACE)
+			//Check if the sequence is in another namespace
+			if (Seq->Location.size() != 0)
 			{
-				std::vector<std::string*> Namespaces;
-				GetNamespace(Namespaces, Tokens, i - 1);    //Get the namespaces. For example, N1::N2::N3 becomes [N1, N2, N3]
-				if (Modules->contains(*Namespaces[0]))
+				if (Modules->contains(Seq->Location[0]))
 				{
-					return { (*Modules)[*Namespaces[0]]->GetSequence(SeqName), nullptr };
+					return { (*Modules)[Seq->Location[0]]->GetSequence(Seq->Name), nullptr };
 				}
-				return { this->Namespaces[*Namespaces[0]]->GetSeqFromNamespace(SeqName, Namespaces, 1, Modules), this->Namespaces[*Namespaces[0]] };
+				return this->Namespaces[Seq->Location[0]]->GetSeqFromNamespace(Seq->Name, Seq->Location, 1, Modules);
 			}
-			return { Sequences[SeqName], this };
+			return { Sequences[Seq->Name], this };
 		}
 
-		std::pair<Sequence*, Parser::Project*> Project::GetOperator(std::vector<Lexer::Token*>* Tokens, int& i, std::map<std::string, GILModule*>* Modules)
+		std::pair<Sequence*, Project*> Project::GetSeq(CallOperation* Seq, std::map<std::string, GILModule*>* Modules)
 		{
-			if (!Operators.contains((*Tokens)[i]->Value))
+			//Check if the sequence is in another namespace
+			if (Seq->Location.size() != 0)
+			{
+				if (Modules->contains(Seq->Location[0]))
+				{
+					return { (*Modules)[Seq->Location[0]]->GetSequence(Seq->Name), nullptr };
+				}
+				return this->Namespaces[Seq->Location[0]]->GetSeqFromNamespace(Seq->Name, Seq->Location, 1, Modules);
+			}
+			return { Sequences[Seq->Name], this };
+		}
+
+		std::pair<Sequence*, Parser::Project*> Project::GetOperator(std::string& OperatorName, std::map<std::string, GILModule*>* Modules)
+		{
+			if (!Operators.contains(OperatorName))
 				return { nullptr, this };
-			Operator* op = (Operator*)Operators[(*Tokens)[i]->Value];
+			Operator* op = (Operator*)Operators[OperatorName];
 			return { op, op->Origin };
 		}
 
 		//Recursively traverse namespaces until you get to the one with the sequence
-		Sequence* Project::GetSeqFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, 
+		std::pair<Sequence*, Project*> Project::GetSeqFromNamespace(std::string& SeqName, std::vector<std::string>& Namespaces, int i,
 			std::map<std::string, GILModule*>* Modules)
 		{
 			if (i < Namespaces.size())
-				return this->Namespaces[*Namespaces[i]]->GetSeqFromNamespace(SeqName, Namespaces, i + 1, Modules);
-			return Sequences[SeqName];
+				return this->Namespaces[Namespaces[i]]->GetSeqFromNamespace(SeqName, Namespaces, i + 1, Modules);
+			return { Sequences[SeqName], this };
 		}
 
 		Sequence* Project::GetOperatorFromNamespace(std::string& SeqName, std::vector<std::string*>& Namespaces, int i, std::map<std::string, GILModule*>* Modules)
@@ -1175,7 +1147,7 @@ namespace GIL
 			Proj->Main.reserve(Len);
 			for (int i = 0; i < Len; ++i)
 			{
-				Proj->Main.push_back(Token::Load(InputFile));
+				Proj->Main.push_back(AST_Node::LoadNode(InputFile, Proj));
 			}
 
 			Len = -1;

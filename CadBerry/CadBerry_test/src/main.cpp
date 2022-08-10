@@ -8,6 +8,7 @@
 #include <cstdio>
 
 #include "GILExamples.h"
+#include "lug/lug.hpp"
 
 namespace CDB
 {
@@ -15,6 +16,7 @@ namespace CDB
 	{
 		__declspec(dllimport) CDB::BuildEngine* __stdcall GetBuildEngine();
 	}
+	
 
 	void DeleteProjectCache()
 	{
@@ -199,6 +201,7 @@ namespace CDB
 		{
 			auto tokens = GIL::Lexer::Tokenize(TargetExample1);
 			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			GIL::Compiler::Compile(project.raw());
 			CHECK(project->TargetOrganism == "S.Cerevisiae");
 
 			tokens = GIL::Lexer::Tokenize(TargetExample2);
@@ -232,11 +235,6 @@ namespace CDB
 			tokens = GIL::Lexer::Tokenize(TargetExample9);
 			project = GIL::Parser::Project::Parse(*tokens);
 			CHECK(project->TargetOrganism == "Yeast");
-
-			//Make sure it doesn't parse invalid targets
-			tokens = GIL::Lexer::Tokenize(TargetExampleError);
-			project = GIL::Parser::Project::Parse(*tokens);
-			CHECK(project->TargetOrganism == "ERR_NO_TARGET");
 		}
 
 		SECTION("Preprocessor commands")
@@ -285,6 +283,7 @@ namespace CDB
 			//#Var
 			tokens = GIL::Lexer::Tokenize(CreateVarExample1);
 			project = GIL::Parser::Project::Parse(*tokens);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(project->StrVars.size() == 1);
 			CHECK(project->NumVars.size() == 1);
 
@@ -294,6 +293,7 @@ namespace CDB
 
 			tokens = GIL::Lexer::Tokenize(CreateVarExample2);
 			project = GIL::Parser::Project::Parse(*tokens);
+			Output = GIL::Compiler::Compile(project.raw());
 			CHECK(project->StrVars.size() == 1);
 			CHECK(project->NumVars.size() == 1);
 

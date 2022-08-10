@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Berry", "Berry\Berry.vcxproj", "{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CDBRNA", "CadBerry\vendor\RNAstructure\CDBRNA\CDBRNA.vcxproj", "{4FC11CA9-3B63-477F-241E-5BD3105FCECF}"
@@ -27,11 +29,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VSCodeIntegration", "Module
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WhereAmI", "CadBerry\vendor\WhereAmI\WhereAmI.vcxproj", "{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lemon", "vendor\lemon\lemon.vcxproj", "{4097DA0F-ACAB-02C1-752D-A620E100FFF1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lug2cpp", "CadBerry\vendor\lug\lug2cpp\lug2cpp.vcxproj", "{42CBA195-AEAA-2031-B7C2-AB0723218792}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "regulation", "regulation\regulation.vcxproj", "{3F565F37-2B0E-A184-9415-7AE080EC3B75}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensing", "sensing\sensing.vcxproj", "{DC53C98B-4833-4827-514B-D3FDBDA9AE88}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{169C8510-82B0-ADC1-4B32-5121B705AAF2}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CadBerry IDE", "CadBerry Installer\CadBerry IDE.vdproj", "{6388CB49-EDBF-4728-8522-21D4680A3D4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +99,14 @@ Global
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Debug|x64.Build.0 = Debug|x64
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.ActiveCfg = Release|x64
 		{F7C69BFF-E393-F60A-0CAD-E4B2F8D82B99}.Release|x64.Build.0 = Release|x64
+		{4097DA0F-ACAB-02C1-752D-A620E100FFF1}.Debug|x64.ActiveCfg = Debug|x64
+		{4097DA0F-ACAB-02C1-752D-A620E100FFF1}.Debug|x64.Build.0 = Debug|x64
+		{4097DA0F-ACAB-02C1-752D-A620E100FFF1}.Release|x64.ActiveCfg = Release|x64
+		{4097DA0F-ACAB-02C1-752D-A620E100FFF1}.Release|x64.Build.0 = Release|x64
+		{42CBA195-AEAA-2031-B7C2-AB0723218792}.Debug|x64.ActiveCfg = Debug|x64
+		{42CBA195-AEAA-2031-B7C2-AB0723218792}.Debug|x64.Build.0 = Debug|x64
+		{42CBA195-AEAA-2031-B7C2-AB0723218792}.Release|x64.ActiveCfg = Release|x64
+		{42CBA195-AEAA-2031-B7C2-AB0723218792}.Release|x64.Build.0 = Release|x64
 		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Debug|x64.ActiveCfg = Debug|x64
 		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Debug|x64.Build.0 = Debug|x64
 		{3F565F37-2B0E-A184-9415-7AE080EC3B75}.Release|x64.ActiveCfg = Release|x64
@@ -103,8 +119,15 @@ Global
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Debug|x64.Build.0 = Debug|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.ActiveCfg = Release|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.Build.0 = Release|x64
+		{6388CB49-EDBF-4728-8522-21D4680A3D4E}.Debug|x64.ActiveCfg = Debug
+		{6388CB49-EDBF-4728-8522-21D4680A3D4E}.Debug|x64.Build.0 = Debug
+		{6388CB49-EDBF-4728-8522-21D4680A3D4E}.Release|x64.ActiveCfg = Release
+		{6388CB49-EDBF-4728-8522-21D4680A3D4E}.Release|x64.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E495BC9-D27A-4F27-A8F2-9751E2C81F66}
 	EndGlobalSection
 EndGlobal

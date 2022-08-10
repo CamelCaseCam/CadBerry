@@ -178,22 +178,29 @@ Enter project name: )";
         bool CreateProject = ImGui::Button("Create Project!");
         if (CreateProject)
         {
-            CDB_BuildInfo("Creating project {0} at location {1}", ProjectName, Path);
-            Application::Get().OpenProject = new Project(ProjectName, Path);
-
-            std::ofstream OutFile;
-            if (std::filesystem::exists(Application::Get().PathToEXE + "/CDBProjectList.cfg"))
+            if (Path != nullptr)
             {
-                OutFile.open(Application::Get().PathToEXE + "/CDBProjectList.cfg", std::ios_base::app);
-                OutFile << "\n";
+                CDB_BuildInfo("Creating project {0} at location {1}", ProjectName, Path);
+                Application::Get().OpenProject = new Project(ProjectName, Path);
+
+                std::ofstream OutFile;
+                if (std::filesystem::exists(Application::Get().PathToEXE + "/CDBProjectList.cfg"))
+                {
+                    OutFile.open(Application::Get().PathToEXE + "/CDBProjectList.cfg", std::ios_base::app);
+                    OutFile << "\n";
+                }
+                else
+                {
+                    OutFile.open(Application::Get().PathToEXE + "/CDBProjectList.cfg");
+                }
+                OutFile << Application::Get().OpenProject->Name << ":" << Application::Get().OpenProject->PathToBerryFile;
+
+                Application::Get().ShouldExit = true;
             }
             else
             {
-                OutFile.open(Application::Get().PathToEXE + "/CDBProjectList.cfg");
+				CDB_EditorError("You must select a path to create the project");
             }
-            OutFile << Application::Get().OpenProject->Name << ":" << Application::Get().OpenProject->PathToBerryFile;
-
-            Application::Get().ShouldExit = true;
         }
     }
 }

@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 ﻿     Creating library ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.lib and object ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.exp
 LINK : warning LNK4217: symbol '?EmptyTokens@GIL@@3V?$vector@PEAVToken@Lexer@GIL@@V?$allocator@PEAVToken@Lexer@GIL@@@std@@@std@@A (class std::vector<class GIL::Lexer::Token *,class std::allocator<class GIL::Lexer::Token *> > GIL::EmptyTokens)' defined in 'Sequence.obj' is imported by 'Compiler.obj' in function '"public: virtual class std::vector<class GIL::Lexer::Token *,class std::allocator<class GIL::Lexer::Token *> > & __cdecl GIL::Sequence::GetTokens(void)" (?GetTokens@Sequence@GIL@@UEAAAEAV?$vector@PEAVToken@Lexer@GIL@@V?$allocator@PEAVToken@Lexer@GIL@@@std@@@std@@XZ)'
 LINK : warning LNK4286: symbol '?EmptyTokens@GIL@@3V?$vector@PEAVToken@Lexer@GIL@@V?$allocator@PEAVToken@Lexer@GIL@@@std@@@std@@A (class std::vector<class GIL::Lexer::Token *,class std::allocator<class GIL::Lexer::Token *> > GIL::EmptyTokens)' defined in 'Sequence.obj' is imported by 'Project.obj'
   GILBuildEngine.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.dll
+=======
+﻿  GILBuildEngine.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.dll
+>>>>>>> parser-ast
           1 file(s) copied.
           1 file(s) copied.
           1 file(s) copied.

@@ -53,6 +53,9 @@
     <ClInclude Include="src\GIL\Compiler\Compiler.h">
       <Filter>GIL\Compiler</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\Compiler\CompilerFunctions.h">
+      <Filter>GIL\Compiler</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\Compiler\CompilerMacros.h">
       <Filter>GIL\Compiler</Filter>
     </ClInclude>
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="src\GIL\OutputTypes.h">
       <Filter>GIL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Parser\AST_Node.h">
+      <Filter>GIL\Parser</Filter>
     </ClInclude>
     <ClInclude Include="src\GIL\Parser\ArchiveCGIL.h">
       <Filter>GIL\Parser</Filter>
@@ -130,6 +136,9 @@
     <ClCompile Include="src\GIL\Compiler\Compiler.cpp">
       <Filter>GIL\Compiler</Filter>
     </ClCompile>
+    <ClCompile Include="src\GIL\Compiler\CompilerFunctions.cpp">
+      <Filter>GIL\Compiler</Filter>
+    </ClCompile>
     <ClCompile Include="src\GIL\Compiler\GBSequence.cpp">
       <Filter>GIL\Compiler</Filter>
     </ClCompile>
@@ -153,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="src\GIL\OutputTypes.cpp">
       <Filter>GIL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Parser\AST_Node.cpp">
+      <Filter>GIL\Parser</Filter>
     </ClCompile>
     <ClCompile Include="src\GIL\Parser\Project.cpp">
       <Filter>GIL\Parser</Filter>

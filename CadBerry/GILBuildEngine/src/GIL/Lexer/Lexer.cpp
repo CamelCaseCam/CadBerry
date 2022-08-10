@@ -10,20 +10,20 @@ namespace GIL
 	namespace Lexer
 	{
 		//Function definitions to make our life easier:
-		Token* StartsWithLetter(std::string& Text, int& i);
-		Token* GetIdent(std::string& Text, int& i);
-		Token* GetPrepro(std::string& Text, int& i);
-		Token* GetDNALiteral(std::string& Text, int& i);
-		Token* GetAminoSequence(std::string& Text, int& i);
-		Token* GetComment(std::string& Text, int& i);
-		Token* GetMultilineComment(std::string& Text, int& i);
-		Token* GetParam(std::string& Text, int& i);
-		Token* GetOp(std::string& Text, int& i);
+		Token* StartsWithLetter(std::string& Text, int& i, size_t& LineNum);
+		Token* GetIdent(std::string& Text, int& i, size_t& LineNum);
+		Token* GetPrepro(std::string& Text, int& i, size_t& LineNum);
+		Token* GetDNALiteral(std::string& Text, int& i, size_t& LineNum);
+		Token* GetAminoSequence(std::string& Text, int& i, size_t& LineNum);
+		Token* GetComment(std::string& Text, int& i, size_t& LineNum);
+		Token* GetMultilineComment(std::string& Text, int& i, size_t& LineNum);
+		Token* GetParam(std::string& Text, int& i, size_t& LineNum);
+		Token* GetOp(std::string& Text, int& i, size_t& LineNum);
 
 		void GetMapToken(Token*& t, std::unordered_map<std::string, Token**>& Dict, std::string& TokenName, Token* Default);
 		void GetMapToken(Token* t, std::unordered_map<std::string, LexerToken>& Dict, LexerToken Default);
 		void GetWord(std::string& Text, std::string& Output, int& i);
-		void GetString(std::string& Text, std::string& Output, int& i);
+		void GetString(std::string& Text, std::string& Output, int& i, size_t& LineNum);
 
 		bool ContainsIllegalOperatorChars(std::string& str);
 
@@ -33,12 +33,13 @@ namespace GIL
 		{
 			
 			std::vector<Token*>* OutputTokens = new std::vector<Token*>();
+			size_t LineNum = 0;
 			for (int i = 0; i < Text.length(); i++)
 			{	
 				switch (tolower(Text[i]))
 				{
 				case '\n':
-					OutputTokens->push_back(Token::Newline);
+					++LineNum;
 					break;
 				case '{':
 					OutputTokens->push_back(Token::Begin);
@@ -51,7 +52,8 @@ namespace GIL
 					break;
 				InAlphabet    //Simple macro to check if the char is in the alphabet
 				{
-					Token * tok = StartsWithLetter(Text, i);
+					Token* tok = StartsWithLetter(Text, i, LineNum);
+					tok->line = LineNum;
 					OutputTokens->push_back(tok);
 					
 					//Now check if the token is an operator definition
@@ -62,31 +64,35 @@ namespace GIL
 
 						//Advance through whitespace
 						while (i < Text.length() && IsWhiteSpace(Text[i]))
+						{
+							if (Text[i] == '\n')
+								++LineNum;
 							++i;
+						}
 						GetWord(Text, tok->Value, i);
 					}
 					break;
 				}
 				case '#':
-					OutputTokens->push_back(GetPrepro(Text, i));
+					OutputTokens->push_back(GetPrepro(Text, i, LineNum));
 					break;
 				case '$':
 					++i;
-					OutputTokens->push_back(GetParam(Text, i));
+					OutputTokens->push_back(GetParam(Text, i, LineNum));
 					break;
 				case '@':
-					OutputTokens->push_back(GetAminoSequence(Text, i));
+					OutputTokens->push_back(GetAminoSequence(Text, i, LineNum));
 					break;
 				case '/':
 					if (Text[i + 1] == '/')
 					{
 						i += 2;
-						OutputTokens->push_back(GetComment(Text, i));
+						OutputTokens->push_back(GetComment(Text, i,	LineNum));
 					}
 					else if (Text[i + 1] == '*')
 					{
 						i += 2;
-						OutputTokens->push_back(GetMultilineComment(Text, i));
+						OutputTokens->push_back(GetMultilineComment(Text, i, LineNum));
 					}
 					else
 					{
@@ -98,7 +104,7 @@ namespace GIL
 					}
 					break;
 				case '.':
-					OutputTokens->push_back(GetOp(Text, i));
+					OutputTokens->push_back(GetOp(Text, i, LineNum));
 					break;
 				case '=':
 					if (Text[i + 1] == '>')
@@ -137,43 +143,25 @@ namespace GIL
 					Token* NewToken = new Token();
 					NewToken->TokenType = LexerToken::STRING;
 					++i;
-					GetString(Text, NewToken->Value, i);
+					GetString(Text, NewToken->Value, i, LineNum);
 					OutputTokens->push_back(NewToken);
 					break;
 				}
 				case '\'':
 					++i;
-					OutputTokens->push_back(GetDNALiteral(Text, i));
+					OutputTokens->push_back(GetDNALiteral(Text, i, LineNum));
 					break;
 				case ':':
 				{
-					//If the last token was a namespace token, ignore this colon
-					if ((*OutputTokens)[OutputTokens->size() - 1]->TokenType == LexerToken::NAMESPACE)
+					//If the last token was a ASSIGNTYPE token, this is a namespace token
+					if ((*OutputTokens)[OutputTokens->size() - 1]->TokenType == LexerToken::ASSIGNTYPE)
 					{
+						(*OutputTokens)[OutputTokens->size() - 1]->TokenType = LexerToken::NAMESPACE;
 						break;
 					}
 					
-					//Check if the last token was an ident
-					if (OutputTokens->operator[](OutputTokens->size() - 1)->TokenType != LexerToken::IDENT)
-					{
-						if ((*OutputTokens)[OutputTokens->size() - 1]->TokenType == LexerToken::RPAREN)
-						{
-							//TODO: fix this
-							OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
-							break;
-						}
-						CDB_BuildError("Expected namespace name");
-					}
-
-					//if it's a type assignment
-					if ((*OutputTokens)[OutputTokens->size() - 2]->TokenType == LexerToken::DEFINESEQUENCE
-						|| (*OutputTokens)[OutputTokens->size() - 2]->TokenType == LexerToken::DEFOP)
-					{
-						//TODO: fix this
-						OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
-						break;
-					}
-					OutputTokens->operator[](OutputTokens->size() - 1)->TokenType = LexerToken::NAMESPACE;
+					//TODO: fix this
+					OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
 					break;
 				}
 				case ' ':
@@ -193,6 +181,7 @@ namespace GIL
 						break;
 					}
 					t->TokenType = LexerToken::IDENT;
+					t->line = LineNum;
 					OutputTokens->push_back(t);
 					break;
 				}
@@ -215,7 +204,7 @@ namespace GIL
 			return false;
 		}
 
-		Token* StartsWithLetter(std::string& Text, int& i)
+		Token* StartsWithLetter(std::string& Text, int& i, size_t& LineNum)
 		{
 			switch (Text[i])
 			{
@@ -235,22 +224,24 @@ namespace GIL
 					//To prevent us from altering the operator token
 					if (T->TokenType == LexerToken::OPERATOR)
 						return new Token(LexerToken::OPERATOR, "");
+					T->line = LineNum;
 					return T;
 				}
 			default:
-				return GetIdent(Text, i);
+				return GetIdent(Text, i, LineNum);
 			}
 		}
 
-		Token* GetIdent(std::string& Text, int& i)
+		Token* GetIdent(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* T = new Token(LexerToken::IDENT, "");
 			GetWord(Text, T->Value, i);
 
+			T->line = LineNum;
 			return T;
 		}
 
-		Token* GetPrepro(std::string& Text, int& i)
+		Token* GetPrepro(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* T = new Token();
 			GetWord(Text, T->Value, i);
@@ -267,22 +258,26 @@ namespace GIL
 					CDB_BuildError("Unknown preprocessor directive \"{0}\"", T->Value);
 				}
 			}
+			T->line = LineNum;
 			return T;
 		}
 
-		Token* GetParam(std::string& Text, int& i)
+		Token* GetParam(std::string& Text, int& i, size_t& LineNum)
 		{
 			std::string s;
 			GetWord(Text, s, i);
 
-			return new Token(LexerToken::PARAM, s);
+			Token* T = new Token(LexerToken::PARAM, s);
+			T->line = LineNum;
+			return T;
 		}
 
 		//One change between this version of gil and the c# version of gil is amino acid sequences. In GIL 1, you'd wrap them in AminoSequence {}
 		//In this version, you do @Your amino sequence@
-		Token* GetAminoSequence(std::string& Text, int& i)
+		Token* GetAminoSequence(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* T = new Token(LexerToken::AMINOS, "");
+			T->line = LineNum;
 			++i;
 
 			int SeqStart = i;
@@ -290,7 +285,13 @@ namespace GIL
 			for (i; i < Text.length() && Text[i] != '@'; ++i)
 			{
 				if (IsWhiteSpace(Text[i]))
+				{
+					if (Text[i] == '\n')
+					{
+						++LineNum;
+					}
 					continue;
+				}
 				SeqLen++;
 			}
 			T->Value.reserve(SeqLen);
@@ -303,13 +304,15 @@ namespace GIL
 			return T;
 		}
 
-		Token* GetComment(std::string& Text, int& i)
+		Token* GetComment(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* T = new Token();
+			T->line = LineNum;
 			int CommentStart = i; 
 			int NumChars = 0;
 			for (i; i < Text.length() && Text[i] != '\n'; ++i)
 				++NumChars;
+			++LineNum;
 			T->TokenType = LexerToken::COMMENT;
 			T->Value.reserve(NumChars);
 			for (CommentStart; CommentStart < i; ++CommentStart)
@@ -317,21 +320,27 @@ namespace GIL
 			return T;
 		}
 
-		Token* GetMultilineComment(std::string& Text, int& i)
+		Token* GetMultilineComment(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* T = new Token();
+			T->line = LineNum;
 			int CommentStart = i;
 			int NumChars = 0;
 			for (i; i < Text.length() && (Text[i] != '*' || Text[i + 1] != '/'); ++i)
+			{
+				if (Text[i] == '\n')
+					++LineNum;
 				++NumChars;
+			}
 			T->TokenType = LexerToken::COMMENT;
 			T->Value = Text.substr(CommentStart, NumChars);
 			return T;
 		}
 
-		Token* GetOp(std::string& Text, int& i)
+		Token* GetOp(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* T = new Token(LexerToken::CALLOP, "");
+			T->line = LineNum;
 			++i;
 			GetWord(Text, T->Value, i);
 
@@ -370,24 +379,33 @@ namespace GIL
 			--i;
 		}
 
-		void GetString(std::string& Text, std::string& Output, int& i)
+		void GetString(std::string& Text, std::string& Output, int& i, size_t& LineNum)
 		{
 			int WordLen = 0;
 			int WordStart = i;
 			for (i; i < Text.length() && Text[i] != '"' && Text[i] != '¬'; ++i)    //We're disallowing ¬ in a string because CadBerry will use that internally to mark entry points
+			{
+				if (Text[i] == '\n')
+					++LineNum;
 				++WordLen;
+			}
 			Output.reserve(WordLen);    //Reserve the length of the string
 			for (WordStart; WordStart < i; ++WordStart)
 				Output += Text[WordStart];
 		}
 
-		Token* GetDNALiteral(std::string& Text, int& i)
+		Token* GetDNALiteral(std::string& Text, int& i, size_t& LineNum)
 		{
 			Token* Output = new Token(LexerToken::DNA, "");
+			Output->line = LineNum;
 			int WordLen = 0;
 			int WordStart = i;
 			for (i; i < Text.length() && Text[i] != '\''; ++i)
+			{
+				if (Text[i] == '\n')
+					++LineNum;
 				++WordLen;
+			}
 			Output->Value.reserve(WordLen);
 			for (WordStart; WordStart < i; ++WordStart)
 				Output->Value += Text[WordStart];
