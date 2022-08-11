@@ -1,0 +1,10 @@
+includedir=C:/Program Files (x86)/Catch2/include
+libdir=C:/Program Files (x86)/Catch2/lib
+pkg_version=3.0.0
+
+Name: Catch2-With-Main
+Description: A modern, C++-native test framework for C++14 and above (links in default main)
+Version: ${pkg_version}
+Requires: catch2 = ${pkg_version}
+Cflags: -I${includedir}
+Libs: -L${libdir} -lCatch2Main

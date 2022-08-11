@@ -1,0 +1,3 @@
+﻿  Building Custom Rule D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/src/CMakeLists.txt
+  catch_main.cpp
+  Catch2WithMain.vcxproj -> D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\Release\Catch2Main.lib

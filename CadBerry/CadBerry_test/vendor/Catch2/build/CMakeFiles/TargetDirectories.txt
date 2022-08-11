@@ -1,0 +1,8 @@
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/CMakeFiles/PACKAGE.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/CMakeFiles/INSTALL.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/CMakeFiles/ALL_BUILD.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/CMakeFiles/ZERO_CHECK.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/Catch2.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/Catch2WithMain.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/PACKAGE.dir
+D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/INSTALL.dir
