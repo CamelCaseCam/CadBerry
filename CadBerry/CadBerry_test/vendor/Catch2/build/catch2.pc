@@ -1,0 +1,11 @@
+prefix=C:/Program Files (x86)/Catch2
+exec_prefix=${prefix}
+includedir=C:/Program Files (x86)/Catch2/include
+libdir=C:/Program Files (x86)/Catch2/lib
+
+Name: Catch2
+Description: A modern, C++-native, test framework for C++14 and above
+URL: https://github.com/catchorg/Catch2
+Version: 3.0.0
+Cflags: -I${includedir}
+Libs: -L${libdir} -lCatch2

@@ -30,16 +30,26 @@ namespace CDB
 
 		EditorWindow->m_LayerStack.PushOverlay(GuiLayer);
 		EditorWindow->m_LayerStack.PushLayer(Viewports);
+<<<<<<< HEAD
 		glGenVertexArrays(1, &VertexArray);
+=======
+		/*glGenVertexArrays(1, &VertexArray);
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
 		glBindVertexArray(VertexArray);
 
 		glGenBuffers(1, &VertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, VertexBuffer);
 
 		float vertices[3 * 3] = {
+<<<<<<< HEAD
 			0.0f, 0.5f, 0.0f,
 			-0.5f, -0.5f, 0.0f,
 			0.5f, -0.5f, 0.0f
+=======
+			-0.5f, 0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.0f, 0.5f, 0.0f
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
 		};
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
@@ -51,6 +61,7 @@ namespace CDB
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IndexBuffer);
 		
 		unsigned int indices[3] = { 0, 1, 2 };
+<<<<<<< HEAD
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		std::string VertSrc = R"(
@@ -81,15 +92,23 @@ namespace CDB
 		)";
 
 		shader = new Shader(VertSrc, FragSrc);
+=======
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
 
 		running = true;
 
 		EditorWindow->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		while (running)
 		{
+<<<<<<< HEAD
 			shader->Bind();
 			glBindVertexArray(VertexArray);
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+=======
+			/*glBindVertexArray(VertexArray);
+			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);*/
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
 
 			EditorWindow->OnUpdate();
 			for (Layer* layer : EditorWindow->m_LayerStack)

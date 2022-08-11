@@ -1,0 +1,717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_automake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_combined_tu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_common_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_compact.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_cumulative_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_junit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_multi.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_sonarqube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_streaming_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_tap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_teamcity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_xml.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_approx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_assertion_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_assertion_result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\internal\catch_matchers_combined_tu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_clara.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_commandline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_source_line_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_case_insensitive_comparisons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_console_colour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debug_console.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enforce.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enum_values_registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_exception_translator_registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_fatal_condition_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_floating_point_helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_istream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\internal\catch_generators_combined_tu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_combined_tu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_list.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_floating_point.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_string.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_templated.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_message.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_output_redirect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_registry_hub.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_combined_tu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_number_generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_seed_generation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_spec_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_result_type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_run_context.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_section.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stdstreams.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_session.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_singletons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reusable_string_stream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stringref.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_string_manip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_tag_alias_registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_case_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_registry_impl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_tracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_registry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_textflow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_spec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_spec_parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tostring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_totals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_version.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_wildcard_pattern.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_xmlwriter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_info_hasher.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\internal\catch_benchmark_combined_tu.cpp">
+      <Filter>benchmark</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_stats.cpp">
+      <Filter>benchmark</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporters_all.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_automake.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_common_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_compact.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_console.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_cumulative_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_event_listener.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_helpers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_junit.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_multi.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_sonarqube.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_streaming_base.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_tap.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_teamcity.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_xml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes\catch2\catch_user_config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_user_config.hpp.in">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_all.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_all.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_all.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_all.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\internal\catch_matchers_impl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_case_insensitive_comparisons.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_console_width.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_container_nonmembers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_noncopyable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_approx.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_assertion_handler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_assertion_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_assertion_result.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_macro_impl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_failure_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_case_sensitive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_clara.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_commandline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_source_line_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_compiler_capabilities.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_android_logwrite.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_counter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_uncaught_exceptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_wchar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_console_colour.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_context.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debug_console.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debugger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_decomposer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enforce.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enum_values_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_errno_guard.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_exception_translator_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_fatal_condition_handler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_floating_point_helpers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_istream.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_unique_name.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_sharding.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generator_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_adapters.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_range.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_capture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_config.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_enum_values_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_generatortracker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_registry_hub.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter_factory.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_tag_alias_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_testcase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_lazy_expr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_leak_detector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_list.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_container_properties.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_contains.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_floating_point.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_predicate.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_quantifiers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_string.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_templated.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_vector.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_message.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_message_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_meta.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_move_and_forward.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_optional.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_output_redirect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_platform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_polyfills.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_preprocessor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_preprocessor_remove_parens.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_number_generator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_seed_generation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_registrars.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_spec_parser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_result_type.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_run_context.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_section.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stdstreams.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_section_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_session.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_singletons.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_startup_exception_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reusable_string_stream.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stream_end_stop.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_string_manip.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stringref.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tag_alias.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tag_alias_autoregistrar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_tag_alias_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_case_info.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_registry_impl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_tracker.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_template_test_macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_template_test_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_registry.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_spec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_spec_parser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_textflow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_timer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_to_string.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tostring.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_totals.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_translate_exception.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_uncaught_exceptions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_unique_ptr.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_void_type.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_version.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_version_macros.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_wildcard_pattern.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_windows_h_proxy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_xmlwriter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_info_hasher.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_benchmark.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_benchmark_all.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_chronometer.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_clock.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_constructor.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_environment.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_estimate.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_execution_plan.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_optimizer.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_outlier_classification.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_sample_analysis.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_analyse.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_benchmark_function.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_complete_invoke.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_estimate_clock.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_measure.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_repeat.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_run_for_at_least.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_stats.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_timing.hpp">
+      <Filter>benchmark</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7FE63A1F-D919-319E-A552-F862CE19D06E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{7CB321FB-B02E-3EA5-8951-1A15B97172C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="benchmark">
+      <UniqueIdentifier>{1B4E8F59-E720-3A7E-96DB-C9BEDF797AE3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

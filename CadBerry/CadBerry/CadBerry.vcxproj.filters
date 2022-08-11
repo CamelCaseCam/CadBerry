@@ -112,7 +112,10 @@
     <ClInclude Include="src\cdbpch.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
     <ClInclude Include="src\CadBerry\Platform\OpenGL\OpenGLContext.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
+=======
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp">
@@ -153,6 +156,9 @@
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
     <ClCompile Include="src\CadBerry\Platform\OpenGL\OpenGLContext.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
+=======
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
   </ItemGroup>
 </Project>

@@ -16,8 +16,11 @@ namespace CDB
 		glfwMakeContextCurrent(WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CDB_EditorAssert(status, "Failed to load Glad")
+<<<<<<< HEAD
 
 		CDB_BuildInfo("Detected {0} GPU", glGetString(GL_VENDOR));
+=======
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
 	}
 
 	void OpenGLContext::SwapBuffers()

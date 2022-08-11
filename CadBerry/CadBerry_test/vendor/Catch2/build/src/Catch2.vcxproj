@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8d538cbe-01bf-4a2e-a98a-6c368fdf13d7}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>Catch2</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Catch2.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Catch2d</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Catch2.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Catch2</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Catch2.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Catch2</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Catch2.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Catch2</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\..;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2 -BD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build --check-stamp-file D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.22\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckSourceCompiles.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\CMake\CatchMiscFunctions.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_user_config.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2 -BD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build --check-stamp-file D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.22\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckSourceCompiles.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\CMake\CatchMiscFunctions.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_user_config.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2 -BD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build --check-stamp-file D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.22\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckSourceCompiles.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\CMake\CatchMiscFunctions.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_user_config.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/src/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2 -BD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build --check-stamp-file D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.22\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.22\Modules\Internal\CheckSourceCompiles.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\CMake\CatchMiscFunctions.cmake;D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_user_config.hpp.in;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\src\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporters_all.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_automake.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_common_base.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_compact.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_console.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_cumulative_base.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_event_listener.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_helpers.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_junit.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_multi.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_sonarqube.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_streaming_base.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_tap.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_teamcity.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_xml.hpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_automake.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_combined_tu.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_common_base.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_compact.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_console.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_cumulative_base.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_junit.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_multi.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_sonarqube.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_streaming_base.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_tap.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_teamcity.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_xml.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_approx.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_assertion_handler.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_assertion_result.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\internal\catch_matchers_combined_tu.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_clara.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_commandline.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_source_line_info.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_config.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_case_insensitive_comparisons.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_console_colour.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_context.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debug_console.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debugger.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enforce.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enum_values_registry.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_exception_translator_registry.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_fatal_condition_handler.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_floating_point_helpers.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_istream.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\internal\catch_generators_combined_tu.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_combined_tu.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_list.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_floating_point.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_string.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_templated.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_message.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_output_redirect.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_registry_hub.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_combined_tu.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_number_generator.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_seed_generation.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_registry.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_spec_parser.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_result_type.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_run_context.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_section.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stdstreams.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_session.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_singletons.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reusable_string_stream.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stringref.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_string_manip.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_tag_alias_registry.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_case_info.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_registry_impl.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_tracker.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_registry.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_textflow.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_spec.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_spec_parser.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_timer.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tostring.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_totals.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_version.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_wildcard_pattern.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_xmlwriter.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_info_hasher.cpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\generated-includes\catch2\catch_user_config.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_user_config.hpp.in" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_all.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_all.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_all.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_all.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\internal\catch_matchers_impl.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_case_insensitive_comparisons.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_console_width.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_container_nonmembers.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_noncopyable.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_approx.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_assertion_handler.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_assertion_info.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_assertion_result.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_macro_impl.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_failure_exception.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_case_sensitive.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_clara.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_commandline.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_source_line_info.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_compiler_capabilities.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_config.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_android_logwrite.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_counter.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_uncaught_exceptions.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_config_wchar.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_console_colour.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_context.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debug_console.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_debugger.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_decomposer.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enforce.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_enum_values_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_errno_guard.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_exception_translator_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_fatal_condition_handler.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_floating_point_helpers.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_istream.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_unique_name.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_sharding.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generator_exception.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_adapters.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_random.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\generators\catch_generators_range.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_capture.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_config.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_enum_values_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_exception.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_generatortracker.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_registry_hub.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter_factory.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_reporter_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_tag_alias_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\interfaces\catch_interfaces_testcase.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_lazy_expr.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_leak_detector.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_list.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_container_properties.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_contains.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_exception.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_floating_point.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_predicate.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_quantifiers.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_string.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_templated.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\matchers\catch_matchers_vector.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_message.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_message_info.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_meta.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_move_and_forward.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_optional.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_output_redirect.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_platform.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_polyfills.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_preprocessor.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_preprocessor_remove_parens.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_number_generator.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_random_seed_generation.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\reporters\catch_reporter_registrars.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reporter_spec_parser.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_result_type.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_run_context.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_section.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stdstreams.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_section_info.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_session.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_singletons.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_startup_exception_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_reusable_string_stream.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stream_end_stop.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_string_manip.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_stringref.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tag_alias.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tag_alias_autoregistrar.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_tag_alias_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_case_info.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_registry_impl.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_tracker.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_template_test_macros.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_macros.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_template_test_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_registry.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_test_spec.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_spec_parser.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_textflow.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_timer.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_to_string.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_tostring.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_totals.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_translate_exception.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_uncaught_exceptions.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_unique_ptr.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_void_type.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_version.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\catch_version_macros.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_wildcard_pattern.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_windows_h_proxy.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_xmlwriter.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\internal\catch_test_case_info_hasher.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_benchmark.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_benchmark_all.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_chronometer.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_clock.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_constructor.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_environment.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_estimate.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_execution_plan.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_optimizer.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_outlier_classification.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\catch_sample_analysis.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_analyse.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_benchmark_function.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_complete_invoke.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_estimate_clock.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_measure.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_repeat.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_run_for_at_least.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_stats.hpp" />
+    <ClInclude Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_timing.hpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\internal\catch_benchmark_combined_tu.cpp" />
+    <ClCompile Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\src\catch2\benchmark\detail\catch_stats.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Development\CadBerry\CadBerry\CadBerry_test\vendor\Catch2\build\ZERO_CHECK.vcxproj">
+      <Project>{1C3A6DB9-8F46-3C07-AAE9-A1FABC8A2EB2}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

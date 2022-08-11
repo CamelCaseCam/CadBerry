@@ -135,7 +135,10 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClInclude Include="src\CadBerry\Project\CreateProject.h" />
     <ClInclude Include="src\CadBerry\Project\Project.h" />
     <ClInclude Include="src\CadBerry\Rendering\GraphicsContext.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\CadBerry\Rendering\Shader.h" />
+=======
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
     <ClInclude Include="src\CadBerry\Tests\SimpleModule.h" />
     <ClInclude Include="src\CadBerry\Tests\SimpleViewport.h" />
     <ClInclude Include="src\CadBerry\Window.h" />
@@ -155,7 +158,10 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
     <ClCompile Include="src\CadBerry\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\CadBerry\Project\CreateProject.cpp" />
     <ClCompile Include="src\CadBerry\Project\Project.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="src\CadBerry\Rendering\Shader.cpp" />
+=======
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
     <ClCompile Include="src\cdbpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

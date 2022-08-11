@@ -1,4 +1,5 @@
 ﻿cl : command line warning D9025: overriding '/MTd' with '/MDd'
+<<<<<<< HEAD
   Compiler.cpp
 D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Layer.h(21,15): warning C4251: 'CDB::Layer::m_Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'CDB::Layer'
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xstring(4905): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -32,6 +33,11 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(76
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(87,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(96,31): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\Compiler.cpp(113,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+=======
+  GBSequence.cpp
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\GBSequence.cpp(42,75): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\GBSequence.cpp(44,53): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
   GILBuildEngine.vcxproj -> D:\Development\CadBerry\CadBerry\bin\Debug-windows-x86_64\GILBuildEngine\GILBuildEngine.dll
           1 file(s) copied.
           1 file(s) copied.

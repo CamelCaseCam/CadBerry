@@ -1,0 +1,10 @@
+^D:\DEVELOPMENT\CADBERRY\CADBERRY\CADBERRY_TEST\VENDOR\CATCH2\SRC\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2 -BD:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build --check-stamp-file D:/Development/CadBerry/CadBerry/CadBerry_test/vendor/Catch2/build/src/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -4,7 +4,10 @@ d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\cadberry.pch
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\vc142.pdb
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\vc142.idb
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\cdbpch.obj
+<<<<<<< HEAD
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\shader.obj
+=======
+>>>>>>> 6bb4493681bd7d96fea1812202eb7077be127cf8
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\project.obj
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\createproject.obj
 d:\development\cadberry\cadberry\bin\debug-windows-x86_64\cadberry\windowswindow.obj
