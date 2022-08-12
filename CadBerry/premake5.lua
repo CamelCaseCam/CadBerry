@@ -65,7 +65,7 @@ project "CadBerry"
 		"%{IncludeDirs.ImPlot}",
 		"CadBerry/vendor/BlockingCollection",
 		"CadBerry/vendor/cpr/include",
-		"CadBerry/vendor/cpr/cpr_generated_includes",
+		"CadBerry/vendor/cpr/cmakebuild/cpr_generated_includes",
 		"CadBerry/vendor/cpr/cmakebuild/_deps/curl-src/include",
 		"CadBerry/vendor/yaml-cpp/include",
 		"%{IncludeDirs.CDBRNA}",
@@ -382,7 +382,7 @@ project "CadBerry_updater"
 	includedirs
 	{
 		"CadBerry/vendor/cpr/include",
-		"CadBerry/vendor/cpr/cpr_generated_includes",
+		"CadBerry/vendor/cpr/cmakebuild/cpr_generated_includes",
 		"CadBerry/vendor/cpr/cmakebuild/_deps/curl-src/include",
 	}
 
