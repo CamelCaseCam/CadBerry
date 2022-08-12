@@ -79,13 +79,19 @@ If you're new to this project, you should start by checking out the [Todos](http
 ____________________________
 ### Requirements
 You will need:
- * Either Visual Studio (Windows) or GCC (Linux). Anything else isn't officially supported, but you can try to get it to work.
+ * Either Visual Studio 2022 (Windows) or GCC (Linux). Anything else isn't officially supported, but you can try to get it to work.
  * CMake for some of the dependencies.
  * The GitHub repository for CadBerry.
 
 ### Building
+#### Windows
 1. Clone the repository
 2. Open a terminal and navigate to the root of the repository
 3. Initialize all submodules
 4. Navigate to `CadBerry/CadBerry/vendor` (relative to the root of the repository)
-5. 
+5. Make a cmake build directory, navigate to it, and run `cmake ..` (this could take a while)
+6. Open the cpr solution file and build the solution in Debug, Release, and RelWithDebInfo configurations
+7. Navigate to `vendor/nfd/build/vs2010` and open the NativeFileDialog solution file and build the solution in Debug and Release configurations (you'll have to retarget the projects)
+8. Navigate to `vendor/yaml-cpp` and run `cmake .`
+9. Open `YAML_CPP.sln` and build the solution in Debug and RelWithDebInfo configurations
+10. Navigate to `CadBerry/CadBerry/` and run `vendor/bin/premake/premake5 vs2022`

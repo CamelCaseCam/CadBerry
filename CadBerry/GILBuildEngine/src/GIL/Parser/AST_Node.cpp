@@ -131,7 +131,7 @@ namespace GIL
 					CDB_BuildError("Sequence {0} passed as parameter does not exist", param);
 					throw GILException();
 				}
-				Output[ParamIdx2Name[i]] = Param(Project->Sequences[param], Project->Sequences[param]->SeqType);
+				Output[ParamIdx2Name[i]] = Param(Project->Sequences[param], Project, Project->Sequences[param]->SeqType);
 			}
 			return Output;
 		}
@@ -488,8 +488,8 @@ namespace GIL
 				//Now we can compile the operator using the parameter
 				//Extract the parameter into a params dictionary
 				std::map<std::string, Param> Params = {
-					{ Operator.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.first->SeqType) },
-					{ Operator.first->ParamIdx2Name[1], Param(RPARAM.first, RPARAM.first->SeqType) }
+					{ Operator.first->ParamIdx2Name[0], Param(LPARAM.first, LPARAM.second, LPARAM.first->SeqType) },
+					{ Operator.first->ParamIdx2Name[1], Param(RPARAM.first, RPARAM.second, RPARAM.first->SeqType) }
 				};
 
 				auto OldParams = context.Params;
@@ -559,7 +559,7 @@ namespace GIL
 				//Now we can compile the operator using the parameter
 				//Extract the parameter into a params dictionary
 				std::map<std::string, Param> Params = {
-					{ Operator.first->ParamIdx2Name[0], Param(PARAM.first, PARAM.first->SeqType) }
+					{ Operator.first->ParamIdx2Name[0], Param(PARAM.first, PARAM.second, PARAM.first->SeqType) }
 				};
 
 				auto OldParams = context.Params;
@@ -635,7 +635,7 @@ namespace GIL
 			}
 			
 			InnerCode innerCode = InnerCode({ OutputRegions, OutputCode });
-			params["InnerCode"] = &innerCode;
+			params["InnerCode"] = Param(&innerCode, Proj);
 
 			Op.first->Get(Op.second, params, context);
 		}

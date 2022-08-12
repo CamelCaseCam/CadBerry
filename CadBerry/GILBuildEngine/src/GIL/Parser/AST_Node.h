@@ -117,7 +117,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			std::string Type;
 			
 			NoCompile
-			AST_Type(Param)
+			AST_Type(ParamNode)
 		};
 
 		//Params closes OpenParams

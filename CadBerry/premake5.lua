@@ -265,19 +265,7 @@ project "Berry"
 		"Release"
 	}
 
-project "lemon"
-	location "vendor/lemon"
-	kind "ConsoleApp"
-	language "C"
-
-	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
-	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
-
-	files
-	{
-		"lemon.c"
-	}
-
+	
 
 project "CadBerry_test"
 	location "CadBerry_test"

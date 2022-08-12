@@ -172,7 +172,7 @@ namespace GIL
 						continue;
 					}
 					//Put the sequence into the output
-					Output[ParamIdx2Name[ParamIdx]] = Param(Proj->Sequences[InsideTokens[n]->Value], Proj->Sequences[InsideTokens[n]->Value]->SeqType);
+					Output[ParamIdx2Name[ParamIdx]] = Param(Proj->Sequences[InsideTokens[n]->Value], Proj, Proj->Sequences[InsideTokens[n]->Value]->SeqType);
 					++ParamIdx;
 				}
 				else if (InsideTokens[n]->TokenType == LexerToken::PARAM)
@@ -228,7 +228,7 @@ namespace GIL
 						continue;
 					}
 
-					Output[InsideTokens[n]->Value] = Param(Proj->Sequences[InsideTokens[n + 2]->Value], Proj->Sequences[InsideTokens[n + 2]->Value]->SeqType);
+					Output[InsideTokens[n]->Value] = Param(Proj->Sequences[InsideTokens[n + 2]->Value], Proj, Proj->Sequences[InsideTokens[n + 2]->Value]->SeqType);
 					n += 2;
 				}
 			}

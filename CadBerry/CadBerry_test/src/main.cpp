@@ -8,7 +8,6 @@
 #include <cstdio>
 
 #include "GILExamples.h"
-#include "lug/lug.hpp"
 
 namespace CDB
 {
