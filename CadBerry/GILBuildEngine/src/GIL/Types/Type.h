@@ -38,7 +38,7 @@ namespace GIL
 
 		std::string TypeName;
 	private:
-		uint16_t TypeID;
+		uint16_t TypeID = 0;
 		
 		//Parent types
 		std::vector<Type*> Inherits;

@@ -33,11 +33,11 @@ namespace CDB
 
 	struct BufferElement
 	{
-		ShaderDataType ElementType;
-		uint32_t Offset;
-		uint32_t Size;
+		ShaderDataType ElementType = ShaderDataType::None;
+		uint32_t Offset = 0;
+		uint32_t Size = 0;
 		std::string Name;
-		bool Normalized;
+		bool Normalized = false;
 
 		BufferElement() {}
 
@@ -85,7 +85,7 @@ namespace CDB
 		std::vector<BufferElement>::const_iterator begin() const { return Elements.begin(); }
 		std::vector<BufferElement>::const_iterator end() const { return Elements.end(); }
 	private:
-		uint32_t Stride;
+		uint32_t Stride = 0;
 		std::vector<BufferElement> Elements;
 
 		void CalculateOffsetsAndStride()

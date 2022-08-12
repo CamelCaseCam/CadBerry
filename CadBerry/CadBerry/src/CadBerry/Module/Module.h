@@ -10,7 +10,7 @@ namespace CDB
 	class CDBAPI Module
 	{
 	public:
-		int NumViewports;
+		int NumViewports = -1;
 		std::string ModuleName;
 		
 		virtual std::string* GetViewportNames() = 0;

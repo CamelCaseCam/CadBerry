@@ -17,9 +17,9 @@ namespace GIL
 			void Save(std::ofstream& OutputFile);
 			static Token* Load(std::ifstream& InputFile);
 
-			LexerToken TokenType;
+			LexerToken TokenType = LexerToken::UNKNOWN;
 			std::string Value;
-			size_t line;
+			size_t line = 0;
 
 			/*For any tokens where the value doesn't matter, I'll add a static pointer so that multiple copies are the same object to save
 			memory. This may seem like a small improvement, but considering that you could have hundreds of newlines in a single file, it's 

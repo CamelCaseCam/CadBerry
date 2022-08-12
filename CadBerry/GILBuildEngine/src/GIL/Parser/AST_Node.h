@@ -96,7 +96,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			void SetPos(ParserPosition newPos) { pos = newPos; }
 
-			ParserPosition pos;
+			ParserPosition pos = { 0, 0 };
 		};
 
 		class GILAPI ProjectNode : public AST_Node
@@ -425,7 +425,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 		enum class GILAPI VariableType
 		{
 			str,
-			num
+			num,
+			unknown
 		};
 
 		extern std::unordered_map<std::string, VariableType> VariableTypes;
@@ -445,7 +446,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			virtual void Save(std::ofstream& OutputFile) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
-			VariableType m_VariableType;
+			VariableType m_VariableType = VariableType::unknown;
 			std::string VarName;
 			std::string VarValue;
 		};
@@ -618,7 +619,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			Call_Params Params;
 			
 			//The parameter to be compiled
-			Param* m_Param;
+			Param* m_Param = nullptr;
 		};
 
 		//For creating namespaces

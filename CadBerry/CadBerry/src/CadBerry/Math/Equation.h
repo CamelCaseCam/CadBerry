@@ -28,7 +28,7 @@ namespace CDB
 
 		enum class Operation
 		{
-			Add, Sub, Mul, Div, Exp, Root, LThan, GThan, IsEq,
+			Add, Sub, Mul, Div, Exp, Root, LThan, GThan, IsEq, None
 		};
 
 		class Number : public Value
@@ -49,9 +49,9 @@ namespace CDB
 			virtual float Get() override;
 
 		private:
-			Value* LValue;
-			Operation op;
-			Value* RValue;
+			Value* LValue = nullptr;
+			Operation op = Operation::None;
+			Value* RValue = nullptr;
 		};
 
 		class Variable : public Value

@@ -433,4 +433,7 @@
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
 </Project>

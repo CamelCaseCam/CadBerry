@@ -17,8 +17,8 @@ namespace CDB
 		//Will bind the LineShader if BindShader isn't set to false
 		void Draw(bool BindShader = true);
 	private:
-		int Intervals, TotalLength;
-		float Scale, X, Y;
+		int Intervals = 0, TotalLength = 0;
+		float Scale = 0, X = 0, Y = 0;
 		scoped_ptr<VertexArray> Verts;
 	};
 }
