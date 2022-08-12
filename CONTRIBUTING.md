@@ -95,3 +95,6 @@ You will need:
 8. Navigate to `vendor/yaml-cpp` and run `cmake .`
 9. Open `YAML_CPP.sln` and build the solution in Debug and RelWithDebInfo configurations
 10. Navigate to `CadBerry/CadBerry/` and run `vendor/bin/premake/premake5 vs2022`
+11. Open `CadBerry.sln` and build the solution
+12. Copy `CadBerry\vendor\cpr\cmakebuild\bin\[YourConfiguration]\cpr.dll`, `libcurl[-d].dll`, and `zlib.dll` to `CadBerry\bin\[YourConfiguration]-windows-x86_64\Berry\`
+13. Run the application. If it crashes or doesn't run, there's probably a bug in the build.
