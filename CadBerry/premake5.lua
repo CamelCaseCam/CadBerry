@@ -102,7 +102,7 @@ project "CadBerry"
 
 		libdirs
 		{
-			"CadBerry/vendor/cpr/lib",
+			"CadBerry/vendor/cpr/cmakebuild/lib",
 			"CadBerry/vendor/yaml-cpp",
 			"CadBerry/vendor/GLFW/bin/Debug-linux-x86_64/GLFW",
 			"CadBerry/vendor/nfd/build/lib/Release/x64/"
@@ -159,7 +159,7 @@ project "CadBerry"
 		libdirs
 		{
 			"CadBerry/vendor/yaml-cpp/Debug",
-			"CadBerry/vendor/cpr/lib/Debug",
+			"CadBerry/vendor/cpr/cmakebuild/lib/Debug",
 			"CadBerry/vendor/nfd/build/lib/Debug/x64",
 			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Debug-windows-x86_64/CDBRNA"
 		}
@@ -184,7 +184,7 @@ project "CadBerry"
 		libdirs
 		{
 			"CadBerry/vendor/yaml-cpp/RelWithDebInfo",
-			"CadBerry/vendor/cpr/lib/RelWithDebInfo",
+			"CadBerry/vendor/cpr/cmakebuild/lib/RelWithDebInfo",
 			"CadBerry/vendor/nfd/build/lib/Release/x64",
 			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Release-windows-x86_64/CDBRNA"
 		}
@@ -415,7 +415,7 @@ project "CadBerry_updater"
 
 		libdirs
 		{
-			"CadBerry/vendor/cpr/lib/Debug"
+			"CadBerry/vendor/cpr/cmakebuild/lib/Debug"
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
@@ -424,7 +424,7 @@ project "CadBerry_updater"
 
 		libdirs
 		{
-			"CadBerry/vendor/cpr/lib/RelWithDebInfo"
+			"CadBerry/vendor/cpr/cmakebuild/lib/RelWithDebInfo"
 		}
 	architecture "x64"
 	configurations
