@@ -1,0 +1,597 @@
+sequence test
+{
+
+}
+
+operation testOp
+{
+
+}
+
+test => testOp
+
+/*
+hello
+*/
+
+"This is a str
+ing"
+
+@AMINOS!@
+
+//Sequence with parameters and types
+sequence P($p1 : cds, $prom : promoter)
+{
+    $p1
+    $prom
+}
+
+
+//________________________________________________________________________________________________________
+// Everything below is copy-pasted from the test script
+//________________________________________________________________________________________________________
+
+//________________________________________________________________________________________
+// SETTING TARGETS
+//________________________________________________________________________________________
+
+//TargetExample1
+#Target "S.Cerevisiae"
+//TargetExample2
+#Target "E.coli"
+//TargetExample3
+#Target "Escherichia coli"
+//TargetExample4
+#Target "human"
+//TargetExample5
+#Target "Pichia"
+//TargetExample6
+#Target "Pichia Pastoris"
+//TargetExample7
+#Target "Saccharomyces cerevisiae"
+//TargetExample8
+#Target "Unoptimized"
+//TargetExample9
+#Target "Yeast"
+
+//This one throws an error because targets can't be DNA
+//TargetExampleError
+#Target 
+'ShouldThrowError'
+
+
+//________________________________________________________________________________________
+// PREPROCESSOR COMMANDS
+//________________________________________________________________________________________
+
+
+//Regions
+//RegionExample
+
+//Different styles of #Region and #EndRegion are supported and used in this example
+
+#Target Unoptimized
+#Region Region1
+	'AAATTT'
+	#region Region2
+		'CCCGGG'
+	#EndRegion
+#endRegion
+
+
+//OverlappingRegionExample
+
+//EndRegion followed by the region name can end a region by name, allowing for overlaps
+
+#Target Unoptimized
+#Region Region1
+	'AAATTT'
+	#region Region2
+		'CCCGGG'
+	#EndRegion Region1
+	'TTTAAA'
+#endRegion Region2
+
+
+
+//SetAttr
+//SetAttrExample
+
+#Target Unoptimized
+#SetAttr "a normal string" "another completely normal string"
+#SetAttr "A More Complicated STRING #%$##@$%RWETRBFIKUOI::P}{(*" "~~~~~~~~~#%$#^$%^&YHGF::"
+
+
+
+//#Var
+//This one's a normal example
+//CreateVarExample1
+
+#Target Unoptimized
+#Var Var1 str "SomeString"
+#var Var2 num "10.0"
+
+
+
+//This one's a stress-test
+//CreateVarExample2
+
+#Target Unoptimized
+#Var "SSDGSFDV  SDFSEFDCSR##@23or3fnreiuh34" str TestValue
+#Var "THIS IS A NUMBER23" num "3892302332.6"
+
+
+
+//#Inc
+//IncExample
+
+#Target Unoptimized
+#Var "TestVar" num "22233.0"
+#Inc "TestVar"
+
+
+//DecExample
+
+#Target Unoptimized
+#Var "TestVar" num "22233.0"
+#Dec "TestVar"
+
+
+
+//#If
+//PreproIfExample
+
+#Target "Unoptimized"
+
+#Var Var1 num "10.0"
+#Var Var2 num "10.0"
+#Var Counter num "0.0"
+
+#If IsEq(Var1 Var2)
+	#Inc Counter
+#EndIf
+
+
+
+//#Else
+//PreproElseExample
+
+#Target "Unoptimized"
+
+#Var Var1 num "10.0"
+#Var Var2 num "282373.0"
+#Var Counter num "0.0"
+
+#If IsEq(Var1 Var2)
+	#Dec Counter
+#else
+	#Inc Counter
+#EndIf
+
+
+
+//________________________________________________________________________________________
+// DNA AND RNA LITERALS
+//________________________________________________________________________________________
+
+
+//DNA literals
+//DNAExample1
+
+#Target "Unoptimized"
+
+//DNA literals can contain all of the cannonical bases
+'AAATTTCCCGGG'
+
+
+//DNAExample2
+
+#Target "Unoptimized"
+
+//DNA literals can also contain any non-cannonical or degenerate bases
+'DSSDGFSSEVREFEWADSFVTERSD'
+
+
+//DNAExample3
+
+#Target "Unoptimized"
+
+//Finally, they can contain symbols and numbers, but this is not officially supported and may be removed in the future
+'@#@#454356w5r23$#$@453425'
+
+
+
+//Amino acid literals
+//AminoSequenceExample1
+
+#Target "Unoptimized"
+
+//Evaluates to GGT ATT CTT TAA GCT GTT ATG CCT TTT TGG AGT ACT AAT CAA TAT TGT AAA CGT CAT GAT GAA 
+@GILxAVMPFWSTNQYCKRHDE@
+
+
+//AminoSequenceExample2
+
+#Target "Yeast"
+
+//Evaluates to GGT ATT TTG TAA GCT GTT ATG CCA TTT TGG TCT ACT AAT CAA TAT TGT AAA AGA CAT GAT GAA 
+@GILxAVMPFWSTNQYCKRHDE@
+
+
+
+//________________________________________________________________________________________
+// SEQUENCES AND OPERATIONS
+//________________________________________________________________________________________
+
+
+//Sequences
+//SequenceNoParams
+
+#Target "Unoptimized"
+
+'CCC'
+ExampleSequence
+'GGG'
+
+sequence ExampleSequence
+{
+	'AAATTT'
+}
+
+
+//MultiSequenceNoParams
+
+#Target "Unoptimized"
+
+Seq2
+'CCC'
+
+sequence Seq2
+{
+	'AAA'
+	Seq1
+}
+
+sequence Seq1
+{
+	'TTT'
+}
+
+
+//SequenceWithParams
+
+#Target "Unoptimized"
+
+Seq1(Seq2)
+'CCC'
+
+sequence Seq2
+{
+	'AAA'
+}
+
+sequence Seq1($Param1)
+{
+	'TTT'
+	$Param1
+}
+
+
+//SequenceWithParamsWithParams
+
+#Target "Unoptimized"
+
+Seq1(Seq2)
+'CCC'
+
+sequence Seq2($Seq)
+{
+	$Seq
+	'AAA'
+}
+
+sequence Seq1($Param1)
+{
+	'TTT'
+	$Param1(Seq3)
+}
+
+sequence Seq3
+{
+	'AAA'
+}
+
+
+
+//Typed sequences
+//SequenceWithTypedParams
+
+#Target "Unoptimized"
+
+Seq1(Seq2)
+'CCC'
+
+sequence Seq2 : cds
+{
+	'AAA'
+}
+
+sequence Seq1($Param1 : cds) : cds
+{
+	'TTT'
+	$Param1
+}
+
+
+//SequenceWithTypedParamsWithParams
+
+#Target "Unoptimized"
+
+Seq1(Seq2)
+'CCC'
+
+sequence Seq2($Seq : cds)
+{
+	$Seq
+	'AAA'
+}
+
+sequence Seq1($Param1)
+{
+	'TTT'
+	$Param1(Seq3)
+}
+
+sequence Seq3 : cds
+{
+	'AAA'
+}
+
+
+//SequenceWithMultipleParams
+
+#Target "Unoptimized"
+
+BigSequence(Seq1 Seq2)
+
+sequence Seq1
+{
+	'AAA'
+}
+
+sequence Seq2
+{
+	'TTT'
+}
+
+sequence BigSequence($S1 $S2)
+{
+	$S1
+	$S2
+}
+
+
+//CustomType
+
+#Target "Unoptimized"
+
+typedef TYPE
+
+
+//CustomTypeInheritance
+
+#Target "Unoptimized"
+
+typedef TYPE inherits cds
+
+
+
+//Operations
+//OpNoParams
+
+#Target "Unoptimized"
+
+.Op1
+{
+	'CCC'
+}
+
+operation Op1
+{
+	'TTT'
+	$InnerCode
+	'TTT'
+}
+
+
+//SequenceWithInnerCode
+
+#Target "Unoptimized"
+
+//This is equivalent to the last example
+.Op1
+{
+	'CCC'
+}
+
+sequence Op1($InnerCode)
+{
+	'TTT'
+	$InnerCode
+	'TTT'
+}
+
+
+//OpSequenceParams
+
+#Target "Unoptimized"
+
+.Op1(Seq1)
+{
+	'CCC'
+}
+
+operation Op1($Seq)
+{
+	'TTT'
+	$InnerCode
+	$Seq
+	'TTT'
+}
+
+sequence Seq1
+{
+	'GGG'
+}
+
+
+//As of right now, you can't call operations passed as parameters. If needed, the following example could let you make use of operations
+/*
+operation Op($OpParam)
+{
+	$OpParam($InnerCode = $InnerCode)
+}
+*/
+
+//SequenceForward
+
+#Target "Unoptimized"
+
+//Create the forward
+ShorterAlias => SuperLongGeneName
+
+ShorterAlias
+
+sequence SuperLongGeneName
+{
+	'AAAAA'
+}
+
+
+//SequenceForwardWithParams
+
+#Target "Unoptimized"
+
+//Create the forward
+ShorterAlias => SuperLongGeneName
+
+ShorterAlias(Seq)
+
+sequence SuperLongGeneName($Param1)
+{
+	'AAAAA'
+	$Param1
+}
+
+sequence Seq
+{
+	'TTT'
+}
+
+
+//OperationForward
+
+#Target "Unoptimized"
+
+SimplerName => ThisIsAPromoterWithAVeryLongName
+
+
+
+operation ThisIsAPromoterWithAVeryLongName
+{
+	'TTT'
+	$InnerCode
+	'TTT'
+}
+
+
+
+
+//________________________________________________________________________________________
+// FOR AND FROM
+//________________________________________________________________________________________
+
+
+//ForExample
+
+#Target "Unoptimized"
+
+for "Yeast"
+{
+	//Evaluates to GGT ATT TTG TAA GCT GTT ATG CCA TTT TGG TCT ACT AAT CAA TAT TGT AAA AGA CAT GAT GAA 
+	@GILxAVMPFWSTNQYCKRHDE@
+}
+
+
+
+//________________________________________________________________________________________
+// OPERATORS
+//________________________________________________________________________________________
+
+
+//UnaryOperatorExample
+
+#Target "Unoptimized"
+
+sequence TestData
+{
+	'TTT'
+}
+
+//Output should be TTTAAAAATTTAAAAA
+TestData *5a
+*5a TestData
+
+operator *5a => Seq
+
+sequence Seq($LVALUE)
+{
+	$LVALUE
+	'AAAAA'
+}
+
+
+//BinaryOperatorExample
+
+#Target "Unoptimized"
+
+sequence TestData1
+{
+	'TTT'
+}
+
+sequence TestData2
+{
+	'AAA'
+}
+
+//Output should be TTTAAA
+TestData1 & TestData2
+
+operator & => OperatorSequence
+
+sequence OperatorSequence($LVALUE $RVALUE)
+{
+	$LVALUE
+	$RVALUE
+}
+
+
+
+//________________________________________________________________________________________
+// DISTRIBUTIONS
+//________________________________________________________________________________________
+
+
+//DistributionExample
+
+#Target "Unoptimized"
+
+//This sequence will only be evaluated if "debug" or "Rel_full" are passed as distributions
+DistSeq
+
+[debug, Rel_full]
+sequence DistSeq
+{
+	'TTT'
+}

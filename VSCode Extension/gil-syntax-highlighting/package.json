@@ -1,0 +1,26 @@
+{
+    "name": "gil-syntax-highlighting",
+    "displayName": "GIL Syntax Highlighting",
+    "description": "Adds syntax highlighting for GIL",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.57.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "gil",
+            "aliases": ["GIL", "gil"],
+            "extensions": [".gil"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "gil",
+            "scopeName": "source.gil",
+            "path": "./syntaxes/gil.tmLanguage.json"
+        }]
+      
+    }
+}
