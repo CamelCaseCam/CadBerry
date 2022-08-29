@@ -1,6 +1,7 @@
 #pragma once
 #include <gilpch.h>
 #include "Core.h"
+#include "GIL/SaveFunctions.h"
 
 namespace GIL
 {
@@ -34,6 +35,9 @@ namespace GIL
 			size_t NodeIdx = 0;
 
 			std::vector<Parser::Region>* OpenRegions;
+			
+			
+			std::string* Distribution = nullptr;
 		};
 	}
 
@@ -129,7 +133,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			Params(std::vector<ParamNode*>&& Params, std::vector<std::string>&& Types) : m_Params(Params) {}
 
 			NoCompile
-				AST_Type(Params)
+			AST_Type(Params)
 
 			std::vector<ParamNode*> m_Params;
 		};
@@ -228,6 +232,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			std::string Type;
 
 			std::vector<AST_Node*> Body;
+			std::vector<std::string> ActiveDistributions;
 		};
 
 		class GILAPI DefineOperation : public ProjectNode
@@ -246,6 +251,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			std::string Type;
 
 			std::vector<AST_Node*> Body;
+			std::vector<std::string> ActiveDistributions;			
 		};
 
 
@@ -529,7 +535,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 		{
 		public:
 			DNALiteral() {}
-			DNALiteral(std::string&& Literal) : Literal(Literal) {}
+			DNALiteral(std::string&& Literal);
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 

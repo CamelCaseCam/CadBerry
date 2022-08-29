@@ -81,6 +81,9 @@ namespace GIL
 			INHERITS,
 
 			OPERATOR,
+
+			LBRACKET,
+			RBRACKET,
 		};
 
 		GILAPI extern std::unordered_map<LexerToken, std::string> LexerToken2Str;

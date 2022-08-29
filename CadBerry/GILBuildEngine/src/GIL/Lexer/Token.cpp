@@ -48,6 +48,9 @@ namespace GIL
 		Token* Token::Operator = new Token(LexerToken::OPERATOR, "");
 
 		Token* Token::UnknownToken = new Token(LexerToken::UNKNOWN, "");
+		
+		Token* Token::LBracket = new Token(LexerToken::LBRACKET, "");
+		Token* Token::RBracket = new Token(LexerToken::RBRACKET, "");
 
 		void Token::Save(std::ofstream& OutputFile)
 		{

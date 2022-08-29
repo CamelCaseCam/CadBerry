@@ -504,3 +504,59 @@ sequence OperatorSequence($LVALUE $RVALUE)
 	$RVALUE
 }
 )";
+
+
+//________________________________________________________________________________________
+// DISTRIBUTIONS
+//________________________________________________________________________________________
+
+
+std::string DistributionExample = R"(
+#Target "Unoptimized"
+
+//This sequence will only be evaluated if "debug" or "Rel_full" are passed as distributions
+DistSeq
+
+[debug, Rel_full]
+sequence DistSeq
+{
+	'TTT'
+}
+)";
+
+
+//________________________________________________________________________________________
+// NAMESPACES
+//________________________________________________________________________________________
+
+
+std::string SingleNamespace = R"(
+#Target "Unoptimized"
+
+TestNamespace::TestSequence
+
+namespace TestNamespace
+{
+	sequence TestSequence
+	{
+		'TTT'
+	}
+}
+)";
+
+std::string MultipleNamespaces = R"(
+#Target "Unoptimized"
+
+TestNamespace1::TestNamespace2::TestSequence
+
+namespace TestNamespace1
+{
+	namespace TestNamespace2
+	{
+		sequence TestSequence
+		{
+			'TTT'
+		}
+	}
+}
+)";

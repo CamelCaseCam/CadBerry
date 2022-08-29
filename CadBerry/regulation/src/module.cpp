@@ -19,7 +19,7 @@ bool HasStartCodon(std::string& Text, int i, int length)
 
 class shRNA_Sequence : public GIL::Sequence
 {
-	virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+	virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context) override
 	{
 		//shRNA consists of a sequence, its complement, and a hairpin region
 

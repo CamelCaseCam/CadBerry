@@ -8,7 +8,7 @@ namespace utils
 		class PrintWarning : public GIL::Sequence
 		{
 		public:
-			virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context) override;
+			virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context) override;
 			virtual void Save(std::ofstream& OutputFile) override {}
 			virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) override {}
 

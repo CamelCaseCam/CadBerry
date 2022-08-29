@@ -164,6 +164,12 @@ namespace GIL
 					OutputTokens->push_back(new Token(LexerToken::ASSIGNTYPE, ""));
 					break;
 				}
+				case '[':
+					OutputTokens->push_back(Token::LBracket);
+					break;
+				case ']':
+					OutputTokens->push_back(Token::RBracket);
+					break;
 				case ' ':
 				case '\t':
 				case '\r':
@@ -332,6 +338,7 @@ namespace GIL
 					++LineNum;
 				++NumChars;
 			}
+			++i;
 			T->TokenType = LexerToken::COMMENT;
 			T->Value = Text.substr(CommentStart, NumChars);
 			return T;
@@ -371,7 +378,7 @@ namespace GIL
 		{
 			int WordLen = 0;
 			int WordStart = i;
-			for (i; i < Text.length() && IsNotWhiteSpace(Text[i]); ++i)
+			for (i; i < Text.length() && IsNotWhiteSpace(Text[i]) && Text[i] != ']' && Text[i] != ','; ++i)
 				++WordLen;
 			Output.reserve(WordLen);    //Reserve the length of the ident
 			for (WordStart; WordStart < i; ++WordStart)

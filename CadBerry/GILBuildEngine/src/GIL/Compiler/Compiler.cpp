@@ -23,7 +23,7 @@ namespace GIL
 		using namespace GIL::Lexer;
 		using namespace GIL::Parser;
 
-		std::pair<std::vector<Region>, std::string> Compile(Project* Proj, std::vector<AST_Node*>* Nodes)
+		std::pair<std::vector<Region>, std::string> Compile(Project* Proj, std::vector<AST_Node*>* Nodes, std::string* Distribution)
 		{
 			if (Nodes == nullptr)
 			{
@@ -36,7 +36,7 @@ namespace GIL
 				Region("Main", 1, -1)
 			};
 
-			CompilerContext Context = { Nodes, &Output, &Code, &CurrentEncoding, nullptr, 0, &OpenRegions };
+			CompilerContext Context = { Nodes, &Output, &Code, &CurrentEncoding, nullptr, 0, &OpenRegions, Distribution };
 
 			//Import any imports
 			ImportAllProjectImports(Proj, Proj);

@@ -29,7 +29,7 @@
 #define ERROR_023 "Error GIL023 (line {0}): when defining an operator, you must give it a name"
 #define ERROR_024 "Error GIL024 (line {0}): when defining an operator, you must give it a sequence to point to"
 #define ERROR_025 "Error GIL025 (line {0}): we have a sequence forward (NewName => OldName), but no name after the arrow"
-#define ERROR_026 "Error GIL026 (line {0}): we have a namespace accession operator (::), but no namespace before it"
+#define ERROR_026 "Error GIL026 (line {0}): we have a namespace accession operator (::), but no namespace after it"
 #define ERROR_027 "Error GIL027 (line {0}): we have a typedef, but no name for the new type"
 #define ERROR_028 "Error GIL028 (line {0}): we have a type inheritance, but no type to inherit from"
 #define ERROR_029 "Error GIL029 (line {0}): when calling an operation, you need to give it a body"
@@ -38,3 +38,4 @@
 #define ERROR_032 "Error GIL032 (line {0}): when creating a namespace, you need to give it a body"
 #define ERROR_033 "Error GIL033: Operator \"{0}\" was set to sequence \"{1}\", which does not exist"
 #define ERROR_034 "Error GIL034: Sequence forward was set to sequence \"{0}\", which does not exist"
+#define ERROR_035 "Error GIL035: Parameter \"{0}\" on line {1} is not a parameter of sequence"

@@ -1,0 +1,6 @@
+sequence KozakSequence
+{
+	#Region KozakSequence
+	'GACACCATGG'
+	#EndRegion
+}

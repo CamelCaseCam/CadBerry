@@ -19,6 +19,6 @@ namespace GIL
 			std::vector<std::string>& ParamIdx2Name, std::map<std::string, Param>* Params = nullptr);
 
 		GILAPI std::pair<std::vector<GIL::Parser::Region>, std::string> Compile(GIL::Parser::Project* Proj,
-			std::vector<Parser::AST_Node*>* Tokens = nullptr);
+			std::vector<Parser::AST_Node*>* Tokens = nullptr, std::string* Distribution = nullptr);
 	}
 }

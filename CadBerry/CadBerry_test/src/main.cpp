@@ -470,6 +470,38 @@ namespace CDB
 			Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.second == "TTTAAA");
 		}
+
+		SECTION("Distributions")
+		{
+			auto tokens = GIL::Lexer::Tokenize(DistributionExample);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+
+			//Should compile to nothing
+			auto Output = GIL::Compiler::Compile(project.raw());
+			REQUIRE(Output.second == "");
+
+			//Should compile to TTT
+			std::string Distribution = "debug";
+			Output = GIL::Compiler::Compile(project.raw(), nullptr, &Distribution);
+			REQUIRE(Output.second == "TTT");
+
+			Distribution = "Rel_full";
+			Output = GIL::Compiler::Compile(project.raw(), nullptr, &Distribution);
+			REQUIRE(Output.second == "TTT");
+		}
+
+		SECTION("Namespaces")
+		{
+			auto tokens = GIL::Lexer::Tokenize(SingleNamespace);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
+			REQUIRE(Output.second == "TTT");
+
+			tokens = GIL::Lexer::Tokenize(MultipleNamespaces);
+			project = GIL::Parser::Project::Parse(*tokens);
+			Output = GIL::Compiler::Compile(project.raw());
+			REQUIRE(Output.second == "TTT");
+		}
 	}
 
 #pragma endregion GILTests

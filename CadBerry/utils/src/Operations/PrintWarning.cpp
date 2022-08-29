@@ -5,7 +5,7 @@ namespace utils
 {
 	namespace Operations
 	{
-		void PrintWarning::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+		void PrintWarning::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 		{
 			if (((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode.second.size() == 0)
 			{

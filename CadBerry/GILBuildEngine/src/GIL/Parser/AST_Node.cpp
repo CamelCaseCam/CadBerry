@@ -23,7 +23,10 @@ namespace GIL
 		void AST_Node::SaveNode(AST_Node* Node, std::ofstream& OutputFile)
 		{
 			SaveString(Node->GetName(), OutputFile);
-			Node->Save(OutputFile);
+			if (_Reflectable_AST_Node_Map.contains(Node->GetName()))
+			{
+				Node->Save(OutputFile);
+			}
 		}
 		
 		AST_Node* AST_Node::LoadNode(std::ifstream& InputFile, Parser::Project* Proj)
@@ -32,11 +35,15 @@ namespace GIL
 			LoadStringFromFile(NodeType, InputFile);
 			
 			//Create a node of that type
-			AST_Node* Node = _Reflectable_AST_Node_Map[NodeType]();
-			
-			//Load and return the node
-			Node->Load(InputFile, Proj);
-			return Node;
+			if (_Reflectable_AST_Node_Map.contains(NodeType))
+			{
+				AST_Node* Node = _Reflectable_AST_Node_Map[NodeType]();
+
+				//Load and return the node
+				Node->Load(InputFile, Proj);
+				return Node;
+			}
+			return nullptr;
 		}
 		
 		Call_Params::Call_Params(std::vector<GIL::Lexer::Token*>&& Params)
@@ -76,6 +83,9 @@ namespace GIL
 
 			//Set up sequence type
 			Seq->SeqType = Proj->GetTypeByID(Proj->AllocType(this->Type));
+
+			//Set up distributions
+			Seq->ActiveDistributions = this->ActiveDistributions;
 			
 			//Add the sequence to the project
 			Proj->Sequences[this->Name] = Seq;
@@ -139,9 +149,9 @@ namespace GIL
 		void UseParam::Compile(CompilerContext& Context, Project* Project)
 		{
 			//Get the parameter and treat it like a regular identifier
-			if (this->m_Param == nullptr)
+			if (this->m_Param == nullptr || this->m_Param->Seq == nullptr)
 			{
-				CDB_BuildError("Parameter \"{0}\" was not passed to function", this->ParamName);
+				CDB_BuildError("Parameter \"{0}\" was not passed to sequence", this->ParamName);
 				return;
 			}
 			auto params = this->Params.ToParamMap(Context, Project, this->m_Param->Seq->ParamIdx2Name);
@@ -261,7 +271,9 @@ namespace GIL
 			//Load the body nodes
 			for (size_t i = 0; i < BodySize; i++)
 			{
-				this->Body.push_back(LoadNode(InputFile, Proj));
+				AST_Node* output = LoadNode(InputFile, Proj);
+				if (output != nullptr)
+					this->Body.push_back(output);
 			}
 		}
 		
@@ -342,6 +354,9 @@ namespace GIL
 			//Set up sequence type
 			Seq->SeqType = Proj->GetTypeByID(Proj->AllocType(this->Type));
 
+			//Set up distributions
+			Seq->ActiveDistributions = this->ActiveDistributions;
+
 			//Add the sequence to the project
 			Proj->Sequences[this->Name] = Seq;
 		}
@@ -377,6 +392,7 @@ namespace GIL
 		
 		void TreatAsSequence(CompilerContext& context, Project* Proj, CallSequence* sequence)
 		{
+			int Start = context.OutputString->length();
 			std::pair<Sequence*, Project*> Seq;
 			
 			//We know the current node isn't an operator. Before doing anything else, make sure the next node isn't a two-parameter operator
@@ -434,6 +450,7 @@ namespace GIL
 			Seq.first->Get(Seq.second, params, context);
 
 			context.Params = OldParams;
+			context.OutputRegions->push_back(Region(sequence->Name, Start, context.OutputString->length()));
 		}
 
 		void TreatAsOperator(CompilerContext& context, Project* Proj, CallSequence* sequence, std::pair<Sequence*, Project*> Operator)
@@ -578,9 +595,11 @@ namespace GIL
 		
 		void CallSequence::Compile(Compiler::CompilerContext& context, Parser::Project* Project)
 		{
+			int Start = context.OutputString->length();
 			if (this->Location.size() != 0 || this->Params.Params.size() != 0)
 			{
 				TreatAsSequence(context, Project, this);
+				context.OutputRegions->push_back(Region(this->Name, Start, context.OutputString->length()));
 				return;
 			}
 			
@@ -907,6 +926,7 @@ namespace GIL
 			for (AST_Node* node : this->Body)
 				SaveNode(node, OutputFile);
 		}
+		
 
 		void Prepro_Else::Load(std::ifstream& InputFile, Parser::Project* Proj)
 		{
@@ -916,6 +936,29 @@ namespace GIL
 				this->Body.push_back(LoadNode(InputFile, Proj));
 		}
 
+#define RemoveChar(c) c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v'
+		void RemoveSpacesFromDNA(std::string& DNA)
+		{
+			size_t InsertIdx = 0;
+			for (size_t CurrentIdx = 0; CurrentIdx < DNA.size(); ++CurrentIdx)
+			{
+				if (RemoveChar(DNA[CurrentIdx]))
+				{
+					//Just shift the current index by one but keep the insertion index the same
+					continue;
+				}
+				//Insert the character
+				DNA[InsertIdx] = DNA[CurrentIdx];
+				++InsertIdx;
+			}
+		}
+		
+		DNALiteral::DNALiteral(std::string&& Literal)
+		{
+			this->Literal = std::move(Literal);
+			RemoveSpacesFromDNA(this->Literal);
+		}
+		
 		void DNALiteral::Compile(Compiler::CompilerContext& context, Parser::Project* Project)
 		{
 			*context.OutputString += this->Literal;
@@ -923,6 +966,8 @@ namespace GIL
 
 		void DNALiteral::Save(std::ofstream& OutputFile)
 		{
+			//Just in case
+			RemoveSpacesFromDNA(this->Literal);
 			SaveString(this->Literal, OutputFile);
 		}
 

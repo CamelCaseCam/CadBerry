@@ -13,7 +13,7 @@ namespace CDB
 
 		virtual void PreBuild(std::string& path, std::string& PreBuildDir) = 0;
 		virtual void Build(std::string& path, std::string& EntryPoint, std::string& PreBuildDir, std::string& OutputDir, 
-			std::string& OutputType) = 0;
+			std::string& OutputType, std::string& Distribution) = 0;
 		virtual void* BuildConsole(std::string& path, std::string& EntryPoint, std::string& PreBuildDir, std::string& OutputType) { return nullptr; }
 		virtual void* BuildConsole(std::string src, std::string OutputType) { return nullptr; }
 

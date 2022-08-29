@@ -73,3 +73,12 @@ extern std::string FromExample;    //TODO
 //Operators
 extern std::string UnaryOperatorExample;
 extern std::string BinaryOperatorExample;
+
+
+//Distributions
+extern std::string DistributionExample;
+
+
+//Namespaces
+extern std::string SingleNamespace;
+extern std::string MultipleNamespaces;

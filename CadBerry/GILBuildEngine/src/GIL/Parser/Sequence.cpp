@@ -66,9 +66,10 @@ namespace GIL
 			if (NodeName == "UseParam")
 			{
 				UseParam* p = (UseParam*)n;
-				if (!Params.contains(p->ParamName))
+				//InnerCode is allowed to be defined implicitly
+				if (!Params.contains(p->ParamName) && p->ParamName != "InnerCode")
 				{
-					CDB_BuildError("Fatal error: parameter " + p->ParamName + " not found in parameter list");
+					CDB_BuildError(ERROR_035, p->ParamName, p->pos.Line);
 					throw GILException();
 				}
 				else
@@ -106,7 +107,7 @@ namespace GIL
 	}
 	
 #define SequenceReturn(val) --CurrentSequenceCallDepth; return val
-	void DynamicSequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context)
+	void DynamicSequence::Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& Context)
 	{
 		if (CurrentSequenceCallDepth > MAX_SEQUENCE_CALL_DEPTH)
 		{
@@ -135,6 +136,8 @@ namespace GIL
 	{
 		SavedSequence = SequenceType::DynamicSequence;
 		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+
+		SaveStringVector(this->ActiveDistributions, OutputFile);
 		
 		SaveSize(this->Nodes.size(), OutputFile);
 		for (AST_Node* n : this->Nodes)
@@ -145,6 +148,8 @@ namespace GIL
 
 	void DynamicSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
 	{
+		LoadStringVectorFromFile(this->ActiveDistributions, InputFile);
+		
 		size_t Size = LoadSizeFromFile(InputFile);
 		this->Nodes.reserve(Size);
 		for (size_t i = 0; i < Size; ++i)
@@ -165,7 +170,7 @@ namespace GIL
 		return NewSequence;
 	}
 	
-	void SequenceForward::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context)
+	void SequenceForward::Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& Context)
 	{
 		if (this->DestinationSequence == nullptr)
 		{
@@ -214,7 +219,7 @@ namespace GIL
 		return true;
 	}	
 
-	void Operator::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, CompilerContext& Context)
+	void Operator::Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& Context)
 	{
 		//First check if the parameters match
 		if (!this->TypesMatch(Params))
@@ -279,7 +284,7 @@ namespace GIL
 		else return this->AlternateImplementation->GetLastImplementation();
 	}
 
-	void InnerCode::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context)
+	void InnerCode::Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context)
 	{
 		//Add the regions to the context
 		context.OutputRegions->reserve(context.OutputRegions->size() + this->m_InnerCode.first.size());
@@ -291,5 +296,27 @@ namespace GIL
 		}
 		
 		*context.OutputString += this->m_InnerCode.second;
+	}
+
+
+	void Sequence::Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context)
+	{
+		if (this->ActiveDistributions.size() == 0)
+		{
+			this->Get_impl(Proj, Params, context);
+			return;
+		}
+		
+		if (context.Distribution == nullptr)
+			return;
+		
+		for (std::string& dist : this->ActiveDistributions)
+		{
+			if (*context.Distribution == dist)
+			{
+				this->Get_impl(Proj, Params, context);
+				return;
+			}
+		}
 	}
 }

@@ -6,7 +6,7 @@ namespace utils
 {
 	namespace Operations
 	{
-		void MCS::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+		void MCS::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 		{
 			using namespace GIL::Lexer;
 			std::string Output;

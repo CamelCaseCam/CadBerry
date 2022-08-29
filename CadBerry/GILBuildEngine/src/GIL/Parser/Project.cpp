@@ -41,7 +41,9 @@ namespace GIL
 
 		ParamNode* GetParam(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError);
 
-		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t i, bool& SyntaxError);
+		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError);
+
+		void GetDistributions(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError, std::vector<std::string>& Distributions);
 
 
 		std::vector<Token*> GetTokensUntil(std::vector<Token*> Tokens, size_t& i, LexerToken End)
@@ -102,6 +104,8 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 		{
 			bool SyntaxError = false;
 			std::vector<AST_Node*> OutputNodes;
+			std::vector<std::string> Distributions;
+			AccessNamespace Namespaces;
 			for (size_t i = 0; i < Tokens.size(); ++i)
 			{
 				switch (Tokens[i]->TokenType)
@@ -281,6 +285,9 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					break;
 				}
 #pragma endregion
+				case LexerToken::LBRACKET:
+					GetDistributions(Tokens, i, SyntaxError, Distributions);
+					continue;
 				case LexerToken::FOR:
 				{
 					Token* FirstToken = Tokens[i];
@@ -358,11 +365,13 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					{
 						auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), "any", mv(Nodes));
 						Node->pos.Line = FirstToken->line;
+						Node->ActiveDistributions = Distributions;						
 						OutputNodes.push_back(Node);
 						break;
 					}
 					auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes));
 					Node->pos.Line = FirstToken->line;
+					Node->ActiveDistributions = Distributions;
 					OutputNodes.push_back(Node);
 					break;
 				}
@@ -409,11 +418,13 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					{
 						auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), "any", mv(Nodes));
 						Node->pos.Line = FirstToken->line;
+						Node->ActiveDistributions = Distributions;
 						OutputNodes.push_back(Node);
 						break;
 					}
 					auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes));
 					Node->pos.Line = FirstToken->line;
+					Node->ActiveDistributions = Distributions;
 					OutputNodes.push_back(Node);
 					break;
 				}
@@ -457,9 +468,14 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					}
 					
 					
-					//This is a sequence being "called"
+					//This is a sequence/operation being "called"
 					//Check if it has namespaces
-					AccessNamespace Namespaces = CheckNamespace(Tokens, i - 1, SyntaxError);
+					Namespaces = CheckNamespace(Tokens, i, SyntaxError);
+					if (Namespaces.Namespaces.size() != 0)
+					{
+						--i;
+						continue;
+					}
 
 					
 					//Check if it has params
@@ -488,11 +504,6 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				}
 				case LexerToken::CALLOP:
 				{
-					//This is an operation being "called"
-					//Check if it has namespaces
-					AccessNamespace Namespaces = CheckNamespace(Tokens, i - 1, SyntaxError);
-
-
 					//Check if it has params
 					std::string& OpName = Tokens[i]->Value;
 					std::vector<Token*> params;
@@ -592,15 +603,20 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					Require(i + 3 < Tokens.size(), Tokens[i], ERROR_030);
 					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_031);
 					Require(Tokens[i + 2]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_032);
+					std::string& Name = Tokens[i + 1]->Value;
 					i += 2;
 					auto InsideTokens = GetInsideTokens(Tokens, i);
 					auto Nodes = ParseNodes(InsideTokens, Target);
-					auto Node = new Namespace(mv(Tokens[i]->Value), mv(Nodes));
+					auto Node = new Namespace(mv(Name), mv(Nodes));
 					Node->pos.Line = Tokens[i]->line;					
 					OutputNodes.push_back(Node);
 					break;
 				}
 				}
+				
+				//If nothing used the distributions, then we can remove them
+				Distributions = {};
+				Namespaces = {};
 			}
 
 			//If there was/were syntax error(s), throw an exception
@@ -640,37 +656,60 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 
 #undef Require
 #define Require(cond, token, msg) if (!(cond)) { SyntaxError = true; Error(msg, token); return {}; }
-		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t i, bool& SyntaxError)
+		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError)
 		{
 			//Check if this is a namespace
-			if (Tokens[i]->TokenType != LexerToken::NAMESPACE)
-				return AccessNamespace(std::vector<Token*>());
-			
-			//Now move backwards to find the first namespace
-			size_t End = i;
-			--i;
-			for (i; i >= 0; --i)
+			if (i + 1 == Tokens.size() || Tokens[i + 1]->TokenType != LexerToken::NAMESPACE)
 			{
-				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				return AccessNamespace(std::vector<Token*>());
+			}
+			
+			//Now move forwards to find the last namespace
+			size_t Start = i;
+			for (i; i < Tokens.size(); ++i)
+			{
+				if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::CALLOP)
 				{
 					Error(ERROR_026, Tokens[i]);
 					return {};
 				}
 				//If NAMESPACE is the first token, that's an error
-				if (i - 1 > 0 && Tokens[i - 1]->TokenType == LexerToken::NAMESPACE)
+				if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::NAMESPACE)
 				{
-					--i;
+					++i;
 					continue;
 				}
 				break;
 			}
 			//Now we have the start of the namespace
 			std::vector<Token*> Namespace;
-			for (i; i < End; i += 2)
+			for (Start; Start < i; Start += 2)
 			{
-				Namespace.push_back(Tokens[i]);
+				Namespace.push_back(Tokens[Start]);
 			}
 			return AccessNamespace(mv(Namespace));
+		}
+
+		void GetDistributions(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError, std::vector<std::string>& Distributions)
+		{
+			if (Tokens[i]->TokenType != LexerToken::LBRACKET)
+			{
+				Distributions = {};
+				return;
+			}
+			++i;
+			//Advance adding string or ident tokens until we hit RBRACKET
+			for (i; i < Tokens.size(); ++i)
+			{
+				if (Tokens[i]->TokenType == LexerToken::RBRACKET)
+					break;
+				if (Tokens[i]->TokenType == LexerToken::IDENT)
+					Distributions.push_back(Tokens[i]->Value);
+				else if (Tokens[i]->TokenType == LexerToken::STRING)
+					Distributions.push_back(Tokens[i]->Value);
+				
+				//Tokens like COMMA will be ignored
+			}
 		}
 
 
@@ -1147,7 +1186,9 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			Proj->Main.reserve(Len);
 			for (int i = 0; i < Len; ++i)
 			{
-				Proj->Main.push_back(AST_Node::LoadNode(InputFile, Proj));
+				AST_Node* Node = AST_Node::LoadNode(InputFile, Proj);
+				if (Node != nullptr)
+					Proj->Main.push_back(Node);
 			}
 
 			Len = -1;

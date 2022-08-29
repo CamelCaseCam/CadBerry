@@ -9,7 +9,7 @@ namespace sensing
 	//__________________________________________________________________________________________________________________________
 
 	std::string TargetText = "";
-	void SetTRAPzymeTarget::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+	void SetTRAPzymeTarget::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 	{
 		TargetText = GetInnerCode(Params).second;    //Sets the Target to the compiles inner tokens
 	}
@@ -45,7 +45,7 @@ namespace sensing
 
 	int FindMatches(std::string& Strand1, std::string& Strand2, int MinChunkSize = 7);    //7 is our min chunk size, because that is one bigger than the binding region
 
-	void GenTZFromAttenuator::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+	void GenTZFromAttenuator::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 	{
 		//Compile the attenuator
 		std::string Attenuator = GetInnerCode(Params).second;
@@ -269,7 +269,7 @@ namespace sensing
 		return self;
 	}
 
-	void GenTZTarget::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+	void GenTZTarget::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 	{
 		/*
 		Pattern is angarthvvvsvvvvvvvvvvvvvvvv
@@ -308,7 +308,7 @@ namespace sensing
 
 
 
-	void GenTZV2FromAttenuator::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, Compiler::CompilerContext& Context)
+	void GenTZV2FromAttenuator::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, Compiler::CompilerContext& Context)
 	{
 		//Compile the attenuator
 		std::string Attenuator = GetInnerCode(Params).second;
@@ -516,7 +516,7 @@ namespace sensing
 		return GenTarget(Proj);
 	}
 
-	void CreateAttenuator::Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
+	void CreateAttenuator::Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& Context)
 	{
 		Context.OutputString->append(GenTarget(Proj));
 	}

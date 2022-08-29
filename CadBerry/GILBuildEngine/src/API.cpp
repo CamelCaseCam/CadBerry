@@ -39,26 +39,32 @@ public:
 
 	virtual void PreBuild(std::string& path, std::string& PreBuildPath) override 
 	{
-		//Read all text from the file
-		std::ifstream InputFile(path);
-		std::stringstream InputText;
-		InputText << InputFile.rdbuf();
-		std::string FileText = InputText.str();
-
-		auto Tokens = *GIL::Lexer::Tokenize(FileText);
-		GIL::Parser::Project* Proj = GIL::Parser::Project::Parse(Tokens);
-		
-		if (!std::filesystem::exists(std::filesystem::path(PreBuildPath).parent_path()))
+		try
 		{
-			std::filesystem::create_directories(std::filesystem::path(PreBuildPath).parent_path());
-		}
-		Proj->Save(PreBuildPath);
+			//Read all text from the file
+			std::ifstream InputFile(path);
+			std::stringstream InputText;
+			InputText << InputFile.rdbuf();
+			std::string FileText = InputText.str();
 
-		delete Proj;
+			auto Tokens = *GIL::Lexer::Tokenize(FileText);
+			GIL::Parser::Project* Proj = GIL::Parser::Project::Parse(Tokens);
+
+			if (!std::filesystem::exists(std::filesystem::path(PreBuildPath).parent_path()))
+			{
+				std::filesystem::create_directories(std::filesystem::path(PreBuildPath).parent_path());
+			}
+			Proj->Save(PreBuildPath);
+
+			delete Proj;
+		} catch (GIL::GILException& e)
+		{
+			CDB_BuildError("Errors precompiling GIL project: {0}", path);
+		}
 	}
 
 	virtual void Build(std::string& path, std::string& EntryPoint, std::string& PreBuildDir, std::string& OutputDir,
-		std::string& OutputType) override
+		std::string& OutputType, std::string& Distribution) override
 	{
 		GIL::Parser::Project* Project;
 		if (std::filesystem::exists(CDB::Application::Get().PreBuildDir + "\\" + EntryPoint + ".cgil"))    //Check if precompiled version exists
@@ -94,7 +100,10 @@ public:
 
 		try
 		{
-			auto Output = GIL::Compiler::Compile(Project);	//Compile code into intermediate output
+			std::string* Dist = nullptr;
+			if (Distribution != "")
+				Dist = &Distribution;
+			auto Output = GIL::Compiler::Compile(Project, nullptr, Dist);	//Compile code into intermediate output
 
 			switch (GIL::String2OutputType[OutputType])
 			{

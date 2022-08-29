@@ -55,7 +55,8 @@ namespace GIL
 	{
 	public:
 		virtual ~Sequence() {}
-		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) = 0;
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) = 0;
+		void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context);
 
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) = 0;
@@ -82,6 +83,8 @@ namespace GIL
 		}
 
 		Type* SeqType = &Type::any;
+
+		std::vector<std::string> ActiveDistributions;
 	};
 
 	////Deprecated, DO NOT USE
@@ -92,7 +95,7 @@ namespace GIL
 	//	StaticSequence(std::vector<GIL::Lexer::Token*> tokens) { this->Tokens = tokens; }
 	//	virtual ~StaticSequence() override;
 
-	//	virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
+	//	virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 	//	virtual void Save(std::ofstream& OutputFile) override;
 	//	virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
@@ -115,7 +118,7 @@ namespace GIL
 		DynamicSequence(std::vector<Parser::AST_Node*> Nodes) { this->Nodes = Nodes; }
 		virtual ~DynamicSequence() override;
 
-		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
@@ -131,7 +134,7 @@ namespace GIL
 			this->SeqType = destination->SeqType;
 		}
 
-		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 		
 		virtual void CompileTimeInit(Parser::Project* Proj) override;
 
@@ -150,7 +153,7 @@ namespace GIL
 	public:
 		InnerCode(std::pair<std::vector<Parser::Region>, std::string> inner) { this->m_InnerCode = inner; }
 
-		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
@@ -166,7 +169,7 @@ namespace GIL
 		Operator(Sequence* destination, std::string& destinationName, Operator* alternateImplementation) : SequenceForward(destination, destinationName), 
 			AlternateImplementation(alternateImplementation) {}
 		
-		virtual void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
 		virtual void Save(std::ofstream& OutputFile) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;

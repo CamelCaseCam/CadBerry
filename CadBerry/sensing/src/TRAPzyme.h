@@ -6,7 +6,7 @@ namespace sensing
 	class SetTRAPzymeTarget : public GIL::Sequence
 	{
 	public:
-		virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
+		virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) override {}
 
@@ -17,7 +17,7 @@ namespace sensing
 	class GenTZTarget : public GIL::Sequence
 	{
 	public:
-		virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
+		virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) override {}
 
@@ -28,7 +28,7 @@ namespace sensing
 	class GenTZFromAttenuator : public GIL::Sequence
 	{
 	public:
-		virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
+		virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) override {}
 
@@ -39,7 +39,7 @@ namespace sensing
 	class GenTZV2FromAttenuator : public GIL::Sequence
 	{
 	public:
-		virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
+		virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) override {}
 
@@ -50,7 +50,7 @@ namespace sensing
 	class CreateAttenuator : public GIL::Sequence
 	{
 	public:
-		virtual void Get(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
+		virtual void Get_impl(GIL::Parser::Project* Proj, std::map<std::string, GIL::Param>& Params, GIL::Compiler::CompilerContext& context) override;
 		virtual void Save(std::ofstream& OutputFile) override {}
 		virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) override {}
 

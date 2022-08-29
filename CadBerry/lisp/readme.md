@@ -1,0 +1,1 @@
+I've been thinking about integrating LISP into CadBerry for code generation and metaprogramming. This folder is for stuff like that. I'm not sure if I'll keep this around, but it's a good place to put stuff I'm working on.
