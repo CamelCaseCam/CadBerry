@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32602.215
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio Version 16
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Berry", "Berry\Berry.vcxproj", "{C9A7E20C-35BC-0ABE-FE3D-AE1D6A1107EF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CDBRNA", "CadBerry\vendor\RNAstructure\CDBRNA\CDBRNA.vcxproj", "{4FC11CA9-3B63-477F-241E-5BD3105FCECF}"
@@ -14,6 +12,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CadBerry_updater", "CadBerry_updater\CadBerry_updater.vcxproj", "{C5D584DF-B1CE-A331-DA00-89B6C658833D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Core", "Modules\Core\Core.vcxproj", "{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DeepMD", "Modules\DeepMD\DeepMD.vcxproj", "{54C3DAAD-4065-0584-2920-19D815618CD4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GILBuildEngine", "GILBuildEngine\GILBuildEngine.vcxproj", "{A719CF0D-93E7-C213-7C7B-333A68E89E78}"
 EndProject
@@ -34,8 +34,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensing", "sensing\sensing.vcxproj", "{DC53C98B-4833-4827-514B-D3FDBDA9AE88}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{169C8510-82B0-ADC1-4B32-5121B705AAF2}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CadBerry IDE", "CadBerry Installer\CadBerry IDE.vdproj", "{0D4D1E4E-8244-43E7-8E06-06197CB9171F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +65,10 @@ Global
 		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Debug|x64.Build.0 = Debug|x64
 		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.ActiveCfg = Release|x64
 		{2EB4837C-1AEB-840D-C3D7-6A10AFED000F}.Release|x64.Build.0 = Release|x64
+		{54C3DAAD-4065-0584-2920-19D815618CD4}.Debug|x64.ActiveCfg = Debug|x64
+		{54C3DAAD-4065-0584-2920-19D815618CD4}.Debug|x64.Build.0 = Debug|x64
+		{54C3DAAD-4065-0584-2920-19D815618CD4}.Release|x64.ActiveCfg = Release|x64
+		{54C3DAAD-4065-0584-2920-19D815618CD4}.Release|x64.Build.0 = Release|x64
 		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Debug|x64.ActiveCfg = Debug|x64
 		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Debug|x64.Build.0 = Debug|x64
 		{A719CF0D-93E7-C213-7C7B-333A68E89E78}.Release|x64.ActiveCfg = Release|x64
@@ -107,15 +109,8 @@ Global
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Debug|x64.Build.0 = Debug|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.ActiveCfg = Release|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.Build.0 = Release|x64
-		{0D4D1E4E-8244-43E7-8E06-06197CB9171F}.Debug|x64.ActiveCfg = Debug
-		{0D4D1E4E-8244-43E7-8E06-06197CB9171F}.Debug|x64.Build.0 = Debug
-		{0D4D1E4E-8244-43E7-8E06-06197CB9171F}.Release|x64.ActiveCfg = Release
-		{0D4D1E4E-8244-43E7-8E06-06197CB9171F}.Release|x64.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E53B6737-1C23-4691-ABC8-A258EF30C9A4}
 	EndGlobalSection
 EndGlobal

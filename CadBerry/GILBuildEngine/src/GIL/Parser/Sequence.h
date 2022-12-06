@@ -21,7 +21,7 @@ namespace GIL
 #endif
 
 
-#define GetInnerCode(Params) ((GIL::InnerCode*)Params["$InnerCode"].Seq)->m_InnerCode
+#define GetInnerCode(Params) ((GIL::InnerCode*)Params["InnerCode"].Seq)->m_InnerCode
 
 	extern std::string Empty;
 

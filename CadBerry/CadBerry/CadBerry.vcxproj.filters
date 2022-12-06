@@ -79,6 +79,9 @@
     <ClInclude Include="src\CadBerry\Application.h">
       <Filter>CadBerry</Filter>
     </ClInclude>
+    <ClInclude Include="src\CadBerry\Application_archive.h">
+      <Filter>CadBerry</Filter>
+    </ClInclude>
     <ClInclude Include="src\CadBerry\Biology\Organism.h">
       <Filter>CadBerry\Biology</Filter>
     </ClInclude>
@@ -290,6 +293,9 @@
     <ClCompile Include="src\CadBerry\Application.cpp">
       <Filter>CadBerry</Filter>
     </ClCompile>
+    <ClCompile Include="src\CadBerry\Application_archive.cpp">
+      <Filter>CadBerry</Filter>
+    </ClCompile>
     <ClCompile Include="src\CadBerry\Biology\Organism.cpp">
       <Filter>CadBerry\Biology</Filter>
     </ClCompile>
@@ -432,8 +438,5 @@
       <Filter>CadBerry\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\cdbpch.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

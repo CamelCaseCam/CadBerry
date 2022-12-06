@@ -58,7 +58,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\cpr\include;..\CadBerry\vendor\cpr\cpr_generated_includes;..\CadBerry\vendor\cpr\_deps\curl-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\cpr\include;..\CadBerry\vendor\cpr\cmakebuild\cpr_generated_includes;..\CadBerry\vendor\cpr\cmakebuild\_deps\curl-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -68,7 +68,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>cpr.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\CadBerry\vendor\cpr\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\CadBerry\vendor\cpr\cmakebuild\lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Debug-windows-x86_64\Berry
@@ -82,7 +82,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>CDB_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\CadBerry\vendor\cpr\include;..\CadBerry\vendor\cpr\cpr_generated_includes;..\CadBerry\vendor\cpr\_deps\curl-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CadBerry\vendor\cpr\include;..\CadBerry\vendor\cpr\cmakebuild\cpr_generated_includes;..\CadBerry\vendor\cpr\cmakebuild\_deps\curl-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -96,7 +96,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>cpr.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\CadBerry\vendor\cpr\lib\RelWithDebInfo;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\CadBerry\vendor\cpr\cmakebuild\lib\RelWithDebInfo;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Release-windows-x86_64\Berry

@@ -529,11 +529,6 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\AST_Node.h(643,27
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\AST_Node.h(30): message : see declaration of 'std::vector<GIL::Parser::AST_Node *,std::allocator<GIL::Parser::AST_Node *>>'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Sequence.h(42,2): warning C4099: 'GIL::Param': type name first seen using 'class' now seen using 'struct'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Sequence.h(41): message : see declaration of 'GIL::Param'
-  CodonEncoding.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\CodonEncoding.h(24,57): warning C4251: 'GIL::Compiler::CodonEncoding::Code2Codon': class 'std::unordered_map<char,std::vector<std::string *,std::allocator<std::string *>> *,std::hash<char>,std::equal_to<char>,std::allocator<std::pair<const char,std::vector<std::string *,std::allocator<std::string *>> *>>>' needs to have dll-interface to be used by clients of class 'GIL::Compiler::CodonEncoding'
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\CodonEncoding.h(24): message : see declaration of 'std::unordered_map<char,std::vector<std::string *,std::allocator<std::string *>> *,std::hash<char>,std::equal_to<char>,std::allocator<std::pair<const char,std::vector<std::string *,std::allocator<std::string *>> *>>>'
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Lexer\Token.h(21,16): warning C4251: 'GIL::Lexer::Token::Value': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Lexer::Token'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
   Compiler.cpp
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Region.h(18,16): warning C4251: 'GIL::Parser::Region::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Parser::Region'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -1264,20 +1259,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\src\CadBerry\Rendering\Renderer.h(32,2
 D:\Development\CadBerry\CadBerry\CadBerry\vendor\glm\glm\fwd.hpp(520): message : see declaration of 'glm::mat<4,4,glm::f32,glm::packed_highp>'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\GBSequence.cpp(54,75): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Compiler\GBSequence.cpp(56,53): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-  GILException.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\GILException.h(9,2): warning C4275: non dll-interface class 'std::exception' used as base for dll-interface class 'GIL::GILException'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\vcruntime_exception.h(48): message : see declaration of 'std::exception'
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\GILException.h(8): message : see declaration of 'GIL::GILException'
-  Lexer.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Lexer\Token.h(21,16): warning C4251: 'GIL::Lexer::Token::Value': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Lexer::Token'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-  LexerMacros.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Lexer\Token.h(21,16): warning C4251: 'GIL::Lexer::Token::Value': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Lexer::Token'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-  LexerTokens.cpp
-  Token.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Lexer\Token.h(21,16): warning C4251: 'GIL::Lexer::Token::Value': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Lexer::Token'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
   AST_Node.cpp
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\AST_Node.h(120,16): warning C4251: 'GIL::Parser::ParamNode::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Parser::ParamNode'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -1792,9 +1773,6 @@ D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Project.cpp(1243,
           [
               _Elem=char
           ]
-  Region.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Region.h(18,16): warning C4251: 'GIL::Parser::Region::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Parser::Region'
-C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
   Sequence.cpp
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Region.h(18,16): warning C4251: 'GIL::Parser::Region::Name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Parser::Region'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
@@ -2042,8 +2020,6 @@ D:\Development\CadBerry\CadBerry\CadBerry\vendor\glm\glm\fwd.hpp(520): message :
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Sequence.cpp(28,48): warning C4273: 'GIL::EmptyTokens': inconsistent dll linkage
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Sequence.h(53,48): message : see previous definition of 'EmptyTokens'
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Parser\Sequence.cpp(294,45): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  SaveFunctions.cpp
-D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\SaveFunctions.cpp(10,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Type.cpp
 D:\Development\CadBerry\CadBerry\GILBuildEngine\src\GIL\Types\Type.h(39,15): warning C4251: 'GIL::Type::TypeName': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'GIL::Type'
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\xstring(4919): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'

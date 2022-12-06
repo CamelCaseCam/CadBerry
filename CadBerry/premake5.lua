@@ -899,6 +899,92 @@ project "Core"
 			"CadBerry/vendor/nfd/build/lib/Release/x64",
 		}
 
+project "DeepMD"
+	location "Modules/DeepMD"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	--linkoptions { '/DEFAULTLIB:"LIBCMT',  }
+
+	files
+	{
+		"Modules/%{prj.name}/src/**.h",
+		"Modules/%{prj.name}/src/**.hpp",
+		"Modules/%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"Core/src",
+		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.GLFW}",
+		"%{IncludeDirs.glm}",
+		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.ImPlot}",
+		"%{IncludeDirs.nfd}",
+	}
+
+	links
+	{
+		"CadBerry",
+		"ImGui",
+		"GLFW",
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "Off"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/Core/Core.pdb ../../bin/" .. OutputDir .. "/Berry/Modules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../../bin/" .. OutputDir .. "/CadBerry_test/Modules"),
+			("{COPYFILE} ../../bin/" .. OutputDir .. "/Core/Core.pdb ../../bin/" .. OutputDir .. "/CadBerry_test/Modules")
+		}
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		runtime "Debug"
+		symbols "On"
+		defines
+		{
+			"CDB_ENABLE_ASSERTS"
+		}
+		links
+		{
+			"nfd_d"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/nfd/build/lib/Debug/x64",
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		runtime "Release"
+		optimize "On"
+		links
+		{
+			"nfd"
+		}
+		libdirs
+		{
+			"CadBerry/vendor/nfd/build/lib/Release/x64",
+		}
+
 project "IRESGenerator"
 	location "Modules/IRESGenerator"
 	kind "SharedLib"

@@ -42,6 +42,19 @@ namespace sensing
 
 		virtual GIL::Sequence* GetSequence(std::string name) override
 		{
+			switch (Str2OpName.at(name))
+			{
+			case OpName::SetTRAPzymeTarget:
+				return SetTRAPzymeTarget::GetPtr();
+			case OpName::GenTZFromAttenuator:
+				return GenTZFromAttenuator::GetPtr();
+			case OpName::GenTZV2FromAttenuator:
+				return GenTZV2FromAttenuator::GetPtr();
+			case OpName::GenTZTarget:
+				return GenTZTarget::GetPtr();
+			case OpName::CreateAttenuator:
+				return CreateAttenuator::GetPtr();
+			}
 			CDB_BuildError("sensing module does not contain sequence {0}", name);
 			return nullptr;
 		}
