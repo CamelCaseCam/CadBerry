@@ -111,6 +111,22 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			virtual void AddToProject(Parser::Project* Proj) = 0;
 		};
 
+		class GILAPI AccessNamespace : public AST_Node
+		{
+		public:
+			AccessNamespace() {}
+			AccessNamespace(std::vector<Lexer::Token*>&& namespaces);
+			AccessNamespace(AccessNamespace&& other) : Namespaces(std::move(other.Namespaces)) {}
+			AccessNamespace(AccessNamespace& other) : Namespaces(other.Namespaces) {}
+
+			void operator=(AccessNamespace&& other) { Namespaces = std::move(other.Namespaces); }
+
+			NoCompile
+			AST_Type(AccessNamespace)
+
+			std::vector<std::string> Namespaces;
+		};
+
 		//I've changed this so the new type syntax is $Name [: type]
 		class GILAPI ParamNode : public AST_Node
 		{
@@ -262,8 +278,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 		class GILAPI Forward : public ProjectNode
 		{
 		public:
-			Forward(std::string&& Origin, std::string&& Destination) : Origin(Origin), Destination(Destination) {}
-			Forward(std::string& Origin, std::string& Destination) : Origin(Origin), Destination(Destination) {}
+			Forward(std::string&& Origin, std::string&& Destination, AccessNamespace&& Location) : Origin(Origin), Destination(Destination), Location(Location) {}
+			Forward(std::string& Origin, std::string& Destination, AccessNamespace& Location) : Origin(Origin), Destination(Destination), Location(Location) {}
 
 			virtual void AddToProject(Parser::Project* Proj) override;
 
@@ -272,6 +288,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			std::string Origin;
 			std::string Destination;
+			AccessNamespace Location;
 		};
 
 		class GILAPI DefineOperator : public ProjectNode
@@ -311,24 +328,14 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			std::map<std::string, Param> ToParamMap(Compiler::CompilerContext& Context, Project* Project, std::vector<std::string>& ParamIdx2Name);
 		};
 
-		class GILAPI AccessNamespace : public AST_Node
-		{
-		public:
-			AccessNamespace() {}
-			AccessNamespace(std::vector<Lexer::Token*>&& namespaces);
-
-			NoCompile
-			AST_Type(AccessNamespace)
-
-			std::vector<std::string> Namespaces;
-		};
-
 		class GILAPI CallSequence : public AST_Node
 		{
 		public:
 			CallSequence() {}
 			CallSequence(std::string&& Name, Call_Params&& Params, AccessNamespace&& Location) : Name(Name), Params(Params),
 				Location(std::move(Location.Namespaces)) {}
+			CallSequence(std::string& Name, Call_Params& Params, AccessNamespace& Location) : Name(Name), Params(Params),
+				Location(Location.Namespaces) {}
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 			AST_Type(CallSequence)

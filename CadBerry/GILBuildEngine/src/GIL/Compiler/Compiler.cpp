@@ -14,6 +14,8 @@
 
 #include "CompilerFunctions.h"
 
+#include "GIL/Bools/BoolCompiler.h"
+
 namespace GIL
 {
 	int CurrentSequenceCallDepth = 0;
@@ -45,9 +47,18 @@ namespace GIL
 
 			//Initialize all operators and forwards
 			InitForwardsAndOperators(Proj);
+
+			//Generate the bool graph
+			GenerateBoolGraphs(Proj);
 			
 
 			//Compile the nodes
+			for (Context; Context.NodeIdx < Context.Nodes->size(); ++Context.NodeIdx)
+			{
+				(*Context.Nodes)[Context.NodeIdx]->Compile(Context, Proj);
+			}
+			Context.NodeIdx = 0;
+			Context.Nodes = &Proj->AddedBoolOps;
 			for (Context; Context.NodeIdx < Context.Nodes->size(); ++Context.NodeIdx)
 			{
 				(*Context.Nodes)[Context.NodeIdx]->Compile(Context, Proj);

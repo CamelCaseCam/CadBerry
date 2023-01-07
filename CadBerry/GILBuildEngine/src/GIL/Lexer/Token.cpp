@@ -35,6 +35,8 @@ namespace GIL
 		Token* Token::NAND = new Token(LexerToken::NAND, "");
 		Token* Token::NOR = new Token(LexerToken::NOR, "");
 
+		Token* Token::IBool = new Token(LexerToken::IBOOL, "");
+
 		Token* Token::LParen = new Token(LexerToken::LPAREN, "");
 		Token* Token::RParen = new Token(LexerToken::RPAREN, "");
 		Token* Token::Comma = new Token(LexerToken::COMMA, "");

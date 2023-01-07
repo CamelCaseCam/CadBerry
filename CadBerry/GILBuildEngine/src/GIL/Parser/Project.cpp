@@ -4,8 +4,8 @@
 #include "Sequence.h"
 #include "GIL/SaveFunctions.h"
 
-#include "GIL/Bools/BoolContext.h"
-#include "GIL/Bools/IfStatement.h"
+#include "GIL/Bools/BoolNode.h"
+#include "GIL/Bools/BoolImplementation.h"
 
 #include "GIL/Errors.h"
 
@@ -44,6 +44,8 @@ namespace GIL
 		AccessNamespace CheckNamespace(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError);
 
 		void GetDistributions(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError, std::vector<std::string>& Distributions);
+
+		BoolNode* ParseBoolExpression(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError, BoolNode* LVALUE = nullptr);
 
 
 		std::vector<Token*> GetTokensUntil(std::vector<Token*> Tokens, size_t& i, LexerToken End)
@@ -285,6 +287,100 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					break;
 				}
 #pragma endregion
+#pragma region BoolParsing
+				case LexerToken::IBOOL:
+				{
+					Require(i + 2 < Tokens.size(), Tokens[i], ERROR_036);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_037);
+					Require(Tokens[i + 2]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_038);
+					std::string ImplName = Tokens[i + 1]->Value;
+
+					//Now parse the nodes inside the bool definition
+					i += 2;
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					
+					//Make the implementation
+					BoolImplementation* Impl = new BoolImplementation(ImplName);
+					for (AST_Node* node : InsideNodes)
+					{
+						if (node->GetName() == "Forward")
+						{
+							Forward* fwd = (Forward*)node;
+							SequenceForward* seq_forward = new SequenceForward();
+							seq_forward->DestinationName = fwd->Destination;
+							seq_forward->Location = std::move(fwd->Location);
+
+#define name(upper, lower) if (fwd->Origin == #upper || fwd->Origin == #lower) { Impl-> ##upper = seq_forward; }
+#define oname(upper, lower) if (fwd->Origin == #upper || fwd->Origin == #lower) { Impl-> ##upper = seq_forward; Impl-> ## upper ##Available = true; }
+							
+							name(Alloc, alloc)
+							else name(Dealloc, dealloc)
+							else name(Set, set)
+							else name(Use, use)
+							else name(NumAvailable, numAvailable)
+							else name(And, and)
+							else name(Or, or)
+							else name(Not, not)
+							else oname(Xor, xor)
+							else oname(Nand, nand)
+							else oname(Nor, nor)
+							else oname(Xnor, xnor)
+							else oname(ChainedAnd, chainedAnd)
+							else oname(ChainedOr, chainedOr)
+							else
+							{
+								//If there's an unrecognized forward, add it to the additional sequences map
+								Impl->AdditionalSequences[fwd->Origin] = seq_forward;
+							}
+						}
+						delete node;
+#undef name
+					}
+					
+					//Make sure the implementations are valid
+#define Check(Name) if (Impl-> ##Name == nullptr) { CDB_BuildError(ERROR_039, ImplName, #Name); throw GILException(); }
+					Check(Alloc)
+					Check(Dealloc)
+					Check(Set)
+					Check(Use)
+					Check(NumAvailable)
+					Check(And)
+					Check(Or)
+					Check(Not)
+#undef Check
+					Target->BoolImplementations.push_back(Impl);
+					
+					break;
+				}
+				case LexerToken::BOOL:
+				{
+					//Defining bools
+					Require(i + 1 < Tokens.size(), Tokens[i], ERROR_040);
+					Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_040);
+					
+					//Get the name of the bool
+					std::string Name = Tokens[i + 1]->Value;
+					
+					//Check if there's a bool with the same name. Bools are added as sequences with the bool type (to prevent shadowing)
+					if (Target->Sequences.contains(Name))
+					{
+						Error(ERROR_041, Tokens[i]);
+						throw GILException();
+					}
+					GILBool* Bool = new GILBool(Name);
+					Target->LocalBools[Name] = (Bool);
+					Target->Sequences[Name] = new BoolSequence(Bool);
+					
+					//Check if the bool is being defined
+					++i;
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::EQUALS)
+						--i;	//Go back to the bool name so it can be parsed as an identifier
+					break;
+				}
+				
+#pragma endregion
+				
 				case LexerToken::LBRACKET:
 					GetDistributions(Tokens, i, SyntaxError, Distributions);
 					continue;
@@ -439,19 +535,67 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					break;
 				}
 
+				case LexerToken::IF:
+				{
+					//An IF node
+					++i;
+					BoolNode* Condition = ParseBoolExpression(Tokens, i, SyntaxError);
+					Require(i < Tokens.size() && Tokens[i]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_020);
+					auto InsideTokens = GetInsideTokens(Tokens, i);
+					auto Nodes = ParseNodes(InsideTokens, Target);
+					auto statements = MakeIfStatements(Condition, Nodes, Target);
+					for (N_UseBool* statement : statements)
+					{
+						OutputNodes.push_back(statement);
+					}
+					break;
+				}
+
 					//This is going to be a big one
 				case LexerToken::IDENT:
 				{
+					//Is this a bool assignment?
+					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::EQUALS)
+					{
+						//There are two options. Either the bool is being assigned to true, or it's being assigned to a sequence
+						Require(i + 2 < Tokens.size(), Tokens[i], ERROR_042);
+						
+						std::string& Name = Tokens[i]->Value;
+						
+						i += 2;
+						if (Tokens[i]->TokenType == LexerToken::BOOL_TRUE)
+						{
+							auto Node = new N_SetBoolTrue(mv(Namespaces), mv(Name));
+							Node->pos.Line = Tokens[i]->line;
+							OutputNodes.push_back(Node);
+						}
+						else
+						{
+							//This could either be setting the bool to a sequence or another bool
+							auto Node = ParseBoolExpression(Tokens, i, SyntaxError, nullptr);
+							Target->GraphHeads.push_back(Node);
+							//Node is a placeholder or boolean value - turn it into a setbool node
+							auto outnode = new N_SetBool(mv(Namespaces), Name, Node);
+							OutputNodes.push_back(outnode);
+							--i;
+						}
+						break;
+					}
+					
 					//Is this a forward?
 					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::FORWARD)
 					{
 						//This is a forward
 						Require(i + 2 < Tokens.size(), Tokens[i], ERROR_025);
 						Require(Tokens[i + 2]->TokenType == LexerToken::IDENT, Tokens[i], ERROR_025);
-						auto Node = new Forward(mv(Tokens[i]->Value), mv(Tokens[i + 2]->Value));
-						Node->pos.Line = Tokens[i]->line;
-						OutputNodes.push_back(Node);
+						//Check if the destination has a namespace
+						auto Origin = Tokens[i];
 						i += 2;
+						AccessNamespace destNamespace = CheckNamespace(Tokens, i, SyntaxError);
+												
+						auto Node = new Forward(mv(Origin->Value), mv(Tokens[i]->Value), mv(destNamespace));
+						Node->pos.Line = Origin->line;
+						OutputNodes.push_back(Node);
 						break;
 					}
 					
@@ -470,9 +614,10 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					
 					//This is a sequence/operation being "called"
 					//Check if it has namespaces
-					Namespaces = CheckNamespace(Tokens, i, SyntaxError);
-					if (Namespaces.Namespaces.size() != 0)
+					AccessNamespace newns = CheckNamespace(Tokens, i, SyntaxError);
+					if (newns.Namespaces.size() != 0)
 					{
+						Namespaces = std::move(newns);
 						--i;
 						continue;
 					}
@@ -710,6 +855,173 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				
 				//Tokens like COMMA will be ignored
 			}
+		}
+
+
+		inline bool IsUnop(std::vector<Token*>& Tokens, size_t& i)
+		{
+			if (Tokens[i]->TokenType == LexerToken::NOT)
+				return true;
+			if (Tokens[i]->TokenType == LexerToken::IDENT)
+			{
+				//User-defined unary operations may not even be possible with the language design. TODO: implement them
+				return false;
+			}
+			return false;
+		}
+		
+		BoolNode* GetValue(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError)
+		{
+			if (Tokens[i]->TokenType == LexerToken::NOT)
+			{
+				//Check the identity of the next node
+				++i;
+				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				{
+					//Throw an error
+					Error(ERROR_044, Tokens[i]);
+					SyntaxError = true;
+					return nullptr;
+				}
+				//Get namespaces
+				AccessNamespace Namespace = CheckNamespace(Tokens, i, SyntaxError);
+				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				{
+					//Throw an error
+					Error(ERROR_044, Tokens[i]);
+					SyntaxError = true;
+					return nullptr;
+				}
+				return new N_Not(new N_Placeholder(Tokens[i]->Value, mv(Namespace)));
+			}
+			else if (Tokens[i]->TokenType == LexerToken::LPAREN)
+			{
+				++i;
+				return ParseBoolExpression(Tokens, i, SyntaxError, nullptr);
+			}
+			else if (Tokens[i]->TokenType != LexerToken::IDENT)
+			{
+				ERROR(ERROR_045, Tokens[i]);
+				SyntaxError = true;
+				return nullptr;
+			}
+			else
+			{
+				//Get namespaces
+				AccessNamespace Namespace = CheckNamespace(Tokens, i, SyntaxError);
+				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				{
+					//Throw an error
+					Error(ERROR_045, Tokens[i]);
+					SyntaxError = true;
+					return nullptr;
+				}
+				return new N_Placeholder(Tokens[i]->Value, mv(Namespace));
+			}
+		}
+
+		//Handles namespaces, expressions, parentheses, etc
+		BoolNode* ParseBoolExpression(std::vector<Token*>& Tokens, size_t& i, bool& SyntaxError, BoolNode* LVALUE)
+		{
+			//Get RVALUE
+			BoolNode* RVALUE = nullptr;
+
+			//First, we need to see if this is a unary or binary operation. If it's a custom operator, things will be a little bit more 
+			//difficult. Because of reasons detailed in https://twitter.com/CamelCaseCam1/status/1602469015473078272?s=20&t=ndZqNKAorpZJe4UAJNfcZw,
+			//it's impossible to have both custom unary and binary operators. So we only support custom binary operators.
+
+			//There are 6 possibilities
+			//1. unop LVALUE
+			//2. LVALUE binop RVALUE
+			//3. unop LVALUE binop RVALUE
+			//4. LVALUE binop unop RVALUE
+			//5. unop LVALUE binop unop RVALUE
+			//6. LVALUE
+			
+			if (LVALUE == nullptr)
+			{
+				LVALUE = GetValue(Tokens, i, SyntaxError);
+
+				//Check if there's more terms in the expression
+				++i;
+			}
+
+			if (i >= Tokens.size() || Tokens[i]->TokenType == LexerToken::RPAREN)
+			{
+				return LVALUE;
+			}
+
+			switch (Tokens[i]->TokenType)
+			{
+			case LexerToken::AND:
+			{
+				//AND stuff
+				++i;
+				RVALUE = GetValue(Tokens, i, SyntaxError);
+				auto newlval = new N_And(LVALUE, RVALUE);
+				
+				//Recursively call this function to generate the bool graph
+				++i;
+				return ParseBoolExpression(Tokens, i, SyntaxError, newlval);
+			}
+			case LexerToken::OR:
+			{
+				//OR stuff
+				++i;
+				RVALUE = GetValue(Tokens, i, SyntaxError);
+				auto newlval = new N_Or(LVALUE, RVALUE);
+
+				//Recursively call this function to generate the bool graph
+				++i;
+				return ParseBoolExpression(Tokens, i, SyntaxError, newlval);
+			}
+			default:
+				return LVALUE;
+			}
+			
+
+			//switch (Tokens[i]->TokenType)
+			//{
+			//case LexerToken::BOOL_TRUE:
+			//{
+			//	//If there are any other nodes, we just simplify this node
+			//	if (i + 1 < Tokens.size())
+			//	{
+			//		switch (Tokens[i + 1]->TokenType)
+			//		{
+			//		//AND and OR both evaluate to whatever the RVALUE is
+			//		case LexerToken::AND:
+			//		case LexerToken::OR:
+			//		case LexerToken::LPAREN:
+			//			i += 2;
+			//			return ParseBoolExpression(Tokens, i);
+			//		}
+			//	}
+			//	break;
+			//}
+			//case LexerToken::LPAREN:
+			//{
+			//	++i;
+			//	LVALUE = ParseBoolExpression(Tokens, i);
+			//	break;
+			//}
+			//case LexerToken::RPAREN:
+			//{
+			//	CDB_BuildError(ERROR_043, Tokens[i]->line);
+			//	throw GILException();
+			//}
+			//case LexerToken::NOT:
+			//{
+			//	++i;
+			//	BoolNode* RVALUE = ParseBoolExpression(Tokens, i);
+			//	return new N_Not(RVALUE);
+			//	break;
+			//}
+			//case LexerToken::IDENT:
+			//{
+
+			//}
+			//}
 		}
 
 
@@ -1046,6 +1358,10 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 		std::pair<Sequence*, Project*> Project::GetSeqFromNamespace(std::string& SeqName, std::vector<std::string>& Namespaces, int i,
 			std::map<std::string, GILModule*>* Modules)
 		{
+			if (i == 0 && Namespaces.size() == 1 && Modules->contains(Namespaces[0]))
+			{
+				return { (*Modules)[Namespaces[0]]->GetSequence(SeqName), nullptr };
+			}
 			if (i < Namespaces.size())
 				return this->Namespaces[Namespaces[i]]->GetSeqFromNamespace(SeqName, Namespaces, i + 1, Modules);
 			return { Sequences[SeqName], this };

@@ -1,0 +1,141 @@
+{
+  "main": {
+    "id": "cf2fd28f2c81bab4",
+    "type": "split",
+    "children": [
+      {
+        "id": "15e6a24aae6440e1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d09ed1c44fd6372b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "BoolPlan.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "85bd6e5f34bac9d6",
+    "type": "split",
+    "children": [
+      {
+        "id": "d355b7b60a1f3939",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5228542e11e6e15d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "04d9204784fa3a53",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "4f242d9d74b6d7e0",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "763951bd63369a51",
+    "type": "split",
+    "children": [
+      {
+        "id": "7446826775e612b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8ec286f38537d494",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "BoolPlan.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d73894d2f9a6c498",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "BoolPlan.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "4202ef1dde67f3c0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "abd4e8eb0053dde6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "BoolPlan.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "d09ed1c44fd6372b",
+  "lastOpenFiles": []
+}

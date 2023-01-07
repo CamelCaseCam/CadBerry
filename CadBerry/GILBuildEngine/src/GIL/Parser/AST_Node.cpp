@@ -365,7 +365,8 @@ namespace GIL
 		{
 			//Create the sequence forward
 			SequenceForward* Forward = new SequenceForward();
-			Forward->DestinationName = this->Destination;
+			Forward->DestinationName = std::move(this->Destination);
+			Forward->Location = std::move(this->Location);
 			Proj->Sequences[this->Origin] = Forward;
 		}
 		

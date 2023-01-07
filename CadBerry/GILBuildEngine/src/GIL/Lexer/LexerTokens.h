@@ -68,6 +68,9 @@ namespace GIL
 			NAND,
 			NOR,
 
+			//Bool implementation
+			IBOOL,
+
 			BOOL_TRUE,
 			BOOL_FALSE,
 

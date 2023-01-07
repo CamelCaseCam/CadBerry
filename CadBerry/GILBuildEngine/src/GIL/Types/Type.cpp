@@ -12,6 +12,7 @@ namespace GIL
 	Type Type::ncds = Type("ncds", 3, { &Type::any });
 	Type Type::promoter = Type("promoter", 4, { &Type::ncds });
 	Type Type::GIL_bool = Type("bool", 5, { &Type::ncds });
+	Type Type::data = Type("data", 6, { &Type::any });
 
 
 	bool Type::IsOfType(Type* other, bool FromChild)

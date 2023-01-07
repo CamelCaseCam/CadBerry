@@ -3,3 +3,7 @@
 // For more information see https://go.microsoft.com/fwlink/?linkid=865984
 #define ReflectMe(ClassName, Parent) static Parent* GetImplementation() { return new ClassName (); }inline static const _Reflectable_MapAdder_##Parent _Reflectable_##ClassName##_##Parent = _Reflectable_MapAdder_##Parent(#ClassName, GetImplementation)
 #define NoCompile
+#define name(upper, lower) if (fwd->Origin == #upper || fwd->Origin == #lower)
+#define AST_Type(Type) virtual std::string GetName() override { return #Type; }
+#define NoSave
+#define field(name)

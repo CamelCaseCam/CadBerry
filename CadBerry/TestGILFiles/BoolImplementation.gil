@@ -1,0 +1,131 @@
+using "tests"
+
+// Creates a bool implementation to make sure everything works
+ibool TestImpl
+{
+    Alloc => _alloc
+    Dealloc => _dealloc
+
+    Set => _set
+    Use => _use
+    NumAvailable => TestModule::NumAvailable
+
+    And => _and
+    Or => _or
+    Not => _not
+}
+
+// Simple test
+bool b1 = Input1 & Input2
+bool b2 = Input3 | ! Input4
+
+if (b1 & b2)
+{
+    Output1
+}
+/*
+Lowered code:
+_and(tbool6, tbool7, Output1)
+
+Input1(set(tbool1))
+Input2(set(tbool2))
+Input3(set(tbool3))
+Input4(set(tbool4))
+
+_not(tbool4, set(tbool5))
+_and(tbool1, tbool2, set(tbool6))
+_or(tbool3, tbool5, set(tbool7))
+
+Outputs:
+_not(tbool4, set(tbool5)) - GGGGAAAAGGGG
+_and(tbool1, tbool2, set(tbool6)) - GGGGAAAAGGGG
+_or(tbool3, tbool5, set(tbool7)) - GGGGAAAAGGGG
+_and(tbool6, tbool7, Output1) - GGGGCCCCGGGG
+
+Input1(set(tbool1)) - AAAAAAAAAAAA
+Input2(set(tbool2)) - TTTTAAAATTTT
+Input3(set(tbool3)) - GGGGAAAAGGGG
+Input4(set(tbool4)) - CCCCAAAACCCC
+
+Output:
+GGGGAAAAGGGGGGGGAAAAGGGGGGGGAAAAGGGGGGGGCCCCGGGGAAAAAAAAAAAATTTTAAAATTTTGGGGAAAAGGGGCCCCAAAACCCC
+
+
+GGGGAAAAGGGGGGGGAAAAGGGGGGGGCCCCGGGGAAAAAAAAAAAATTTTAAAATTTTGGGGAAAAGGGGCCCCAAAACCCC
+GGGGAAAAGGGGGGGGCCCCGGGGAAAAAAAAAAAATTTTAAAATTTTGGGGAAAAGGGGGGGGAAAAGGGGCCCCAAAACCCCGGGGAAAAGGGGTTTTAAAATTTTGGGGAAAAGGGG
+*/
+
+
+
+//______________________________________________________________________________
+// Implementation
+//______________________________________________________________________________
+
+sequence Input1($inner : any)
+{
+    'AAAA'
+    $inner
+    'AAAA'
+}
+
+sequence Output1
+{
+    'CCCC'
+}
+
+sequence Input2($inner : any)
+{
+    'TTTT'
+    $inner
+    'TTTT'
+}
+
+sequence Input3($inner : any)
+{
+    'GGGG'
+    $inner
+    'GGGG'
+}
+
+sequence Input4($inner : any)
+{
+    'CCCC'
+    $inner
+    'CCCC'
+}
+
+sequence _alloc {}
+sequence _dealloc {}
+
+sequence _set($name : data)
+{
+    'AAAA'
+}
+
+sequence _use($inner : any)
+{
+    'TTTT'
+    $inner
+    'TTTT'
+}
+
+sequence _and($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _or($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _not($input : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}

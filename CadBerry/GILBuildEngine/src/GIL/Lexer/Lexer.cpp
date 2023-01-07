@@ -114,6 +114,11 @@ namespace GIL
 					}
 					else
 					{
+						if (Text[i + 1] == ' ')
+						{
+							OutputTokens->push_back(Token::Equals);
+							break;
+						}
 						//May be an operator
 						Token* t = new Token();
 						GetWord(Text, t->Value, i);
@@ -122,14 +127,54 @@ namespace GIL
 					}
 					break;
 				case '&':
+				{
+					//Probably an operator
+					Token* t = new Token();
+					GetWord(Text, t->Value, i);
+					if (t->Value == "&")
+					{
+						t->TokenType = LexerToken::AND;
+						OutputTokens->push_back(t);
+					}
+					else
+					{
+						t->TokenType = LexerToken::IDENT;
+						OutputTokens->push_back(t);
+					}
+					break;
+				}
 				case '|':
+				{
+					//Probably an operator
+					Token* t = new Token();
+					GetWord(Text, t->Value, i);
+					if (t->Value == "|")
+					{
+						t->TokenType = LexerToken::OR;
+						OutputTokens->push_back(t);
+					}
+					else
+					{
+						t->TokenType = LexerToken::IDENT;
+						OutputTokens->push_back(t);
+					}
+					break;
+				}
 				case '!':
 				{
 					//Probably an operator
 					Token* t = new Token();
 					GetWord(Text, t->Value, i);
-					t->TokenType = LexerToken::IDENT;
-					OutputTokens->push_back(t);
+					if (t->Value == "!")
+					{
+						t->TokenType = LexerToken::NOT;
+						OutputTokens->push_back(t);
+					}
+					else
+					{
+						t->TokenType = LexerToken::IDENT;
+						OutputTokens->push_back(t);
+					}
 					break;
 				}
 				case '(':

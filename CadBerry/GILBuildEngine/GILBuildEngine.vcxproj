@@ -114,9 +114,12 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\Core.h" />
     <ClInclude Include="src\GIL.h" />
     <ClInclude Include="src\GIL\Bools\Bool.h" />
+    <ClInclude Include="src\GIL\Bools\BoolAllocator.h" />
+    <ClInclude Include="src\GIL\Bools\BoolCompiler.h" />
     <ClInclude Include="src\GIL\Bools\BoolContext.h" />
-    <ClInclude Include="src\GIL\Bools\IfStatement.h" />
-    <ClInclude Include="src\GIL\Bools\Test.h" />
+    <ClInclude Include="src\GIL\Bools\BoolImplementation.h" />
+    <ClInclude Include="src\GIL\Bools\BoolNode.h" />
+    <ClInclude Include="src\GIL\Bools\BuiltinAllocators.h" />
     <ClInclude Include="src\GIL\CGIL\CGIL_info.h" />
     <ClInclude Include="src\GIL\Compiler\CodonEncoding.h" />
     <ClInclude Include="src\GIL\Compiler\Compiler.h" />
@@ -130,6 +133,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Lexer\LexerMacros.h" />
     <ClInclude Include="src\GIL\Lexer\LexerTokens.h" />
     <ClInclude Include="src\GIL\Lexer\Token.h" />
+    <ClInclude Include="src\GIL\MacroUtils.h" />
     <ClInclude Include="src\GIL\Modules\GILModule.h" />
     <ClInclude Include="src\GIL\OutputTypes.h" />
     <ClInclude Include="src\GIL\Parser\AST_Node.h" />
@@ -138,6 +142,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClInclude Include="src\GIL\Parser\Project.h" />
     <ClInclude Include="src\GIL\Parser\Region.h" />
     <ClInclude Include="src\GIL\Parser\Sequence.h" />
+    <ClInclude Include="src\GIL\Reflection\Reflect.h" />
     <ClInclude Include="src\GIL\RestrictionSites.h" />
     <ClInclude Include="src\GIL\SaveFunctions.h" />
     <ClInclude Include="src\GIL\Types\Type.h" />
@@ -147,8 +152,10 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
-    <ClCompile Include="src\GIL\Bools\Bool.cpp" />
+    <ClCompile Include="src\GIL\Bools\BoolCompiler.cpp" />
     <ClCompile Include="src\GIL\Bools\BoolContext.cpp" />
+    <ClCompile Include="src\GIL\Bools\BoolNode.cpp" />
+    <ClCompile Include="src\GIL\Bools\BuiltinAllocators.cpp" />
     <ClCompile Include="src\GIL\Compiler\CodonEncoding.cpp" />
     <ClCompile Include="src\GIL\Compiler\Compiler.cpp" />
     <ClCompile Include="src\GIL\Compiler\CompilerFunctions.cpp" />

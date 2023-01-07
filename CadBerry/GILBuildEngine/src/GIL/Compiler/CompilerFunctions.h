@@ -98,11 +98,11 @@ namespace GIL
 				Operator* _op = (Operator*)op.second;
 				if (Proj->Sequences.contains(_op->DestinationName))
 				{
-					_op->DestinationSequence = Proj->Sequences[_op->DestinationName];
+					_op->DestinationSequence = Proj->GetSeqFromNamespace(_op->DestinationName, _op->Location.Namespaces, 0, &Modules);
 					_op->Origin = Proj;
-					_op->ParameterTypes = _op->DestinationSequence->ParameterTypes;
-					_op->ParamIdx2Name = _op->DestinationSequence->ParamIdx2Name;
-					_op->SeqType = _op->DestinationSequence->SeqType;
+					_op->ParameterTypes = _op->DestinationSequence.first->ParameterTypes;
+					_op->ParamIdx2Name = _op->DestinationSequence.first->ParamIdx2Name;
+					_op->SeqType = _op->DestinationSequence.first->SeqType;
 				}
 				else
 				{

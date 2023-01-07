@@ -20,6 +20,7 @@ namespace GIL
 			{"typedef", &Token::Typedef},
 			{"inherits", &Token::Inherits},
 			{"operator", &Token::Operator},
+			{"ibool", &Token::IBool}
 		});
 
 		std::unordered_map<std::string, LexerToken> PreprocessorDirectives = std::unordered_map<std::string, LexerToken>({

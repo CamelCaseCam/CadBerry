@@ -100,7 +100,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Debug-window
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>opengl32.lib;cpr.lib;nfd.lib;yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\cmakebuild\lib\RelWithDebInfo;vendor\nfd\build\lib\Release\x64;vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>vendor\SFML\lib;vendor\yaml-cpp\RelWithDebInfo;vendor\cpr\cmakebuild\lib\Release;vendor\nfd\build\lib\Release\x64;vendor\RNAstructure\CDBRNA\bin\Release-windows-x86_64\CDBRNA;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ImportLibrary>..\bin\Release-windows-x86_64\CadBerry\CadBerry.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
@@ -113,7 +113,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
   <ItemGroup>
     <ClInclude Include="src\CadBerry.h" />
     <ClInclude Include="src\CadBerry\Application.h" />
-    <ClInclude Include="src\CadBerry\Application_archive.h" />
     <ClInclude Include="src\CadBerry\Biology\Organism.h" />
     <ClInclude Include="src\CadBerry\BuildEngine\BuildDialog.h" />
     <ClInclude Include="src\CadBerry\BuildEngine\BuildEngine.h" />
@@ -187,7 +186,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\CadBerry\CadBerry.pdb ..\bin\Release-wi
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CadBerry\Application.cpp" />
-    <ClCompile Include="src\CadBerry\Application_archive.cpp" />
     <ClCompile Include="src\CadBerry\Biology\Organism.cpp" />
     <ClCompile Include="src\CadBerry\BuildEngine\BuildDialog.cpp" />
     <ClCompile Include="src\CadBerry\BuildEngine\BuildEngine.cpp" />

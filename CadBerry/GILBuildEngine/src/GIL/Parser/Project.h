@@ -10,6 +10,9 @@
 #include "GIL/Types/Type.h"
 
 #include "Core.h"
+#include "GIL/Bools/BoolImplementation.h"
+#include "GIL/Bools/Bool.h"
+#include "GIL/Bools/BoolNode.h"
 
 namespace GIL
 {
@@ -85,13 +88,23 @@ namespace GIL
 				{"ncds", 3},
 				{"promoter", 4},
 				{"bool", 5},
+				{"data", 6}
 			};
 
 			std::vector<Type*> Types = {
 				&Type::any,
 				&Type::cds, &Type::protein,
-				&Type::ncds, &Type::promoter, &Type::GIL_bool,
+				&Type::ncds, &Type::promoter, &Type::GIL_bool, &Type::data
 			};
+
+			//Bool implementations
+			std::vector<BoolImplementation*> BoolImplementations;
+			std::unordered_map<std::string, GILBool*> LocalBools;
+			std::vector<BoolNode*> GraphHeads;
+			std::vector<AST_Node*> AddedBoolOps;
+			
+			int TempBoolCount = 0;
+			std::string GetTempBoolName() { return "temp_bool_" + std::to_string(TempBoolCount++); }
 		};
 		std::vector<GIL::Lexer::Token*> GetInsideTokens(std::vector<GIL::Lexer::Token*>& Tokens, size_t& i);
 		std::vector<GIL::Lexer::Token*> GetInsideTokens(std::vector<GIL::Lexer::Token*>& Tokens, int& i);

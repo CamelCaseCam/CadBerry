@@ -54,6 +54,8 @@ namespace GIL
 			static Token* NAND;
 			static Token* NOR;
 
+			static Token* IBool;
+
 			static Token* LParen;
 			static Token* RParen;
 			static Token* Comma;

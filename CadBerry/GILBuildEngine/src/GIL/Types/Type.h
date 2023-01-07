@@ -26,7 +26,7 @@ namespace GIL
 
 		inline uint16_t GetID() { return TypeID; }
 		
-#define FirstUserTypeIdx 6
+#define FirstUserTypeIdx 7
 		inline const bool IsUserType() const { return TypeID >= FirstUserTypeIdx; }
 
 		static Type any;
@@ -35,6 +35,7 @@ namespace GIL
 		static Type promoter;
 		static Type protein;
 		static Type GIL_bool;
+		static Type data;
 
 		std::string TypeName;
 	private:

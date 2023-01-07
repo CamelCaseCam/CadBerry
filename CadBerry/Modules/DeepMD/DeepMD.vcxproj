@@ -109,6 +109,14 @@ copy /B /Y ..\..\bin\Release-windows-x86_64\Core\Core.pdb ..\..\bin\Release-wind
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Atom.h" />
+    <ClInclude Include="src\Simulation.h" />
+    <ClInclude Include="src\Viewport.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Viewport.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\CadBerry\CadBerry.vcxproj">
       <Project>{918CE669-7D59-4175-A672-2F1D929E7603}</Project>
     </ProjectReference>
@@ -118,15 +126,6 @@ copy /B /Y ..\..\bin\Release-windows-x86_64\Core\Core.pdb ..\..\bin\Release-wind
     <ProjectReference Include="..\..\CadBerry\vendor\GLFW\GLFW.vcxproj">
       <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Module.cpp" />
-    <ClCompile Include="src\Viewport.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Atom.h" />
-    <ClInclude Include="src\Simulation.h" />
-    <ClInclude Include="src\Viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

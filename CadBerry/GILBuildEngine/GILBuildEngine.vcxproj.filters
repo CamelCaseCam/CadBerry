@@ -22,6 +22,9 @@
     <Filter Include="GIL\Parser">
       <UniqueIdentifier>{FD274D93-E9DF-8EE0-52E7-673C3EBE29D1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GIL\Reflection">
+      <UniqueIdentifier>{BB1AB6F0-A7E8-A9F6-907C-1A1D7CE9855B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GIL\Types">
       <UniqueIdentifier>{056386ED-71CD-3A64-BA0B-EC0926B518B9}</UniqueIdentifier>
     </Filter>
@@ -35,13 +38,22 @@
     <ClInclude Include="src\GIL\Bools\Bool.h">
       <Filter>GIL\Bools</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\Bools\BoolAllocator.h">
+      <Filter>GIL\Bools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Bools\BoolCompiler.h">
+      <Filter>GIL\Bools</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\Bools\BoolContext.h">
       <Filter>GIL\Bools</Filter>
     </ClInclude>
-    <ClInclude Include="src\GIL\Bools\IfStatement.h">
+    <ClInclude Include="src\GIL\Bools\BoolImplementation.h">
       <Filter>GIL\Bools</Filter>
     </ClInclude>
-    <ClInclude Include="src\GIL\Bools\Test.h">
+    <ClInclude Include="src\GIL\Bools\BoolNode.h">
+      <Filter>GIL\Bools</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GIL\Bools\BuiltinAllocators.h">
       <Filter>GIL\Bools</Filter>
     </ClInclude>
     <ClInclude Include="src\GIL\CGIL\CGIL_info.h">
@@ -83,6 +95,9 @@
     <ClInclude Include="src\GIL\Lexer\Token.h">
       <Filter>GIL\Lexer</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\MacroUtils.h">
+      <Filter>GIL</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\Modules\GILModule.h">
       <Filter>GIL\Modules</Filter>
     </ClInclude>
@@ -107,6 +122,9 @@
     <ClInclude Include="src\GIL\Parser\Sequence.h">
       <Filter>GIL\Parser</Filter>
     </ClInclude>
+    <ClInclude Include="src\GIL\Reflection\Reflect.h">
+      <Filter>GIL\Reflection</Filter>
+    </ClInclude>
     <ClInclude Include="src\GIL\RestrictionSites.h">
       <Filter>GIL</Filter>
     </ClInclude>
@@ -124,10 +142,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\API.cpp" />
-    <ClCompile Include="src\GIL\Bools\Bool.cpp">
+    <ClCompile Include="src\GIL\Bools\BoolCompiler.cpp">
       <Filter>GIL\Bools</Filter>
     </ClCompile>
     <ClCompile Include="src\GIL\Bools\BoolContext.cpp">
+      <Filter>GIL\Bools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Bools\BoolNode.cpp">
+      <Filter>GIL\Bools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GIL\Bools\BuiltinAllocators.cpp">
       <Filter>GIL\Bools</Filter>
     </ClCompile>
     <ClCompile Include="src\GIL\Compiler\CodonEncoding.cpp">

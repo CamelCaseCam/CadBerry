@@ -1,9 +1,12 @@
 #include <gilpch.h>
 #include "Sequence.h"
 #include "GIL/Compiler/Compiler.h"
+#include "GIL/Compiler/CompilerFunctions.h"
 #include "GIL/SaveFunctions.h"
 #include "GIL/GILException.h"
 #include "GIL/Errors.h"
+
+#include "GIL/Parser/Project.h"
 
 namespace GIL
 {
@@ -93,12 +96,13 @@ namespace GIL
 
 	void SequenceForward::CompileTimeInit(Parser::Project* Proj)
 	{
-		if (Proj->Sequences.contains(this->DestinationName))
+		auto seq = Proj->GetSeqFromNamespace(this->DestinationName, this->Location.Namespaces, 0, &Compiler::Modules);
+		if (seq.first != nullptr)
 		{
-			this->DestinationSequence = Proj->Sequences[this->DestinationName];
-			this->ParameterTypes = this->DestinationSequence->ParameterTypes;
-			this->ParamIdx2Name = this->DestinationSequence->ParamIdx2Name;
-			this->SeqType = this->DestinationSequence->SeqType;
+			this->DestinationSequence = seq;
+			this->ParameterTypes = this->DestinationSequence.first->ParameterTypes;
+			this->ParamIdx2Name = this->DestinationSequence.first->ParamIdx2Name;
+			this->SeqType = this->DestinationSequence.first->SeqType;
 		}
 		else
 		{
@@ -172,20 +176,28 @@ namespace GIL
 	
 	void SequenceForward::Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& Context)
 	{
-		if (this->DestinationSequence == nullptr)
+		if (this->DestinationSequence.first == nullptr)
 		{
-			this->DestinationSequence = Proj->Sequences[this->DestinationName];
+			this->DestinationSequence = Proj->GetSeqFromNamespace(this->DestinationName, this->Location.Namespaces, 0, &Compiler::Modules);
 		}
-		this->DestinationSequence->Get(Proj, Params, Context);
+		this->DestinationSequence.first->Get(this->DestinationSequence.second, Params, Context);
+	}
+	void* SequenceForward::Data(Project* Proj)
+	{
+		if (this->DestinationSequence.first == nullptr)
+		{
+			this->DestinationSequence = Proj->GetSeqFromNamespace(this->DestinationName, this->Location.Namespaces, 0, &Compiler::Modules);
+		}
+		return this->DestinationSequence.first->Data(this->DestinationSequence.second);
 	}
 
 	std::vector<GIL::Lexer::Token*>& SequenceForward::GetTokens()
 	{
-		if (this->DestinationSequence == nullptr)
+		if (this->DestinationSequence.first == nullptr)
 		{
 			return EmptyTokens;
 		}
-		return this->DestinationSequence->GetTokens();
+		return this->DestinationSequence.first->GetTokens();
 	}	
 
 	void SequenceForward::Save(std::ofstream& OutputFile)
@@ -199,6 +211,19 @@ namespace GIL
 	void SequenceForward::Load(std::ifstream& InputFile, Parser::Project* Proj)
 	{
 		LoadStringFromFile(this->DestinationName, InputFile);
+	}
+	
+	void BoolSequence::Save(std::ofstream& OutputFile)
+	{
+		SavedSequence = SequenceType::SequenceForward;
+		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+
+		
+	}
+
+	void BoolSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
+	{
+		
 	}
 
 
@@ -232,11 +257,11 @@ namespace GIL
 
 			AlternateImplementation->Get(Proj, Params, Context);
 		}
-		if (this->DestinationSequence == nullptr)
+		if (this->DestinationSequence.first == nullptr)
 		{
-			this->DestinationSequence = Proj->Sequences[this->DestinationName];
+			this->DestinationSequence = Proj->GetSeqFromNamespace(this->DestinationName, this->Location.Namespaces, 0, &Compiler::Modules);
 		}
-		this->DestinationSequence->Get(Proj, Params, Context);
+		this->DestinationSequence.first->Get(this->DestinationSequence.second, Params, Context);
 	}
 
 	void Operator::Save(std::ofstream& OutputFile)

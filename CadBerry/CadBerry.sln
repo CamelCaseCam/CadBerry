@@ -33,6 +33,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "regulation", "regulation\re
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sensing", "sensing\sensing.vcxproj", "{DC53C98B-4833-4827-514B-D3FDBDA9AE88}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxproj", "{78756B10-E489-93C1-AD0B-372119DF8FF2}"
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utils", "utils\utils.vcxproj", "{169C8510-82B0-ADC1-4B32-5121B705AAF2}"
 EndProject
 Global
@@ -105,6 +107,10 @@ Global
 		{DC53C98B-4833-4827-514B-D3FDBDA9AE88}.Debug|x64.Build.0 = Debug|x64
 		{DC53C98B-4833-4827-514B-D3FDBDA9AE88}.Release|x64.ActiveCfg = Release|x64
 		{DC53C98B-4833-4827-514B-D3FDBDA9AE88}.Release|x64.Build.0 = Release|x64
+		{78756B10-E489-93C1-AD0B-372119DF8FF2}.Debug|x64.ActiveCfg = Debug|x64
+		{78756B10-E489-93C1-AD0B-372119DF8FF2}.Debug|x64.Build.0 = Debug|x64
+		{78756B10-E489-93C1-AD0B-372119DF8FF2}.Release|x64.ActiveCfg = Release|x64
+		{78756B10-E489-93C1-AD0B-372119DF8FF2}.Release|x64.Build.0 = Release|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Debug|x64.ActiveCfg = Debug|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Debug|x64.Build.0 = Debug|x64
 		{169C8510-82B0-ADC1-4B32-5121B705AAF2}.Release|x64.ActiveCfg = Release|x64

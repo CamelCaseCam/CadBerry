@@ -502,6 +502,44 @@ namespace CDB
 			Output = GIL::Compiler::Compile(project.raw());
 			REQUIRE(Output.second == "TTT");
 		}
+
+		SECTION("Bools")
+		{
+			auto tokens = GIL::Lexer::Tokenize(BoolImplementationExample);
+			CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+			REQUIRE(project->BoolImplementations.size() == 1);
+			REQUIRE(project->BoolImplementations[0]->name == "TestImpl");
+			
+			//Make sure all the sequences are defined
+			auto impl = project->BoolImplementations[0];
+			CHECK(impl->Alloc != nullptr);
+			CHECK(impl->Dealloc != nullptr);
+			CHECK(impl->Set != nullptr);
+			CHECK(impl->Use != nullptr);
+			CHECK(impl->NumAvailable != nullptr);
+			
+			CHECK(impl->And != nullptr);
+			CHECK(impl->Or != nullptr);
+			CHECK(impl->Not != nullptr);
+			
+			//Make sure extra sequences aren't defined
+			CHECK((!impl->ChainedAndAvailable && impl->ChainedAnd == nullptr));
+			CHECK((!impl->ChainedOrAvailable && impl->ChainedOr == nullptr));
+			
+			CHECK((!impl->NandAvailable && impl->Nand == nullptr));
+			CHECK((!impl->NorAvailable && impl->Nor == nullptr));
+			CHECK((!impl->XnorAvailable && impl->Xnor == nullptr));
+			CHECK((!impl->XorAvailable && impl->Xor == nullptr));
+
+			CHECK(impl->AdditionalSequences.size() == 0);
+
+
+			tokens = GIL::Lexer::Tokenize(BoolExample);
+			project = GIL::Parser::Project::Parse(*tokens);
+			auto Output = GIL::Compiler::Compile(project.raw());
+
+			REQUIRE(Output.second == "GGGGAAAAGGGGGGGGAAAAGGGGGGGGCCCCGGGGAAAAAAAAAAAATTTTAAAATTTTGGGGAAAAGGGGCCCCAAAACCCCGGGGAAAAGGGG");
+		}
 	}
 
 #pragma endregion GILTests

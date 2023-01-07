@@ -1,6 +1,5 @@
 #pragma once
 #include <gilpch.h>
-#include "IfStatement.h"
 
 namespace GIL
 {
@@ -35,7 +34,7 @@ namespace GIL
 		};
 
 		extern std::map<std::string, BinOp*> Bools;
-		extern std::vector<IfStatement*> IfStatements;
+		//extern std::vector<IfStatement*> IfStatements;
 
 		extern int IntermediateNum;
 		Value* AllocIntermediateBool(BinOp* Op);

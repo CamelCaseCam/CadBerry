@@ -184,7 +184,7 @@ project "CadBerry"
 		libdirs
 		{
 			"CadBerry/vendor/yaml-cpp/RelWithDebInfo",
-			"CadBerry/vendor/cpr/cmakebuild/lib/RelWithDebInfo",
+			"CadBerry/vendor/cpr/cmakebuild/lib/Release",
 			"CadBerry/vendor/nfd/build/lib/Release/x64",
 			"CadBerry/vendor/RNAstructure/CDBRNA/bin/Release-windows-x86_64/CDBRNA"
 		}
@@ -660,6 +660,75 @@ project "utils"
 			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/Berry/GILModules"),
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
 			("{COPYFILE} ../bin/" .. OutputDir .. "/utils/utils.pdb ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
+		}
+	filter "configurations:Debug"
+		defines "CDB_DEBUG"
+		runtime "Debug"
+		symbols "On"
+		defines
+		{
+			"CDB_ENABLE_ASSERTS"
+		}
+	filter "configurations:Release"
+		defines "CDB_RELEASE"
+		runtime "Release"
+		optimize "On"
+		
+project "tests"
+	location "tests"
+	kind "SharedLib"
+	language "C++"
+
+	targetdir ("bin/" .. OutputDir .. "/%{prj.name}")
+	objdir ("bin/" .. OutputDir .. "/%{prj.name}")
+
+	--linkoptions { '/DEFAULTLIB:"LIBCMT',  }
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.hpp",
+		"%{prj.name}/src/**.cpp",
+	}
+
+	includedirs
+	{
+		"CadBerry/vendor/spdlog/include",
+		"CadBerry/src",
+		"GILBuildEngine/src",
+		"utils/src",
+		"%{IncludeDirs.glm}",
+		"%{IncludeDirs.ImGui}",
+		"%{IncludeDirs.BlockingCollection}",
+		"%{IncludeDirs.ImPlot}",
+	}
+
+	links
+	{
+		"CadBerry",
+		"ImGui",
+		"GILBuildEngine",
+	}
+
+	filter "system:windows"
+		cppdialect "C++20"
+		staticruntime "Off"
+		systemversion "latest"
+
+		defines
+		{
+			"CDB_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE",
+			"IMGUI_IMPL_OPENGL_LOADER_GLAD2",
+			"FMT_HEADER_ONLY"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/Berry/GILModules"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/tests/tests.pdb ../bin/" .. OutputDir .. "/Berry/GILModules"),
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
+			("{COPYFILE} ../bin/" .. OutputDir .. "/tests/tests.pdb ../bin/" .. OutputDir .. "/CadBerry_test/GILModules"),
 		}
 	filter "configurations:Debug"
 		defines "CDB_DEBUG"

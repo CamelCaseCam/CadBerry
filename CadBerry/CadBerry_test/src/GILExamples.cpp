@@ -1,9 +1,10 @@
 #include "GILExamples.h"
 
-
 //________________________________________________________________________________________
 // SETTING TARGETS
 //________________________________________________________________________________________
+#pragma region Setting targets
+
 
 std::string TargetExample1         = R"(#Target "S.Cerevisiae")";
 std::string TargetExample2         = R"(#Target "E.coli")";
@@ -19,11 +20,13 @@ std::string TargetExample9         = R"(#Target "Yeast")";
 std::string TargetExampleError         = R"(#Target 
 'ShouldThrowError')";
 
+#pragma endregion
+
 
 //________________________________________________________________________________________
 // PREPROCESSOR COMMANDS
 //________________________________________________________________________________________
-
+#pragma region Preprocessor commands
 
 //Regions
 std::string RegionExample               = R"(
@@ -120,11 +123,13 @@ std::string PreproElseExample = R"(
 #EndIf
 )";
 
+#pragma endregion
+
 
 //________________________________________________________________________________________
 // DNA AND RNA LITERALS
 //________________________________________________________________________________________
-
+#pragma region DNA and RNA literals
 
 //DNA literals
 std::string DNAExample1 = R"(
@@ -164,11 +169,13 @@ std::string AminoSequenceExample2 = R"(
 @GILxAVMPFWSTNQYCKRHDE@
 )";
 
+#pragma endregion
+
 
 //________________________________________________________________________________________
 // SEQUENCES AND OPERATIONS
 //________________________________________________________________________________________
-
+#pragma region Sequences and operations
 
 //Sequences
 std::string SequenceNoParams = R"(
@@ -437,6 +444,7 @@ operation ThisIsAPromoterWithAVeryLongName
 
 )";
 
+#pragma endregion
 
 //________________________________________________________________________________________
 // FOR AND FROM
@@ -560,3 +568,208 @@ namespace TestNamespace1
 	}
 }
 )";
+
+
+//________________________________________________________________________________________
+// BOOLS
+//________________________________________________________________________________________
+#pragma region Bools
+
+std::string BoolImplementationExample = R"(
+#Target "Unoptimized"
+using "tests"
+
+// Creates a bool implementation to make sure everything works
+ibool TestImpl
+{
+    Alloc => _alloc
+    Dealloc => _dealloc
+
+    Set => _set
+    Use => _use
+    NumAvailable => TestModule::NumAvailable
+
+    And => _and
+    Or => _or
+    Not => _not
+}
+
+//______________________________________________________________________________
+// Implementation
+//______________________________________________________________________________
+
+sequence Input1($inner : any)
+{
+    'AAAA'
+    $inner
+    'AAAA'
+}
+
+sequence Output1
+{
+    'CCCC'
+}
+
+sequence Input2($inner : any)
+{
+    'TTTT'
+    $inner
+    'TTTT'
+}
+
+sequence Input3($inner : any)
+{
+    'GGGG'
+    $inner
+    'GGGG'
+}
+
+sequence Input4($inner : any)
+{
+    'CCCC'
+    $inner
+    'CCCC'
+}
+
+sequence _alloc {}
+sequence _dealloc {}
+
+sequence _set($name : data)
+{
+    'AAAA'
+}
+
+sequence _use($inner : any)
+{
+    'TTTT'
+    $inner
+    'TTTT'
+}
+
+sequence _and($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _or($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _not($output)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+)";
+
+
+std::string BoolExample = R"(
+#Target "Unoptimized"
+using "tests"
+
+// Creates a bool implementation to make sure everything works
+ibool TestImpl
+{
+	Alloc => _alloc
+	Dealloc => _dealloc
+
+	Set => _set
+	Use => _use
+	NumAvailable => tests::NumAvailable
+
+	And => _and
+	Or => _or
+	Not => _not
+}
+
+// Simple test
+bool b1 = Input1 & Input2
+bool b2 = Input3 | ! Input4
+
+if (b1 & b2)
+{
+    Output1
+}
+
+
+//______________________________________________________________________________
+// Implementation
+//______________________________________________________________________________
+
+sequence Input1($InnerCode : any)
+{
+    'AAAA'
+    $InnerCode
+    'AAAA'
+}
+
+sequence Output1
+{
+    'CCCC'
+}
+
+sequence Input2($InnerCode : any)
+{
+    'TTTT'
+    $InnerCode
+    'TTTT'
+}
+
+sequence Input3($InnerCode : any)
+{
+    'GGGG'
+    $InnerCode
+    'GGGG'
+}
+
+sequence Input4($InnerCode : any)
+{
+    'CCCC'
+    $InnerCode
+    'CCCC'
+}
+
+sequence _alloc {}
+sequence _dealloc {}
+
+sequence _set($name : data)
+{
+    'AAAA'
+}
+
+sequence _use($inner : any)
+{
+    'TTTT'
+    $inner
+    'TTTT'
+}
+
+sequence _and($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _or($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _not($input : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+)";
+
+#pragma endregion

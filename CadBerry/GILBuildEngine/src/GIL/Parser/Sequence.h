@@ -9,11 +9,13 @@
 
 #include "GIL/Parser/AST_Node.h"
 
+#include "GIL/Bools/Bool.h"
+
 
 namespace GIL
 {
 	//High, but hopefully low enough to prevent stack overflow
-	#define MAX_SEQUENCE_CALL_DEPTH 100
+	constexpr unsigned int MAX_SEQUENCE_CALL_DEPTH = 100;
 
 	//Only expose this within GIL
 #ifdef GIL_BUILD_DLL
@@ -50,6 +52,11 @@ namespace GIL
 	};
 
 
+#define NoSave virtual void Save(std::ofstream& OutputFile) override {} \
+virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
+
+#define NoImpl virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override {}
+
 	extern CDBAPI std::vector<GIL::Lexer::Token*> EmptyTokens;
 	class Sequence    //Base sequence class that is inherited by different sequence types
 	{
@@ -60,6 +67,10 @@ namespace GIL
 
 		virtual void Save(std::ofstream& OutputFile) = 0;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) = 0;
+
+		//For data sequences
+		virtual void* Data(Parser::Project* Proj) { return nullptr; }
+		virtual void DelData(void* data) { }
 
 		virtual std::vector<GIL::Lexer::Token*>& GetTokens() { return EmptyTokens; }
 
@@ -129,8 +140,8 @@ namespace GIL
 	class SequenceForward : public Sequence
 	{
 	public:
-		SequenceForward() { DestinationSequence = nullptr; }
-		SequenceForward(Sequence* destination, std::string& destinationName) : DestinationSequence(destination), DestinationName(destinationName) {
+		SequenceForward() { DestinationSequence = { nullptr, nullptr }; }
+		SequenceForward(Parser::AccessNamespace&& Location, Sequence* destination, Parser::Project* origin, std::string& destinationName) : Location(Location), DestinationSequence({destination, origin}), DestinationName(destinationName) {
 			this->SeqType = destination->SeqType;
 		}
 
@@ -143,8 +154,11 @@ namespace GIL
 
 		std::vector<GIL::Lexer::Token*>& GetTokens() override;
 
-		Sequence* DestinationSequence;
-		std::string& DestinationName = Empty;
+		virtual void* Data(Parser::Project* Proj) override;
+
+		Parser::AccessNamespace Location;
+		std::pair<Sequence*, Parser::Project*> DestinationSequence;
+		std::string DestinationName;
 	};
 
 	//TODO: maybe rewrite this so it keeps a list of nodes
@@ -166,8 +180,8 @@ namespace GIL
 	{
 	public:
 		Operator() {}
-		Operator(Sequence* destination, std::string& destinationName, Operator* alternateImplementation) : SequenceForward(destination, destinationName), 
-			AlternateImplementation(alternateImplementation) {}
+		Operator(Sequence* destination, Parser::Project* origin, std::string& destinationName, Operator* alternateImplementation) : SequenceForward({}, destination, origin, destinationName),
+			AlternateImplementation(alternateImplementation), Origin(origin) {}
 		
 		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
@@ -181,5 +195,55 @@ namespace GIL
 
 		//Operators are global, but need to remember where they came from
 		Parser::Project* Origin = nullptr;
+	};
+
+	class BoolSequence : public Sequence
+	{
+	public:
+		BoolSequence(Parser::GILBool* m_bool) : m_bool(m_bool) {}
+
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override {}
+
+		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
+
+		Parser::GILBool* m_bool;
+	};
+
+
+	//This sequence subclass is for internal use. It's a quick way to make a sequence that just returns a constant value. It WILL NOT be saved 
+	//with a project, and should not be added to the project's sequence map
+	class GILAPI InlineSequence : public Sequence
+	{
+	public:
+		InlineSequence(std::string&& OutText, std::vector<Parser::Region>&& OutRegions) : OutText(OutText), OutRegions(OutRegions) {}
+		InlineSequence(std::string& OutText, std::vector<Parser::Region>& OutRegions) : OutText(OutText), OutRegions(OutRegions) {}
+
+		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override 
+		{
+			*context.OutputString += OutText;
+			context.OutputRegions->reserve(context.OutputRegions->size() + OutRegions.size());
+			for (int i = 0; i < OutRegions.size(); ++i)
+				context.OutputRegions->push_back(OutRegions[i]);
+		}
+
+		NoSave
+
+		std::string OutText;
+		std::vector<Parser::Region> OutRegions;
+	};
+
+	//DOES NOT own data pointer
+	class GILAPI DataSequence : public Sequence
+	{
+	public:
+		DataSequence(void* data) : data(data) {}
+
+		virtual void* Data(Parser::Project* Proj) override { return data; }
+
+		NoSave
+		NoImpl
+
+		void* data;
 	};
 }
