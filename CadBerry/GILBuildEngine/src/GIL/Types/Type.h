@@ -19,6 +19,7 @@ namespace GIL
 		virtual bool IsOfType(Type* other, bool FromChild);
 		virtual void AddInheritance(Type* other) { Inherits.push_back(other); }
 		virtual void RemoveInheritance(Type* other);
+		virtual bool HasInheritance(Type* other);
 		virtual void ClearInheritance() { Inherits.clear(); }
 
 		virtual void Save(std::ofstream& OutputFile);

@@ -37,6 +37,16 @@ namespace GIL
 			}
 		}
 	}
+
+	bool Type::HasInheritance(Type* other)
+	{
+		for (Type* t : this->Inherits)
+		{
+			if (t == other)
+				return true;
+		}
+		return false;
+	}
 	
 	void Type::Save(std::ofstream& OutputFile)
 	{
@@ -44,8 +54,12 @@ namespace GIL
 		SaveString(this->TypeName, OutputFile);
 
 		//Save the type inheritance
-		OutputFile.write((char*)this->Inherits.size(), sizeof(size_t));
-		
+		size_t NumInherits = this->Inherits.size();
+		OutputFile.write((char*)&NumInherits, sizeof(size_t));
+		for (int i = 0; i < this->Inherits.size(); ++i)
+		{
+			SaveString(this->Inherits[i]->TypeName, OutputFile);
+		}
 	}
 	
 	Type* Type::Load(std::ifstream& InputFile, Parser::Project* Proj)
@@ -53,10 +67,13 @@ namespace GIL
 		//Recreate the type
 		std::string NewType;
 		LoadStringFromFile(NewType, InputFile);
+		
+		bool EditType = !Proj->TypeName2Idx.contains(NewType);
+		
 		auto TypeID = Proj->AllocType(NewType);
 		
 		//Load the type inheritance
-		size_t InheritanceCount;
+		size_t InheritanceCount = -1;
 		InputFile.read((char*)&InheritanceCount, sizeof(size_t));
 		for (size_t i = 0; i < InheritanceCount; ++i)
 		{
@@ -65,7 +82,7 @@ namespace GIL
 			
 			//Make sure the type exists
 			auto InheritanceID = Proj->AllocType(InheritanceName);
-			Proj->AddInheritance(TypeID, InheritanceID);
+			if (EditType) Proj->AddInheritance(TypeID, InheritanceID);
 		}
 		return Proj->GetTypeByID(TypeID);
 	}

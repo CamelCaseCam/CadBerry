@@ -136,10 +136,47 @@ namespace GIL
 		--CurrentSequenceCallDepth;
 	}
 
+	void Sequence::SaveBaseSequence(std::ofstream& OutputFile)
+	{
+		//Save sequence type
+		this->SeqType->Save(OutputFile);
+		
+		SaveStringVector(this->ParamIdx2Name, OutputFile);
+		
+		//Save parameter types
+		size_t NumParams = this->ParameterTypes.size();
+		OutputFile.write((char*)&NumParams, sizeof(size_t));
+		for (auto param : this->ParameterTypes)
+		{
+			SaveString(param.first, OutputFile);
+			SaveString(param.second->TypeName, OutputFile);
+		}
+	}
+	
+	void Sequence::LoadBaseSequence(std::ifstream& InputFile, Parser::Project* Proj)
+	{
+		this->SeqType = Type().Load(InputFile, Proj);
+		
+		LoadStringVectorFromFile(this->ParamIdx2Name, InputFile);
+		
+		size_t NumParams = -1;
+		InputFile.read((char*)&NumParams, sizeof(size_t));
+		for (int i = 0; i < NumParams; ++i)
+		{
+			std::string ParamName;
+			LoadStringFromFile(ParamName, InputFile);
+			std::string TypeName;
+			LoadStringFromFile(TypeName, InputFile);
+			uint16_t ID = Proj->AllocType(TypeName);
+			this->ParameterTypes[ParamName] = Proj->GetTypeByID(ID);
+		}
+	}
+
 	void DynamicSequence::Save(std::ofstream& OutputFile)
 	{
 		SavedSequence = SequenceType::DynamicSequence;
 		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
+		this->SaveBaseSequence(OutputFile);
 
 		SaveStringVector(this->ActiveDistributions, OutputFile);
 		
@@ -152,6 +189,7 @@ namespace GIL
 
 	void DynamicSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
 	{
+		this->LoadBaseSequence(InputFile, Proj);
 		LoadStringVectorFromFile(this->ActiveDistributions, InputFile);
 		
 		size_t Size = LoadSizeFromFile(InputFile);
@@ -282,6 +320,7 @@ namespace GIL
 			SavedSequence = SequenceType::EndOfOperators;
 			OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
 		}
+		this->SaveBaseSequence(OutputFile);
 	}
 
 	void Operator::Load(std::ifstream& InputFile, Parser::Project* Proj)
@@ -300,6 +339,7 @@ namespace GIL
 		{
 			this->AlternateImplementation = nullptr;
 		}
+		this->LoadBaseSequence(InputFile, Proj);
 	}
 
 	Operator* Operator::GetLastImplementation()

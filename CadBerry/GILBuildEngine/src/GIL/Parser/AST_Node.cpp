@@ -23,6 +23,11 @@ namespace GIL
 		void AST_Node::SaveNode(AST_Node* Node, std::ofstream& OutputFile)
 		{
 			SaveString(Node->GetName(), OutputFile);
+
+			//Save position
+			OutputFile.write((char*)&Node->pos.Line, sizeof(size_t));
+			OutputFile.write((char*)&Node->pos.Column, sizeof(size_t));
+			
 			if (_Reflectable_AST_Node_Map.contains(Node->GetName()))
 			{
 				Node->Save(OutputFile);
@@ -34,10 +39,15 @@ namespace GIL
 			std::string NodeType;
 			LoadStringFromFile(NodeType, InputFile);
 			
+			ParserPosition pos;
+			InputFile.read((char*)&pos.Line, sizeof(size_t));
+			InputFile.read((char*)&pos.Column, sizeof(size_t));
+			
 			//Create a node of that type
 			if (_Reflectable_AST_Node_Map.contains(NodeType))
 			{
 				AST_Node* Node = _Reflectable_AST_Node_Map[NodeType]();
+				Node->pos = pos;
 
 				//Load and return the node
 				Node->Load(InputFile, Proj);
@@ -804,12 +814,14 @@ namespace GIL
 		
 		void SetVar::Save(std::ofstream& OutputFile)
 		{
+			OutputFile.write((char*)&this->m_VariableType, sizeof(VariableType));
 			SaveString(this->VarName, OutputFile);
 			SaveString(this->VarValue, OutputFile);
 		}
 
 		void SetVar::Load(std::ifstream& InputFile, Parser::Project* Proj)
 		{
+			InputFile.read((char*)&this->m_VariableType, sizeof(VariableType));
 			LoadStringFromFile(this->VarName, InputFile);
 			LoadStringFromFile(this->VarValue, InputFile);
 		}

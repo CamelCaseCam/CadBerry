@@ -857,7 +857,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			}
 		}
 
-
+#pragma region bool stuff
 		inline bool IsUnop(std::vector<Token*>& Tokens, size_t& i)
 		{
 			if (Tokens[i]->TokenType == LexerToken::NOT)
@@ -1023,12 +1023,12 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			//}
 			//}
 		}
+#pragma endregion
 
 
 
 
-
-		
+#pragma region utils
 		void GetReusableElements(std::vector<Token*>& Tokens, Project* Target)    //Does all the actual parsing
 		{
 			auto nodes = ParseNodes(Tokens, Target); 
@@ -1189,6 +1189,8 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			}
 			return true;
 		}
+#pragma endregion
+		
 		void Project::Save(std::string Path)
 		{
 			std::ofstream OutputFile(Path, std::ios::binary);
@@ -1212,8 +1214,19 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			//Write the target organism to the file
 			SaveString(this->TargetOrganism, OutputFile);
 
+			//Write the types to the file
+			int Len = this->Types.size() - FirstUserTypeIdx;
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (Type* type : this->Types)
+			{
+				if (type->IsUserType())
+				{
+					type->Save(OutputFile);
+				}
+			}
+
 			//Write sequences to the file
-			int Len = this->Sequences.size();
+			Len = this->Sequences.size();
 			OutputFile.write((char*)&Len, sizeof(int));
 			for (auto sequence : this->Sequences)
 			{
@@ -1273,15 +1286,13 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				OutputFile.write((char*)&var.second, sizeof(double));
 			}
 
-			//Write the types to the file
-			Len = this->Types.size();
+			//Save the operators
+			Len = this->Operators.size();
 			OutputFile.write((char*)&Len, sizeof(int));
-			for (Type* type : this->Types)
+			for (auto& op : this->Operators)
 			{
-				if (type->IsUserType())
-				{
-					type->Save(OutputFile);
-				}
+				SaveString(op.first, OutputFile);
+				op.second->Save(OutputFile);
 			}
 		}
 
@@ -1315,6 +1326,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			}
 		}
 
+#pragma region Getting sequences
 		//Some more func defs
 		void GetNamespace(std::vector<std::string*>& Namespaces, std::vector<Lexer::Token*>* Tokens, int i);
 
@@ -1397,9 +1409,11 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				return this->Namespaces[*Namespaces[i]]->GetOpFromNamespace(OpName, Namespaces, i + 1, Modules);
 			return Sequences[OpName];
 		}
+#pragma endregion
 
 
 
+#pragma region Type stuff
 		uint16_t Project::AllocType(std::string TypeName)
 		{
 			//If the type already exists, return a reference to it
@@ -1460,7 +1474,8 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 		{
 			RemoveInheritance(Types[child], Types[parent]);
 		}
-
+#pragma endregion
+		
 		void GetNamespace(std::vector<std::string*>& Namespaces, std::vector<Lexer::Token*>* Tokens, int i)
 		{
 			int idx = i;
@@ -1488,7 +1503,15 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			Project* Proj = new Project();
 			LoadStringFromFile(Proj->TargetOrganism, InputFile);    //Load the target organism
 
-			int Len = -1;
+			//Load the types
+			int Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			for (int i = 0; i < Len; ++i)
+			{
+				Type().Load(InputFile, Proj);
+			}
+
+			Len = -1;
 			InputFile.read((char*)&Len, sizeof(int));    //Load the sequences
 			for (int i = 0; i < Len; ++i)
 			{
@@ -1506,7 +1529,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				if (Node != nullptr)
 					Proj->Main.push_back(Node);
 			}
-
+			
 			Len = -1;
 			InputFile.read((char*)&Len, sizeof(int));    //Load the imports
 			Proj->Imports.reserve(Len);
@@ -1556,17 +1579,23 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				double val;
 				LoadStringFromFile(key, InputFile);
 				InputFile.read((char*)&val, sizeof(double));
-				Proj->StrVars[key] = val;
+				Proj->NumVars[key] = val;
 			}
-			return Proj;
 
-			//Load the types
+			//Load the operators
 			Len = 0;
 			InputFile.read((char*)&Len, sizeof(int));
 			for (int i = 0; i < Len; ++i)
 			{
-				Type().Load(InputFile, Proj);
+				std::string key;
+				LoadStringFromFile(key, InputFile);
+				//We know that this is an operator, but loading it as a sequence makes sure we load it's data correctly
+				Sequence* Seq = Sequence::LoadSequence(InputFile, Proj);
+				Proj->Operators[key] = Seq;
 			}
+
+			
+			return Proj;
 		}
 	}
 }

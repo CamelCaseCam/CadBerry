@@ -409,8 +409,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			EndRegion(std::string&& RegionName) : RegionName(RegionName) {}
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
-			AST_Type(BeginRegion)
-				ReflectMe(EndRegion, AST_Node);
+			AST_Type(EndRegion)
+			ReflectMe(EndRegion, AST_Node);
 
 			virtual void Save(std::ofstream& OutputFile) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
@@ -453,8 +453,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 
-			AST_Type(SetVar)
-				ReflectMe(SetVar, AST_Node);
+			AST_Type(SetVar);
+			ReflectMe(SetVar, AST_Node);
 
 			virtual void Save(std::ofstream& OutputFile) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
@@ -472,8 +472,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 
-			AST_Type(IncVar)
-				ReflectMe(IncVar, AST_Node);
+			AST_Type(IncVar);
+			ReflectMe(IncVar, AST_Node);
 
 			virtual void Save(std::ofstream& OutputFile) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
@@ -489,8 +489,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 
-			AST_Type(DecVar)
-				ReflectMe(DecVar, AST_Node);
+			AST_Type(DecVar);
+			ReflectMe(DecVar, AST_Node);
 
 			virtual void Save(std::ofstream& OutputFile) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;

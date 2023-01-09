@@ -96,6 +96,9 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 		Type* SeqType = &Type::any;
 
 		std::vector<std::string> ActiveDistributions;
+	protected:
+		void SaveBaseSequence(std::ofstream& OutputFile);
+		void LoadBaseSequence(std::ifstream& InputFile, Parser::Project* Proj);
 	};
 
 	////Deprecated, DO NOT USE

@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\GILExamples.h" />
+    <ClInclude Include="src\GILTests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\GILExamples.cpp" />
