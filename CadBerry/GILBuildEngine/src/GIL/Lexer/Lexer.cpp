@@ -2,8 +2,11 @@
 #include "Lexer.h"
 #include "LexerTokens.h"
 #include "LexerMacros.h"
+#include "GIL/GILException.h"
 
 #include <ctype.h>
+
+#define GIL_DISABLE_BOOLS
 
 namespace GIL
 {
@@ -239,6 +242,17 @@ namespace GIL
 				}
 			}
 
+#ifdef GIL_DISABLE_BOOLS
+			//Disable bool stuff temporarily
+			for (Token* tok : *OutputTokens)
+				if (tok->TokenType == LexerToken::IBOOL || tok->TokenType == LexerToken::BOOL || tok->TokenType == LexerToken::BOOL_FALSE
+					|| tok->TokenType == LexerToken::BOOL_TRUE || tok->TokenType == LexerToken::IF)
+				{
+					CDB_BuildError("GIL bools are not supported by the stable version of the compiler. To enable this feature, recompile using the version on the developer branch");
+					throw GILException();
+				}
+#endif
+			
 			return OutputTokens;
 		}
 

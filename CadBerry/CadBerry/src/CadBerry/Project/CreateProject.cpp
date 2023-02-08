@@ -1,6 +1,10 @@
 #include "cdbpch.h"
 #include "CreateProject.h"
+
+#pragma warning(push, 0)
 #include "imgui.h"
+#pragma warning(pop)
+
 #include "CadBerry/Log.h"
 #include "CadBerry/Application.h"
 #include "CadBerry/Platform/Headless/HeadlessInput.h"

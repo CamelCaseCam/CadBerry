@@ -154,6 +154,7 @@ copy /B /Y ..\bin\Release-windows-x86_64\GILBuildEngine\GILBuildEngine.pdb ..\bi
     <ClCompile Include="src\API.cpp" />
     <ClCompile Include="src\GIL\Bools\BoolCompiler.cpp" />
     <ClCompile Include="src\GIL\Bools\BoolContext.cpp" />
+    <ClCompile Include="src\GIL\Bools\BoolImplementation.cpp" />
     <ClCompile Include="src\GIL\Bools\BoolNode.cpp" />
     <ClCompile Include="src\GIL\Bools\BuiltinAllocators.cpp" />
     <ClCompile Include="src\GIL\Compiler\CodonEncoding.cpp" />

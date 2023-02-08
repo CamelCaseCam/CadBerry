@@ -82,8 +82,12 @@ extern std::string DistributionExample;
 //Namespaces
 extern std::string SingleNamespace;
 extern std::string MultipleNamespaces;
+extern std::string NamespaceSequenceAsParameter;
 
 
 //Bools
 extern std::string BoolImplementationExample;
 extern std::string BoolExample;
+
+extern std::string SequenceBoolExample;
+extern std::string SequenceParamBoolExample;

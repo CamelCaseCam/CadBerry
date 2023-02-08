@@ -105,6 +105,12 @@ copy /B /Y ..\bin\Release-windows-x86_64\tests\tests.pdb ..\bin\Release-windows-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\NumAvailable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\API.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CadBerry\CadBerry.vcxproj">
       <Project>{918CE669-7D59-4175-A672-2F1D929E7603}</Project>
     </ProjectReference>
@@ -114,12 +120,6 @@ copy /B /Y ..\bin\Release-windows-x86_64\tests\tests.pdb ..\bin\Release-windows-
     <ProjectReference Include="..\GILBuildEngine\GILBuildEngine.vcxproj">
       <Project>{A719CF0D-93E7-C213-7C7B-333A68E89E78}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\API.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\NumAvailable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

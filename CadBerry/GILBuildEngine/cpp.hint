@@ -7,3 +7,4 @@
 #define AST_Type(Type) virtual std::string GetName() override { return #Type; }
 #define NoSave
 #define field(name)
+#define HashNode(__VA_ARGS__) virtual size_t Hash() const noexcept override { return ((size_t)this->GetType() __VA_ARGS__); }

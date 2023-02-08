@@ -331,7 +331,8 @@ SECTION("Distributions")
 {
 	auto tokens = GIL::Lexer::Tokenize(DistributionExample);
 	CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
-
+	SaveAndLoad(project);
+	
 	//Should compile to nothing
 	auto Output = GIL::Compiler::Compile(project.raw());
 	REQUIRE(Output.second == "");
@@ -350,6 +351,7 @@ SECTION("Namespaces")
 {
 	auto tokens = GIL::Lexer::Tokenize(SingleNamespace);
 	CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+	SaveAndLoad(project);
 	auto Output = GIL::Compiler::Compile(project.raw());
 	REQUIRE(Output.second == "TTT");
 
@@ -357,12 +359,19 @@ SECTION("Namespaces")
 	project = GIL::Parser::Project::Parse(*tokens);
 	Output = GIL::Compiler::Compile(project.raw());
 	REQUIRE(Output.second == "TTT");
+
+	tokens = GIL::Lexer::Tokenize(NamespaceSequenceAsParameter);
+	project = GIL::Parser::Project::Parse(*tokens);
+	SaveAndLoad(project);
+	Output = GIL::Compiler::Compile(project.raw());
+	CHECK(Output.second == "TTTAAACCC");
 }
 
 SECTION("Bools")
 {
 	auto tokens = GIL::Lexer::Tokenize(BoolImplementationExample);
 	CDB::scoped_ptr<GIL::Parser::Project> project = GIL::Parser::Project::Parse(*tokens);
+	//SaveAndLoad(project);
 	REQUIRE(project->BoolImplementations.size() == 1);
 	REQUIRE(project->BoolImplementations[0]->name == "TestImpl");
 
@@ -392,7 +401,22 @@ SECTION("Bools")
 
 	tokens = GIL::Lexer::Tokenize(BoolExample);
 	project = GIL::Parser::Project::Parse(*tokens);
+	SaveAndLoad(project);
 	auto Output = GIL::Compiler::Compile(project.raw());
 
 	REQUIRE(Output.second == "GGGGAAAAGGGGGGGGAAAAGGGGGGGGCCCCGGGGAAAAAAAAAAAATTTTAAAATTTTGGGGAAAAGGGGCCCCAAAACCCCGGGGAAAAGGGG");
+
+	tokens = GIL::Lexer::Tokenize(SequenceBoolExample);
+	project = GIL::Parser::Project::Parse(*tokens);
+	SaveAndLoad(project);
+	Output = GIL::Compiler::Compile(project.raw());
+
+	REQUIRE(Output.second == "GGGGAAAAGGGGTTTTAAATTTTGGGGAAAAGGGGTTTTAAATTTTTTTAAAAGGGAAAA");
+
+	tokens = GIL::Lexer::Tokenize(SequenceParamBoolExample);
+	project = GIL::Parser::Project::Parse(*tokens);
+	SaveAndLoad(project);
+	Output = GIL::Compiler::Compile(project.raw());
+
+	REQUIRE(Output.second == "GGGGAAAAGGGGTTTTAAATTTTGGGGAAAAGGGGTTTTAAATTTTTTTAAAAGGGAAAATTTAAAAGGGAAAA");
 }

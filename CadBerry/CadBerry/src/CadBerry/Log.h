@@ -2,9 +2,12 @@
 
 #include <cdbpch.h>
 #include "Core.h"
+
+#pragma warning(push, 0)
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 #include "spdlog/fmt/ostr.h"
+#pragma warning(pop)
 
 #include <memory>
 
@@ -20,8 +23,8 @@ namespace CDB
 		static void Init();
 		static void DeInit();
 
-		static std::shared_ptr<spdlog::logger>& GetEditorLogger() { return EditorLogger; }
-		static std::shared_ptr<spdlog::logger>& GetBuildLogger() { return BuildLogger; }
+		static spdlog::logger* GetEditorLogger() { return EditorLogger.get(); }
+		static spdlog::logger* GetBuildLogger() { return BuildLogger.get(); }
 
 		static void WriteInfo(std::string info);
 	};

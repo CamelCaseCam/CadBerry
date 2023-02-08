@@ -3,17 +3,30 @@
 #include "GIL/Parser/AST_Node.h"
 #include "BoolImplementation.h"
 
+namespace GIL::Parser
+{
+	class GILAPI BoolNode;
+}
+
+template<>
+struct GILAPI std::hash<GIL::Parser::BoolNode>
+{
+	size_t operator()(GIL::Parser::BoolNode const& bn) const noexcept;
+};
+
+
 namespace GIL
 {
 	namespace Parser
 	{
-		enum class BoolNodeType
+		enum class GILAPI BoolNodeType
 		{
 			BOOLINPUT,
 			SETBOOL,
 			SETBOOLTRUE,
 
 			PLACEHOLDER,
+			PARAMPLACEHOLDER,
 
 			AND,
 			OR,
@@ -22,21 +35,37 @@ namespace GIL
 			CAST,
 			USEBOOL
 		};
-
-		class BoolNode
+		
+		class GILAPI BoolNode
 		{
 		public:
 			BoolNode() {}
 			virtual ~BoolNode() {}
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) = 0;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) = 0;
 
-			virtual BoolNodeType GetType() = 0;
+			void SaveNode(std::ofstream& node, Project* Proj);
+			static BoolNode* LoadNode(std::ifstream& node, Project* Proj);
+			
+			virtual size_t Hash() const noexcept = 0;
+
+			virtual BoolNodeType GetType() const noexcept = 0;
 		};
 
-		class N_SetBool : public AST_Node
+#define HashNode(...) virtual size_t Hash() const noexcept override { return ((size_t)this->GetType() __VA_ARGS__); }
+#define hs(type) ) ^ std::hash<type>()(
+		
+
+		class GILAPI N_SetBool : public AST_Node
 		{
 		public:
+			N_SetBool() {}
 			N_SetBool(AccessNamespace&& location, std::string& Bool, BoolNode* Value) : Location(location), Value(Value), Bool(Bool) {}
 
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+
+			ReflectMe(N_SetBool, AST_Node);
 			AST_Type(N_SetBool)
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 
@@ -45,12 +74,17 @@ namespace GIL
 			std::string Bool;
 		};
 		
-		class N_BoolInput : public AST_Node
+		class GILAPI N_BoolInput : public AST_Node
 		{
 		public:
+			N_BoolInput() {}
 			N_BoolInput(std::string BoolID, Sequence* Seq, Project* origin) : BoolID(BoolID), Seq(Seq), Origin(origin) {}
 
-			AST_Type(N_BoolInput)
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+			
+			ReflectMe(N_BoolInput, AST_Node);
+			AST_Type(N_BoolInput);
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 
 			std::string BoolID;
@@ -58,11 +92,33 @@ namespace GIL
 			Project* Origin;
 		};
 
-		class N_SetBoolTrue : public AST_Node
+		class GILAPI N_ParamBoolInput : public AST_Node
 		{
 		public:
+			N_ParamBoolInput() {}
+			N_ParamBoolInput(std::string BoolID, std::string ParamName) : BoolID(BoolID), ParamName(ParamName) {}
+
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override {}
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override {}
+
+			ReflectMe(N_ParamBoolInput, AST_Node);
+			AST_Type(N_ParamBoolInput);
+			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override {}
+
+			std::string BoolID;
+			std::string ParamName;
+		};
+
+		class GILAPI N_SetBoolTrue : public AST_Node
+		{
+		public:
+			N_SetBoolTrue() {}
 			N_SetBoolTrue(AccessNamespace&& location, std::string&& name) : Location(location), Name(name) {}
 
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+			
+			ReflectMe(N_SetBoolTrue, AST_Node);
 			AST_Type(N_SetBoolTrue)
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 
@@ -70,67 +126,117 @@ namespace GIL
 			std::string Name;
 		};
 
-		class N_Placeholder : public BoolNode
+		class GILAPI N_Placeholder : public BoolNode
 		{
 		public:
+			N_Placeholder() {}
 			N_Placeholder(std::string& Name, AccessNamespace&& Location) : Name(Name), Location(Location) {}
 			
-			virtual BoolNodeType GetType() override { return BoolNodeType::PLACEHOLDER; }
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+			
+			virtual BoolNodeType GetType() const noexcept override { return BoolNodeType::PLACEHOLDER; }
+
+
+			HashNode(
+				hs(std::string) Name
+				hs(AccessNamespace) Location
+			)
 			
 			std::string Name;
 			AccessNamespace Location;
 		};
 
-		class N_And : public BoolNode
+		class GILAPI N_And : public BoolNode
 		{
-			public:
+		public:
+			N_And() {}
 			N_And(BoolNode* left, BoolNode* right) : left(left), right(right) {}
 
-			virtual BoolNodeType GetType() override { return BoolNodeType::AND; }
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+			
+			virtual BoolNodeType GetType() const noexcept override { return BoolNodeType::AND; }
+
+			HashNode(
+				hs(BoolNode) *left
+				hs(BoolNode) *right
+			)
 			
 			BoolNode* left;
 			BoolNode* right;
 		};
 
-		class N_Or : public BoolNode
+		class GILAPI N_Or : public BoolNode
 		{
-			public:
+		public:
+			N_Or() {}
 			N_Or(BoolNode* left, BoolNode* right) : left(left), right(right) {}
 
-			virtual BoolNodeType GetType() override { return BoolNodeType::OR; }
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+			
+			virtual BoolNodeType GetType() const noexcept override { return BoolNodeType::OR; }
+			
+			HashNode(
+				hs(BoolNode)* left
+				hs(BoolNode)* right
+			)
 			
 			BoolNode* left;
 			BoolNode* right;
 		};
 		
-		class N_Not : public BoolNode
+		class GILAPI N_Not : public BoolNode
 		{
-			public:
+		public:
+			N_Not() {}
 			N_Not(BoolNode* node) : node(node) {}
 
-			virtual BoolNodeType GetType() override { return BoolNodeType::NOT; }
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+
+			virtual BoolNodeType GetType() const noexcept override { return BoolNodeType::NOT; }
+			
+			HashNode(
+				hs(BoolNode) *node
+			)
 			
 			BoolNode* node;
 		};
 		
-		class N_Cast : public BoolNode
+		class GILAPI N_Cast : public BoolNode
 		{
 		public:
-			N_Cast(BoolImplementation* implementation, AST_Node* node) : implementation(implementation), node(node) {}
+			N_Cast() {}
+			N_Cast(BoolImplementation* implementation, BoolNode* node) : implementation(implementation), node(node) {}
 
-			virtual BoolNodeType GetType() override { return BoolNodeType::CAST; }
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+
+			virtual BoolNodeType GetType() const noexcept override { return BoolNodeType::CAST; }
+			
+			//TODO: this needs to be improved once we implement casts
+			HashNode(
+				hs(BoolNode) *node
+			)
 			
 			BoolImplementation* implementation;
-			AST_Node* node;
+			BoolNode* node;
 		};
 		
 
 		
-		class N_UseBool : public AST_Node
+		class GILAPI N_UseBool : public AST_Node
 		{
 		public:
+			N_UseBool() {}
 			N_UseBool(BoolNode* boolref, std::vector<AST_Node*>&& nodes);
 
+			virtual void Save(std::ofstream& OutputFile, Project* Proj) override;
+			virtual void Load(std::ifstream& InputFile, Project* Proj) override;
+			
+			ReflectMe(N_UseBool, AST_Node);
 			AST_Type(N_UseBool)
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) override;
 			
@@ -138,6 +244,14 @@ namespace GIL
 			BoolImplementation* implementation = nullptr;
 			std::vector<AST_Node*> nodes;
 		};
-		std::vector<N_UseBool*> MakeIfStatements(BoolNode* boolref, std::vector<AST_Node*>& nodes, Project* project);
+		std::vector<N_UseBool*> MakeIfStatements(BoolNode* boolref, std::vector<AST_Node*>& nodes, Project* project,
+			std::unordered_map<std::string, GILBool*>* LocalBools = nullptr, std::vector<BoolNode*>* GraphHeads = nullptr,
+			std::vector<AST_Node*>* AddedBoolOps = nullptr);
 	}
+}
+
+//Hashing stuff
+inline size_t std::hash<GIL::Parser::BoolNode>::operator()(GIL::Parser::BoolNode const& bn) const noexcept
+{
+	return bn.Hash();
 }

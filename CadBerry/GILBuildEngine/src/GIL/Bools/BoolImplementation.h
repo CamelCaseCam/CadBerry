@@ -55,6 +55,7 @@ namespace GIL
 		class BoolImplementation
 		{
 		public:
+			BoolImplementation() {}
 			BoolImplementation(std::string name) : name(name) {}
 			//C++ sequence to create a bool
 			Sequence* Alloc = nullptr;
@@ -103,6 +104,9 @@ namespace GIL
 			
 			//We keep a record of the implementation's name to make it possible to force a certain implementation to be used
 			std::string name;
+
+			void Save(std::ofstream& OutputFile, Parser::Project* Proj);
+			static BoolImplementation* Load(std::ifstream& InputFile, Parser::Project* Proj);
 		};
 	}
 }

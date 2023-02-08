@@ -102,6 +102,10 @@ namespace GIL
 			std::unordered_map<std::string, GILBool*> LocalBools;
 			std::vector<BoolNode*> GraphHeads;
 			std::vector<AST_Node*> AddedBoolOps;
+
+			//For saving and loading bool implementations
+			std::unordered_map<size_t, bool> SavedBools;	//TODO: replace this with a bloom filter
+			std::unordered_map<size_t, BoolNode*> LoadedBools;
 			
 			int TempBoolCount = 0;
 			std::string GetTempBoolName() { return "temp_bool_" + std::to_string(TempBoolCount++); }

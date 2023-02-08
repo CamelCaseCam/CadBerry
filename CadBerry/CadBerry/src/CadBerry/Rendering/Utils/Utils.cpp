@@ -1,8 +1,11 @@
 #include <cdbpch.h>
 #include "Utils.h"
 #include "CadBerry/Log.h"
+
+#pragma warning(push, 0)
 #include "imgui.h"
 #include "imgui_internal.h"
+#pragma warning(pop)
 
 #include "CadBerry/Utils/memory.h"
 

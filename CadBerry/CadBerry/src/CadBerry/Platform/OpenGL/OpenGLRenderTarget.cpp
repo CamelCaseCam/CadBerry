@@ -6,7 +6,9 @@
 
 #include <GLFW/glfw3.h>
 
+#pragma warning(push, 0)
 #include "imgui.h"
+#pragma warning(pop)
 
 namespace CDB
 {

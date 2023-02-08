@@ -2,8 +2,10 @@
 #include "InputVector.h"
 #include "CadBerry/Log.h"
 
+#pragma warning(push, 0)
 #include "imgui.h"
 #include "misc/cpp/imgui_stdlib.h"
+#pragma warning(pop)
 
 namespace CDB
 {

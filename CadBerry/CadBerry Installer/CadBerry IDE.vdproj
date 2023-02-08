@@ -99,12 +99,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_0B3A50749774427CA789408C5C8FE6C0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0B6E1A74943E451DA4D501CFA09B3511"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -160,6 +154,12 @@
         "Entry"
         {
         "MsmKey" = "8:_10DC4F97DD4D458CA84DF57B5EFA4A9C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1101FF4E383F408C992CBAEBC313DD50"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -406,12 +406,6 @@
         "Entry"
         {
         "MsmKey" = "8:_33BEA13C356F4B39801F1888AD941492"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_341C0DB522C244CA8D5D9DA0FAE53B7C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -777,6 +771,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4827D33DDB2246EEB45441C2D7929C2E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4971361E7EC44C6BA8A1F1FD6E88A465"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -844,6 +844,12 @@
         "Entry"
         {
         "MsmKey" = "8:_5328CB8B67D1461AA558AD2A4D8EA4A7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_53814F4B65584EAFA378002E5360D13A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1066,6 +1072,12 @@
         "Entry"
         {
         "MsmKey" = "8:_6679EB1945884BA9B871550F19422739"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_669343183F604480B54B87059D71659D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1647,12 +1659,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A54F830C75E2437FBCF12AB1FD82811B"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_A67C499578BF441985005FFE026BA548"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1689,12 +1695,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_ABE3066BAE404382962181289F5D52E0"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_ACD6AD2BEF6D4632B73FBE8E1FB5387D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -1702,6 +1702,12 @@
         "Entry"
         {
         "MsmKey" = "8:_ADFA60753E464B30A330B92A19FCAC38"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AEFCB8788FEC4B86927E8EBA43FA4DEC"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1810,12 +1816,6 @@
         "Entry"
         {
         "MsmKey" = "8:_B7D824576EC74F28BFC3BCEB3EE37B90"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B7E6A03ECD5049288CB7E84B05BC441F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2205,6 +2205,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E1F7A8FC70A346EF87D596B1191F1C8D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E25EDD57D41E4512883550B447BF7AB1"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -2218,12 +2224,6 @@
         "Entry"
         {
         "MsmKey" = "8:_E27E472BC30A449C9B795F0E586CF72D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E3AE995A4ECE4390AF98716C00511A0C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -2946,26 +2946,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B3A50749774427CA789408C5C8FE6C0"
-            {
-            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\E.Coli@Conditionals.cgil"
-            "TargetName" = "8:E.Coli@Conditionals.cgil"
-            "Tag" = "8:"
-            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B6E1A74943E451DA4D501CFA09B3511"
             {
             "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Data\\data_tables\\loop.dh"
@@ -3152,6 +3132,26 @@
             "TargetName" = "8:dnatstacki1n.dh"
             "Tag" = "8:"
             "Folder" = "8:_F26A2D2CE6A8401C9E736CF86D1886EB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1101FF4E383F408C992CBAEBC313DD50"
+            {
+            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\gil.restriction.cgil"
+            "TargetName" = "8:gil.restriction.cgil"
+            "Tag" = "8:"
+            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3786,26 +3786,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_341C0DB522C244CA8D5D9DA0FAE53B7C"
-            {
-            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\restriction.cgil"
-            "TargetName" = "8:restriction.cgil"
-            "Tag" = "8:"
-            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3761DB3BF2C2F241496B78E014A003CE"
             {
             "SourcePath" = "8:api-ms-win-crt-runtime-l1-1-0.dll"
@@ -4386,6 +4366,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4827D33DDB2246EEB45441C2D7929C2E"
+            {
+            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\gil.Plasmid.cgil"
+            "TargetName" = "8:gil.Plasmid.cgil"
+            "Tag" = "8:"
+            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4971361E7EC44C6BA8A1F1FD6E88A465"
             {
             "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Data\\data_tables\\std_ensemble_defect.model"
@@ -4592,6 +4592,26 @@
             "TargetName" = "8:dnacoaxstack.dat"
             "Tag" = "8:"
             "Folder" = "8:_F26A2D2CE6A8401C9E736CF86D1886EB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_53814F4B65584EAFA378002E5360D13A"
+            {
+            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\E.Coli@gil.Plasmid.cgil"
+            "TargetName" = "8:E.Coli@gil.Plasmid.cgil"
+            "Tag" = "8:"
+            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -5012,6 +5032,26 @@
             "TargetName" = "8:dnatstacki23.dh"
             "Tag" = "8:"
             "Folder" = "8:_F26A2D2CE6A8401C9E736CF86D1886EB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_669343183F604480B54B87059D71659D"
+            {
+            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\S.Cerevisiae@gil.Plasmid.cgil"
+            "TargetName" = "8:S.Cerevisiae@gil.Plasmid.cgil"
+            "Tag" = "8:"
+            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -6206,26 +6246,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A54F830C75E2437FBCF12AB1FD82811B"
-            {
-            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\S.Cerevisiae@Plasmid.cgil"
-            "TargetName" = "8:S.Cerevisiae@Plasmid.cgil"
-            "Tag" = "8:"
-            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A67C499578BF441985005FFE026BA548"
             {
             "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Data\\data_tables\\rna.tstacki.dg"
@@ -6346,26 +6366,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ABE3066BAE404382962181289F5D52E0"
-            {
-            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\Plasmid.cgil"
-            "TargetName" = "8:Plasmid.cgil"
-            "Tag" = "8:"
-            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ACD6AD2BEF6D4632B73FBE8E1FB5387D"
             {
             "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Data\\data_tables\\rna.triloop.dg"
@@ -6392,6 +6392,26 @@
             "TargetName" = "8:b-test.tloop.dg"
             "Tag" = "8:"
             "Folder" = "8:_F26A2D2CE6A8401C9E736CF86D1886EB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AEFCB8788FEC4B86927E8EBA43FA4DEC"
+            {
+            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\gil.Human.cgil"
+            "TargetName" = "8:gil.Human.cgil"
+            "Tag" = "8:"
+            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -6752,26 +6772,6 @@
             "TargetName" = "8:dnahexaloop.dat"
             "Tag" = "8:"
             "Folder" = "8:_F26A2D2CE6A8401C9E736CF86D1886EB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B7E6A03ECD5049288CB7E84B05BC441F"
-            {
-            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\E.Coli@Plasmid.cgil"
-            "TargetName" = "8:E.Coli@Plasmid.cgil"
-            "Tag" = "8:"
-            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -7726,6 +7726,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E1F7A8FC70A346EF87D596B1191F1C8D"
+            {
+            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\E.Coli@gil.Conditionals.cgil"
+            "TargetName" = "8:E.Coli@gil.Conditionals.cgil"
+            "Tag" = "8:"
+            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E25EDD57D41E4512883550B447BF7AB1"
             {
             "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Data\\data_tables\\m6A.miscloop.dg"
@@ -7772,26 +7792,6 @@
             "TargetName" = "8:dnadynalignmiscloop.dh"
             "Tag" = "8:"
             "Folder" = "8:_F26A2D2CE6A8401C9E736CF86D1886EB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E3AE995A4ECE4390AF98716C00511A0C"
-            {
-            "SourcePath" = "8:..\\bin\\Release-windows-x86_64\\Berry\\Build\\Libs\\Human.cgil"
-            "TargetName" = "8:Human.cgil"
-            "Tag" = "8:"
-            "Folder" = "8:_586DBAEA45584A329A74733728D75F71"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -8722,7 +8722,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CadBerry"
         "ProductCode" = "8:{0233391A-E7BC-4DDC-A699-F8109119AC4F}"
-        "PackageCode" = "8:{0FCF83CD-B7CB-4F21-9B9F-A3B351A8B3B0}"
+        "PackageCode" = "8:{D4A9CE22-8397-445E-80BF-60C550BDB68D}"
         "UpgradeCode" = "8:{EDF7950D-93F9-49F5-A0A2-09B2C8792B5C}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

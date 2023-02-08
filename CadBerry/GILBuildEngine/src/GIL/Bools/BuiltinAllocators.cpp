@@ -353,7 +353,7 @@ namespace GIL
 					CallSequence potentialseq = CallSequence(placeholder->Name, dummyparams, placeholder->Location);
 					auto PossibleSequence = Proj->GetSeq(&potentialseq, &Modules);
 					if (PossibleSequence.first == nullptr)
-					{
+					{						
 						//TODO: Error
 						throw GILException();
 					}

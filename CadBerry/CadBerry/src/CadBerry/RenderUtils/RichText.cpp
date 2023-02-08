@@ -1,8 +1,10 @@
 #include <cdbpch.h>
 #include "RichText.h"
 
+#pragma warning(push, 0)
 #include "imgui.h"
 #include "imgui_internal.h"
+#pragma warning(pop)
 
 namespace CDB
 {

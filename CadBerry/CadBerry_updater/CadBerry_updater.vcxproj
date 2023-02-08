@@ -96,7 +96,7 @@ copy /B /Y ..\bin\Debug-windows-x86_64\CadBerry_updater\CadBerry_updater.pdb ..\
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>cpr.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\CadBerry\vendor\cpr\cmakebuild\lib\RelWithDebInfo;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\CadBerry\vendor\cpr\cmakebuild\lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /B /Y ..\bin\Release-windows-x86_64\CadBerry_updater\CadBerry_updater.exe ..\bin\Release-windows-x86_64\Berry

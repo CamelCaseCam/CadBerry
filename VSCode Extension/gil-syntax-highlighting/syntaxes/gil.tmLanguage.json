@@ -25,7 +25,7 @@
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.gil",
-				"match": "(sequence|operation|import|using|operator|typedef|inherits|for|from)"
+				"match": "(sequence|operation|import|using|operator|typedef|inherits|for|from|bool|ibool|if)"
 			}]
 		},
 		"comments": {

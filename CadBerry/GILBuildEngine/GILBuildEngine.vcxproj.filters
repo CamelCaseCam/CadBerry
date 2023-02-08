@@ -148,6 +148,9 @@
     <ClCompile Include="src\GIL\Bools\BoolContext.cpp">
       <Filter>GIL\Bools</Filter>
     </ClCompile>
+    <ClCompile Include="src\GIL\Bools\BoolImplementation.cpp">
+      <Filter>GIL\Bools</Filter>
+    </ClCompile>
     <ClCompile Include="src\GIL\Bools\BoolNode.cpp">
       <Filter>GIL\Bools</Filter>
     </ClCompile>

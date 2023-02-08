@@ -59,7 +59,7 @@ class shRNA_Sequence : public GIL::Sequence
 		Context.OutputString->append(Subsegment1 + loop + Complement + "uu");
 	}
 
-	virtual void Save(std::ofstream& OutputFile) { }
+	virtual void Save(std::ofstream& OutputFile, GIL::Parser::Project* Proj) { }
 	virtual void Load(std::ifstream& InputFile, GIL::Parser::Project* Proj) {}
 };
 

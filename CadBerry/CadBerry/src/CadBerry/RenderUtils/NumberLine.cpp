@@ -3,7 +3,10 @@
 #include "CadBerry/Rendering/Buffer.h"
 #include "CadBerry/Rendering/RenderCommand.h"
 
+#pragma warning(push, 0)
 #include "imgui.h"
+#pragma warning(pop)
+
 #include "CadBerry/Rendering/Renderer.h"
 
 namespace CDB

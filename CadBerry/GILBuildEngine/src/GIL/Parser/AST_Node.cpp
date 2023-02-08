@@ -20,7 +20,7 @@ namespace GIL
 
 
 		//This MUST be called for nodes loaded using LoadNode, otherwise the node's type information won't be saved
-		void AST_Node::SaveNode(AST_Node* Node, std::ofstream& OutputFile)
+		void AST_Node::SaveNode(AST_Node* Node, std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(Node->GetName(), OutputFile);
 
@@ -30,7 +30,7 @@ namespace GIL
 			
 			if (_Reflectable_AST_Node_Map.contains(Node->GetName()))
 			{
-				Node->Save(OutputFile);
+				Node->Save(OutputFile, Proj);
 			}
 		}
 		
@@ -56,15 +56,35 @@ namespace GIL
 			return nullptr;
 		}
 		
-		Call_Params::Call_Params(std::vector<GIL::Lexer::Token*>&& Params)
+#define Require(cond, msg, tok) if (!cond) { CDB_BuildError(msg, );}
+		Call_Params::Call_Params(std::vector<std::vector<GIL::Lexer::Token*>>&& Params)
 		{
-			this->Params.reserve(Params.size());
-			for (auto token : Params)
+			this->Params.resize(Params.size());
+			//Loop through underlying vectors and remove namespace accession operators
+			for (auto& vec : Params)
 			{
-				this->Params.push_back(std::move(token->Value));
-				GIL::Lexer::Token::SafeDelete(token);
+				size_t ins = 0;
+				for (Token* tok : vec)
+				{
+					if (tok->TokenType == LexerToken::NAMESPACE)
+						continue;
+					vec[ins] = tok;
+					++ins;
+				}
+				vec.resize(ins);
 			}
-			Params.clear();
+
+			//Loop through underlying vectors and find namespaces
+			for (size_t i = 0; i < Params.size(); ++i)
+			{
+				auto& vec = Params[i];
+				//Loop through vector backwards to get name and location
+				std::pair<std::string, AccessNamespace>& seqinfo = this->Params[i];
+				seqinfo.first = vec[vec.size() - 1]->Value;
+				Token::SafeDelete(vec[vec.size() - 1]);
+				vec.resize(vec.size() - 1);
+				seqinfo.second = AccessNamespace(std::move(vec));
+			}
 		}
 
 		void Import::AddToProject(Parser::Project* Proj)
@@ -80,7 +100,7 @@ namespace GIL
 		//TODO: namespaces
 		void DefineSequence::AddToProject(Parser::Project* Proj)
 		{
-			DynamicSequence* Seq = new DynamicSequence(this->Body);
+			DynamicSequence* Seq = new DynamicSequence(this->Body, this->LocalBools, this->LocalGraphHeads, this->LocalAddedBoolOps);
 			
 			//Set up parameters
 			Seq->ParamIdx2Name.reserve(this->m_Params.m_Params.size());
@@ -121,7 +141,7 @@ namespace GIL
 			AminosToDNA(*Context.OutputString, this->Literal, Project, *Context.Encoding);
 		}
 		
-		void AminoAcidLiteral::Save(std::ofstream& OutputFile)
+		void AminoAcidLiteral::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->Literal, OutputFile);
 		}
@@ -136,7 +156,8 @@ namespace GIL
 			std::map<std::string, Param> Output;
 			for (int i = 0; i < this->Params.size(); ++i)
 			{
-				std::string& param = this->Params[i];
+				std::string& param = this->Params[i].first;
+				AccessNamespace& location = this->Params[i].second;
 				//Check if this is a parameter
 				if (Context.Params != nullptr && Context.Params->contains(param))
 				{
@@ -145,13 +166,14 @@ namespace GIL
 				}
 				
 				//Otherwise, make sure it exists
-				if (!Project->Sequences.contains(param))
+				auto potentialseq = Project->GetSeqFromNamespace(param, location.Namespaces, 0, &Modules);
+				if (potentialseq.first == nullptr)
 				{
 					//We can't recover from this, terminate compilation
 					CDB_BuildError("Sequence {0} passed as parameter does not exist", param);
 					throw GILException();
 				}
-				Output[ParamIdx2Name[i]] = Param(Project->Sequences[param], Project, Project->Sequences[param]->SeqType);
+				Output[ParamIdx2Name[i]] = Param(potentialseq.first, potentialseq.second, potentialseq.first->SeqType);
 			}
 			return Output;
 		}
@@ -174,20 +196,33 @@ namespace GIL
 			Context.Params = OldParams;
 		}
 
-		void Call_Params::Save(std::ofstream& OutputFile)
+		void Call_Params::Save(std::ofstream& OutputFile, Project* Proj)
 		{
-			SaveStringVector(this->Params, OutputFile);
+			SaveSize(this->Params.size(), OutputFile);
+			for (auto& param : this->Params)
+			{
+				SaveString(param.first, OutputFile);
+				param.second.Save(OutputFile, Proj);
+			}
 		}
 		
 		void Call_Params::Load(std::ifstream& InputFile, Parser::Project* Proj)
 		{
-			LoadStringVectorFromFile(this->Params, InputFile);
+			size_t i = LoadSizeFromFile(InputFile);
+			this->Params.reserve(i);
+			for (int n = 0; n < i; ++n)
+			{
+				std::pair<std::string, AccessNamespace> toload;
+				LoadStringFromFile(toload.first, InputFile);
+				toload.second.Load(InputFile, Proj);
+				this->Params.push_back(std::move(toload));
+			}
 		}
 		
-		void UseParam::Save(std::ofstream& OutputFile)
+		void UseParam::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->ParamName, OutputFile);
-			this->Params.Save(OutputFile);
+			this->Params.Save(OutputFile, Proj);
 		}
 		
 		void UseParam::Load(std::ifstream& InputFile, Parser::Project* Proj)
@@ -256,7 +291,7 @@ namespace GIL
 			*context.OutputString += Output;
 		}
 	
-		void From::Save(std::ofstream& OutputFile)
+		void From::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			//Save the origin organism
 			SaveString(this->Origin, OutputFile);
@@ -266,7 +301,7 @@ namespace GIL
 			//Save the body nodes
 			for (auto& node : this->Body)
 			{
-				SaveNode(node, OutputFile);
+				SaveNode(node, OutputFile, Proj);
 			}
 		}
 		void From::Load(std::ifstream& InputFile, Parser::Project* Proj)
@@ -317,7 +352,7 @@ namespace GIL
 			context.Encoding = OldEncoding;
 		}
 		
-		void For::Save(std::ofstream& OutputFile)
+		void For::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			//Save the target
 			SaveString(this->Target, OutputFile);
@@ -327,7 +362,7 @@ namespace GIL
 			//Save the body nodes
 			for (auto& node : this->Body)
 			{
-				SaveNode(node, OutputFile);
+				SaveNode(node, OutputFile, Proj);
 			}
 		}
 		
@@ -350,7 +385,7 @@ namespace GIL
 		//Remember, this is *just* a sequence with an InnerCode parameter
 		void DefineOperation::AddToProject(Parser::Project* Proj)
 		{
-			DynamicSequence* Seq = new DynamicSequence(this->Body);
+			DynamicSequence* Seq = new DynamicSequence(this->Body, this->LocalBools, this->LocalGraphHeads, this->LocalAddedBoolOps);
 
 			//Set up parameters
 			Seq->ParamIdx2Name.reserve(this->m_Params.m_Params.size());
@@ -392,7 +427,87 @@ namespace GIL
 			Op->AlternateImplementation = AlternateImplementation;
 			Proj->Operators[this->Name] = Op;
 		}
-		
+
+		void AddSequencePrefix(Sequence* seq, BoolNode* node, std::string Prefix)
+		{
+			switch (node->GetType())
+			{
+			case BoolNodeType::AND:
+			{
+				N_And* n = (N_And*)node;
+				AddSequencePrefix(seq, n->left, Prefix);
+				AddSequencePrefix(seq, n->right, Prefix);
+				break;
+			}
+			case BoolNodeType::OR:
+			{
+				N_Or* n = (N_Or*)node;
+				AddSequencePrefix(seq, n->left, Prefix);
+				AddSequencePrefix(seq, n->right, Prefix);
+				break;
+			}
+			case BoolNodeType::NOT:
+			{
+				N_Not* n = (N_Not*)node;
+				AddSequencePrefix(seq, n->node, Prefix);
+				break;
+			}
+			case BoolNodeType::CAST:
+			{
+				N_Cast* n = (N_Cast*)node;
+				AddSequencePrefix(seq, n->node, Prefix);
+				break;
+			}
+			case BoolNodeType::PLACEHOLDER:
+			{
+				N_Placeholder* placeholdernode = (N_Placeholder*)node;
+				if (seq->GetLocalBools().contains(placeholdernode->Name))
+					placeholdernode->Name = Prefix + placeholdernode->Name;
+				break;
+			}
+			}
+		}
+
+		void RemSequencePrefix(Sequence* seq, BoolNode* node, std::string Prefix)
+		{
+			switch (node->GetType())
+			{
+			case BoolNodeType::AND:
+			{
+				N_And* n = (N_And*)node;
+				AddSequencePrefix(seq, n->left, Prefix);
+				AddSequencePrefix(seq, n->right, Prefix);
+				break;
+			}
+			case BoolNodeType::OR:
+			{
+				N_Or* n = (N_Or*)node;
+				AddSequencePrefix(seq, n->left, Prefix);
+				AddSequencePrefix(seq, n->right, Prefix);
+				break;
+			}
+			case BoolNodeType::NOT:
+			{
+				N_Not* n = (N_Not*)node;
+				AddSequencePrefix(seq, n->node, Prefix);
+				break;
+			}
+			case BoolNodeType::CAST:
+			{
+				N_Cast* n = (N_Cast*)node;
+				AddSequencePrefix(seq, n->node, Prefix);
+				break;
+			}
+			case BoolNodeType::PLACEHOLDER:
+			{
+				N_Placeholder* placeholdernode = (N_Placeholder*)node;
+				//Check if the prefix is there
+				if (placeholdernode->Name.substr(0, Prefix.size()) == Prefix)
+					placeholdernode->Name = placeholdernode->Name.substr(Prefix.size());
+				break;
+			}
+			}
+		}
 		
 		/*
 		* Operators are treated as follows:
@@ -459,6 +574,12 @@ namespace GIL
 
 			//Now compile the parameter
 			Seq.first->Get(Seq.second, params, context);
+
+			//Add params to all of the inlined node params
+			for (auto* p : sequence->BoolNodeParams)
+			{
+				*p = params;
+			}
 
 			context.Params = OldParams;
 			context.OutputRegions->push_back(Region(sequence->Name, Start, context.OutputString->length()));
@@ -622,11 +743,11 @@ namespace GIL
 				TreatAsSequence(context, Project, this);
 		}
 		
-		void CallSequence::Save(std::ofstream& OutputFile)
+		void CallSequence::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->Name, OutputFile);
 			SaveStringVector(this->Location, OutputFile);
-			this->Params.Save(OutputFile);
+			this->Params.Save(OutputFile, Proj);
 		}
 		
 		void CallSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
@@ -670,15 +791,15 @@ namespace GIL
 			Op.first->Get(Op.second, params, context);
 		}
 		
-		void CallOperation::Save(std::ofstream& OutputFile)
+		void CallOperation::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->Name, OutputFile);
-			this->Params.Save(OutputFile);
+			this->Params.Save(OutputFile, Proj);
 			
 			SaveSize(this->InnerNodes.size(), OutputFile);
 			for (AST_Node* node : this->InnerNodes)
 			{
-				SaveNode(node, OutputFile);
+				SaveNode(node, OutputFile, Proj);
 			}
 			
 			SaveStringVector(this->Location, OutputFile);
@@ -710,7 +831,7 @@ namespace GIL
 			context.OpenRegions->push_back(Region(this->RegionName, context.OutputString->size(), 0));
 		}
 		
-		void BeginRegion::Save(std::ofstream& OutputFile)
+		void BeginRegion::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->RegionName, OutputFile);
 		}
@@ -746,7 +867,7 @@ namespace GIL
 			CDB_BuildError("Region \"{0}\" ended explicitly by #EndRegion does not exist", this->RegionName);
 		}
 		
-		void EndRegion::Save(std::ofstream& OutputFile)
+		void EndRegion::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->RegionName, OutputFile);
 		}
@@ -767,7 +888,7 @@ namespace GIL
 			Project->Attributes[this->AttrName] = this->AttrValue;
 		}
 		
-		void SetAttr::Save(std::ofstream& OutputFile)
+		void SetAttr::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->AttrName, OutputFile);
 			SaveString(this->AttrValue, OutputFile);
@@ -812,7 +933,7 @@ namespace GIL
 			Project->StrVars[this->VarName] = this->VarValue;
 		}
 		
-		void SetVar::Save(std::ofstream& OutputFile)
+		void SetVar::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			OutputFile.write((char*)&this->m_VariableType, sizeof(VariableType));
 			SaveString(this->VarName, OutputFile);
@@ -838,7 +959,7 @@ namespace GIL
 			++Project->NumVars[this->VarName];
 		}
 
-		void IncVar::Save(std::ofstream& OutputFile)
+		void IncVar::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->VarName, OutputFile);
 		}
@@ -860,7 +981,7 @@ namespace GIL
 			--Project->NumVars[this->VarName];
 		}
 
-		void DecVar::Save(std::ofstream& OutputFile)
+		void DecVar::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->VarName, OutputFile);
 		}
@@ -906,7 +1027,7 @@ namespace GIL
 			}
 		}
 
-		void Prepro_If::Save(std::ofstream& OutputFile)
+		void Prepro_If::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveString(this->Condition, OutputFile);
 			SaveSize(this->Params.size(), OutputFile);
@@ -915,7 +1036,7 @@ namespace GIL
 
 			SaveSize(this->Body.size(), OutputFile);
 			for (AST_Node* node : this->Body)
-				SaveNode(node, OutputFile);
+				SaveNode(node, OutputFile, Proj);
 		}
 
 		void Prepro_If::Load(std::ifstream& InputFile, Parser::Project* Proj)
@@ -933,11 +1054,11 @@ namespace GIL
 				this->Body.push_back(LoadNode(InputFile, Proj));
 		}
 
-		void Prepro_Else::Save(std::ofstream& OutputFile)
+		void Prepro_Else::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			SaveSize(this->Body.size(), OutputFile);
 			for (AST_Node* node : this->Body)
-				SaveNode(node, OutputFile);
+				SaveNode(node, OutputFile, Proj);
 		}
 		
 
@@ -977,7 +1098,7 @@ namespace GIL
 			*context.OutputString += this->Literal;
 		}
 
-		void DNALiteral::Save(std::ofstream& OutputFile)
+		void DNALiteral::Save(std::ofstream& OutputFile, Project* Proj)
 		{
 			//Just in case
 			RemoveSpacesFromDNA(this->Literal);

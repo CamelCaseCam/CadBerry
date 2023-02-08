@@ -4,7 +4,9 @@
 #include "CadBerry/Application.h"
 #include "CadBerry/ExecuteCommand.h"
 
+#pragma warning(push, 0)
 #include "imgui.h"
+#pragma warning(pop)
 
 #define YAML_CPP_STATIC_DEFINE
 

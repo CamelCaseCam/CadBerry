@@ -6,6 +6,8 @@
 #include "GIL/Parser/AST_Node.h"
 #include "GIL/MacroUtils.h"
 
+//TODO: add a function to get placeholder node names
+
 
 namespace GIL
 {
@@ -18,9 +20,40 @@ namespace GIL
 			this->nodes = nodes;
 			
 		}
-		
-		std::vector<N_UseBool*> MakeIfStatements(BoolNode* boolref, std::vector<AST_Node*>& nodes, Project* project)
+
+		void N_UseBool::Save(std::ofstream& OutputFile, Project* Proj)
 		{
+			this->boolref->SaveNode(OutputFile, Proj);
+
+			SaveSize(this->nodes.size(), OutputFile);
+			for (auto& n : this->nodes)
+			{
+				AST_Node::SaveNode(n, OutputFile, Proj);
+			}
+		}
+
+		void N_UseBool::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			this->boolref = BoolNode::LoadNode(InputFile, Proj);
+
+			size_t len = LoadSizeFromFile(InputFile);
+			this->nodes.reserve(len);
+			for (size_t i = 0; i < len; ++i)
+			{
+				this->nodes.push_back(AST_Node::LoadNode(InputFile, Proj));
+			}
+		}
+		
+		std::vector<N_UseBool*> MakeIfStatements(BoolNode* boolref, std::vector<AST_Node*>& nodes, Project* project,
+			std::unordered_map<std::string, GILBool*>* LocalBools, std::vector<BoolNode*>* GraphHeads,
+			std::vector<AST_Node*>* AddedBoolOps)
+		{
+			if (GraphHeads == nullptr)
+				GraphHeads = &project->GraphHeads;
+			if (LocalBools == nullptr)
+				LocalBools = &project->LocalBools;
+			if (AddedBoolOps == nullptr)
+				AddedBoolOps = &project->AddedBoolOps;
 			//Because all if statements are being executed in parallel, we can't have nested if statements. This function lifts nested if 
 			//statements out of the parent if statement to make them valid
 
@@ -37,7 +70,7 @@ namespace GIL
 					BoolNode* cond = node->boolref;
 					node->boolref = new N_And(boolref, cond);
 					
-					project->GraphHeads.push_back(node->boolref);
+					(*GraphHeads).push_back(node->boolref);
 					output.push_back(node);
 				}
 				else if (nodes[i]->GetName() == "N_SetBool")
@@ -47,15 +80,15 @@ namespace GIL
 					BoolNode* cond = node->Value;
 					node->Value = new N_And(boolref, cond);
 					
-					project->GraphHeads.push_back(node->Value);
-					project->AddedBoolOps.push_back(node);
+					(*GraphHeads).push_back(node->Value);
+					(*AddedBoolOps).push_back(node);
 				}
 				else
 				{				
 					output[0]->nodes.push_back(nodes[i]);
 				}
 			}
-			project->GraphHeads.push_back(boolref);
+			(*GraphHeads).push_back(boolref);
 			return output;
 		}
 #define func() std::pair<std::string, std::vector<Region>>()
@@ -85,6 +118,36 @@ namespace GIL
 					name += placeholder_node->Location.Namespaces[i] + "@";
 				}
 				name += placeholder_node->Name;
+
+				//Check if the placeholder was a parameter
+				if (placeholder_node->Name.substr(0, 6) == "!param")
+				{
+					if (context.Params == nullptr)
+					{
+						//Error that probably won't happen
+						throw GILException();
+					}
+					name = placeholder_node->Name.substr(6);
+					if (!(*context.Params).contains(name))
+					{
+						CDB_BuildError("Parameter {0} does not exist (line {1})", name, pos.Line);
+						throw GILException();
+					}
+					Sequence* ParamVal = (*context.Params)[name].Seq;
+					
+					//Require that it's a boolean sequence
+					if (ParamVal->SeqType != &Type::GIL_bool)
+					{
+						CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", name, pos.Line);
+						throw GILException();
+					}
+					
+					//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+					BoolSequence* seqref = (BoolSequence*)ParamVal;
+					GILBool* underlyingbool = seqref->m_bool;
+					//Finally, we have the bool's name
+					name = underlyingbool->Name;
+				}
 
 				//Make sure the placeholder exists
 				if (!Proj->LocalBools.contains(name))
@@ -125,6 +188,36 @@ namespace GIL
 					name += placeholder_node->Location.Namespaces[i] + "@";
 				}
 				name += placeholder_node->Name;
+
+				//Check if the placeholder was a parameter
+				if (placeholder_node->Name.substr(0, 6) == "!param")
+				{
+					if (context.Params == nullptr)
+					{
+						//Error that probably won't happen
+						throw GILException();
+					}
+					name = placeholder_node->Name.substr(6);
+					if (!(*context.Params).contains(name))
+					{
+						CDB_BuildError("Parameter {0} does not exist (line {1})", name, pos.Line);
+						throw GILException();
+					}
+					Sequence* ParamVal = (*context.Params)[name].Seq;
+
+					//Require that it's a boolean sequence
+					if (ParamVal->SeqType != &Type::GIL_bool)
+					{
+						CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", name, pos.Line);
+						throw GILException();
+					}
+
+					//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+					BoolSequence* seqref = (BoolSequence*)ParamVal;
+					GILBool* underlyingbool = seqref->m_bool;
+					//Finally, we have the bool's name
+					name = underlyingbool->Name;
+				}
 
 				DataSequence nameseq = DataSequence(&name);
 
@@ -175,6 +268,36 @@ namespace GIL
 					name += placeholder_node->Location.Namespaces[i] + "@";
 				}
 				name += placeholder_node->Name;
+				
+				//Check if the placeholder was a parameter
+				if (placeholder_node->Name.substr(0, 6) == "!param")
+				{
+					if (context.Params == nullptr)
+					{
+						//Error that probably won't happen
+						throw GILException();
+					}
+					name = placeholder_node->Name.substr(6);
+					if (!(*context.Params).contains(name))
+					{
+						CDB_BuildError("Parameter {0} does not exist (line {1})", name, pos.Line);
+						throw GILException();
+					}
+					Sequence* ParamVal = (*context.Params)[name].Seq;
+
+					//Require that it's a boolean sequence
+					if (ParamVal->SeqType != &Type::GIL_bool)
+					{
+						CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", name, pos.Line);
+						throw GILException();
+					}
+
+					//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+					BoolSequence* seqref = (BoolSequence*)ParamVal;
+					GILBool* underlyingbool = seqref->m_bool;
+					//Finally, we have the bool's name
+					name = underlyingbool->Name;
+				}
 
 				DataSequence nameseq = DataSequence(&name);
 
@@ -207,6 +330,36 @@ namespace GIL
 					name += placeholder_node->Location.Namespaces[i] + "@";
 				}
 				name += placeholder_node->Name;
+
+				//Check if the placeholder was a parameter
+				if (placeholder_node->Name.substr(0, 6) == "!param")
+				{
+					if (context.Params == nullptr)
+					{
+						//Error that probably won't happen
+						throw GILException();
+					}
+					name = placeholder_node->Name.substr(6);
+					if (!(*context.Params).contains(name))
+					{
+						CDB_BuildError("Parameter {0} does not exist (line {1})", name, pos.Line);
+						throw GILException();
+					}
+					Sequence* ParamVal = (*context.Params)[name].Seq;
+
+					//Require that it's a boolean sequence
+					if (ParamVal->SeqType != &Type::GIL_bool)
+					{
+						CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", name, pos.Line);
+						throw GILException();
+					}
+
+					//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+					BoolSequence* seqref = (BoolSequence*)ParamVal;
+					GILBool* underlyingbool = seqref->m_bool;
+					//Finally, we have the bool's name
+					name = underlyingbool->Name;
+				}
 
 				DataSequence nameseq = DataSequence(&name);
 
@@ -251,6 +404,36 @@ namespace GIL
 					name += node->Location.Namespaces[i] + "@";
 				}
 				name += node->Name;
+
+				//Check if the placeholder was a parameter
+				if (node->Name.substr(0, 6) == "!param")
+				{
+					if (context.Params == nullptr)
+					{
+						//Error that probably won't happen
+						throw GILException();
+					}
+					name = node->Name.substr(6);
+					if (!(*context.Params).contains(name))
+					{
+						CDB_BuildError("Parameter {0} does not exist (line {1})", name, pos.Line);
+						throw GILException();
+					}
+					Sequence* ParamVal = (*context.Params)[name].Seq;
+
+					//Require that it's a boolean sequence
+					if (ParamVal->SeqType != &Type::GIL_bool)
+					{
+						CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", name, pos.Line);
+						throw GILException();
+					}
+
+					//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+					BoolSequence* seqref = (BoolSequence*)ParamVal;
+					GILBool* underlyingbool = seqref->m_bool;
+					//Finally, we have the bool's name
+					name = underlyingbool->Name;
+				}
 
 				if (!Proj->LocalBools.contains(name))
 				{
@@ -371,6 +554,66 @@ namespace GIL
 					lname += left->Name;
 					rname += right->Name;
 
+					//Check if the placeholder was a parameter
+					if (left->Name.substr(0, 6) == "!param")
+					{
+						if (context.Params == nullptr)
+						{
+							//Error that probably won't happen
+							throw GILException();
+						}
+						lname = left->Name.substr(6);
+						if (!(*context.Params).contains(lname))
+						{
+							CDB_BuildError("Parameter {0} does not exist (line {1})", lname, pos.Line);
+							throw GILException();
+						}
+						Sequence* ParamVal = (*context.Params)[lname].Seq;
+
+						//Require that it's a boolean sequence
+						if (ParamVal->SeqType != &Type::GIL_bool)
+						{
+							CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", lname, pos.Line);
+							throw GILException();
+						}
+
+						//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+						BoolSequence* seqref = (BoolSequence*)ParamVal;
+						GILBool* underlyingbool = seqref->m_bool;
+						//Finally, we have the bool's name
+						lname = underlyingbool->Name;
+					}
+
+					//Check if the placeholder was a parameter
+					if (right->Name.substr(0, 6) == "!param")
+					{
+						if (context.Params == nullptr)
+						{
+							//Error that probably won't happen
+							throw GILException();
+						}
+						rname = right->Name.substr(6);
+						if (!(*context.Params).contains(rname))
+						{
+							CDB_BuildError("Parameter {0} does not exist (line {1})", rname, pos.Line);
+							throw GILException();
+						}
+						Sequence* ParamVal = (*context.Params)[rname].Seq;
+
+						//Require that it's a boolean sequence
+						if (ParamVal->SeqType != &Type::GIL_bool)
+						{
+							CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", rname, pos.Line);
+							throw GILException();
+						}
+
+						//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+						BoolSequence* seqref = (BoolSequence*)ParamVal;
+						GILBool* underlyingbool = seqref->m_bool;
+						//Finally, we have the bool's name
+						rname = underlyingbool->Name;
+					}
+
 					//Make sure the bools exist
 					if (!Proj->LocalBools.contains(lname))
 					{
@@ -411,6 +654,36 @@ namespace GIL
 				}
 				iname += input->Name;
 				
+				//Check if the placeholder was a parameter
+				if (input->Name.substr(0, 6) == "!param")
+				{
+					if (context.Params == nullptr)
+					{
+						//Error that probably won't happen
+						throw GILException();
+					}
+					iname = input->Name.substr(6);
+					if (!(*context.Params).contains(iname))
+					{
+						CDB_BuildError("Parameter {0} does not exist (line {1})", iname, pos.Line);
+						throw GILException();
+					}
+					Sequence* ParamVal = (*context.Params)[iname].Seq;
+
+					//Require that it's a boolean sequence
+					if (ParamVal->SeqType != &Type::GIL_bool)
+					{
+						CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", iname, pos.Line);
+						throw GILException();
+					}
+
+					//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+					BoolSequence* seqref = (BoolSequence*)ParamVal;
+					GILBool* underlyingbool = seqref->m_bool;
+					//Finally, we have the bool's name
+					iname = underlyingbool->Name;
+				}
+				
 				//Make sure the bool exists
 				if (!Proj->LocalBools.contains(iname))
 				{
@@ -436,8 +709,29 @@ namespace GIL
 		}
 #undef Require
 		
+		void N_SetBool::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			SaveString(this->Bool, OutputFile);
+			this->Location.Save(OutputFile, Proj);
+			this->Value->SaveNode(OutputFile, Proj);
+		}
+
+		void N_SetBool::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			LoadStringFromFile(this->Bool, InputFile);
+			this->Location.Load(InputFile, Proj);
+			this->Value = BoolNode::LoadNode(InputFile, Proj);
+		}
+
 		void N_SetBool::Compile(Compiler::CompilerContext& context, Parser::Project* Proj)
 		{
+			//Check if there's local params
+			auto* OldParams = context.Params;
+			if (this->LocalFlattenedParams.size() != 0)
+			{
+				context.Params = &this->LocalFlattenedParams;
+			}
+
 			//Get the bool
 			std::vector<std::string>& loc = this->Location.Namespaces;
 			
@@ -484,11 +778,32 @@ namespace GIL
 			
 			//Finally, compile the bool's condition. This will behave differently if the implementation supports chained ANDs and ORs
 			CompileCondition(b, context, Proj, this->Value, &seq, this->pos);
+			
+			//Restore the old params
+			context.Params = OldParams;
 		}
 
 
+		void N_SetBoolTrue::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			SaveString(this->Name, OutputFile);
+			this->Location.Save(OutputFile, Proj);
+		}
+
+		void N_SetBoolTrue::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			LoadStringFromFile(this->Name, InputFile);
+			this->Location.Load(InputFile, Proj);
+		}
+
 		void N_SetBoolTrue::Compile(Compiler::CompilerContext& context, Parser::Project* Proj)
 		{
+			auto* OldParams = context.Params;
+			if (this->LocalFlattenedParams.size() != 0)
+			{
+				context.Params = &this->LocalFlattenedParams;
+			}
+			
 			std::vector<std::string>& loc = this->Location.Namespaces;
 
 			//Convert the location to a full name
@@ -519,11 +834,19 @@ namespace GIL
 			DataSequence seq = DataSequence(&name);
 			std::map<std::string, Param> Params = { {"name", Param(&seq, Proj)} };
 			b->impl->Set->Get(Proj, Params, context);
+
+			context.Params = OldParams;
 		}
 
 
 		void N_UseBool::Compile(Compiler::CompilerContext& context, Parser::Project* Proj)
 		{
+			auto* OldParams = context.Params;
+			if (this->LocalFlattenedParams.size() != 0)
+			{
+				context.Params = &this->LocalFlattenedParams;
+			}
+			
 			//First, compile the inner nodes
 			std::vector<Region> Output;
 			std::vector<Region> OpenRegions;
@@ -541,6 +864,12 @@ namespace GIL
 			//Construct params
 			std::map<std::string, Param> Params = { {"inner", Param(&InnerSeq, Proj)} };
 
+			/*
+			* NOTE TO SELF:
+			* This is just a hack. We need to get *an* implementation to compile the bool, so we travel back to the placeholder node to find 
+			* one. We'll have to fix this when we introduce casting. 
+			*/
+			
 			//Find placeholder node (all graphs have to lead to a placeholder node if you travel back far enough)
 			BoolNode* bn = this->boolref;
 			for (int itter = 0; itter < 9999999999 && bn->GetType() != BoolNodeType::PLACEHOLDER; ++itter)
@@ -555,6 +884,7 @@ namespace GIL
 					break;
 				case BoolNodeType::NOT:
 					bn = reinterpret_cast<N_Not*>(bn)->node;
+					break;
 				default:
 					break;
 				}
@@ -567,6 +897,36 @@ namespace GIL
 				name += ns + "@";
 			}
 			name += placeholder->Name;
+			
+			//Check if the placeholder was a parameter
+			if (placeholder->Name.substr(0, 6) == "!param")
+			{
+				if (context.Params == nullptr)
+				{
+					//Error that probably won't happen
+					throw GILException();
+				}
+				name = placeholder->Name.substr(6);
+				if (!(*context.Params).contains(name))
+				{
+					CDB_BuildError("Parameter {0} does not exist (line {1})", name, pos.Line);
+					throw GILException();
+				}
+				Sequence* ParamVal = (*context.Params)[name].Seq;
+
+				//Require that it's a boolean sequence
+				if (ParamVal->SeqType != &Type::GIL_bool)
+				{
+					CDB_BuildError("Parameter {0} used in boolean expression is not a boolean sequence (line {1})", name, pos.Line);
+					throw GILException();
+				}
+
+				//This only works because GIL_Bool types are (supposed to be) castable to BoolSequence
+				BoolSequence* seqref = (BoolSequence*)ParamVal;
+				GILBool* underlyingbool = seqref->m_bool;
+				//Finally, we have the bool's name
+				name = underlyingbool->Name;
+			}
 
 			if (!Proj->LocalBools.contains(name))
 			{
@@ -586,8 +946,24 @@ namespace GIL
 
 			//Compile the bool's condition
 			CompileCondition(b, context, Proj, this->boolref, &InnerSeq, this->pos);
+
+			context.Params = OldParams;
 		}
 		
+		void N_BoolInput::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			//This should *only* be created after compilation, so we don't have to save anything
+			CDB_BuildError("BoolInput nodes are intended to be created during compilation, so they should not be saved");
+			throw GILException();
+		}
+
+		void N_BoolInput::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			//This should *only* be created after compilation, so we don't have to load anything
+			CDB_BuildError("BoolInput nodes are intended to be created during compilation, so they should not be loaded");
+			throw GILException();
+		}
+
 		void N_BoolInput::Compile(Compiler::CompilerContext& context, Parser::Project* Project)
 		{
 			//Get the bool from the project
@@ -617,5 +993,147 @@ namespace GIL
 			Params = { {"InnerCode", Param(&InnerSeq, Project)} };
 			this->Seq->Get(this->Origin, Params, context);
 		}
-	}
+
+		
+		void N_Placeholder::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			SaveString(this->Name, OutputFile);
+			this->Location.Save(OutputFile, Proj);
+		}
+		
+		void N_Placeholder::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			LoadStringFromFile(this->Name, InputFile);
+			this->Location.Load(InputFile, Proj);
+		}
+		
+		void N_And::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			this->left->SaveNode(OutputFile, Proj);
+			this->right->SaveNode(OutputFile, Proj);
+		}
+		
+		void N_And::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			this->left = LoadNode(InputFile, Proj);
+			this->right = LoadNode(InputFile, Proj);
+		}
+		
+		void N_Or::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			this->left->SaveNode(OutputFile, Proj);
+			this->right->SaveNode(OutputFile, Proj);
+		}
+		
+		void N_Or::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			this->left = LoadNode(InputFile, Proj);
+			this->right = LoadNode(InputFile, Proj);
+		}
+		
+		void N_Not::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			this->node->SaveNode(OutputFile, Proj);
+		}
+		
+		void N_Not::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			this->node = LoadNode(InputFile, Proj);
+		}
+		
+		void N_Cast::Save(std::ofstream& OutputFile, Project* Proj)
+		{
+			this->node->SaveNode(OutputFile, Proj);
+		}
+		
+		void N_Cast::Load(std::ifstream& InputFile, Project* Proj)
+		{
+			this->node = LoadNode(InputFile, Proj);
+		}
+		
+		void BoolNode::SaveNode(std::ofstream& node, Project* Proj)
+		{
+			//Hash the bool and check if it's been saved already
+			size_t hash = std::hash<BoolNode>()(*this);
+			node.write((char*)&hash, sizeof(size_t));
+			if (Proj->SavedBools.contains(hash))
+				return;
+			Proj->SavedBools[hash] = true;
+
+			auto type = this->GetType();
+			node.write((char*)&type, sizeof(BoolNodeType));
+			switch (type)
+			{
+			case BoolNodeType::AND:
+				reinterpret_cast<N_And*>(this)->Save(node, Proj);
+				break;
+			case BoolNodeType::OR:
+				reinterpret_cast<N_Or*>(this)->Save(node, Proj);
+				break;
+			case BoolNodeType::NOT:
+				reinterpret_cast<N_Not*>(this)->Save(node, Proj);
+				break;
+			case BoolNodeType::CAST:
+				reinterpret_cast<N_Cast*>(this)->Save(node, Proj);
+				break;
+			case BoolNodeType::PLACEHOLDER:
+				reinterpret_cast<N_Placeholder*>(this)->Save(node, Proj);
+				break;
+			default:
+				break;
+			}
+		}
+		
+		BoolNode* BoolNode::LoadNode(std::ifstream& node, Project* Proj)
+		{
+			//Read the bool's hash from the file
+			size_t hash;
+			node.read((char*)&hash, sizeof(size_t));
+			if (Proj->LoadedBools.contains(hash))
+				return Proj->LoadedBools[hash];
+
+			BoolNodeType type;
+			node.read((char*)&type, sizeof(BoolNodeType));
+			switch (type)
+			{
+			case BoolNodeType::AND:
+			{
+				N_And* n = new N_And();
+				Proj->LoadedBools[hash] = n;
+				n->Load(node, Proj);
+				return n;
+			}
+			case BoolNodeType::OR:
+			{
+				N_Or* n = new N_Or();
+				Proj->LoadedBools[hash] = n;
+				n->Load(node, Proj);
+				return n;
+			}
+			case BoolNodeType::NOT:
+			{
+				N_Not* n = new N_Not();
+				Proj->LoadedBools[hash] = n;
+				n->Load(node, Proj);
+				return n;
+			}
+			case BoolNodeType::CAST:
+			{
+				N_Cast* n = new N_Cast();
+				Proj->LoadedBools[hash] = n;
+				n->Load(node, Proj);
+				return n;
+			}
+			case BoolNodeType::PLACEHOLDER:
+			{
+				N_Placeholder* n = new N_Placeholder();
+				Proj->LoadedBools[hash] = n;
+				n->Load(node, Proj);
+				return n;
+			}
+			default:
+				return nullptr;
+			}
+		}
+}
 }

@@ -9,6 +9,8 @@ namespace GIL
 	{
 		class Region;
 		class Project;
+		class GILBool;
+		class BoolNode;
 		class AST_Node;
 	}
 	class Param;
@@ -87,11 +89,11 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			virtual void Compile(Compiler::CompilerContext& context, Parser::Project* Project) {}
 
-			virtual void Save(std::ofstream & OutputFile) { }
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) { }
 
 			//Loads including type information
 			static AST_Node* LoadNode(std::ifstream & InputFile, Parser::Project * Proj);
-			static void SaveNode(AST_Node* Node, std::ofstream& OutputFile);
+			static void SaveNode(AST_Node* Node, std::ofstream& OutputFile, Parser::Project* Project);
 			virtual void Load(std::ifstream & InputFile, Parser::Project * Proj) {}
 
 			virtual std::string GetName() { return ""; }
@@ -99,6 +101,8 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			virtual bool CanAddToProject() { return false; }
 
 			void SetPos(ParserPosition newPos) { pos = newPos; }
+
+			std::map<std::string, Param> LocalFlattenedParams;
 
 			ParserPosition pos = { 0, 0 };
 		};
@@ -117,12 +121,16 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AccessNamespace() {}
 			AccessNamespace(std::vector<Lexer::Token*>&& namespaces);
 			AccessNamespace(AccessNamespace&& other) : Namespaces(std::move(other.Namespaces)) {}
-			AccessNamespace(AccessNamespace& other) : Namespaces(other.Namespaces) {}
+			AccessNamespace(const AccessNamespace& other) : Namespaces(other.Namespaces) {}
 
-			void operator=(AccessNamespace&& other) { Namespaces = std::move(other.Namespaces); }
+			void operator=(AccessNamespace&& other) noexcept { Namespaces = std::move(other.Namespaces); }
+			void operator=(const AccessNamespace& other) noexcept { Namespaces = other.Namespaces; }
 
-			NoCompile
-			AST_Type(AccessNamespace)
+			NoCompile;
+			AST_Type(AccessNamespace);
+				
+			virtual void Save(std::ofstream& OutputFile, Parser::Project* Project) override { SaveStringVector(Namespaces, OutputFile); }
+			virtual void Load(std::ifstream& InputFile, Parser::Project* Project) override { LoadStringVectorFromFile(Namespaces, InputFile); }
 
 			std::vector<std::string> Namespaces;
 		};
@@ -182,9 +190,9 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			Using(std::string&& filename) : FileName(filename) {}
 
 			NoCompile
-				AST_Type(Import)
+			AST_Type(Import)
 
-				virtual void AddToProject(Parser::Project* Proj) override;
+			virtual void AddToProject(Parser::Project* Proj) override;
 
 			std::string FileName;
 		};
@@ -206,7 +214,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(From)
 			ReflectMe(From, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 
@@ -225,7 +233,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(For)
 			ReflectMe(For, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string Target;
@@ -235,8 +243,11 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 		class GILAPI DefineSequence : public ProjectNode
 		{
 		public:
-			DefineSequence(std::string&& Name, Params&& Params, std::string&& Type, std::vector<AST_Node*>&& Body) : Name(Name), m_Params(Params),
-				Type(Type), Body(Body) {}
+			DefineSequence(std::string&& Name, Params&& Params, std::string&& Type, std::vector<AST_Node*>&& Body,
+				std::unordered_map<std::string, Parser::GILBool*>&& LocalBools, 
+				std::vector<Parser::BoolNode*>&& LocalGraphHeads,
+				std::vector<Parser::AST_Node*>&& LocalAddedBoolOps) : Name(Name), m_Params(Params),
+				Type(Type), Body(Body), LocalBools(LocalBools), LocalGraphHeads(LocalGraphHeads), LocalAddedBoolOps(LocalAddedBoolOps) {}
 
 			virtual void AddToProject(Parser::Project* Proj) override;
 
@@ -249,13 +260,19 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 
 			std::vector<AST_Node*> Body;
 			std::vector<std::string> ActiveDistributions;
+			std::unordered_map<std::string, Parser::GILBool*> LocalBools;
+			std::vector<Parser::BoolNode*> LocalGraphHeads;
+			std::vector<Parser::AST_Node*> LocalAddedBoolOps;
 		};
 
 		class GILAPI DefineOperation : public ProjectNode
 		{
 		public:
-			DefineOperation(std::string&& Name, Params&& Params, std::string&& Type, std::vector<AST_Node*>&& Body) : Name(Name), m_Params(Params),
-				Type(Type), Body(Body) {}
+			DefineOperation(std::string&& Name, Params&& Params, std::string&& Type, std::vector<AST_Node*>&& Body,
+				std::unordered_map<std::string, Parser::GILBool*>&& LocalBools,
+				std::vector<Parser::BoolNode*>&& LocalGraphHeads,
+				std::vector<Parser::AST_Node*>&& LocalAddedBoolOps) : Name(Name), m_Params(Params),
+				Type(Type), Body(Body), LocalBools(LocalBools), LocalGraphHeads(LocalGraphHeads), LocalAddedBoolOps(LocalAddedBoolOps) {}
 
 			virtual void AddToProject(Parser::Project* Proj) override;
 
@@ -267,7 +284,11 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			std::string Type;
 
 			std::vector<AST_Node*> Body;
-			std::vector<std::string> ActiveDistributions;			
+			std::vector<std::string> ActiveDistributions;	
+			
+			std::unordered_map<std::string, Parser::GILBool*> LocalBools;
+			std::vector<Parser::BoolNode*> LocalGraphHeads;
+			std::vector<Parser::AST_Node*> LocalAddedBoolOps;			
 		};
 
 
@@ -314,16 +335,16 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 		{
 		public:
 			Call_Params() {}
-			Call_Params(std::vector<std::string>&& Params) : Params(Params) {}
-			Call_Params(std::vector<GIL::Lexer::Token*>&& Params);
+			Call_Params(std::vector<std::string>&& Params);
+			Call_Params(std::vector<std::vector<GIL::Lexer::Token*>>&& Params);
 
 			NoCompile
 			AST_Type(Call_Params)
 			
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
-			std::vector<std::string> Params;
+			std::vector<std::pair<std::string, AccessNamespace>> Params;
 			
 			std::map<std::string, Param> ToParamMap(Compiler::CompilerContext& Context, Project* Project, std::vector<std::string>& ParamIdx2Name);
 		};
@@ -341,12 +362,16 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(CallSequence)
 			ReflectMe(CallSequence, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string Name;
 			std::vector<std::string> Location;
 			Call_Params Params;
+
+			//There's probably a better solution, but this lets us keep params in flattened bool nodes. When the sequence is called, its 
+			//params will be added to the flattened bool node's params
+			std::vector<std::map<std::string, Param>*> BoolNodeParams;
 		};
 
 		class GILAPI CallOperation : public AST_Node
@@ -360,7 +385,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(CallOperation)
 			ReflectMe(CallOperation, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string Name;
@@ -396,7 +421,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(BeginRegion)
 			ReflectMe(BeginRegion, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string RegionName;
@@ -412,7 +437,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(EndRegion)
 			ReflectMe(EndRegion, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string RegionName;
@@ -428,7 +453,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(SetAttr)
 			ReflectMe(SetAttr, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string AttrName;
@@ -456,7 +481,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(SetVar);
 			ReflectMe(SetVar, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			VariableType m_VariableType = VariableType::unknown;
@@ -475,7 +500,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(IncVar);
 			ReflectMe(IncVar, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string VarName;
@@ -492,7 +517,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(DecVar);
 			ReflectMe(DecVar, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string VarName;
@@ -510,7 +535,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(Prepro_If)
 			ReflectMe(Prepro_If, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string Condition;
@@ -528,7 +553,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(Prepro_Else)
 			ReflectMe(Prepro_Else, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::vector<AST_Node*> Body;
@@ -549,7 +574,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(DNALiteral)
 			ReflectMe(DNALiteral, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string Literal;
@@ -566,7 +591,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(AminoAcidLiteral)
 			ReflectMe(AminoAcidLiteral, AST_Node);
 
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 			std::string Literal;
@@ -625,7 +650,7 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 			AST_Type(UseParam)
 			ReflectMe(UseParam, AST_Node);
 			
-			virtual void Save(std::ofstream& OutputFile) override;
+			virtual void Save(std::ofstream & OutputFile, Parser::Project* Project) override;
 			virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 			
 			std::string ParamName;
@@ -651,3 +676,17 @@ inline static const _Reflectable_MapAdder_ ## Parent    _Reflectable_ ## ClassNa
 		};
 	}
 }
+
+template<>
+struct std::hash<GIL::Parser::AccessNamespace>
+{
+	size_t operator()(const GIL::Parser::AccessNamespace& Node) const
+	{
+		size_t hsh = 0;
+		for (auto& ns : Node.Namespaces)
+		{
+			hsh ^= std::hash<std::string>()(ns);
+		}
+		return hsh;
+	}
+};

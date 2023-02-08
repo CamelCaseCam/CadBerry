@@ -415,7 +415,7 @@ project "CadBerry_updater"
 
 		libdirs
 		{
-			"CadBerry/vendor/cpr/cmakebuild/lib/Debug"
+			"CadBerry/vendor/cpr/cmakebuild/lib/Debug",
 		}
 	filter "configurations:Release"
 		defines "CDB_RELEASE"
@@ -424,7 +424,7 @@ project "CadBerry_updater"
 
 		libdirs
 		{
-			"CadBerry/vendor/cpr/cmakebuild/lib/RelWithDebInfo"
+			"CadBerry/vendor/cpr/cmakebuild/lib/Release"
 		}
 	architecture "x64"
 	configurations

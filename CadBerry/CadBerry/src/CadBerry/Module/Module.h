@@ -3,7 +3,9 @@
 #include "CadBerry/Core.h"
 #include "Viewport.h"
 
+#pragma warning(push, 0)
 #include "imgui.h"
+#pragma warning(pop)
 
 namespace CDB
 {

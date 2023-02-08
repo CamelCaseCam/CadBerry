@@ -24,11 +24,15 @@ namespace GIL
 		DynamicSequence,
 		Operator,
 		EndOfOperators,
+		BoolSequence,
 	};
 
 	SequenceType SavedSequence;
 
 	std::vector<GIL::Lexer::Token*> EmptyTokens = {};
+	std::unordered_map<std::string, Parser::GILBool*> EmptyBools = {};
+	std::vector<Parser::BoolNode*> EmptyGraph = {};
+	std::vector<Parser::AST_Node*> EmptyNodes = {};
 
 	Sequence* CreateSequence(SequenceType sequenceType)
 	{
@@ -43,8 +47,40 @@ namespace GIL
 			return new DynamicSequence();
 		case GIL::SequenceType::Operator:
 			return new Operator();
+		case GIL::SequenceType::BoolSequence:
+			return new BoolSequence();
 		default:
 			break;
+		}
+	}
+
+	/*
+	* We handle bool nodes seperately from normal nodes, that way we can pull them out of sequences in if statements. Otherwise, GIL would 
+	* generate invalid code. The problem is, it's very difficult to know if the sequence is being compiled from within an if statement in a 
+	* nice way. So, the bool compiler will flatten all if statements instead of only ones running in another statement. Example:
+	* 
+	* Sequence -> DNA
+	*          -> If -> DNA
+	* Becomes:
+	* Sequence -> DNA
+	* If -> DNA
+	*/
+	DynamicSequence::DynamicSequence(std::vector<Parser::AST_Node*> Nodes, std::unordered_map<std::string, Parser::GILBool*> LocalBools, 
+		std::vector<Parser::BoolNode*> LocalGraphHeads, std::vector<Parser::AST_Node*> LocalAddedBoolOps) : LocalBools((LocalBools)), GraphHeads((LocalGraphHeads)), BoolNodes((BoolNodes))
+	{
+		//Divide nodes between sequence nodes and bool nodes
+		this->Nodes.reserve(Nodes.size());
+		for (AST_Node* node : Nodes)
+		{
+			auto name = node->GetName();
+			if (name == "N_SetBoolTrue" || name == "N_SetBool" || name == "N_UseBool")
+			{
+				this->BoolNodes.push_back(node);
+			}
+			else
+			{
+				this->Nodes.push_back(node);
+			}
 		}
 	}
 
@@ -172,7 +208,7 @@ namespace GIL
 		}
 	}
 
-	void DynamicSequence::Save(std::ofstream& OutputFile)
+	void DynamicSequence::Save(std::ofstream& OutputFile,Project* Proj)
 	{
 		SavedSequence = SequenceType::DynamicSequence;
 		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
@@ -183,7 +219,7 @@ namespace GIL
 		SaveSize(this->Nodes.size(), OutputFile);
 		for (AST_Node* n : this->Nodes)
 		{
-			AST_Node::SaveNode(n, OutputFile);
+			AST_Node::SaveNode(n, OutputFile, Proj);
 		}
 	}
 
@@ -200,6 +236,47 @@ namespace GIL
 		}
 	}
 	
+
+	void DynamicSequence::AddBoolNodePrefix(std::string& prefix)
+	{
+		for (auto node : this->Nodes)
+		{
+			if (node->GetName() == "N_SetBool")
+			{
+				N_SetBool* n = (N_SetBool*)node;
+				//Check if the bool is a local bool
+				if (this->LocalBools.contains(n->Bool))
+					n->Bool = prefix + n->Bool;
+			}
+			else if (node->GetName() == "N_SetBoolTrue")
+			{
+				N_SetBoolTrue* n = (N_SetBoolTrue*)node;
+				if (this->LocalBools.contains(n->Name))
+					n->Name = prefix + n->Name;
+			}
+		}
+	}
+	
+    void DynamicSequence::RemBoolNodePrefix(std::string& prefix)
+    {
+		for (auto node : this->Nodes)
+		{
+			if (node->GetName() == "N_SetBool")
+			{
+				N_SetBool* n = (N_SetBool*)node;
+				//Check if the name starts with the prefix
+				if (n->Bool.substr(0, prefix.size()) == prefix)
+					n->Bool = n->Bool.substr(prefix.size());
+			}
+			else if (node->GetName() == "N_SetBoolTrue")
+			{
+				N_SetBoolTrue* n = (N_SetBoolTrue*)node;
+				//Check if the name starts with the prefix
+				if (n->Name.substr(0, prefix.size()) == prefix)
+					n->Name = n->Name.substr(prefix.size());
+			}
+		}
+	}
 	
 	
 
@@ -229,39 +306,43 @@ namespace GIL
 		return this->DestinationSequence.first->Data(this->DestinationSequence.second);
 	}
 
-	std::vector<GIL::Lexer::Token*>& SequenceForward::GetTokens()
+	std::vector<GIL::Parser::AST_Node*>& SequenceForward::GetNodes()
 	{
 		if (this->DestinationSequence.first == nullptr)
 		{
-			return EmptyTokens;
+			return EmptyNodes;
 		}
-		return this->DestinationSequence.first->GetTokens();
+		return this->DestinationSequence.first->GetNodes();
 	}	
 
-	void SequenceForward::Save(std::ofstream& OutputFile)
+	void SequenceForward::Save(std::ofstream& OutputFile, Parser::Project* Proj)
 	{
 		SavedSequence = SequenceType::SequenceForward;
 		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
 
 		SaveString(this->DestinationName, OutputFile);
+		this->Location.Save(OutputFile, Proj);
 	}
 	
 	void SequenceForward::Load(std::ifstream& InputFile, Parser::Project* Proj)
 	{
 		LoadStringFromFile(this->DestinationName, InputFile);
+		this->Location.Load(InputFile, Proj);
 	}
 	
-	void BoolSequence::Save(std::ofstream& OutputFile)
+	void BoolSequence::Save(std::ofstream& OutputFile, Parser::Project* Proj)
 	{
-		SavedSequence = SequenceType::SequenceForward;
+		SavedSequence = SequenceType::BoolSequence;
 		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
 
-		
+		SaveString(this->m_bool->Name, OutputFile);
 	}
 
 	void BoolSequence::Load(std::ifstream& InputFile, Parser::Project* Proj)
 	{
-		
+		std::string name;
+		LoadStringFromFile(name, InputFile);
+		this->m_bool = Proj->LocalBools[name];
 	}
 
 
@@ -302,7 +383,7 @@ namespace GIL
 		this->DestinationSequence.first->Get(this->DestinationSequence.second, Params, Context);
 	}
 
-	void Operator::Save(std::ofstream& OutputFile)
+	void Operator::Save(std::ofstream& OutputFile, Parser::Project* Proj)
 	{
 		SavedSequence = SequenceType::Operator;
 		OutputFile.write((char*)&SavedSequence, sizeof(SequenceType));
@@ -312,7 +393,7 @@ namespace GIL
 		//Now recursively save the operators
 		if (this->AlternateImplementation != nullptr)
 		{
-			AlternateImplementation->Save(OutputFile);
+			AlternateImplementation->Save(OutputFile, Proj);
 		}
 		else
 		{

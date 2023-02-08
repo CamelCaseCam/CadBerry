@@ -102,8 +102,15 @@ namespace GIL
 #define GetIdent(Name, FirstToken, ErrorCode) Require(Tokens[i + 1]->TokenType == LexerToken::IDENT, Tokens[i], ErrorCode);\
 std::string& Name = Tokens[i + 1]->Value; i += 2
 
-		std::vector<AST_Node*> ParseNodes(std::vector<Token*>& Tokens, Project* Target)
+		std::vector<AST_Node*> ParseNodes(std::vector<Token*>& Tokens, Project* Target, 
+			std::unordered_map<std::string, GILBool*>* LocalBools = nullptr, std::vector<BoolNode*>* GraphHeads = nullptr,
+			std::vector<AST_Node*>* AddedBoolOps = nullptr)
 		{
+			if (LocalBools == nullptr)
+				LocalBools = &Target->LocalBools;
+			if (GraphHeads == nullptr)
+				GraphHeads = &Target->GraphHeads;
+			
 			bool SyntaxError = false;
 			std::vector<AST_Node*> OutputNodes;
 			std::vector<std::string> Distributions;
@@ -256,7 +263,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					break;
 				PREPRO_IF_FoundEnd:
 					//Now parse the inner tokens
-					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto InsideNodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 					auto Node = new Prepro_If(mv(Condition), mv(ParamTokens), mv(InsideNodes));
 					Node->pos.Line = FirstToken->line;
 					OutputNodes.push_back(Node);
@@ -274,7 +281,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 						if (Tokens[i]->TokenType == LexerToken::PREPRO_ENDIF)
 						{
 							auto InsideTokens = std::vector<Token*>(Tokens.begin() + Start, Tokens.begin() + i);
-							auto InsideNodes = ParseNodes(InsideTokens, Target);
+							auto InsideNodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 							auto Node = new Prepro_Else(mv(InsideNodes));
 							Node->pos.Line = FirstToken->line;							
 							OutputNodes.push_back(Node);
@@ -298,7 +305,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					//Now parse the nodes inside the bool definition
 					i += 2;
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto InsideNodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 					
 					//Make the implementation
 					BoolImplementation* Impl = new BoolImplementation(ImplName);
@@ -369,7 +376,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 						throw GILException();
 					}
 					GILBool* Bool = new GILBool(Name);
-					Target->LocalBools[Name] = (Bool);
+					(*LocalBools)[Name] = (Bool);
 					Target->Sequences[Name] = new BoolSequence(Bool);
 					
 					//Check if the bool is being defined
@@ -395,7 +402,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					i += 2;
 					Require(Tokens[i]->TokenType == LexerToken::BEGIN, FirstToken, ERROR_016);
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto InsideNodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 					auto Node = new For(mv(NewTarget), mv(InsideNodes));
 					Node->pos.Line = FirstToken->line;
 					OutputNodes.push_back(Node);
@@ -412,7 +419,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					i += 2;
 					Require(Tokens[i]->TokenType == LexerToken::BEGIN, FirstToken, ERROR_018);
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto InsideNodes = ParseNodes(InsideTokens, Target);
+					auto InsideNodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 					auto Node = new For(mv(NewTarget), mv(InsideNodes));
 					Node->pos.Line = FirstToken->line;					
 					OutputNodes.push_back(Node);
@@ -455,17 +462,24 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					//Get the body of the sequence
 					Require(Tokens[i]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_020);
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto Nodes = ParseNodes(InsideTokens, Target);
+
+					std::unordered_map<std::string, Parser::GILBool*> SeqBools;
+					std::vector<Parser::BoolNode*> SeqGraphHeads;
+					std::vector<Parser::AST_Node*> SeqAddedOps;
+
+					auto Nodes = ParseNodes(InsideTokens, Target, &SeqBools, &SeqGraphHeads, &SeqAddedOps);
 
 					if (Type == nullptr)
 					{
-						auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), "any", mv(Nodes));
+						auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), "any", mv(Nodes), mv(SeqBools),
+							mv(SeqGraphHeads), mv(SeqAddedOps));
 						Node->pos.Line = FirstToken->line;
 						Node->ActiveDistributions = Distributions;						
 						OutputNodes.push_back(Node);
 						break;
 					}
-					auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes));
+					auto Node = new DefineSequence(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes), mv(SeqBools),
+						mv(SeqGraphHeads), mv(SeqAddedOps));
 					Node->pos.Line = FirstToken->line;
 					Node->ActiveDistributions = Distributions;
 					OutputNodes.push_back(Node);
@@ -508,17 +522,24 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					//Get the body of the sequence
 					Require(Tokens[i]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_020);
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto Nodes = ParseNodes(InsideTokens, Target);
+					
+					std::unordered_map<std::string, Parser::GILBool*> SeqBools;
+					std::vector<Parser::BoolNode*> SeqGraphHeads;
+					std::vector<Parser::AST_Node*> SeqAddedOps;
+
+					auto Nodes = ParseNodes(InsideTokens, Target, &SeqBools, &SeqGraphHeads, &SeqAddedOps);
 
 					if (Type == nullptr)
 					{
-						auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), "any", mv(Nodes));
+						auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), "any", mv(Nodes), mv(SeqBools),
+							mv(SeqGraphHeads), mv(SeqAddedOps));
 						Node->pos.Line = FirstToken->line;
 						Node->ActiveDistributions = Distributions;
 						OutputNodes.push_back(Node);
 						break;
 					}
-					auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes));
+					auto Node = new DefineOperation(mv(SeqName), mv(SeqParams), mv(*Type), mv(Nodes), mv(SeqBools),
+						mv(SeqGraphHeads), mv(SeqAddedOps));
 					Node->pos.Line = FirstToken->line;
 					Node->ActiveDistributions = Distributions;
 					OutputNodes.push_back(Node);
@@ -542,8 +563,8 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					BoolNode* Condition = ParseBoolExpression(Tokens, i, SyntaxError);
 					Require(i < Tokens.size() && Tokens[i]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_020);
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto Nodes = ParseNodes(InsideTokens, Target);
-					auto statements = MakeIfStatements(Condition, Nodes, Target);
+					auto Nodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
+					auto statements = MakeIfStatements(Condition, Nodes, Target, LocalBools, GraphHeads, AddedBoolOps);
 					for (N_UseBool* statement : statements)
 					{
 						OutputNodes.push_back(statement);
@@ -626,17 +647,25 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					//Check if it has params
 					Token* FirstToken = Tokens[i];
 					std::string& SeqName = Tokens[i]->Value;
-					std::vector<Token*> params;
+					std::vector<std::vector<Token*>> params;
+					std::vector<Token*> param;
 					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
 					{
 						i += 2;
 						for (i; i < Tokens.size(); ++i)
 						{
 							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+							{
+								params.push_back(param);
 								break;
+							}
 							if (Tokens[i]->TokenType == LexerToken::COMMA)
+							{
+								params.push_back(param);
+								param.clear();
 								continue;
-							params.push_back(Tokens[i]);
+							}
+							param.push_back(Tokens[i]);
 						}
 					}
 					Call_Params SeqParams(mv(params));
@@ -651,17 +680,25 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				{
 					//Check if it has params
 					std::string& OpName = Tokens[i]->Value;
-					std::vector<Token*> params;
+					std::vector<std::vector<Token*>> params;
+					std::vector<Token*> param;
 					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
 					{
 						i += 2;
 						for (i; i < Tokens.size(); ++i)
 						{
 							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+							{
+								params.push_back(param);
 								break;
+							}
 							if (Tokens[i]->TokenType == LexerToken::COMMA)
+							{
+								params.push_back(param);
+								param.clear();
 								continue;
-							params.push_back(Tokens[i]);
+							}
+							param.push_back(Tokens[i]);
 						}
 					}
 					Call_Params OpParams(mv(params));
@@ -670,7 +707,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					Require(Tokens[i + 1]->TokenType == LexerToken::BEGIN, Tokens[i], ERROR_029);
 					i += 1;
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto Nodes = ParseNodes(InsideTokens, Target);
+					auto Nodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 
 
 					auto Node = new CallOperation(mv(OpName), mv(OpParams), mv(Nodes), mv(Namespaces));
@@ -722,17 +759,25 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 
 					//Check if it has params
 					std::string& SeqName = Tokens[i]->Value;
-					std::vector<Token*> params;
+					std::vector<std::vector<Token*>> params;
+					std::vector<Token*> param;
 					if (i + 1 < Tokens.size() && Tokens[i + 1]->TokenType == LexerToken::LPAREN)
 					{
 						i += 2;
 						for (i; i < Tokens.size(); ++i)
 						{
 							if (Tokens[i]->TokenType == LexerToken::RPAREN)
+							{
+								params.push_back(param);
 								break;
+							}
 							if (Tokens[i]->TokenType == LexerToken::COMMA)
+							{
+								params.push_back(param);
+								param.clear();
 								continue;
-							params.push_back(Tokens[i]);
+							}
+							param.push_back(Tokens[i]);
 						}
 					}
 					Call_Params SeqParams(mv(params));
@@ -751,7 +796,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 					std::string& Name = Tokens[i + 1]->Value;
 					i += 2;
 					auto InsideTokens = GetInsideTokens(Tokens, i);
-					auto Nodes = ParseNodes(InsideTokens, Target);
+					auto Nodes = ParseNodes(InsideTokens, Target, LocalBools, GraphHeads, AddedBoolOps);
 					auto Node = new Namespace(mv(Name), mv(Nodes));
 					Node->pos.Line = Tokens[i]->line;					
 					OutputNodes.push_back(Node);
@@ -876,7 +921,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			{
 				//Check the identity of the next node
 				++i;
-				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::PARAM)
 				{
 					//Throw an error
 					Error(ERROR_044, Tokens[i]);
@@ -885,12 +930,18 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				}
 				//Get namespaces
 				AccessNamespace Namespace = CheckNamespace(Tokens, i, SyntaxError);
-				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::PARAM)
 				{
 					//Throw an error
 					Error(ERROR_044, Tokens[i]);
 					SyntaxError = true;
 					return nullptr;
+				}
+				//Now construct the node
+				if (Tokens[i]->TokenType == LexerToken::PARAM)
+				{
+					std::string Name = "!param@" + Tokens[i]->Value;
+					return new N_Not(new N_Placeholder(Name, AccessNamespace()));
 				}
 				return new N_Not(new N_Placeholder(Tokens[i]->Value, mv(Namespace)));
 			}
@@ -899,7 +950,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				++i;
 				return ParseBoolExpression(Tokens, i, SyntaxError, nullptr);
 			}
-			else if (Tokens[i]->TokenType != LexerToken::IDENT)
+			else if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::PARAM)
 			{
 				ERROR(ERROR_045, Tokens[i]);
 				SyntaxError = true;
@@ -909,12 +960,18 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			{
 				//Get namespaces
 				AccessNamespace Namespace = CheckNamespace(Tokens, i, SyntaxError);
-				if (Tokens[i]->TokenType != LexerToken::IDENT)
+				if (Tokens[i]->TokenType != LexerToken::IDENT && Tokens[i]->TokenType != LexerToken::PARAM)
 				{
 					//Throw an error
 					Error(ERROR_045, Tokens[i]);
 					SyntaxError = true;
 					return nullptr;
+				}
+				//Now construct the node
+				if (Tokens[i]->TokenType == LexerToken::PARAM)
+				{
+					std::string Name = "!param@" + Tokens[i]->Value;
+					return new N_Placeholder(Name, AccessNamespace());
 				}
 				return new N_Placeholder(Tokens[i]->Value, mv(Namespace));
 			}
@@ -1031,7 +1088,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 #pragma region utils
 		void GetReusableElements(std::vector<Token*>& Tokens, Project* Target)    //Does all the actual parsing
 		{
-			auto nodes = ParseNodes(Tokens, Target); 
+			auto nodes = ParseNodes(Tokens, Target);
 			Target->Main = mv(nodes);
 			for (AST_Node* node : Target->Main)
 			{
@@ -1199,6 +1256,9 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 
 		void Project::Save(std::ofstream& OutputFile)
 		{
+			//Make sure we save all the nodes
+			this->SavedBools = {};
+
 			//Write the CGIL file version to the file
 			int version = CGILVersion;
 			OutputFile.write((char*)&version, sizeof(int));
@@ -1225,6 +1285,15 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				}
 			}
 
+			//Save the bools
+			Len = this->LocalBools.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (auto& b : this->LocalBools)
+			{
+				SaveString(b.first, OutputFile);
+				SaveString(b.second->Name, OutputFile);
+			}
+
 			//Write sequences to the file
 			Len = this->Sequences.size();
 			OutputFile.write((char*)&Len, sizeof(int));
@@ -1232,7 +1301,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			{
 				std::string Name = sequence.first;
 				SaveString(Name, OutputFile);
-				sequence.second->Save(OutputFile);
+				sequence.second->Save(OutputFile, this);
 			}
 
 			//Write entry point to file
@@ -1240,7 +1309,7 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			OutputFile.write((char*)&Len, sizeof(int));
 			for (AST_Node* node : this->Main)
 			{
-				AST_Node::SaveNode(node, OutputFile);
+				AST_Node::SaveNode(node, OutputFile, this);
 			}
 
 			//Write imports to the file for dynamic linking (WIP)
@@ -1292,7 +1361,31 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 			for (auto& op : this->Operators)
 			{
 				SaveString(op.first, OutputFile);
-				op.second->Save(OutputFile);
+				op.second->Save(OutputFile, this);
+			}
+
+			//Save the bool implementations
+			Len = this->BoolImplementations.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (auto& impl : this->BoolImplementations)
+			{
+				impl->Save(OutputFile, this);
+			}
+
+			//Save the bool graphs
+			Len = this->GraphHeads.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (auto& graph : this->GraphHeads)
+			{
+				graph->SaveNode(OutputFile, this);
+			}
+			
+			//Save the added bool ops
+			Len = this->AddedBoolOps.size();
+			OutputFile.write((char*)&Len, sizeof(int));
+			for (auto& op : this->AddedBoolOps)
+			{
+				AST_Node::SaveNode(op, OutputFile, this);
 			}
 		}
 
@@ -1511,6 +1604,19 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				Type().Load(InputFile, Proj);
 			}
 
+			//Load the bools
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			for (int i = 0; i < Len; ++i)
+			{
+				std::string BoolName;
+				LoadStringFromFile(BoolName, InputFile);
+				std::string BoolVal;
+				LoadStringFromFile(BoolVal, InputFile);
+				
+				Proj->LocalBools[BoolName] = new GILBool(BoolVal);
+			}
+			
 			Len = -1;
 			InputFile.read((char*)&Len, sizeof(int));    //Load the sequences
 			for (int i = 0; i < Len; ++i)
@@ -1592,6 +1698,33 @@ std::string& Name = Tokens[i + 1]->Value; i += 2
 				//We know that this is an operator, but loading it as a sequence makes sure we load it's data correctly
 				Sequence* Seq = Sequence::LoadSequence(InputFile, Proj);
 				Proj->Operators[key] = Seq;
+			}
+
+			//Load the bool implementations
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			for (int i = 0; i < Len; ++i)
+			{
+				BoolImplementation* impl = BoolImplementation::Load(InputFile, Proj);
+				Proj->BoolImplementations.push_back(impl);
+			}
+			
+			//Load the graph heads
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			Proj->GraphHeads.reserve(Len);
+			for (int i = 0; i < Len; ++i)
+			{
+				Proj->GraphHeads.push_back(BoolNode::LoadNode(InputFile, Proj));
+			}
+			
+			//Load the added bool ops
+			Len = 0;
+			InputFile.read((char*)&Len, sizeof(int));
+			Proj->AddedBoolOps.reserve(Len);
+			for (int i = 0; i < Len; ++i)
+			{
+				Proj->AddedBoolOps.push_back(AST_Node::LoadNode(InputFile, Proj));
 			}
 
 			

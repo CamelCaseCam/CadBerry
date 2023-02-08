@@ -24,6 +24,15 @@ namespace GIL
 	{
 		using namespace GIL::Lexer;
 		using namespace GIL::Parser;
+		
+		void ZeroAllSeqInfo(Project* Proj)
+		{
+			for (auto& seq : Proj->Sequences)
+				if (seq.second != nullptr)
+					seq.second->Callnum = 0;
+			for (auto& newproj : Proj->Namespaces)
+				ZeroAllSeqInfo(newproj.second);
+		}
 
 		std::pair<std::vector<Region>, std::string> Compile(Project* Proj, std::vector<AST_Node*>* Nodes, std::string* Distribution)
 		{
@@ -40,6 +49,7 @@ namespace GIL
 
 			CompilerContext Context = { Nodes, &Output, &Code, &CurrentEncoding, nullptr, 0, &OpenRegions, Distribution };
 
+
 			//Import any imports
 			ImportAllProjectImports(Proj, Proj);
 
@@ -48,8 +58,12 @@ namespace GIL
 			//Initialize all operators and forwards
 			InitForwardsAndOperators(Proj);
 
+			ZeroAllSeqInfo(Proj);
+
 			//Generate the bool graph
 			GenerateBoolGraphs(Proj);
+
+			ZeroAllSeqInfo(Proj);
 			
 
 			//Compile the nodes

@@ -298,7 +298,7 @@ sequence Seq3 : cds
 std::string SequenceWithMultipleParams = R"(
 #Target "Unoptimized"
 
-BigSequence(Seq1 Seq2)
+BigSequence(Seq1, Seq2)
 
 sequence Seq1
 {
@@ -569,11 +569,94 @@ namespace TestNamespace1
 }
 )";
 
+std::string NamespaceSequenceAsParameter = R"(
+#Target "Unoptimized"
+
+Seq1(ns1::Seq2)
+'CCC'
+
+namespace ns1
+{
+	sequence Seq2
+	{
+		'AAA'
+	}
+}
+
+sequence Seq1($Param1)
+{
+	'TTT'
+	$Param1
+}
+)";
+
 
 //________________________________________________________________________________________
 // BOOLS
 //________________________________________________________________________________________
 #pragma region Bools
+
+#pragma region BoolImpl
+#define BoolImpl R"(
+using "tests"
+
+// Creates a bool implementation to make sure everything works
+ibool TestImpl
+{
+	Alloc => _alloc
+	Dealloc => _dealloc
+
+	Set => _set
+	Use => _use
+	NumAvailable => tests::NumAvailable
+
+	And => _and
+	Or => _or
+	Not => _not
+}
+
+
+//______________________________________________________________________________
+// Implementation
+//______________________________________________________________________________
+
+sequence _alloc {}
+sequence _dealloc {}
+
+sequence _set($name : data)
+{
+    'AAAA'
+}
+
+sequence _use($inner : any)
+{
+    'TTTT'
+    $inner
+    'TTTT'
+}
+
+sequence _and($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _or($left : data, $right : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+
+sequence _not($input : data, $output : any)
+{
+    'GGGG'
+    $output
+    'GGGG'
+}
+)"
+#pragma endregion
 
 std::string BoolImplementationExample = R"(
 #Target "Unoptimized"
@@ -771,5 +854,96 @@ sequence _not($input : data, $output : any)
     'GGGG'
 }
 )";
+
+std::string SequenceBoolExample = R"(
+#Target "Unoptimized"
+
+//Define a sequence that defines and uses local bools
+
+sequence TestSequence
+{
+	bool b1 = DummyInput1 & DummyInput2
+	if (b1)
+	{
+		DummyOutput
+	}
+}
+
+TestSequence
+TestSequence
+
+/*
+Lowered code:
+_and(tbool1, tbool2, set(testsequence@r1@b1))   GGGGAAAAGGGG
+_use(testsequence@r1@b1, DummyOutput)			TTTTAAATTTT
+_and(tbool3, tbool4, set(testsequence@r2@b1))	GGGGAAAAGGGG
+_use(testsequence@r2@b1, DummyOutput)			TTTTAAATTTT
+
+DummyInput1(set(tbool1))						TTTAAAA
+DummyInput2(set(tbool2))						GGGAAAA
+
+Output:
+GGGGAAAAGGGGTTTTAAATTTTGGGGAAAAGGGGTTTTAAATTTTTTTAAAAGGGAAAA
+*/
+
+sequence DummyInput1($InnerCode : any)
+{
+	'TTT'
+    $InnerCode
+}
+
+sequence DummyInput2($InnerCode : any)
+{
+	'GGG'
+    $InnerCode
+}
+
+sequence DummyOutput
+{
+	'AAA'
+}
+
+)" BoolImpl;
+
+
+std::string SequenceParamBoolExample = R"(
+#Target "Unoptimized"
+
+//Define a sequence that defines and uses local bools passed as parameters
+
+sequence Test($b1, $b2, $output)
+{
+	bool b = $b1 & $b2
+	if (b)
+	{
+		$output
+	}
+}
+
+Test(DummyInput1, DummyInput2, DummyOutput1)
+Test(DummyInput1, DummyInput2, DummyOutput2)
+
+sequence DummyInput1($inner : any)
+{
+	'TTT'
+    $inner
+}
+
+sequence DummyInput2($inner : any)
+{
+	'GGG'
+    $inner
+}
+
+sequence DummyOutput1
+{
+	'AAA'
+}
+
+sequence DummyOutput2
+{
+	'CCC'
+}
+)" BoolImpl;
 
 #pragma endregion

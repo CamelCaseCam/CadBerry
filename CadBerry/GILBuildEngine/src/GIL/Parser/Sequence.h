@@ -30,6 +30,7 @@ namespace GIL
 	namespace Parser
 	{
 		class Project;
+		class BoolNode;
 	}
 
 	struct CachedSequenceChunk
@@ -52,12 +53,15 @@ namespace GIL
 	};
 
 
-#define NoSave virtual void Save(std::ofstream& OutputFile) override {} \
+#define NoSave virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) override {} \
 virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 
 #define NoImpl virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override {}
 
 	extern CDBAPI std::vector<GIL::Lexer::Token*> EmptyTokens;
+	extern GILAPI std::unordered_map<std::string, Parser::GILBool*> EmptyBools;
+	extern GILAPI std::vector<Parser::BoolNode*> EmptyGraph;
+	extern GILAPI std::vector<Parser::AST_Node*> EmptyNodes;
 	class Sequence    //Base sequence class that is inherited by different sequence types
 	{
 	public:
@@ -65,14 +69,14 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) = 0;
 		void Get(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context);
 
-		virtual void Save(std::ofstream& OutputFile) = 0;
+		virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) = 0;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) = 0;
 
 		//For data sequences
 		virtual void* Data(Parser::Project* Proj) { return nullptr; }
 		virtual void DelData(void* data) { }
 
-		virtual std::vector<GIL::Lexer::Token*>& GetTokens() { return EmptyTokens; }
+		virtual std::vector<GIL::Parser::AST_Node*>& GetNodes() { return EmptyNodes; }
 
 		//For stuff like forwards
 		virtual void CompileTimeInit(Parser::Project* Proj) {}
@@ -96,6 +100,14 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 		Type* SeqType = &Type::any;
 
 		std::vector<std::string> ActiveDistributions;
+
+		int Callnum = 0;
+
+		virtual std::unordered_map<std::string, Parser::GILBool*>& GetLocalBools() { return  EmptyBools; }
+		virtual std::vector<Parser::BoolNode*>& GetGraphHeads() { return EmptyGraph; }
+		virtual std::vector<Parser::AST_Node*>& GetBoolTypeNodes() { return EmptyNodes; }
+		virtual void AddBoolNodePrefix(std::string& prefix) {}
+		virtual void RemBoolNodePrefix(std::string& prefix) {}
 	protected:
 		void SaveBaseSequence(std::ofstream& OutputFile);
 		void LoadBaseSequence(std::ifstream& InputFile, Parser::Project* Proj);
@@ -129,15 +141,31 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 	{
 	public:
 		DynamicSequence() {}
-		DynamicSequence(std::vector<Parser::AST_Node*> Nodes) { this->Nodes = Nodes; }
+		DynamicSequence(std::vector<Parser::AST_Node*> Nodes,
+			std::unordered_map<std::string, Parser::GILBool*> LocalBools,
+			std::vector<Parser::BoolNode*> LocalGraphHeads,
+			std::vector<Parser::AST_Node*> LocalAddedBoolOps);
 		virtual ~DynamicSequence() override;
 
 		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
-		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
+		virtual std::unordered_map<std::string, Parser::GILBool*>& GetLocalBools() { return LocalBools; }
+		virtual std::vector<Parser::BoolNode*>& GetGraphHeads() { return GraphHeads; }
+		virtual std::vector<Parser::AST_Node*>& GetBoolTypeNodes() { return BoolNodes; }
+
+		virtual std::vector<Parser::AST_Node*>& GetNodes() { return Nodes; }
+
+		virtual void AddBoolNodePrefix(std::string& prefix) override;
+		virtual void RemBoolNodePrefix(std::string& prefix) override;
+
 		std::vector<Parser::AST_Node*> Nodes;
+
+		std::unordered_map<std::string, Parser::GILBool*> LocalBools;
+		std::vector<Parser::BoolNode*> GraphHeads;
+		std::vector<Parser::AST_Node*> BoolNodes;
 	};
 
 	class SequenceForward : public Sequence
@@ -152,10 +180,10 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 		
 		virtual void CompileTimeInit(Parser::Project* Proj) override;
 
-		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
-		std::vector<GIL::Lexer::Token*>& GetTokens() override;
+		std::vector<GIL::Parser::AST_Node*>& GetNodes() override;
 
 		virtual void* Data(Parser::Project* Proj) override;
 
@@ -172,7 +200,7 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 
 		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
-		virtual void Save(std::ofstream& OutputFile) override {}
+		virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) override {}
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 
 		std::pair<std::vector<Parser::Region>, std::string> m_InnerCode;
@@ -188,7 +216,7 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 		
 		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override;
 
-		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 		Operator* GetLastImplementation();
@@ -203,11 +231,12 @@ virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override {}
 	class BoolSequence : public Sequence
 	{
 	public:
+		BoolSequence() {}
 		BoolSequence(Parser::GILBool* m_bool) : m_bool(m_bool) {}
 
 		virtual void Get_impl(Parser::Project* Proj, std::map<std::string, Param>& Params, Compiler::CompilerContext& context) override {}
 
-		virtual void Save(std::ofstream& OutputFile) override;
+		virtual void Save(std::ofstream& OutputFile, Parser::Project* Proj) override;
 		virtual void Load(std::ifstream& InputFile, Parser::Project* Proj) override;
 
 		Parser::GILBool* m_bool;
