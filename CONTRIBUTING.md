@@ -16,21 +16,21 @@ The Core CadBerry module contains every viewport built-in to CadBerry. This incl
  * DNA Editor - Provides DNA manipulation that can't easily be built into GIL (ex. reverse complement, complement, etc.)
  * Modelling - A modelling framework that lets you run simulations (needs an update, consider it deprecated)
 
-VSCodeIntegration allows you to open VSCode from CadBerry and precompiles GIL files while VSCode is open. This is kept seperate from Core because it requires VSCode to be installed.
+VSCodeIntegration allows you to open VSCode from CadBerry and precompiles GIL files while VSCode is open. This is kept separate from Core because it requires VSCode to be installed.
 
-IRESGenerator was created for a seperate project and will likely be moved into its own repository. 
+IRESGenerator was created for a separate project and will likely be moved into its own repository. 
 
 ### Style, Smart Pointers, Exceptions, and OOP
 There are several common code conventions used in C++ that aren't used in CadBerry. Below are some of the things that you should know about, along with the reasoning behind the convention.
 
 #### Style
-The C++ standard library has a bunch of functions that are extremely slow while providing almost no benefit. For example, std::find. Functions like this **should not** be used. Using standard library functions is encouraged, but only when those functions provide a benefit without a segnificant performance penalty.
+The C++ standard library has a bunch of functions that are extremely slow while providing almost no benefit. For example, std::find. Functions like this **should not** be used. Using standard library functions is encouraged, but only when those functions provide a benefit without a significant performance penalty.
 
 #### Smart Pointers
 Smart pointers are used in CadBerry, but so are raw pointers. CadBerry has its own slightly less memory-safe smart pointer class (`CDB::scoped_ptr`) that is used in place of `std::unique_ptr`. While `std::shared_ptr` is acceptable if there is no other option, it is not recommended. In many situations where a shared pointer can be used, a raw pointer is preferable. For example, the GIL lexer outputs a vector of raw pointers to tokens, this way duplicates of tokens can be added.
 
 #### Exceptions
-Exceptions are avoided in the core CadBerry editor, but are used in the build engine. In CadBerry, fatal errors kill the program, so no exception is needed. In the build engine, exceptions are used to terminate compilation without crashing the program.
+Exceptions are avoided in the core CadBerry editor but are used in the build engine. In CadBerry, fatal errors kill the program, so no exception is needed. In the build engine, exceptions are used to terminate compilation without crashing the program.
 
 As a general rule, exceptions **should not** be used in CadBerry. Exceptions can be used in modules, but they should be used for fatal errors that stop whatever the module is doing without crashing the program. They should be caught and handled in the module, and then the module should exit.
 
@@ -45,7 +45,7 @@ CadBerry uses a combination of OpenGL and Dear ImGui to render the editor. The O
 CadBerry uses [Catch2](https://github.com/catchorg/Catch2) to test the editor and GIL. Before submitting any pull requests, you should run CadBerry_test to make sure everything is working correctly.
 
 ### CadBerry vs GIL
-CadBerry is designed to be an IDE for synthetic biology. GIL is a language for synthetic biology. While they are both in the same repository, GIL is older and has more features. They are designed to be used together, but they could be seperated with a little work.
+CadBerry is designed to be an IDE for synthetic biology. GIL is a language for synthetic biology. While they are both in the same repository, GIL is older and has more features. They are designed to be used together, but they could be separated with a little work.
 
 ## How you can contribute
 ____________________________
